@@ -1,7 +1,7 @@
 // 同步子进程
 const execSync = require('child_process').execSync;
 // 时间格式生成
-function dateFormat(date) {
+function dateFormat (date) {
     let y = date.getFullYear();
     let M = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
     let d = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -11,7 +11,7 @@ function dateFormat(date) {
     return `${y}-${M}-${d} ${h}:${m}:${s}`;
 }
 // 获取当前git分支信息
-function getBranchVersionInfo() {
+function getBranchVersionInfo () {
     // 当前分支名
     let vName = execSync('git name-rev --name-only HEAD').toString().trim();
     // 提交的commit hash
@@ -40,7 +40,7 @@ class BranchVersionWebpackPlugin {
      * compilation: 本次打包的内容
      * */
 
-    apply(compiler) {
+    apply (compiler) {
         // 异步方法，生成打包目录时：生成文件
         compiler.hooks.emit.tapAsync('BranchVersionWebpackPlugin', (compilation, cb) => {
             // 添加分支版本信息文件

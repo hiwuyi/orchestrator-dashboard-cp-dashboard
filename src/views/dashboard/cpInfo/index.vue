@@ -379,7 +379,7 @@ export default defineComponent({
       try {
         let formData = new FormData()
         formData.append('wallet_address', metaAddress.value)
-        const cpscoreRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}stats/cpscores`, 'post', formData)
+        const cpscoreRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}stats/cpscores`, 'post', formData)
         if (cpscoreRes && cpscoreRes.status === 'success' && cpscoreRes.data) {
           ringGraphData.cpScore = cpscoreRes.data.providers_program || []
           ringGraphData.providersTotal.contribution_score = cpscoreRes.data.total_contribution_score || 0
@@ -390,7 +390,7 @@ export default defineComponent({
     }
     async function getTotalscore () {
       try {
-        const cpscoreRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}stats/get_tx_count?chain_id=20241133&wallet_address=${metaAddress.value}`, 'get')
+        const cpscoreRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}stats/get_tx_count?chain_id=20241133&wallet_address=${metaAddress.value}`, 'get')
         if (cpscoreRes && cpscoreRes.status === 'success') {
           ringGraphData.transactionDriveProgram.wallet_address_contribution = cpscoreRes.data.total_score || 0
         }
@@ -409,7 +409,7 @@ export default defineComponent({
       }
       // ?${system.$Qs.stringify(params)}
       // ?${new URLSearchParams(params).toString()}
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}cpdata/${metaAddress.value}`, 'get')
       const providerRes_test = {
         "data": {
           "list_providers_cnt": 4,
@@ -861,7 +861,7 @@ export default defineComponent({
       } else {
         providersData.value = []
         cpLoad.value = false
-        if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
+        // if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
       }
       providersTableLoad.value = false
     }
@@ -1422,7 +1422,7 @@ export default defineComponent({
             padding: 0.15rem;
             margin: 0.3rem 0 0;
             border-radius: 0.15rem;
-            // border: 2px solid @theme-color-opacity1;
+            // border: 2px solid var(--theme-color-opacity1);
             overflow: hidden;
             text-align: center;
             // box-shadow: 0 0 15px #447dff;
@@ -1457,9 +1457,9 @@ export default defineComponent({
                 animation: run1 1s linear infinite; // animation-delay: 0s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(2) {
@@ -1471,9 +1471,9 @@ export default defineComponent({
                 // animation-delay: 1s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(3) {
@@ -1485,9 +1485,9 @@ export default defineComponent({
                 // animation-delay: 2s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(4) {
@@ -1499,9 +1499,9 @@ export default defineComponent({
                 // animation-delay: 3s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
             }
@@ -1623,7 +1623,7 @@ export default defineComponent({
             &:hover,
             &:active,
             &:focus {
-              border-color: @theme-color;
+              border-color: var(--theme-color);
             }
           }
         }
@@ -1650,10 +1650,10 @@ export default defineComponent({
         th {
           word-break: break-word;
           padding: 0.1rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           border: 0;
           .cell {
-            color: @text-color;
+            color: var(--text-color);
             word-break: break-word;
             @media screen and (max-width: 540px) {
               font-size: 12px;
@@ -1663,7 +1663,7 @@ export default defineComponent({
         }
         td {
           padding: 0.16rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           color: rgb(181, 183, 200);
           border-color: rgb(38, 39, 47);
           @media screen and (max-width: 540px) {
@@ -1672,7 +1672,7 @@ export default defineComponent({
           }
           i {
             margin-right: 5px;
-            color: @text-color;
+            color: var(--text-color);
             font-size: 18px;
             @media screen and (max-width: 1260px) {
               font-size: 16px;
@@ -1843,20 +1843,20 @@ export default defineComponent({
               span {
                 padding: 3px 10px;
                 margin: 3px 5px 3px 0;
-                background-color: @theme-color;
+                background-color: var(--theme-color);
                 font-size: 12px;
                 border-radius: 45px;
                 word-break: break-word;
                 line-height: 1;
-                color: @white-color;
+                color: var(--white-color);
               }
             }
           }
           &.el-table__expanded-cell {
             padding: 0.32rem 0.64rem;
-            // border: 1px solid @white-color;
+            // border: 1px solid var(--white-color);
             &:hover {
-              background-color: @primary-color !important;
+              background-color: var(--primary-color) !important;
             }
           }
         }
@@ -1871,7 +1871,7 @@ export default defineComponent({
         //   }
         // }
         &.expanded {
-          border: 1px solid @white-color;
+          border: 1px solid var(--white-color);
           border-collapse: collapse;
         }
       }
@@ -1888,7 +1888,7 @@ export default defineComponent({
       justify-content: flex-end;
       align-items: center;
       .el-pagination__total {
-        color: @white-color;
+        color: var(--white-color);
       }
       .btn-next,
       .btn-prev,
@@ -1896,13 +1896,13 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
-        color: @white-color;
+        color: var(--white-color);
         border: 1px solid #f4f4f5;
         border-radius: 5px;
         &:not(.disabled).active,
         &:not(.disabled):hover {
-          background-color: @theme-color;
-          border-color: @theme-color;
+          background-color: var(--theme-color);
+          border-color: var(--theme-color);
         }
         &:not(.disabled):hover {
         }

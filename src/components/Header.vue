@@ -204,9 +204,9 @@ import {
   CircleCheck, DocumentCopy, Avatar, Delete, View
 } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
-import * as echarts from "echarts"
 import SpaceTokenABI from '@/utils/abi/SwanToken.json'
 import CollateralABI from '@/utils/abi/CollateralContract.json'
+import swanLogo from "@/assets/images/icons/logo.png"
 export default defineComponent({
   components: {
     CircleCheck, DocumentCopy, Avatar, Delete, View
@@ -219,7 +219,6 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const swanLogo = require("@/assets/images/icons/logo.png")
     const providersLoad = ref(false)
     const providersData = ref([])
     const small = ref(false)
@@ -262,10 +261,10 @@ export default defineComponent({
       amount: NaN,
       tx_hash: ''
     })
-    const txLink = process.env.VUE_APP_ATOMBLOCKURL
-    const tokenAddress = process.env.VUE_APP_OPSWAN_SWANTOKEN_ADDRESS
+    const txLink = import.meta.env.VITE_API_ATOMBLOCKURL
+    const tokenAddress = import.meta.env.VITE_API_OPSWAN_SWANTOKEN_ADDRESS
     const tokenContract = new system.$commonFun.web3Init.eth.Contract(SpaceTokenABI, tokenAddress)
-    const collateralAddress = process.env.VUE_APP_COLLATERAL_CONTACT
+    const collateralAddress = import.meta.env.VITE_API_COLLATERAL_CONTACT
     const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
 
 
@@ -275,7 +274,7 @@ export default defineComponent({
     }
     async function createCom () {
       tokenShow.value = true
-      const listRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}api_token`, 'post')
+      const listRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}api_token`, 'post')
       if (listRes && listRes.status === 'success') {
         system.$commonFun.messageTip('success', listRes.message ? listRes.message : 'Success!')
         getdataList()
@@ -288,7 +287,7 @@ export default defineComponent({
       tokenShow.value = true
       let formData = new FormData()
       formData.append('api_token', tokenName)
-      const listRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}api_token/delete`, 'post', formData)
+      const listRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}api_token/delete`, 'post', formData)
       if (listRes && listRes.status === 'success') system.$commonFun.messageTip('success', listRes.message ? listRes.message : 'Delete successfully!')
       else system.$commonFun.messageTip('error', listRes.message ? listRes.message : 'Delete failed!')
       getdataList()
@@ -299,7 +298,7 @@ export default defineComponent({
       toolData.value = ''
 
       try {
-        const keysRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}api_token`, 'get')
+        const keysRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}api_token`, 'get')
 
         if (keysRes && keysRes.status === 'success') {
           // Assuming the 'data' field in response contains the required token
@@ -457,7 +456,7 @@ export default defineComponent({
         cpCheckCont.balance = system.$commonFun.web3Init.utils.fromWei(String(balances), 'ether') || 0
         cpCheckCont.taskBalance = system.$commonFun.web3Init.utils.fromWei(String(taskBalance), 'ether') || 0
       } catch{ }
-      // const cpRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/collateral/${metaAddress.value}`, 'get')
+      // const cpRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}cp/collateral/${metaAddress.value}`, 'get')
       // if (cpRes) {
       //   system.$commonFun.messageTip(cpRes.status, cpRes.message)
       //   cpCheckCont.tip = cpRes.message
@@ -584,7 +583,7 @@ export default defineComponent({
       }
     }
     .nav {
-      color: @white-color;
+      color: var(--white-color);
       @media screen and (max-width: 599px) {
         width: 100%;
         margin: 0 0 6px;
@@ -597,7 +596,7 @@ export default defineComponent({
         &:hover,
         &.active {
           background-color: rgb(21, 23, 28);
-          color: @theme-color;
+          color: var(--theme-color);
         }
         @media screen and (max-width: 599px) {
           padding: 6px 2px;
@@ -626,7 +625,7 @@ export default defineComponent({
           width: 18px;
           height: 18px;
           margin: 0 auto;
-          color: @white-color;
+          color: var(--white-color);
         }
         .el-sub-menu__icon-arrow {
           display: none;
@@ -643,7 +642,7 @@ export default defineComponent({
         }
         .info-style {
           background: linear-gradient(45deg, #025bd5, #3c73ec);
-          color: @white-color;
+          color: var(--white-color);
           cursor: text;
           border-radius: 0.08rem;
           transition: all 0.2s;
@@ -657,7 +656,7 @@ export default defineComponent({
           }
           .el-dropdown {
             padding: 0.05rem 0.07rem 0.05rem 0.05rem;
-            border-left: 1px solid @theme-color;
+            border-left: 1px solid var(--theme-color);
           }
         }
         .el-button-group > .el-button {
@@ -790,7 +789,7 @@ export default defineComponent({
               position: absolute;
               left: 0.16rem;
               top: 50%;
-              content: "";
+              content: '';
               width: 0.08rem;
               height: 0.08rem;
               margin-top: -0.04rem;
@@ -858,7 +857,7 @@ export default defineComponent({
         font-size: inherit;
         svg,
         path {
-          fill: @theme-color;
+          fill: var(--theme-color);
         }
         .el-button {
           justify-content: flex-start;
@@ -867,7 +866,7 @@ export default defineComponent({
           margin: 8px 0 0;
           background: transparent !important;
           border: 0;
-          color: @theme-color !important;
+          color: var(--theme-color) !important;
           font-size: inherit;
           font-weight: normal;
           font-family: inherit;
@@ -937,8 +936,8 @@ export default defineComponent({
       height: auto;
       margin: 0 0 0.2rem;
       padding: 0.1rem 0.15rem;
-      background-color: @theme-color;
-      border-color: @theme-color;
+      background-color: var(--theme-color);
+      border-color: var(--theme-color);
       border-radius: 4px;
       font-size: 14px;
       @media screen and (max-width: 768px) {
@@ -1045,12 +1044,12 @@ export default defineComponent({
                 height: auto;
                 min-width: 0.5rem;
                 padding: 5px 0;
-                background: @theme-color;
-                border-color: @theme-color;
+                background: var(--theme-color);
+                border-color: var(--theme-color);
                 font-family: inherit;
                 font-size: inherit;
                 border: 0;
-                color: @white-color;
+                color: var(--white-color);
                 line-height: 1.2;
                 cursor: pointer;
               }
@@ -1072,7 +1071,7 @@ export default defineComponent({
               }
               p.color {
                 background: #0b318f;
-                color: @white-color;
+                color: var(--white-color);
               }
               .el-radio {
                 margin: 0;
@@ -1091,7 +1090,7 @@ export default defineComponent({
                 }
                 .el-radio__input.is-checked + .el-radio__label {
                   background: #0b318f;
-                  color: @white-color;
+                  color: var(--white-color);
                 }
               }
             }
@@ -1250,7 +1249,7 @@ export default defineComponent({
     border-top-right-radius: 0.05rem;
     &:first-child {
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         bottom: 0;
         left: 12px;

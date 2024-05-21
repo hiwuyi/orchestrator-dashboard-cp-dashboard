@@ -51,7 +51,7 @@ export default defineComponent({
   min-height: 100vh;
   .content {
     .el-backtop {
-      background-color: @white-color;
+      background-color: var(--white-color);
       color: #7c2d8a;
     }
   }
@@ -108,7 +108,7 @@ export default defineComponent({
 .el-loading-mask {
   background-color: rgba(29, 29, 29, 0.9);
   .el-loading-spinner .path {
-    stroke: @theme-color;
+    stroke: var(--theme-color);
   }
 }
 
@@ -129,7 +129,7 @@ export default defineComponent({
     font-size: 14px;
   }
   a {
-    color: @theme-color;
+    color: var(--theme-color);
     &:hover {
       text-decoration: underline;
     }

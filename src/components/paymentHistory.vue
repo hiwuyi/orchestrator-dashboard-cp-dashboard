@@ -318,7 +318,7 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     const statusRadio = ref('')
-    let biddingContractAddress = process.env.VUE_APP_OPSWAN_BIDDING_ADDRESS
+    let biddingContractAddress = import.meta.env.VITE_API_OPSWAN_BIDDING_ADDRESS
     let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
 
     function handleSizeChange (val) {
@@ -336,7 +336,7 @@ export default defineComponent({
       let formData = new FormData()
       formData.append('tx_hash', row.transaction_hash)
       formData.append('chain_id', row.chain_id)
-      const reviewRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}claim_review`, 'post', formData)
+      const reviewRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}claim_review`, 'post', formData)
       if (reviewRes) {
         ElMessageBox.alert(
           `Status: ${reviewRes.status}<br />Message: ${reviewRes.message}`,
@@ -374,7 +374,7 @@ export default defineComponent({
       paymentLoad.value = true
       let formData = new FormData()
       formData.append('task_uuid', row.task_uuid)
-      const retryRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}terminate_retry`, 'post', formData)
+      const retryRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}terminate_retry`, 'post', formData)
       if (!retryRes || retryRes.status !== 'success') if (retryRes.message) system.$commonFun.messageTip('error', retryRes.message)
       init()
     }
@@ -441,7 +441,7 @@ export default defineComponent({
       let formData = new FormData()
       formData.append('tx_hash', row.transaction_hash)
       formData.append('chain_id', row.chain_id)
-      const refundRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}user/refund`, 'post', formData)
+      const refundRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}user/refund`, 'post', formData)
       if (!refundRes || refundRes.status !== 'success') if (refundRes.message) system.$commonFun.messageTip('error', refundRes.message)
       init()
     }
@@ -457,7 +457,7 @@ export default defineComponent({
         formData.append('amount', system.$commonFun.web3Init.utils.fromWei(String(receipt.events.RewardClaimed.returnValues.reward), 'ether'))
       } catch {
       }
-      const claimRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}user/provider/payments`, 'post', formData)
+      const claimRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}user/provider/payments`, 'post', formData)
       if (!claimRes || claimRes.status !== 'success') if (claimRes.message) system.$commonFun.messageTip('error', claimRes.message)
       init()
     }
@@ -465,7 +465,7 @@ export default defineComponent({
     async function init (pFilter) {
       paymentLoad.value = true
       paymentType.value = route.query.type || 'user'
-      const requestURL = `${process.env.VUE_APP_BASEAPI}provider/payments`
+      const requestURL = `${import.meta.env.VITE_API_BASEAPI}provider/payments`
       const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
       let paramsOption = {
         limit: pagin.pageSize,
@@ -538,7 +538,7 @@ export default defineComponent({
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
-    color: @white-color;
+    color: var(--white-color);
     font-size: 14px;
     text-align: left;
 
@@ -546,7 +546,7 @@ export default defineComponent({
       margin: 0;
       font-weight: bold;
       font-size: 0.24rem;
-      color: @white-color;
+      color: var(--white-color);
       text-transform: capitalize;
     }
 
@@ -583,7 +583,7 @@ export default defineComponent({
         th,
         td {
           padding: 0.1rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           font-size: 15px;
           color: rgb(181, 183, 200);
           border-color: rgb(38, 39, 47);
@@ -622,23 +622,23 @@ export default defineComponent({
               background-color: transparent;
               font-family: inherit;
               font-size: inherit;
-              border-color: @theme-color;
+              border-color: var(--theme-color);
               border-radius: 1rem;
               line-height: 1;
-              color: @theme-color;
+              color: var(--theme-color);
 
               &:hover {
-                background-color: @theme-color;
-                color: @white-color;
+                background-color: var(--theme-color);
+                color: var(--white-color);
               }
 
               &.is-disabled {
-                border-color: @text-color;
-                color: @text-color;
+                border-color: var(--text-color);
+                color: var(--text-color);
 
                 &:hover {
                   background-color: transparent;
-                  color: @text-color;
+                  color: var(--text-color);
                 }
               }
             }
@@ -652,9 +652,9 @@ export default defineComponent({
         th {
           font-size: 16px;
           font-weight: normal;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           text-transform: uppercase;
-          color: @text-color;
+          color: var(--text-color);
           @media screen and (max-width: 1600px) {
             font-size: 14px;
           }
@@ -676,12 +676,12 @@ export default defineComponent({
       .btn-next,
       .btn-prev,
       .el-pager li {
-        background-color: @primary-color;
+        background-color: var(--primary-color);
         color: rgb(181, 183, 200);
 
         &.active,
         &:hover {
-          color: @white-color;
+          color: var(--white-color);
         }
       }
 
@@ -819,7 +819,7 @@ export default defineComponent({
               position: absolute;
               left: 0.16rem;
               top: 50%;
-              content: "";
+              content: '';
               width: 0.08rem;
               height: 0.08rem;
               margin-top: -0.04rem;
@@ -899,7 +899,7 @@ export default defineComponent({
 
         svg,
         path {
-          fill: @theme-color;
+          fill: var(--theme-color);
         }
 
         .el-button {
@@ -909,7 +909,7 @@ export default defineComponent({
           margin: 8px 0 0;
           background: transparent !important;
           border: 0;
-          color: @theme-color !important;
+          color: var(--theme-color) !important;
           font-size: inherit;
           font-weight: normal;
           font-family: inherit;

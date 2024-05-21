@@ -85,7 +85,7 @@ export default defineComponent({
         "page_no": page,
         "page_size": pagin.pageSize
       }
-      const paymentsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}rewards?${system.$Qs.stringify(paramsCont)}`, 'get') //?public_address=${store.state.metaAddress}
+      const paymentsRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_UBI}rewards?${system.$Qs.stringify(paramsCont)}`, 'get') //?public_address=${store.state.metaAddress}
       if (paymentsRes && paymentsRes.code === 0) {
         for (let p = 0; p < paymentsRes.data.list.length; p++) {
           let { url_tx } = await system.$commonFun.getUnit(parseInt(paymentsRes.data.list[p].chain_id), 16)
@@ -130,14 +130,14 @@ export default defineComponent({
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
-    color: @white-color;
+    color: var(--white-color);
     font-size: 14px;
     text-align: left;
     .title {
       margin: 0 0 0.4rem;
       font-weight: bold;
       font-size: 0.24rem;
-      color: @white-color;
+      color: var(--white-color);
       text-transform: capitalize;
     }
     :deep(.el-table) {
@@ -148,7 +148,7 @@ export default defineComponent({
         th,
         td {
           padding: 0.1rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           font-size: 15px;
           color: rgb(181, 183, 200);
           border-color: rgb(38, 39, 47);
@@ -182,13 +182,13 @@ export default defineComponent({
               background-color: transparent;
               font-family: inherit;
               font-size: inherit;
-              border-color: @theme-color;
+              border-color: var(--theme-color);
               border-radius: 1rem;
               line-height: 1;
-              color: @theme-color;
+              color: var(--theme-color);
               &:hover {
-                background-color: @theme-color;
-                color: @white-color;
+                background-color: var(--theme-color);
+                color: var(--white-color);
               }
             }
             .copy-style {
@@ -202,9 +202,9 @@ export default defineComponent({
         th {
           font-size: 16px;
           font-weight: normal;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           text-transform: uppercase;
-          color: @text-color;
+          color: var(--text-color);
           @media screen and (max-width: 1600px) {
             font-size: 14px;
           }
@@ -223,11 +223,11 @@ export default defineComponent({
       .btn-next,
       .btn-prev,
       .el-pager li {
-        background-color: @primary-color;
+        background-color: var(--primary-color);
         color: rgb(181, 183, 200);
         &.active,
         &:hover {
-          color: @white-color;
+          color: var(--white-color);
         }
       }
       .btn-prev {

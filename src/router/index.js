@@ -4,17 +4,17 @@ import {
     createWebHashHistory
 } from 'vue-router'
 const home = () =>
-    import ("@/components/Home");
+    import ("@/components/Home.vue");
 const dashboard = () =>
-    import ("@/views/dashboard/index");
+    import ("@/views/dashboard/index.vue");
 const main = () =>
-    import ("@/views/dashboard/main/index");
+    import ("@/views/dashboard/main/index.vue");
 const paymentHistory = () =>
-    import ("@/components/paymentHistory");
+    import ("@/components/paymentHistory.vue");
 const UBIHistory = () =>
-    import ("@/components/UBIHistory");
+    import ("@/components/UBIHistory.vue");
 const myCPInfo = () =>
-    import ("@/views/dashboard/cpInfo/index");
+    import ("@/views/dashboard/cpInfo/index.vue");
 
 const routes = [{
         path: '/',
@@ -95,8 +95,8 @@ const routes = [{
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    // history: createWebHashHistory(process.env.BASE_URL),
+    history: createWebHistory(),
+    // history: createWebHashHistory(),
     routes
 })
 

@@ -5,10 +5,12 @@
 </template>
 
 <script>
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
 export default {
     name: 'app',
 }
 </script>
-<style>
-@import "/static/css/style.css";
+<style lang="less">
+@import './assets/css/style.css';
+@import './assets/css/variables.css';
 </style>

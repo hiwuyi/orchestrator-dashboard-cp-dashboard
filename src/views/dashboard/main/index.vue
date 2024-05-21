@@ -515,7 +515,7 @@
                 <div class="drain-time"></div>
                 <div class="title">VCPU</div>
                 <h6>Current VCPU usage</h6>
-                <div id="maychar-vcpu" class="maychar"></div>
+                <div id="maychar-vcpu" ref="maycharVcpu" class="maychar"></div>
                 <h6 class="background-free">
                   <i></i>
                   <b>{{providerBody.data.total_vcpu - providerBody.data.total_used_vcpu}}</b> vcpu Free
@@ -927,7 +927,12 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   CircleCheck, DocumentCopy, Avatar
 } from '@element-plus/icons-vue'
+// import 'echarts/map/js/world'
 import * as echarts from "echarts"
+import worldGeoJSON from '@/assets/js/w.json'
+// import '@/assets/js/world.js'
+import badgeIcon01 from "@/assets/images/icons/badge-1.png"
+import badgeIcon02 from "@/assets/images/icons/badge-2.png"
 
 export default defineComponent({
   components: {
@@ -940,8 +945,6 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
-    const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
     const gmtTime = new Date().toGMTString()
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
@@ -1013,7 +1016,7 @@ export default defineComponent({
         offset: page * pagin.pageSize,
         search_string: networkInput.value
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
         pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(providerRes.data.providers)
@@ -1032,7 +1035,7 @@ export default defineComponent({
         owner_addr: networkZK.owner_addr,
         node_id: networkZK.node_id
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.code === 0) {
         paginZK.total = providerRes.data.total || 0
         providerBody.ubiTableData = providerRes.data.list || []
@@ -1061,14 +1064,14 @@ export default defineComponent({
       return l
     }
     async function getUBITotal () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}stats`, 'get')
+      const statsRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_UBI}stats`, 'get')
       if (statsRes && statsRes.code === 0) {
         providerBody.ubiData = statsRes.data || {}
         // changeZKtype()
       } else providerBody.ubiData = {}
     }
     async function getTotal () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/stats`, 'get')
+      const statsRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_STATS}v2/stats`, 'get')
       if (statsRes) {
         providerBody.totalData.gas_used_today = statsRes.gas_used_today || ''
         providerBody.totalData.total_addresses = statsRes.total_addresses || ''
@@ -1079,7 +1082,7 @@ export default defineComponent({
       }
     }
     async function getCounters () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/smart-contracts/counters`, 'get')
+      const statsRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_STATS}v2/smart-contracts/counters`, 'get')
       if (statsRes) {
         providerBody.totalData.new_smart_contracts_24h = statsRes.new_smart_contracts_24h || ''
         providerBody.totalData.smart_contracts = statsRes.smart_contracts || ''
@@ -1087,7 +1090,7 @@ export default defineComponent({
     }
     async function getOverview () {
       providersLoad.value = true
-      const overviewRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/overview`, 'get')
+      const overviewRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}cp/overview`, 'get')
       if (overviewRes && overviewRes.status === 'success') {
         pagin.total_deployments = overviewRes.data.total_deployments
         pagin.active_applications = overviewRes.data.active_applications
@@ -1099,15 +1102,15 @@ export default defineComponent({
       providersLoad.value = false
     }
     async function getStorageStats () {
-      const storageRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_FILSWANSTATS}stats/storage`, 'get')
+      const storageRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_FILSWANSTATS}stats/storage`, 'get')
       if (storageRes && storageRes.status === "success") providerBody.storageData = storageRes.data || {}
     }
     async function getProviderStats () {
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_FILSWANSTATS}stats/provider`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_FILSWANSTATS}stats/provider`, 'get')
       if (providerRes && providerRes.status === "success") providerBody.providerData = providerRes.data || {}
     }
     async function getGeneralStats () {
-      const generalRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}stats/general`, 'get')
+      const generalRes = await system.$commonFun.sendRequest(`${import.meta.env.VITE_API_BASEAPI}stats/general`, 'get')
       if (generalRes && generalRes.status === "success") providerBody.generalData = generalRes.data || {}
     }
     const searchProvider = system.$commonFun.debounce(async function () {
@@ -1167,9 +1170,7 @@ export default defineComponent({
     }
     function drawChart (dataArr) {
       let chart = echarts.init(document.getElementById('chart'))
-      window.addEventListener('resize', function () {
-        chart.resize()
-      })
+      console.log(chart)
       chart.setOption({
         grid: {
           top: '2%',
@@ -1194,7 +1195,7 @@ export default defineComponent({
         },
         geo: {
           show: true,
-          map: 'world',
+          map: 'worldHq',
           label: {
             normal: {
               show: false
@@ -1243,12 +1244,16 @@ export default defineComponent({
           }
         ]
       })
+      window.addEventListener('resize', function () {
+        chart.resize()
+      })
     }
+    const maycharVcpu = ref(null)
     const changetype = () => {
       const machart_gpu = echarts.init(document.getElementById("maychar-gpu"));
       const machart_memory = echarts.init(document.getElementById("maychar-memory"));
       const machart_storage = echarts.init(document.getElementById("maychar-storage"));
-      const machart_vcpu = echarts.init(document.getElementById("maychar-vcpu"));
+      const machart_vcpu = echarts.init(maycharVcpu.value);
       const option = {
         tooltip: {
           trigger: 'item',
@@ -1401,6 +1406,7 @@ export default defineComponent({
       else changetype()
     }
     onActivated(async () => {
+      echarts.registerMap('worldHq', worldGeoJSON)
       reset('init')
     })
     return {
@@ -1420,7 +1426,7 @@ export default defineComponent({
       providerBody,
       badgeIcon01,
       badgeIcon02,
-      accessToken, expands, activeName, cpLoad,
+      accessToken, expands, activeName, cpLoad,maycharVcpu,
       handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, expandChange, getRowKeys, handleClick
     }
   }
@@ -1573,7 +1579,7 @@ export default defineComponent({
             }
             small {
               margin: 0 0 0 5px;
-              font-family: "Montserrat-Regular";
+              font-family: 'Montserrat-Regular';
               font-weight: normal;
               color: #a0a0a0;
               font-size: 0.13rem;
@@ -1616,7 +1622,7 @@ export default defineComponent({
               }
               small {
                 margin: 0;
-                font-family: "Montserrat-Regular";
+                font-family: 'Montserrat-Regular';
                 font-weight: normal;
                 color: #a0a0a0;
                 font-size: 0.14rem;
@@ -1658,7 +1664,7 @@ export default defineComponent({
             padding: 0.15rem;
             margin: 0.3rem 0 0;
             border-radius: 0.15rem;
-            // border: 2px solid @theme-color-opacity1;
+            // border: 2px solid var(--theme-color-opacity1);
             overflow: hidden;
             text-align: center;
             // box-shadow: 0 0 15px #447dff;
@@ -1693,9 +1699,9 @@ export default defineComponent({
                 animation: run1 1s linear infinite; // animation-delay: 0s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(2) {
@@ -1707,9 +1713,9 @@ export default defineComponent({
                 // animation-delay: 1s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(3) {
@@ -1721,9 +1727,9 @@ export default defineComponent({
                 // animation-delay: 2s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
               &:nth-child(4) {
@@ -1735,9 +1741,9 @@ export default defineComponent({
                 // animation-delay: 3s;
                 background: linear-gradient(
                   to right,
-                  @theme-color-opacity2,
-                  @theme-color-opacity1,
-                  @theme-color-opacity
+                  var(--theme-color-opacity2),
+                  var(--theme-color-opacity1),
+                  var(--theme-color-opacity)
                 );
               }
             }
@@ -1827,7 +1833,7 @@ export default defineComponent({
             &:hover,
             &:active,
             &:focus {
-              border-color: @theme-color;
+              border-color: var(--theme-color);
             }
           }
         }
@@ -1854,10 +1860,10 @@ export default defineComponent({
         th {
           word-break: break-word;
           padding: 0.1rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           border: 0;
           .cell {
-            color: @text-color;
+            color: var(--text-color);
             word-break: break-word;
             @media screen and (max-width: 540px) {
               font-size: 12px;
@@ -1867,7 +1873,7 @@ export default defineComponent({
         }
         td {
           padding: 0.16rem 0;
-          background-color: @primary-color;
+          background-color: var(--primary-color);
           color: rgb(181, 183, 200);
           border-color: rgb(38, 39, 47);
           @media screen and (max-width: 540px) {
@@ -1876,7 +1882,7 @@ export default defineComponent({
           }
           i {
             margin-right: 5px;
-            color: @text-color;
+            color: var(--text-color);
             font-size: 18px;
             @media screen and (max-width: 1260px) {
               font-size: 16px;
@@ -1999,7 +2005,7 @@ export default defineComponent({
                     &.li-gpu {
                       &::before {
                         position: absolute;
-                        content: "";
+                        content: '';
                         right: 0.1rem;
                         top: 0.1rem;
                         width: 7px;
@@ -2047,20 +2053,20 @@ export default defineComponent({
               span {
                 padding: 3px 10px;
                 margin: 3px 5px 3px 0;
-                background-color: @theme-color;
+                background-color: var(--theme-color);
                 font-size: 12px;
                 border-radius: 45px;
                 word-break: break-word;
                 line-height: 1;
-                color: @white-color;
+                color: var(--white-color);
               }
             }
           }
           &.el-table__expanded-cell {
             padding: 0.32rem 0.64rem;
-            // border: 1px solid @white-color;
+            // border: 1px solid var(--white-color);
             &:hover {
-              background-color: @primary-color !important;
+              background-color: var(--primary-color) !important;
             }
           }
         }
@@ -2075,7 +2081,7 @@ export default defineComponent({
         //   }
         // }
         &.expanded {
-          border: 1px solid @white-color;
+          border: 1px solid var(--white-color);
           border-collapse: collapse;
         }
       }
@@ -2092,7 +2098,7 @@ export default defineComponent({
       justify-content: flex-end;
       align-items: center;
       .el-pagination__total {
-        color: @white-color;
+        color: var(--white-color);
       }
       .btn-next,
       .btn-prev,
@@ -2100,14 +2106,14 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
-        color: @white-color;
+        color: var(--white-color);
         border: 1px solid #f4f4f5;
         border-radius: 5px;
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
-          background-color: @theme-color;
-          border-color: @theme-color;
+          background-color: var(--theme-color);
+          border-color: var(--theme-color);
         }
         &:not(.disabled):hover {
         }
@@ -2127,7 +2133,7 @@ export default defineComponent({
     border-top-right-radius: 0.05rem;
     &:first-child {
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         bottom: 0;
         left: 12px;

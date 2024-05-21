@@ -26,21 +26,14 @@
   <meta property="og:image:height" content="300">
   <meta property="og:image:alt" content="Swan logo">
   <meta property="og:description" content="Swan provides a layer 2 cross-chain infrastructure for Web3 projects by integrating data, computing, and payment into one suite. Swan offers a complete solution that enables web3 developers to integrate decentralized storage, edge computing, and payment across multiple chains with ease.">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
-  <title>
-    <%= webpackConfig.name %>
-  </title>
-  <script src="<%= BASE_URL %>static/js/web3.min.js"></script>
+  <link rel="icon" href="/favicon.ico">
+  <title>Orchestrator</title>
+  <script src="/src/assets/js/web3.min.js"></script>
 </head>
 
 <body>
-  <noscript>
-    <strong>We're sorry but
-      <%= webpackConfig.name %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-  </noscript>
   <div id="app"></div>
-  <!-- built files will be auto injected -->
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>
