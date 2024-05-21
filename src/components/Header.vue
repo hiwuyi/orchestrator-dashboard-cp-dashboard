@@ -2,7 +2,7 @@
   <section id="container">
     <div class="swan-logo flex-row nowrap">
       <img :src="swanLogo" @click="system.$commonFun.goLink('https://www.swanchain.io/')" />
-      <div class="flex-row nowrap swan-right">
+      <div class="flex-row nowrap swan-right font-17">
         <!-- <div class="nav pcShow">
           <router-link :to="{name: 'dashboard'}" :class="{'active': route.name === 'dashboard'}">Dashboard</router-link>
           <router-link :to="{ name: 'myCPInfo'}" :class="{'active': route.name === 'myCPInfo'}" v-if="accessToken !== ''">CP Profile</router-link>

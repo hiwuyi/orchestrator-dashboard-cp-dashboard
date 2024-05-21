@@ -1,44 +1,68 @@
 <template>
   <div id="payment">
-    <div class="payment-history container-landing">
-      <div class="title">UBI Reward history</div>
+    <div class="payment-history container-landing font-16">
       <el-table v-loading="paymentLoad" :data="paymentData" stripe style="width: 100%">
-        <el-table-column prop="task_id" label="Task ID" width="90" />
-        <el-table-column prop="type" label="Task Type" min-width="90">
+        <el-table-column prop="task_id" width="90">
+          <template #header>
+            <div class="font-20 weight-4">Task ID</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="type" min-width="90">
+          <template #header>
+            <div class="font-20 weight-4">Task Type</div>
+          </template>
           <template #default="scope">
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="zk_type" label="ZK Type" min-width="110" />
-        <el-table-column prop="node_id" label="NODE ID" min-width="100">
+        <el-table-column prop="zk_type" min-width="110">
+          <template #header>
+            <div class="font-20 weight-4">ZK Type</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="node_id" min-width="100">
+          <template #header>
+            <div class="font-20 weight-4">NODE ID</div>
+          </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
               {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-              <svg t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
-                <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
-                  p-id="2310" fill="#b5b7c8"></path>
-                <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
-                <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+              <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
               </svg>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="started_at" label="Started AT" min-width="135">
+        <el-table-column prop="started_at" min-width="135">
+          <template #header>
+            <div class="font-20 weight-4">Started AT</div>
+          </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.started_at)}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="ended_at" label="ended at" min-width="135">
+        <el-table-column prop="ended_at" min-width="135">
+          <template #header>
+            <div class="font-20 weight-4">ended at</div>
+          </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.ended_at)}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="tx_hash" label="transaction hash" min-width="120">
+        <el-table-column prop="tx_hash" min-width="120">
+          <template #header>
+            <div class="font-20 weight-4">transaction hash</div>
+          </template>
           <template #default="scope">
             <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank">{{scope.row.tx_hash}}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="Amount (SWAN)" />
+        <el-table-column prop="amount">
+          <template #header>
+            <div class="font-20 weight-4">Amount (SWAN)</div>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination class="flex-row" :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
       />
@@ -101,10 +125,7 @@ export default defineComponent({
       }
       paymentLoad.value = false
     }
-    onMounted(async () => { })
-    onActivated(async () => {
-      init()
-    })
+    onMounted(async () => init())
     watch(route, (to, from) => {
       if (to.name === "UBIHistory") init()
     })
@@ -123,15 +144,13 @@ export default defineComponent({
 <style  lang="less" scoped>
 #payment {
   width: 100%;
-  .payment-history {
+  :deep(.payment-history) {
     height: calc(100% - 1.2rem);
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
+    padding-top: 0.2rem;
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
     color: @white-color;
-    font-size: 14px;
     text-align: left;
     .title {
       margin: 0 0 0.4rem;
@@ -140,24 +159,39 @@ export default defineComponent({
       color: @white-color;
       text-transform: capitalize;
     }
-    :deep(.el-table) {
+    .el-table {
+      width: 100%;
+      margin: 0 auto 0.24rem;
       background-color: transparent;
-      // border-radius: 0.1rem;
-      border: 1px solid rgb(30, 32, 39);
+      font-size: inherit;
+      border-radius: 0.1rem;
+      border: 1px solid #c6cddc;
       tr {
-        th,
+        background-color: transparent;
+        th {
+          word-break: break-word;
+          padding: 0.18rem 0;
+          background-color: @theme-color;
+          font-size: inherit;
+          border: 0;
+          .cell {
+            color: @white-color;
+            word-break: break-word;
+            text-transform: capitalize;
+            text-align: center;
+            line-height: 1.1;
+            @media screen and (max-width: 540px) {
+              font-size: 12px;
+            }
+          }
+        }
         td {
-          padding: 0.1rem 0;
-          background-color: @primary-color;
-          font-size: 15px;
-          color: rgb(181, 183, 200);
-          border-color: rgb(38, 39, 47);
-          @media screen and (max-width: 1600px) {
-            font-size: 13px;
-          }
-          @media screen and (max-width: 768px) {
-            font-size: 12px;
-          }
+          padding: 0.08rem 0;
+          background-color: @white-color;
+          font-size: inherit;
+          color: #3d3d3d;
+          border-color: #c6cddc;
+          text-align: center;
           .cell {
             display: flex;
             align-items: center;
@@ -191,51 +225,252 @@ export default defineComponent({
                 color: @white-color;
               }
             }
-            .copy-style {
-              cursor: pointer;
-              svg {
-                margin: 0 0 0 0.05rem;
+          }
+          i {
+            margin-right: 5px;
+            color: @text-color;
+            font-size: 18px;
+            @media screen and (max-width: 1260px) {
+              font-size: 16px;
+            }
+          }
+          .service-body {
+            padding: 0 0.25rem 0.1rem;
+            // color: #333;
+            // border-top: rgb(220, 223, 230) 1px solid;
+            // border-bottom: rgb(220, 223, 230) 1px solid;
+            .tit {
+              margin: 0.2rem 0 0;
+              font-size: 16px;
+              font-weight: 500;
+              text-transform: capitalize;
+              @media screen and (max-width: 1260px) {
+                font-size: 14px;
+              }
+            }
+            .desc {
+              padding: 0 0 0.1rem;
+              font-size: 14px;
+              @media screen and (max-width: 1260px) {
+                font-size: 12px;
+              }
+            }
+            .list {
+              padding: 0.1rem 0 0;
+              .li-title {
+                width: 100%;
+                padding: 0 0 0.1rem;
+                border-bottom: 1px solid #26272f;
+              }
+              ul {
+                display: flex;
+                align-items: stretch;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin: 0 auto 0.25rem;
+                @media screen and (max-width: 768px) {
+                  justify-content: flex-start;
+                }
+                li {
+                  width: 27%;
+                  margin-right: 6%;
+                  @media screen and (max-width: 768px) {
+                    width: auto;
+                    margin-right: 0.5rem;
+                  }
+                  &.m-r {
+                    margin-right: 0;
+                  }
+                  .flex-row {
+                    flex-wrap: wrap;
+                    .li-body {
+                      width: 27%;
+                      margin-right: 6%;
+                      @media screen and (max-width: 768px) {
+                        width: auto;
+                        margin-right: 0.5rem;
+                      }
+                    }
+                  }
+                  .li-body {
+                    position: relative;
+                    padding: 0.15rem;
+                    margin: 0.3rem 0;
+                    background-color: #0d0e12;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+                    -webkit-backdrop-filter: blur(5px);
+                    backdrop-filter: blur(5px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    border-radius: 0.1rem;
+                    animation: glow 1s ease-in-out infinite alternate;
+                    @media screen and (max-width: 768px) {
+                      padding: 0.15rem 0.3rem;
+                    }
+                    p {
+                      padding: 3px 0;
+                      font-size: 14px;
+                      line-height: 1.3;
+                      text-align: center;
+                      @media screen and (max-width: 1260px) {
+                        font-size: 12px;
+                      }
+                      strong,
+                      b {
+                        margin-right: 5px;
+                        font-size: 17px;
+                        @media screen and (max-width: 1260px) {
+                          font-size: 15px;
+                        }
+                        @media screen and (max-width: 540px) {
+                          font-size: 13px;
+                        }
+                      }
+                      &.t {
+                        text-transform: capitalize; // color: #808290;
+                      }
+                      &.t-capitalize {
+                        text-transform: uppercase;
+                      }
+                      &:nth-child(2) {
+                        strong {
+                          color: #4db470;
+                        }
+                      }
+                      &:nth-child(3) {
+                        strong {
+                          color: #488fc3;
+                        }
+                      }
+                      &:nth-child(4) {
+                        strong {
+                          color: #9266a9;
+                        }
+                      }
+                    }
+                    &.li-gpu {
+                      &::before {
+                        position: absolute;
+                        content: "";
+                        right: 0.1rem;
+                        top: 0.1rem;
+                        width: 7px;
+                        height: 7px;
+                        background-color: orange;
+                        border-radius: 7px;
+                      }
+                    }
+                    &.li-status {
+                      &::before {
+                        background-color: #8bc34a;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .el-divider--horizontal {
+              margin: 0.1rem 0;
+            }
+          }
+          .name-style {
+            color: @theme-color;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          .copy-style {
+            cursor: pointer;
+            flex-wrap: wrap;
+            svg {
+              margin: 0 0 0 0.05rem;
+            }
+          }
+          .badge {
+            display: flex;
+            align-items: center;
+            white-space: normal;
+            word-break: break-word;
+            .img {
+              width: 0.23rem;
+              height: 0.23rem;
+              margin-right: 0.15rem;
+              @media screen and (max-width: 1260px) {
+                width: 20px;
+                height: 20px;
+              }
+            }
+            .machines-style {
+              flex-wrap: wrap;
+              span {
+                padding: 3px 10px;
+                margin: 3px 5px 3px 0;
+                background-color: @theme-color;
+                font-size: 12px;
+                border-radius: 45px;
+                word-break: break-word;
+                line-height: 1;
+                color: @white-color;
               }
             }
           }
-        }
-        th {
-          font-size: 16px;
-          font-weight: normal;
-          background-color: @primary-color;
-          text-transform: uppercase;
-          color: @text-color;
-          @media screen and (max-width: 1600px) {
-            font-size: 14px;
-          }
-          @media screen and (max-width: 768px) {
-            font-size: 13px;
+          &.el-table__expanded-cell {
+            padding: 0.32rem 0.64rem;
+            // border: 1px solid @white-color;
+            &:hover {
+              background-color: @primary-color !important;
+            }
           }
         }
-      }
-      .el-table__inner-wrapper::before {
-        height: 0;
+        // &.expanded,
+        // &:hover {
+        //   td {
+        //     background-color: rgba(255, 255, 255, 0.85);
+        //     color: #000;
+        //     i {
+        //       color: #000;
+        //     }
+        //   }
+        // }
+        &.expanded {
+          border: 1px solid @white-color;
+          border-collapse: collapse;
+        }
       }
     }
-    :deep(.el-pagination) {
-      margin: 0.4rem auto;
+    .el-table--border .el-table__inner-wrapper::after,
+    .el-table--border::after,
+    .el-table--border::before,
+    .el-table__inner-wrapper::before {
+      background-color: rgb(38, 39, 47);
+      height: 0;
+    }
+    .el-pagination {
+      display: flex;
       justify-content: center;
+      align-items: center;
+      margin: 0;
+      .el-pagination__total {
+        color: #878c93;
+      }
       .btn-next,
       .btn-prev,
       .el-pager li {
-        background-color: @primary-color;
-        color: rgb(181, 183, 200);
-        &.active,
-        &:hover {
-          color: @white-color;
+        min-width: 32px;
+        margin: 0 4px;
+        background-color: transparent;
+        color: #878c93;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        &:not(.disabled).active,
+        &:not(.disabled):hover,
+        &.is-active {
+          background-color: #f9fafb;
+          border-color: @border-color;
+          color: #606060;
         }
-      }
-      .btn-prev {
-        i {
-          font-size: 14px;
-          @media screen and (min-width: 1800px) {
-            font-size: 16px;
-          }
+        &:not(.disabled):hover {
         }
       }
     }

@@ -1,24 +1,44 @@
 <template>
   <section id="container">
     <div class="flex-row header-title font-32">
-      <el-select v-model="aarList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-        <el-option v-for="item in aarList.options" :key="item.value" :label="item.label" :value="item.value" />
-      </el-select>
-      <div class="font-18">
-        Welcome to the Atom Accelerator Race campaign! You can join the campaign at:
-        <br>
-        <span class="color link" @click="system.$commonFun.goLink('https://proxima-testnet.swanchain.io')">https://proxima-testnet.swanchain.io</span>
-      </div>
+      <h1 class="color font-33 font-bold">GPU availability and pricing</h1>
+    </div>
+
+    <div class="providers-overview">
+      <el-row :gutter="50">
+        <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14" class="flex-row baseline">
+          <div class="usage-style flex-row font-27 font-bold">
+            <label>Total Available GPUs: </label>
+            <div class="progress flex-row space-between nowrap">
+              <el-progress :percentage="60" color="#76b900" :stroke-width="16" />
+              <div class="text">
+                <span>68</span> /291</div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
     </div>
 
     <div class="providers-network font-16">
-      <div class="title flex-row">
-        <b class="font-27 font-bold">{{ activeName === 'FCP' ? 'FCP' :'ECP'}} Rankings</b>
-      </div>
-      <div class="providers-cp" v-if="activeName === 'FCP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Name: </span>
-          <el-input v-model="networkInput" placeholder="please input CP name" class="font-14" @chang="searchProvider" @input="searchProvider" />
+      <div class="providers-cp">
+        <div class="search-body flex-row font-17">
+          <span class="font-22">Chipset: </span>
+          <el-select v-model="chipsetList.value" @change="handleClick" placeholder="Select" size="small">
+            <el-option v-for="item in chipsetList.options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+          <span class="font-22">vRAM: </span>
+          <el-select v-model="vRAMList.value" @change="handleClick" placeholder="Select" size="small">
+            <el-option v-for="item in vRAMList.options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+          <span class="font-22">Interface: </span>
+          <el-select v-model="interfaceList.value" @change="handleClick" placeholder="Select" size="small">
+            <el-option v-for="item in interfaceList.options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+          <span class="font-22">Price from </span>
+          <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
+          <span class="font-22">to </span>
+          <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
+          <span class="font-22">$ &nbsp;&nbsp;&nbsp;&nbsp;</span>
           <el-button type="info" :disabled="!networkInput ? true:false" round @click="clearProvider">Clear</el-button>
           <el-button type="primary" :disabled="!networkInput ? true:false" round @click="searchProvider">
             <el-icon>
@@ -27,195 +47,53 @@
             Search
           </el-button>
         </div>
-        <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-          <el-table-column type="index" min-width="70">
-            <template #header>
-              <div class="font-20 weight-4">Ranking</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <img v-if="scope.$index === 0 && pagin.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
-                <img v-else-if="scope.$index === 1 && pagin.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
-                <span v-else class="img"></span> {{scope.$index+1}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Name</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style">{{scope.row.name}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="node_id" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">NodeID</div>
-            </template>
-            <template #default="scope">
-              <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
-                {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
-                </svg>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="computer_provider.active_deployment" width="150">
-            <template #header>
-              <div class="font-20 weight-4">Active deployment</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="computer_provider.score" width="120">
-            <template #header>
-              <div class="font-20 weight-4">Score</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_list" min-width="140">
-            <template #header>
-              <div class="font-20 weight-4">GPU</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
-                    {{gpu}}
-                  </span>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">Region</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="uptime">
-            <template #header>
-              <div class="font-20 weight-4">Uptime</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        />
-      </div>
 
-      <div class="providers-cp" v-if="activeName === 'ECP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Contract Address: </span>
-          <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">Name: </span>
-          <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">NodeID: </span>
-          <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
-        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
-          <el-table-column type="index" min-width="70">
-            <template #header>
-              <div class="font-20 weight-4">Ranking</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <img v-if="scope.$index === 0 && paginZK.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
-                <img v-else-if="scope.$index === 1 && paginZK.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
-                <span v-else class="img"></span> {{scope.$index+1}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="owner_addr" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Contract Address</div>
-            </template>
-            <template #default="scope">
-              <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Name</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style">{{scope.row.name}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="node_id" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">nodeID</div>
-            </template>
-            <template #default="scope">
-              <div class="flex-row copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
-                {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
-                </svg>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_tags" min-width="140">
-            <template #header>
-              <div class="font-20 weight-4">GPU</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_tags" :key="g">
-                    {{gpu}}
-                  </span>
+        <el-row :gutter="24" class="small-row">
+          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" v-for="gpu in gpuList" :key="gpu">
+            <div class="grid-content">
+              <div class="top flex-row space-between">
+                <div class="left flex-row font-25">
+                  <i class="icon icon-gpu"></i>
+                  {{gpu.name}}
+                </div>
+                <div class="right flex-row baseline font-25">
+                  <div class="text">
+                    <span>{{gpu.used}}</span>/{{gpu.total}}</div>
+                  <span class="small-text font-14">{{gpu.available ?'Available':'Occupied'}}</span>
                 </div>
               </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">status</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">Region</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="task">
-            <template #header>
-              <div class="font-20 weight-4">Total Task</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{scope.row.task?scope.row.task.total : ''}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="task" min-width="140">
-            <template #header>
-              <div class="font-20 weight-4">Completed(%)</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination hide-on-single-page :page-size="paginZK.pageSize" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="paginZK.total" @size-change="handleSizeChange"
-          @current-change="handleZKCurrentChange" />
+              <el-row :gutter="24" class="content">
+                <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
+                  <el-row class="font-18 note">
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p>vRAM:</p>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p class="color">{{gpu.vRAM}}</p>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p>Interface:</p>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p class="color">{{gpu.Interface}}</p>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p>Price:</p>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                      <p class="color">{{gpu.Price}}</p>
+                    </el-col>
+                  </el-row>
+                </el-col>
+                <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8" class="flex-row flex-end align-end">
+                  <router-link to="" class="font-17" :class="{'is-disabled': gpu.rentnow}">RENT NOW</router-link>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
-
-    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
   </section>
 </template>
 
@@ -240,64 +118,100 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
-    const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
-    const providersLoad = ref(false)
-    const providersTableLoad = ref(false)
-    const providersData = ref([])
-    const providerBody = reactive({
-      ubiTableData: []
-    })
-    const pagin = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
-    const paginZK = reactive({
-      pageSize: 5,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
-    const small = ref(false)
-    const background = ref(false)
-    const cpLoad = ref(false)
-    const aarList = reactive({
-      value: 'FCP',
+    const chipsetList = reactive({
+      value: 'A100',
       options: [
         {
-          value: 'FCP',
-          label: 'Atom Accelerator Race (FCP)'
-        },
+          value: 'A100',
+          label: 'A100'
+        }]
+    })
+    const vRAMList = reactive({
+      value: '80Gi',
+      options: [
         {
-          value: 'ECP',
-          label: 'Atom Accelerator Race (ECP)'
+          value: '80Gi',
+          label: '80Gi'
+        }]
+    })
+    const interfaceList = reactive({
+      value: 'A100',
+      options: [
+        {
+          value: 'A100',
+          label: 'A100'
         }]
     })
     const networkInput = ref('')
-    const networkZK = reactive({
-      contract_address: '',
-      owner_addr: '',
-      node_id: ''
-    })
-    const activeName = ref('FCP')
-    const vmOperate = reactive({
-      centerDrawerVisible: false,
-      row: {}
-    })
+    const gpuList = ref([
+      {
+        name: '100',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: false
+      },
+      {
+        name: 'RTX 3090Ti',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: false
+      },
+      {
+        name: 'T4',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: true
+      },
+      {
+        name: '100',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: false
+      },
+      {
+        name: 'RTX 3090Ti',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: false
+      },
+      {
+        name: 'T4',
+        total: 54,
+        used: 40,
+        available: true,
+        vRAM: '80Gi',
+        Interface: 'PCIe',
+        Price: '$1.2 ～1.4',
+        tip: 'tip',
+        rentnow: true
+      }
+    ])
 
-    function handleSizeChange (val) { }
-    async function handleCurrentChange (currentPage) {
-      pagin.pageNo = currentPage
-      init()
-    }
-    async function handleZKCurrentChange (currentPage) {
-      paginZK.pageNo = currentPage
-      getUBITable()
-    }
     async function init () {
       providersTableLoad.value = true
       const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
@@ -359,74 +273,27 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }, 700)
-    const searchZKProvider = system.$commonFun.debounce(async function () {
-      paginZK.pageNo = 1
-      getUBITable()
-    }, 700)
     function clearProvider () {
       networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (activeName.value === 'ECP') {
-        paginZK.pageNo = 1
-        getUBITable()
-      } else {
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
-      }
-    }
-    function reset (type) {
-      pagin.total = 0
-      pagin.total_deployments = 0
-      pagin.active_applications = 0
       pagin.pageSize = 10
       pagin.pageNo = 1
-      providersData.value = []
-      providersLoad.value = false
-      providersTableLoad.value = false
-      networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (route.params.type === 'FCP') {
-        activeName.value = 'FCP'
-        aarList.value = 'FCP'
-      } else {
-        activeName.value = 'ECP'
-        aarList.value = 'ECP'
-      }
       init()
-      getUBITable()
     }
-    const handleClick = async (value) => {
-      activeName.value = value || 'FCP'
-      router.push({ name: 'aar', params: { type: activeName.value } })
-      cpLoad.value = true
-      await system.$commonFun.timeout(500)
+    function reset (type) {
+      networkInput.value = ''
+      chipsetList.value = 'A100'
+      vRAMList.value = '80Gi'
+      interfaceList.value = 'A100'
     }
     onActivated(async () => {
-      reset('init')
+      // reset('init')
     })
     return {
       system,
       route,
       metaAddress,
-      providersLoad,
-      providersTableLoad,
-      providersData,
-      providerBody,
-      networkInput,
-      networkZK,
-      pagin,
-      paginZK,
-      small,
-      background,
-      badgeIcon01,
-      badgeIcon02,
-      accessToken, cpLoad, aarList, activeName, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick
+      networkInput, chipsetList, vRAMList, interfaceList, gpuList,
+      searchProvider, clearProvider
     }
   }
 })
@@ -447,12 +314,6 @@ export default defineComponent({
     line-height: 1.15;
     h1 {
       margin: 0 0.3rem 0 0;
-    }
-    .link {
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
     }
     .el-select {
       width: auto;
@@ -509,8 +370,7 @@ export default defineComponent({
     padding: 0;
     .title {
       width: 100%;
-      margin: 0.22rem 0 0;
-      line-height: 1;
+      margin: 0 0 0.17rem;
       a {
         padding: 0.07rem 0.1rem;
         margin: 0 0 0 0.1rem;
@@ -528,93 +388,71 @@ export default defineComponent({
       }
     }
     .el-row {
+      &.small-row {
+        width: 90%;
+        @media screen and (max-width: 1200px) {
+          width: 100%;
+        }
+      }
       .el-col {
-        margin: 0.22rem 0 0;
+        margin: 0.24rem 0 0;
         &.flex-row {
           display: flex;
-        }
-        &.m {
-          margin: 0.22rem 0;
         }
         .title-link {
           margin: auto;
           line-height: 1;
         }
         .grid-content {
-          width: 100%;
-          height: calc(100% - 0.3rem);
-          padding: 0.18rem 0.14rem 0.12rem;
+          width: calc(100% - 0.48rem);
+          height: calc(100% - 0.36rem);
+          padding: 0.18rem 0.24rem;
           background: @white-color;
           border-radius: 0.18rem;
           box-shadow: 0 0 12px #e6e7eb;
-          h6 {
-            width: 100%;
-            line-height: 1.2;
-            text-transform: capitalize;
-            color: @border-color;
-            &.t {
-              width: auto;
-              padding: 0 0.2rem;
-            }
-            small {
-              margin: 0 0 0 5px;
-              font-family: "Montserrat-Regular";
-              font-weight: normal;
-              color: #a0a0a0;
-              font-size: 0.13rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.15rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 12px;
+          .el-col {
+            margin: 0.1rem 0 0;
+          }
+          .top {
+            margin: 0;
+            .left {
+              .icon {
+                width: 0.4rem;
+                height: 0.4rem;
+                margin: 0 0.07rem 0 0;
+                &.icon-gpu {
+                  background: url(../../../assets/images/icons/icon-gpu.png)
+                    no-repeat center;
+                  background-size: 100%;
+                }
               }
             }
-            .el-select {
-              font-size: inherit;
-              .el-tooltip__trigger {
-                margin: 0;
-                width: 80px;
-                padding: 2px 4px;
+            .right {
+              .text {
+                margin: 0 0 0 0.2rem;
+                white-space: nowrap;
+                line-height: 1;
+                span {
+                  color: #76b900;
+                }
+              }
+              .small-text {
+                margin: 0 0 0 0.14rem;
+                color: @border-color;
               }
             }
           }
-          b {
-            position: relative;
-            padding: 6px 0 12px;
-            margin: 0 0 2px;
-            line-height: 1;
-            .span {
-              position: absolute;
-              bottom: 0;
-              right: 0.2rem;
-              &.up {
-                color: #38a169;
-              }
-              &.down {
-                color: #e53e3e;
-              }
-              small {
-                margin: 0;
-                font-family: "Montserrat-Regular";
-                font-weight: normal;
-                color: #a0a0a0;
-                font-size: 0.14rem;
-                @media screen and (min-width: 1800px) {
-                  font-size: 0.16rem;
-                }
-                @media screen and (max-width: 768px) {
-                  font-size: 13px;
-                }
-              }
-            }
-            small {
-              margin: 0 0 0 4px;
-              font-size: 0.16rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.18rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 15px;
+          .content {
+            a {
+              padding: 0.08rem 0.06rem;
+              background-color: @theme-color;
+              border-radius: 0.08rem;
+              color: @white-color;
+              line-height: 1;
+              cursor: pointer;
+              &.is-disabled {
+                background-color: @border-color;
+                cursor: no-drop;
               }
             }
           }
@@ -624,12 +462,12 @@ export default defineComponent({
           margin: 0 0 0.08rem;
           color: #000000;
           label {
-            width: 2.8rem;
+            width: 3.1rem;
             margin: 0 0.1rem 0 0;
             line-height: 1.1;
           }
           .progress {
-            width: calc(85% - 2.9rem);
+            width: calc(85% - 3.2rem);
             .el-progress {
               width: 100%;
               .el-progress__text {
@@ -640,10 +478,12 @@ export default defineComponent({
               }
             }
             .text {
-              width: 100%;
-              margin: 3px 0 0;
+              margin: 0 0 0 0.2rem;
+              white-space: nowrap;
               line-height: 1;
-              color: @border-color;
+              span {
+                color: #76b900;
+              }
             }
           }
         }
@@ -665,51 +505,64 @@ export default defineComponent({
             height: 400px;
           }
         }
-        .chart {
-          width: 100%;
-          margin: 0.45rem auto 0;
-          height: 500px;
-          @media screen and (max-width: 540px) {
-            height: 400px;
-          }
-        }
-        .el-tabs {
-          .el-tabs__header {
-            margin: 0;
-            .el-tabs__active-bar,
-            .el-tabs__nav-wrap:after {
-              display: none;
-            }
-            .el-tabs__nav {
-              .el-tabs__item {
-                height: auto;
-                padding: 0.1rem 0.18rem;
-                margin: 0 0.16rem 0 0;
-                border-radius: 0.08rem;
-                line-height: 1.1;
-                &.is-active {
-                  background-color: @theme-color;
-                  color: @white-color;
-                }
-              }
-            }
-          }
-        }
       }
     }
     .search-body {
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin: 0.4rem 0 0;
+      margin: 0.55rem 0 0.26rem;
+      .el-select {
+        width: auto;
+        margin: 0 0.3rem 0 0.17rem;
+        font-size: inherit;
+        .el-tooltip__trigger {
+          margin: 0;
+          width: auto;
+          height: auto;
+          padding: 0.06rem 0.15rem 0.06rem 0.2rem;
+          background-color: transparent;
+          font-size: inherit;
+          font-family: inherit;
+          border: 1px solid #505052;
+          border-radius: 0.07rem;
+          box-shadow: none;
+          .el-select__selected-item {
+            position: relative;
+            top: auto;
+            margin: 0 0.12rem 0 0;
+            transform: translateY(0px);
+            line-height: 1.2;
+            color: #333;
+            &.is-hidden {
+              display: none;
+            }
+          }
+          .el-select__suffix {
+            .el-select__icon {
+              width: 9px;
+              height: 9px;
+              background: url(../../../assets/images/icons/icon-02.png)
+                no-repeat center;
+              background-size: 100%;
+              svg {
+                display: none;
+              }
+            }
+          }
+        }
+      }
       .el-input {
-        width: 30%;
+        width: 0.7rem;
         max-width: 250px;
-        min-width: 150px;
+        min-width: 60px;
         margin: 0 0.16rem 0 0.1rem;
         font-size: inherit;
+        &.small-spacing {
+          margin: 0 0.06rem 0 0.1rem;
+        }
         .el-input__wrapper {
-          background-color: @white-color;
-          border: 1px solid @border-color;
+          background-color: transparent;
+          border: 1px solid #505052;
           border-radius: 0.08rem;
           box-shadow: none;
           .el-input__inner {
@@ -957,13 +810,13 @@ export default defineComponent({
             align-items: center;
             white-space: normal;
             word-break: break-word;
-            .img {
-              width: 0.23rem;
-              height: 0.23rem;
-              margin-right: 0.15rem;
+            img {
+              width: 30px;
+              height: 30px;
+              margin-right: 5px;
               @media screen and (max-width: 1260px) {
-                width: 20px;
-                height: 20px;
+                width: 25px;
+                height: 25px;
               }
             }
             .machines-style {

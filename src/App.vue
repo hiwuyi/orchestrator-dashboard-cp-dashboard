@@ -10,7 +10,7 @@ export default {
 }
 </script>
 <style lang="less">
-@import "/static/css/style.css";
+@import "./assets/css/style.css";
 
 .mt-border {
   margin: 30px auto;
@@ -78,6 +78,9 @@ export default {
 }
 .font-27 {
   font-size: 0.27rem;
+}
+.font-25 {
+  font-size: 0.25rem;
 }
 .font-24 {
   font-size: 0.24rem;
@@ -157,6 +160,9 @@ export default {
     align-items: baseline;
     align-content: baseline;
   }
+  &.align-end {
+    align-items: flex-end;
+  }
 }
 
 .width-icon {
@@ -219,6 +225,10 @@ export default {
 
 .img {
   display: block;
+  width: 100%;
+}
+
+.width {
   width: 100%;
 }
 

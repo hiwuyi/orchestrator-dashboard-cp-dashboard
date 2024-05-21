@@ -301,7 +301,7 @@
           <div class="title flex-row">
             <b class="font-27 font-bold">Location Overview</b>
           </div>
-          <div class='chart-world' id='chart' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+          <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
           <div class="title flex-row">
@@ -595,11 +595,12 @@ export default defineComponent({
       getGeneralStats()
     }
     function drawChart (dataArr) {
-      let chart = echarts.init(document.getElementById('chart'))
+      let chart = echarts.init(document.getElementById('chart-world'))
       window.addEventListener('resize', function () {
         chart.resize()
       })
       chart.setOption({
+        roam: true,
         grid: {
           top: '2%',
           left: '2%',
@@ -621,6 +622,19 @@ export default defineComponent({
             align: "left"
           }
         },
+        legend: {
+          // 图例显示的位置
+          orient: 'vertical',
+          left: 'left',
+          // 图例标签的格式器，可以定制文本
+          formatter: function (name) {
+              return echarts.format.truncateText(name, 90);
+          },
+          // 图例文本样式
+          textStyle: {
+              fontSize: 12
+          }
+        },
         geo: {
           show: true,
           map: 'world',
@@ -633,7 +647,21 @@ export default defineComponent({
             }
           },
           // aspectScale: 0.75,
-          roam: false,
+          // roam: true, // 开启拖拽和缩放
+          // zoom: 1.2,
+          toolbox: {
+            show: true,
+            feature: {
+                // 启用缩放工具
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                // 启用还原工具
+                restore: {},
+                // 启用拖拽平移工具
+                move: {}
+            }
+          },
           itemStyle: {
             normal: {
               areaColor: '#b6ceff',
@@ -655,7 +683,38 @@ export default defineComponent({
         },
         series: [
           {
-            name: 'world',
+            name: 'FCP',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            itemStyle: {
+              // borderWidth: 1,
+              // borderColor: '#fff',
+              // color: 'rgba(89, 152, 14, 1)',
+              color: '#000',
+              shadowBlur: 2,
+              shadowColor: '#7ca3fb'
+            },
+            data: [
+            {
+                "city": "阿尔及利亚",
+                "value": [
+                    -178.535,
+                    35.8639
+                ]
+            },
+            {
+                "city": "阿尔及利亚111",
+                "value": [
+                    78.535,
+                    -35.8639
+                ]
+            }],
+            roam: true,
+            symbolSize: 8,
+            zlevel: 1
+          },
+          {
+            name: 'ECP',
             type: 'scatter',
             coordinateSystem: 'geo',
             itemStyle: {
@@ -667,9 +726,34 @@ export default defineComponent({
               shadowColor: '#7ca3fb'
             },
             data: dataArr,
+            roam: true,
             symbolSize: 8,
             zlevel: 1
-          }
+          },
+          // {
+          //   name: 'world',
+          //   type: 'scatter',
+          //   coordinateSystem: 'geo',
+          //   itemStyle: {
+          //     // borderWidth: 1,
+          //     // borderColor: '#fff',
+          //     // color: 'rgba(89, 152, 14, 1)',
+          //     color: '#cf3cc9',
+          //     shadowBlur: 2,
+          //     shadowColor: '#7ca3fb'
+          //   },
+          //   data: [{
+          //       "name": "阿尔及利亚",
+          //       "value": 8441.537
+          //   },
+          //   {
+          //       "name": "阿根廷",
+          //       "value": 40374.224
+          //   }],
+          //   roam: true,
+          //   symbolSize: 8,
+          //   zlevel: 1
+          // }
         ]
       })
     }
@@ -1155,7 +1239,9 @@ export default defineComponent({
         }
         .el-tabs {
           .el-tabs__header {
+            padding: 0 0 0.2rem;
             margin: 0;
+            border-bottom: 1px solid @border-color;
             .el-tabs__active-bar,
             .el-tabs__nav-wrap:after {
               display: none;

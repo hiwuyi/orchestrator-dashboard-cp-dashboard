@@ -1,10 +1,13 @@
 <template>
   <div class="flex-row center">
-    <el-dialog v-model="props.centerDialogVisible" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="dialog-body">
-      <div class="dialog-content font-18">
+    <el-drawer v-model="props.centerDrawerVisible"  direction="rtl" size="50%"
+    :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" 
+    @before-close="closeHandle()" @close="closeHandle()" align-center 
+    class="drawer-body">
+      <div class="drawer-content font-18">
         <div class="flex-row space-between name-title">
           <b class="font-27 font-bold">{{props.list.type === 'FCP' ? 'FCPname1' : 'ECPname1'}}</b>
-          <router-link :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17">View CP Profile</router-link>
+          <router-link :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
         </div>
         <el-row class="font-18 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
@@ -148,7 +151,7 @@
           </div>
         </div>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -179,7 +182,7 @@ export default defineComponent({
     Warning, ElIcon, ElDialog, ElButton, ElCheckbox
   },
   props: {
-    centerDialogVisible: { type: Boolean, default: false },
+    centerDrawerVisible: { type: Boolean, default: false },
     list: {
       type: Object,
       default: {
@@ -267,19 +270,20 @@ export default defineComponent({
 
 <style lang="less">
 .el-overlay {
-  .dialog-body {
+  .drawer-body {
     width: 50%;
     max-width: 900px;
     min-width: 300px;
-    padding: 0.18rem 0.3rem;
     border-radius: 6px;
     word-break: break-word;
     color: #6c6f72;
-    .el-dialog__header {
+    .el-drawer__header {
+      display: none;
       padding: 0;
     }
-    .el-dialog__body {
-      .dialog-content {
+    .el-drawer__body {
+      .drawer-content {
+        padding: 0.18rem 0.3rem;
         line-height: 1.4;
         cursor: text;
         .name-title {
@@ -615,9 +619,9 @@ export default defineComponent({
         }
       }
     }
-    .el-dialog__footer {
+    .el-drawer__footer {
       padding: 0;
-      .dialog-footer {
+      .drawer-footer {
       }
     }
   }

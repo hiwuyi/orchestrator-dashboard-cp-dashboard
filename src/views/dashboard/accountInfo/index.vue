@@ -5,6 +5,211 @@
     </div>
 
     <div class="providers-network font-16">
+      <div class="providers">
+        <el-row :gutter="32">
+          <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
+            <div class="providers-cp s">
+              <div class="flex-row space-between name-title">
+                <b class="font-27 font-bold">Account Info</b>
+              </div>
+              <div class="font-22 note b">
+                <el-row>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                    <p>CP Contract Address:</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                    <p>{{system.$commonFun.replaceFormat(pagin.total)}}</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                    <p>Account type:</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                    <p>{{ringGraphData.data.average_score_total || '-'}}</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                    <p>Owner Address:</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.cpu_total)}}</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                    <p>Worker Address:</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.memory_total)}}</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                    <p>Benefciary Address:</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.gpu_total)}}</p>
+                  </el-col>
+                </el-row>
+              </div>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+            <div class="providers-cp s">
+              <div class="flex-row space-between name-title">
+                <b class="font-27 font-bold">Balance Info</b>
+              </div>
+              <div class="font-22 note b">
+                <el-row>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
+                    <p class="color">Available Balance：0.9984 sETH</p>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
+                    <div class="flex-row space-between font-16 width">
+                      <span>FCP Collateral Balance:</span>
+                      <span class="text-right">0.1444 SETH</span>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
+                    <div class="flex-row space-between font-16 width">
+                      <span>FCP Locked Balance: </span>
+                      <span>0.1234 SETH</span>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
+                    <div class="collateral font-18">FCP Collateral</div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
+                    <div class="flex-row space-between font-16 width">
+                      <span>FCP Collateral Balance:</span>
+                      <span class="text-right">0.1444 SETH</span>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
+                    <div class="flex-row space-between font-16 width">
+                      <span>FCP Locked Balance: </span>
+                      <span>0.1234 SETH</span>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
+                    <div class="collateral font-18">FCP Collateral</div>
+                  </el-col>
+                </el-row>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+
+      <div class="providers">
+        <el-row :gutter="32">
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <div class="grid-content">
+              <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <div class="grid-content">
+              <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+
+      <div class="providers-cp">
+        <div class="flex-row space-between name-title">
+          <b class="font-27 font-bold">Resource List</b>
+        </div>
+        <div class="font-22 note b">
+          <el-row>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Total Number Of Node:</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{system.$commonFun.replaceFormat(pagin.total)}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Average Score:</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{ringGraphData.data.average_score_total || '-'}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Used CPU/Total:</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{system.$commonFun.replaceFormat(ringGraphData.data.cpu_total)}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Used Memory/Total (GiB):</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{system.$commonFun.replaceFormat(ringGraphData.data.memory_total)}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Used GPU/Total:</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{system.$commonFun.replaceFormat(ringGraphData.data.gpu_total)}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>Used Storage/Total (GiB):</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <p>{{system.$commonFun.replaceFormat(ringGraphData.data.storage_total)}}</p>
+            </el-col>
+          </el-row>
+          <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+            <el-table-column prop="name" min-width="120">
+              <template #header>
+                <div class="font-20 weight-4">Name</div>
+              </template>
+              <template #default="scope">
+                <div class="badge">
+                  {{scope.row.name}}
+                </div>
+              </template>
+            </el-table-column>
+            <!-- <el-table-column prop="country" label="Country" /> -->
+            <el-table-column prop="computer_provider.status" width="120">
+              <template #header>
+                <div class="font-20 weight-4">status</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="computer_provider.score" width="120">
+              <template #header>
+                <div class="font-20 weight-4">Score</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="gpu_list" min-width="140">
+              <template #header>
+                <div class="font-20 weight-4">GPU</div>
+              </template>
+              <template #default="scope">
+                <div class="badge">
+                  <div class="flex-row machines-style">
+                    <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
+                      {{gpu}}
+                    </span>
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="region" min-width="100">
+              <template #header>
+                <div class="font-20 weight-4">Region</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="uptime">
+              <template #header>
+                <div class="font-20 weight-4">Uptime</div>
+              </template>
+              <template #default="scope">
+                <div>
+                  {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          />
+        </div>
+      </div>
+
       <div class="providers-cp">
         <div class="search-body flex-row font-18">
           <el-select v-model="infoList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
@@ -22,7 +227,8 @@
             Search
           </el-button> -->
         </div>
-        <payment-history></payment-history>
+        <payment-history v-if="activeName === 'Space'"></payment-history>
+        <ubi-history v-else></ubi-history>
       </div>
     </div>
   </section>
@@ -30,6 +236,7 @@
 
 <script>
 import paymentHistory from "@/components/paymentHistory"
+import ubiHistory from "@/components/UBIHistory"
 import { defineComponent, computed, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
@@ -40,7 +247,7 @@ import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
-    Search, paymentHistory
+    Search, paymentHistory, ubiHistory
   },
   setup () {
     const store = useStore()
@@ -94,56 +301,749 @@ export default defineComponent({
     })
     const activeName = ref('FCP')
     const vmOperate = reactive({
-      centerDialogVisible: false,
+      centerDrawerVisible: false,
       row: {}
     })
+    const ringGraphData = reactive({
+      data: {},
+      cpScore: {},
+      transactionDriveProgram: {},
+      providersTotal: {}
+    })
 
+    function reset (type) {
+      pagin.total = 0
+      pagin.total_deployments = 0
+      pagin.active_applications = 0
+      pagin.pageSize = 10
+      pagin.pageNo = 1
+      providersData.value = []
+      providerBody.ubiTableData = []
+      providersTableLoad.value = false
+      providersLoad.value = false
+      networkInput.value = ''
+      if (route.params.type === 'Space') {
+        activeName.value = 'Space'
+        infoList.value = 'Space'
+      } else {
+        activeName.value = 'UBI'
+        infoList.value = 'UBI'
+      }
+    }
+    const handleClick = async (value) => {
+      activeName.value = value || 'Space'
+      router.push({ name: 'accountInfo', params: { type: activeName.value } })
+      cpLoad.value = true
+      await system.$commonFun.timeout(500)
+    }
     function handleSizeChange (val) { }
     async function handleCurrentChange (currentPage) {
       pagin.pageNo = currentPage
       init()
     }
-    async function handleZKCurrentChange (currentPage) {
-      paginZK.pageNo = currentPage
-      getUBITable()
+    async function getCpscore () {
+      providersLoad.value = true
+      try {
+        let formData = new FormData()
+        formData.append('wallet_address', metaAddress.value)
+        const cpscoreRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}stats/cpscores`, 'post', formData)
+        if (cpscoreRes && cpscoreRes.status === 'success') {
+          ringGraphData.cpScore = cpscoreRes.data.providers_program || []
+          ringGraphData.transactionDriveProgram = cpscoreRes.data.transaction_drive_program || {}
+          ringGraphData.providersTotal = await providersNodeTree(ringGraphData.cpScore)
+        } else if (cpscoreRes.message) system.$commonFun.messageTip('error', cpscoreRes.message)
+      } catch { }
+      providersLoad.value = false
+    }
+    function providersNodeTree (nodeData) {
+      const res = {
+        contribution_score: 0,
+        task_job_count: 0
+      }
+      let data = nodeData || []
+      let memoryUnit = ''
+      let storageUnit = ''
+      data.forEach((item) => {
+        res.contribution_score += Number(item.contribution_score || 0)
+        res.task_job_count += Number(item.task_job_count || 0)
+      })
+      return res
     }
     async function init () {
+      cpLoad.value = true
       providersTableLoad.value = true
       const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
       const params = {
         limit: pagin.pageSize,
         offset: page * pagin.pageSize,
-        search_string: networkInput.value
+        search_string: networkInput.value,
+        // start_time: 1713470000,
+        // end_time: 1714077711
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
+      // ?${system.$Qs.stringify(params)}
+      // ?${new URLSearchParams(params).toString()}
+      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
+      const providerRes_test = {
+        "data": {
+          "list_providers_cnt": 4,
+          "providers": [
+            {
+              "city": "Montreal",
+              "computer_provider": {
+                "allowed_nodes": null,
+                "autobid": 1,
+                "city": "Montreal",
+                "country": null,
+                "created_at": "1709866614",
+                "deleted_at": null,
+                "job_stats": {
+                  "end_time": 1714092141,
+                  "failed": 0,
+                  "start_time": 1713487341,
+                  "submit_failed": 0,
+                  "total_submit": 0
+                },
+                "last_active_at": null,
+                "lat": 45.5075,
+                "lon": -73.5887,
+                "machines": [
+                  {
+                    "created_at": "1709866624",
+                    "machine_id": "315ae8c203ec4b3aa9bf7dd9bd96cec0",
+                    "node_id": "04d5fce8dae0f493b35ae3e09aa9ba9fb9981ca8bb8c4c83d43eb23a6ff014e77ebab8e989265385571f2b34df7a6c1131a3aa713c9c9369027a73d57224e8b3c5",
+                    "specs": {
+                      "cpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      },
+                      "gpu": {
+                        "attached_gpus": 2,
+                        "cuda_version": "12020",
+                        "details": [
+                          {
+                            "bar1_memory_usage": {
+                              "free": "249 MiB",
+                              "total": "256 MiB",
+                              "used": "6 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "8745 MiB",
+                              "total": "10240 MiB",
+                              "used": "1494 MiB"
+                            },
+                            "product_name": "NVIDIA 3080",
+                            "status": "available"
+                          },
+                          {
+                            "bar1_memory_usage": {
+                              "free": "254 MiB",
+                              "total": "256 MiB",
+                              "used": "1 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "24257 MiB",
+                              "total": "24576 MiB",
+                              "used": "318 MiB"
+                            },
+                            "product_name": "NVIDIA 3090",
+                            "status": "occupied"
+                          }
+                        ],
+                        "driver_version": "535.113.01"
+                      },
+                      "memory": {
+                        "free": "233.00 GiB",
+                        "total": "251.00 GiB",
+                        "used": "18.00 GiB"
+                      },
+                      "model": "amd64",
+                      "storage": {
+                        "free": "375.00 GiB",
+                        "total": "410.00 GiB",
+                        "used": "35.00 GiB"
+                      },
+                      "vcpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      }
+                    },
+                    "updated_at": "1712735774"
+                  }
+                ],
+                "multi_address": "/ip4/38.140.46.60/tcp/8086",
+                "name": "cp-2.44-2",
+                "node_id": "04d5fce8dae0f493b35ae3e09aa9ba9fb9981ca8bb8c4c83d43eb23a6ff014e77ebab8e989265385571f2b34df7a6c1131a3aa713c9c9369027a73d57224e8b3c5",
+                "online": false,
+                "payment_stats": {
+                  "claimed_amount": null,
+                  "claimed_count": 0,
+                  "end_time": 1714092141,
+                  "start_time": 1713487341,
+                  "waiting_claim_count": 0
+                },
+                "public_address": "0xFbc1d38a2127D81BFe3EA347bec7310a1cfa2373",
+                "region": "Quebec-CA",
+                "score": 100,
+                "status": "Active",
+                "updated_at": "1714061249"
+              },
+              "country": null,
+              "name": "cp-2.44-2",
+              "node_id": "04d5fce8dae0f493b35ae3e09aa9ba9fb9981ca8bb8c4c83d43eb23a6ff014e77ebab8e989265385571f2b34df7a6c1131a3aa713c9c9369027a73d57224e8b3c5",
+              "region": "Quebec-CA",
+              "uptime": 0.9725905402731051
+            },
+            {
+              "city": "Montreal",
+              "computer_provider": {
+                "allowed_nodes": null,
+                "autobid": 1,
+                "city": "Montreal",
+                "country": null,
+                "created_at": "1712053635",
+                "deleted_at": null,
+                "job_stats": {
+                  "end_time": 1714092141,
+                  "failed": 0,
+                  "start_time": 1713487341,
+                  "submit_failed": 0,
+                  "total_submit": 0
+                },
+                "last_active_at": null,
+                "lat": 45.5075,
+                "lon": -73.5887,
+                "machines": [
+                  {
+                    "created_at": "1712053645",
+                    "machine_id": "315ae8c203ec4b3aa9bf7dd9bd96cec0",
+                    "node_id": "049d09a536d1ea95e7f863a8f93265913f4115ac4fb4d56cfcde051f3a78c7dc52cb1a6feb48e17690f0e98145e221c69262c0e3e7c3657caeaec7841a8d8104a3",
+                    "specs": {
+                      "cpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      },
+                      "cpu_name": "",
+                      "gpu": {
+                        "attached_gpus": 2,
+                        "cuda_version": "12020",
+                        "details": [
+                          {
+                            "bar1_memory_usage": {
+                              "free": "249 MiB",
+                              "total": "256 MiB",
+                              "used": "6 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "8745 MiB",
+                              "total": "10240 MiB",
+                              "used": "1494 MiB"
+                            },
+                            "product_name": "NVIDIA 3080",
+                            "status": "available"
+                          },
+                          {
+                            "bar1_memory_usage": {
+                              "free": "254 MiB",
+                              "total": "256 MiB",
+                              "used": "1 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "24257 MiB",
+                              "total": "24576 MiB",
+                              "used": "318 MiB"
+                            },
+                            "product_name": "NVIDIA 3090",
+                            "status": "occupied"
+                          }
+                        ],
+                        "driver_version": "535.113.01"
+                      },
+                      "memory": {
+                        "free": "233.00 GiB",
+                        "total": "251.00 GiB",
+                        "used": "18.00 GiB"
+                      },
+                      "model": "amd64",
+                      "storage": {
+                        "free": "375.00 GiB",
+                        "total": "410.00 GiB",
+                        "used": "35.00 GiB"
+                      },
+                      "vcpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      }
+                    },
+                    "updated_at": "1712132889"
+                  }
+                ],
+                "multi_address": "/ip4/38.140.46.60/tcp/8086",
+                "name": "cp-2.44-2",
+                "node_id": "049d09a536d1ea95e7f863a8f93265913f4115ac4fb4d56cfcde051f3a78c7dc52cb1a6feb48e17690f0e98145e221c69262c0e3e7c3657caeaec7841a8d8104a3",
+                "online": false,
+                "payment_stats": {
+                  "claimed_amount": null,
+                  "claimed_count": 0,
+                  "end_time": 1714092141,
+                  "start_time": 1713487341,
+                  "waiting_claim_count": 0
+                },
+                "public_address": "0xFbc1d38a2127D81BFe3EA347bec7310a1cfa2373",
+                "region": "Quebec-CA",
+                "score": 97,
+                "status": "Active",
+                "updated_at": "1714061249"
+              },
+              "country": null,
+              "name": "cp-2.44-2",
+              "node_id": "049d09a536d1ea95e7f863a8f93265913f4115ac4fb4d56cfcde051f3a78c7dc52cb1a6feb48e17690f0e98145e221c69262c0e3e7c3657caeaec7841a8d8104a3",
+              "region": "Quebec-CA",
+              "uptime": 0.9727884425094003
+            },
+            {
+              "city": "Montreal",
+              "computer_provider": {
+                "allowed_nodes": null,
+                "autobid": 1,
+                "city": "Montreal",
+                "country": null,
+                "created_at": "1712137980",
+                "deleted_at": null,
+                "job_stats": {
+                  "end_time": 1714092141,
+                  "failed": 0,
+                  "start_time": 1713487341,
+                  "submit_failed": 0,
+                  "total_submit": 0
+                },
+                "last_active_at": null,
+                "lat": 45.5075,
+                "lon": -73.5887,
+                "machines": [
+                  {
+                    "created_at": "1712143229",
+                    "machine_id": "70518000-5ab2-11eb-8000-18c04db4a530",
+                    "node_id": "04495c245fff4f0eb99ac3ee3e979af9b974c35d99798e97397afecdc0a495abf146f874ea0164ea2b815e43da4f0daffcf5481cbaface642d161ed1e3f579a484",
+                    "specs": {
+                      "cpu": {
+                        "free": "53",
+                        "total": "96",
+                        "used": "43"
+                      },
+                      "cpu_name": "AMD",
+                      "gpu": {
+                        "attached_gpus": 2,
+                        "cuda_version": "12020",
+                        "details": [
+                          {
+                            "bar1_memory_usage": {
+                              "free": "249 MiB",
+                              "total": "256 MiB",
+                              "used": "6 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "8745 MiB",
+                              "total": "10240 MiB",
+                              "used": "1494 MiB"
+                            },
+                            "product_name": "NVIDIA 3080",
+                            "status": ""
+                          },
+                          {
+                            "bar1_memory_usage": {
+                              "free": "254 MiB",
+                              "total": "256 MiB",
+                              "used": "1 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "24257 MiB",
+                              "total": "24576 MiB",
+                              "used": "318 MiB"
+                            },
+                            "product_name": "NVIDIA 3090",
+                            "status": ""
+                          }
+                        ],
+                        "driver_version": "535.113.01"
+                      },
+                      "memory": {
+                        "free": "147 GiB",
+                        "total": "251 GiB",
+                        "used": "9 GiB"
+                      },
+                      "model": "",
+                      "storage": {
+                        "free": "128 GiB",
+                        "total": "455 GiB",
+                        "used": "304 GiB"
+                      },
+                      "vcpu": {
+                        "free": "53",
+                        "total": "96",
+                        "used": "43"
+                      }
+                    },
+                    "updated_at": "1712735051"
+                  }
+                ],
+                "multi_address": "/ip4/38.140.46.60/tcp/8086",
+                "name": "ubi-cp-24",
+                "node_id": "04495c245fff4f0eb99ac3ee3e979af9b974c35d99798e97397afecdc0a495abf146f874ea0164ea2b815e43da4f0daffcf5481cbaface642d161ed1e3f579a484",
+                "online": false,
+                "payment_stats": {
+                  "claimed_amount": null,
+                  "claimed_count": 0,
+                  "end_time": 1714092141,
+                  "start_time": 1713487341,
+                  "waiting_claim_count": 0
+                },
+                "public_address": "0xFbc1d38a2127D81BFe3EA347bec7310a1cfa2373",
+                "region": "Quebec-CA",
+                "score": 98,
+                "status": "Active",
+                "updated_at": "1714061249"
+              },
+              "country": null,
+              "name": "ubi-cp-24",
+              "node_id": "04495c245fff4f0eb99ac3ee3e979af9b974c35d99798e97397afecdc0a495abf146f874ea0164ea2b815e43da4f0daffcf5481cbaface642d161ed1e3f579a484",
+              "region": "Quebec-CA",
+              "uptime": 0.9726894913912527
+            },
+            {
+              "city": "Montreal",
+              "computer_provider": {
+                "allowed_nodes": null,
+                "autobid": 1,
+                "city": "Montreal",
+                "country": null,
+                "created_at": "1712735800",
+                "deleted_at": null,
+                "job_stats": {
+                  "end_time": 1714092141,
+                  "failed": 12,
+                  "start_time": 1713487341,
+                  "submit_failed": 7,
+                  "total_submit": 40
+                },
+                "last_active_at": "1713938072",
+                "lat": 45.5075,
+                "lon": -73.5887,
+                "machines": [
+                  {
+                    "created_at": "1712735811",
+                    "machine_id": "315ae8c203ec4b3aa9bf7dd9bd96cec0",
+                    "node_id": "0478a886cb6e191a0531fb6f8a7da4c0fbf0ec220af6d49e622f7e2da514f0ea205ed77918796c66ae642f0996dbf0ecc4bb7f1dd949705d1306abd1c14b60fb8a",
+                    "specs": {
+                      "cpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      },
+                      "cpu_name": "",
+                      "gpu": {
+                        "attached_gpus": 2,
+                        "cuda_version": "12020",
+                        "details": [
+                          {
+                            "bar1_memory_usage": {
+                              "free": "254 MiB",
+                              "total": "256 MiB",
+                              "used": "1 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "10007 MiB",
+                              "total": "10240 MiB",
+                              "used": "232 MiB"
+                            },
+                            "product_name": "NVIDIA 3080",
+                            "status": "occupied"
+                          },
+                          {
+                            "bar1_memory_usage": {
+                              "free": "254 MiB",
+                              "total": "256 MiB",
+                              "used": "1 MiB"
+                            },
+                            "fb_memory_usage": {
+                              "free": "24257 MiB",
+                              "total": "24576 MiB",
+                              "used": "318 MiB"
+                            },
+                            "product_name": "NVIDIA 3090",
+                            "status": "available"
+                          }
+                        ],
+                        "driver_version": "535.113.01"
+                      },
+                      "memory": {
+                        "free": "237.00 GiB",
+                        "total": "251.00 GiB",
+                        "used": "14.00 GiB"
+                      },
+                      "storage": {
+                        "free": "365.00 GiB",
+                        "total": "410.00 GiB",
+                        "used": "45.00 GiB"
+                      },
+                      "vcpu": {
+                        "free": "79",
+                        "total": "96",
+                        "used": "17"
+                      }
+                    },
+                    "updated_at": "1714092133"
+                  }
+                ],
+                "multi_address": "/ip4/38.140.46.60/tcp/8086",
+                "name": "cp-2.44-2",
+                "node_id": "0478a886cb6e191a0531fb6f8a7da4c0fbf0ec220af6d49e622f7e2da514f0ea205ed77918796c66ae642f0996dbf0ecc4bb7f1dd949705d1306abd1c14b60fb8a",
+                "online": true,
+                "payment_stats": {
+                  "claimed_amount": "246.89306",
+                  "claimed_count": 19,
+                  "end_time": 1714092141,
+                  "start_time": 1713487341,
+                  "waiting_claim_count": 7
+                },
+                "public_address": "0xFbc1d38a2127D81BFe3EA347bec7310a1cfa2373",
+                "region": "Quebec-CA",
+                "score": 100,
+                "status": "Active",
+                "updated_at": "1714080093"
+              },
+              "country": null,
+              "name": "cp-2.44-2",
+              "node_id": "0478a886cb6e191a0531fb6f8a7da4c0fbf0ec220af6d49e622f7e2da514f0ea205ed77918796c66ae642f0996dbf0ecc4bb7f1dd949705d1306abd1c14b60fb8a",
+              "region": "Quebec-CA",
+              "uptime": 0.9728793427694744
+            }
+          ]
+        },
+        "message": "cp data api returns successfully",
+        "status": "success"
+      }
       if (providerRes && providerRes.status === 'success') {
         pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(providerRes.data.providers)
+        ringGraphData.data = await resolveNodeTree(providerRes)
       } else {
         providersData.value = []
+        cpLoad.value = false
         if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
       }
       providersTableLoad.value = false
     }
-    async function getUBITable () {
-      providersTableLoad.value = true
-      const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
-      const params = {
-        page_size: paginZK.pageSize,
-        page_no: page,
-        contract_address: networkZK.contract_address,
-        owner_addr: networkZK.owner_addr,
-        node_id: networkZK.node_id
+    const changetype = () => {
+      const machart_job = echarts.init(document.getElementById("chart-job"));
+      const machart_reward = echarts.init(document.getElementById("chart-reward"));
+      const option1 = {
+        title: {
+          text: 'Job completion',
+          // subtext: 'Fake Data',
+          textStyle: {
+            color: '#000',
+            fontStyle: 'normal',
+            fontWeight: '400',
+            fontFamily: 'Gilroy-Medium',
+            fontSize: 16
+          }
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        legend: {
+          data: ['Job Failed', 'Job Success'],
+          right: '4%'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            // prettier-ignore
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: 'Job Failed',
+            type: 'bar',
+            data: [
+              2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
+            ]
+          },
+          {
+            name: 'Job Success',
+            type: 'bar',
+            data: [
+              2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
+            ]
+          }
+        ]
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
-      if (providerRes && providerRes.code === 0) {
-        paginZK.total = providerRes.data.total || 0
-        providerBody.ubiTableData = providerRes.data.list || []
+      const option2 = {
+        title: {
+          text: 'Reward claimed',
+          textStyle: {
+            color: '#000',
+            fontStyle: 'normal',
+            fontWeight: '400',
+            fontFamily: 'Gilroy-Medium',
+            fontSize: 16
+          }
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['Claimed Count', 'Waiting'],
+          right: '4%'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: 'Claimed Count',
+            type: 'line',
+            stack: 'Total',
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: 'Waiting',
+            type: 'line',
+            stack: 'Total',
+            data: [220, 182, 191, 234, 290, 330, 310]
+          }
+        ]
+      }
+      machart_job.setOption(option1);
+      machart_reward.setOption(option2);
+      window.addEventListener("resize", function () {
+        machart_job.resize();
+        machart_reward.resize();
+      })
+    }
+    function resolveNodeTree (nodeData) {
+      const res = {
+        cpu_total: 0,
+        gpu_total: 0,
+        memory_total: 0,
+        storage_total: 0,
+        average_score_total: 0, //（所有score 加起来/node总数）
+        failed_total: 0, //(job_stats.failed)
+        submit_failed_total: 0, //(job_stats.submit_failed)
+        total_failed: 0, //(job_stats.total_submit + job_stats.failed)
+        total_success: 0, //(job_stats.total_submit - job_stats.failed)
+        total_submit: 0, //(job_stats.total_submit + job_stats.submit_failed)
+        claimed_count_total: 0, //(payment_stats.claimed_count )
+        claimed_amount_total: 0, //(payment_stats.claimed_amount)
+        waitng_total: 0, //(payment_stats.waiting_claim_count)
+        claim_total: 0 //(payment_stats.claimed_count + payment_stats.waiting_claim_count)
+      }
+      let data = []
+      let list_providers_cnt = 0
+      if (nodeData && nodeData.data && nodeData.data.list_providers_cnt > 0) {
+        list_providers_cnt = Number(nodeData.data.list_providers_cnt)
+        data = nodeData.data.providers || []
       } else {
-        providerBody.ubiTableData = []
-        if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
+        return res
       }
-      providersTableLoad.value = false
+      let memoryUnit = ''
+      let storageUnit = ''
+      data.forEach((item) => {
+        if (!item.computer_provider) {
+          return
+        }
+        res.average_score_total += Number(item.computer_provider.score || 0)
+        // job_stats
+        const job_stats = item.computer_provider.job_stats || {}
+        res.failed_total += Number(job_stats.failed || 0)
+        res.submit_failed_total += Number(job_stats.submit_failed || 0)
+        res.total_failed += Number(job_stats.submit_failed || 0) + Number(job_stats.failed || 0)
+        res.total_success += Number(job_stats.total_submit || 0) - Number(job_stats.failed || 0)
+        res.total_submit += Number(job_stats.total_submit || 0) + Number(job_stats.submit_failed || 0)
+        // payment_stats
+        const payment_stats = item.computer_provider.payment_stats || {}
+        res.claimed_count_total += Number(payment_stats.claimed_count || 0)
+        res.claimed_amount_total += Number(payment_stats.claimed_amount || 0)
+        res.waitng_total += Number(payment_stats.waiting_claim_count || 0)
+        res.claim_total +=
+          Number(payment_stats.claimed_count || 0) + Number(payment_stats.waiting_claim_count || 0)
+        // machines
+        const machines = item.computer_provider.machines || []
+        machines.forEach((machine) => {
+          if (!machine.specs) {
+            return
+          }
+          // cpu
+          res.cpu_total += machine.specs.cpu ? Number(machine.specs.cpu.total || 0) : 0
+          // gpu
+          res.gpu_total += machine.specs.gpu ? Number(machine.specs.gpu.attached_gpus || 0) : 0
+          // memory
+          const memoryList =
+            machine.specs.memory && machine.specs.memory.total
+              ? machine.specs.memory.total.split(' ')
+              : []
+          memoryUnit = memoryList[1] ? ` ${memoryList[1]}` : memoryUnit
+          res.memory_total += Number(memoryList[0] || 0)
+          // storage
+          const storageList =
+            machine.specs.storage && machine.specs.storage.total
+              ? machine.specs.storage.total.split(' ')
+              : []
+          storageUnit = storageList[1] ? ` ${storageList[1]}` : storageUnit
+          res.storage_total += Number(storageList[0] || 0)
+        })
+      })
+      // add memory unit
+      //res.memory_total += memoryUnit ? memoryUnit : 0
+      // add storage unit
+      //res.storage_total += storageUnit ? storageUnit : 0
+      res.average_score_total = Number((res.average_score_total / list_providers_cnt).toFixed(2))
+      return res
+    }
+    async function getGraphData (list) {
+      let l = list || []
+      l.forEach((element) => {
+        element.gpu_list = []
+        try {
+          if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
+            element.computer_provider.machines.forEach((machines) => {
+              if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
+                machines.specs.gpu.details.forEach((gpu) => {
+                  if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
+                })
+              }
+            })
+          }
+        } catch{ }
+      })
+      return l
     }
     async function getList (list) {
       let l = list || []
@@ -168,55 +1068,16 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }, 700)
-    const searchZKProvider = system.$commonFun.debounce(async function () {
-      paginZK.pageNo = 1
-      getUBITable()
-    }, 700)
     function clearProvider () {
       networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (activeName.value === 'ECP') {
-        paginZK.pageNo = 1
-        getUBITable()
-      } else {
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
-      }
-    }
-    function reset (type) {
-      pagin.total = 0
-      pagin.total_deployments = 0
-      pagin.active_applications = 0
       pagin.pageSize = 10
       pagin.pageNo = 1
-      providersData.value = []
-      providersLoad.value = false
-      providersTableLoad.value = false
-      networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (route.params.type === 'Space') {
-        activeName.value = 'Space'
-        infoList.value = 'Space'
-      } else {
-        activeName.value = 'UBI'
-        infoList.value = 'UBI'
-      }
       init()
-      getUBITable()
-    }
-    const handleClick = async (value) => {
-      activeName.value = value || 'Space'
-      router.push({ name: 'accountInfo', params: { type: activeName.value } })
-      cpLoad.value = true
-      await system.$commonFun.timeout(500)
     }
     onActivated(async () => {
       reset('init')
+      changetype()
+      // getCpscore()
     })
     return {
       system,
@@ -234,8 +1095,8 @@ export default defineComponent({
       background,
       badgeIcon01,
       badgeIcon02,
-      accessToken, cpLoad, infoList, activeName, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick
+      accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData,
+      handleSizeChange, handleCurrentChange, searchProvider, clearProvider, handleClick
     }
   }
 })
@@ -274,8 +1135,9 @@ export default defineComponent({
         padding: 0.06rem 0.22rem;
         font-size: inherit;
         font-family: inherit;
-        border-color: #b6c0d1;
+        border: 1px solid #b6c0d1;
         border-radius: 0.07rem;
+        box-shadow: none;
         .el-select__selected-item {
           position: relative;
           top: auto;
@@ -306,11 +1168,49 @@ export default defineComponent({
   :deep(.providers-overview),
   :deep(.providers-network) {
     padding: 0;
+    .s {
+      margin: 0 !important;
+    }
+    .providers {
+      margin: 0.3rem 0 0;
+    }
     .providers-cp {
       padding: 0.3rem 0.35rem;
       margin: 0.45rem 0 0;
       background-color: @white-color;
       border-radius: 0.25rem;
+      .note {
+        .el-row {
+          margin: 0.1rem 0 0.34rem;
+          .el-col {
+            margin: 0.08rem 0;
+            p {
+              color: #000;
+              &.color {
+                color: @theme-color;
+                .green {
+                  color: #8dd565;
+                }
+                .orange {
+                  color: #ff9413;
+                }
+                .blue {
+                  color: #6067f5;
+                }
+              }
+            }
+            .collateral {
+              padding: 0.06rem 0.16rem;
+              margin: 0 0 0.1rem;
+              background-color: @theme-color;
+              border-radius: 0.2rem;
+              color: @white-color;
+              line-height: 1;
+              cursor: pointer;
+            }
+          }
+        }
+      }
     }
     .title {
       width: 100%;
@@ -346,111 +1246,12 @@ export default defineComponent({
           line-height: 1;
         }
         .grid-content {
-          width: 100%;
+          width: calc(100% - 0.28rem);
           height: calc(100% - 0.3rem);
           padding: 0.18rem 0.14rem 0.12rem;
           background: @white-color;
           border-radius: 0.18rem;
           box-shadow: 0 0 12px #e6e7eb;
-          h6 {
-            width: 100%;
-            line-height: 1.2;
-            text-transform: capitalize;
-            color: @border-color;
-            &.t {
-              width: auto;
-              padding: 0 0.2rem;
-            }
-            small {
-              margin: 0 0 0 5px;
-              font-family: "Montserrat-Regular";
-              font-weight: normal;
-              color: #a0a0a0;
-              font-size: 0.13rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.15rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 12px;
-              }
-            }
-            .el-select {
-              font-size: inherit;
-              .el-tooltip__trigger {
-                margin: 0;
-                width: 80px;
-                padding: 2px 4px;
-              }
-            }
-          }
-          b {
-            position: relative;
-            padding: 6px 0 12px;
-            margin: 0 0 2px;
-            line-height: 1;
-            .span {
-              position: absolute;
-              bottom: 0;
-              right: 0.2rem;
-              &.up {
-                color: #38a169;
-              }
-              &.down {
-                color: #e53e3e;
-              }
-              small {
-                margin: 0;
-                font-family: "Montserrat-Regular";
-                font-weight: normal;
-                color: #a0a0a0;
-                font-size: 0.14rem;
-                @media screen and (min-width: 1800px) {
-                  font-size: 0.16rem;
-                }
-                @media screen and (max-width: 768px) {
-                  font-size: 13px;
-                }
-              }
-            }
-            small {
-              margin: 0 0 0 4px;
-              font-size: 0.16rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.18rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 15px;
-              }
-            }
-          }
-        }
-        .usage-style {
-          width: 100%;
-          margin: 0 0 0.08rem;
-          color: #000000;
-          label {
-            width: 2.8rem;
-            margin: 0 0.1rem 0 0;
-            line-height: 1.1;
-          }
-          .progress {
-            width: calc(85% - 2.9rem);
-            .el-progress {
-              width: 100%;
-              .el-progress__text {
-                display: none;
-              }
-              .el-progress-bar__outer {
-                background-color: @border-color;
-              }
-            }
-            .text {
-              width: 100%;
-              margin: 3px 0 0;
-              line-height: 1;
-              color: @border-color;
-            }
-          }
         }
         .chart-trends {
           width: 100%;
@@ -458,46 +1259,6 @@ export default defineComponent({
           height: 2.3rem;
           @media screen and (max-width: 540px) {
             height: 300px;
-          }
-        }
-        .chart-world {
-          width: 100%;
-          margin: 0 auto;
-          height: 3.15rem;
-          background-color: @theme-color;
-          border-radius: 0.2rem;
-          @media screen and (max-width: 540px) {
-            height: 400px;
-          }
-        }
-        .chart {
-          width: 100%;
-          margin: 0.45rem auto 0;
-          height: 500px;
-          @media screen and (max-width: 540px) {
-            height: 400px;
-          }
-        }
-        .el-tabs {
-          .el-tabs__header {
-            margin: 0;
-            .el-tabs__active-bar,
-            .el-tabs__nav-wrap:after {
-              display: none;
-            }
-            .el-tabs__nav {
-              .el-tabs__item {
-                height: auto;
-                padding: 0.1rem 0.18rem;
-                margin: 0 0.16rem 0 0;
-                border-radius: 0.08rem;
-                line-height: 1.1;
-                &.is-active {
-                  background-color: @theme-color;
-                  color: @white-color;
-                }
-              }
-            }
           }
         }
       }
@@ -517,8 +1278,9 @@ export default defineComponent({
           padding: 0.06rem 0.22rem;
           font-size: inherit;
           font-family: inherit;
-          border-color: #b6c0d1;
+          border: 1px solid #b6c0d1;
           border-radius: 0.07rem;
+          box-shadow: none;
           .el-select__selected-item {
             position: relative;
             top: auto;

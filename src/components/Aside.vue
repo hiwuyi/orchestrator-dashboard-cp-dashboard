@@ -23,9 +23,9 @@
       </el-sub-menu> -->
       <el-menu-item index="accountInfo">
         <i class="icon icon-AccountInfo"></i>
-        <span class="font-22">Account info</span>
+        <span class="font-22">CP Profile</span>
       </el-menu-item>
-      <el-menu-item index="Resource">
+      <el-menu-item index="resource">
         <i class="icon icon-Resource"></i>
         <span class="font-22">Resource</span>
       </el-menu-item>
@@ -57,6 +57,7 @@ export default defineComponent({
       else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
       else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
       else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'Space' } })
+      else if (key === 'resource') router.push({ name: 'resource' })
     }
     async function activeMenu (row) {
       const nameMenu = row || route.name
@@ -64,9 +65,10 @@ export default defineComponent({
       else if (nameMenu.indexOf('rankings') > -1) activeIndex.value = 'rankings'
       else if (nameMenu.indexOf('aar') > -1) activeIndex.value = 'aar'
       else if (nameMenu.indexOf('accountInfo') > -1) activeIndex.value = 'accountInfo'
+      else if (nameMenu.indexOf('resource') > -1) activeIndex.value = 'resource'
       else activeIndex.value = nameMenu
 
-      const chainId = await system.$commonFun.web3Init.eth.net.getId()
+      // const chainId = await system.$commonFun.web3Init.eth.net.getId()
       // const { unit, name, url } = await system.$commonFun.getUnit(chainId)
       // info.network = name || `Chain ID: ${chainId}`
       // info.unit = unit

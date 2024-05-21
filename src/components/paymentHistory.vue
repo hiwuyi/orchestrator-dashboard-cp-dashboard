@@ -1,7 +1,7 @@
 <template>
   <div id="payment">
-    <div class="payment-history container-landing">
-      <div class="status-style flex-row">
+    <div class="payment-history container-landing font-16">
+      <div class="status-style flex-row font-18">
         <el-radio-group v-model="statusRadio" class="ml-4" @change="radioFilterChange">
           <el-radio value="" size="large">payment status</el-radio>
           <el-radio value="Claim Failed" size="large">Claim Failed</el-radio>
@@ -15,38 +15,44 @@
 
       <el-table v-loading="paymentLoad" element-loading-text="Please do not refresh the page" :data="paymentData" stripe style="width: 100%" @filter-change="handleFilterChange">
         <!-- <el-table-column prop="chain_id" label="chain id" min-width="110" /> -->
-        <el-table-column prop="job" label="task uuid" min-width="100">
+        <el-table-column prop="job" min-width="100">
+          <template #header>
+            <div class="font-20 weight-4">task uuid</div>
+          </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.task_uuid, 'Copied')">
               {{ system.$commonFun.hiddAddress(scope.row.task_uuid) || '-' }}
-              <svg t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
-                <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
-                  p-id="2310" fill="#b5b7c8"></path>
-                <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
-                <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+              <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
               </svg>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="hardware_type" label="Task Type" min-width="60">
+        <el-table-column prop="hardware_type" min-width="60">
+          <template #header>
+            <div class="font-20 weight-4">Task Type</div>
+          </template>
           <template #default="scope">
             <span>{{ scope.row.hardware_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="node_id" label="NODE ID" min-width="100">
+        <el-table-column prop="node_id" min-width="100">
+          <template #header>
+            <div class="font-20 weight-4">NODE ID</div>
+          </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
               {{ system.$commonFun.hiddAddress(scope.row.node_id) }}
-              <svg t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
-                <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
-                  p-id="2310" fill="#b5b7c8"></path>
-                <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
-                <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+              <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
               </svg>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="created_at" label="created at" min-width="120" column-key="created_at" filterable :filters="[
+        <el-table-column prop="created_at" min-width="120">
+          <!-- column-key="created_at" filterable :filters="[
         { text: '60', value: '60' },
         { text: '50', value: '50' },
         { text: '40', value: '40' },
@@ -55,28 +61,40 @@
         { text: '10', value: '10' },
         { text: '5', value: '5' },
         { text: '1', value: '1' },
-      ]" filter-placement="bottom-end" :filter-multiple="false">
+      ]" filter-placement="bottom-end" :filter-multiple="false" -->
+          <template #header>
+            <div class="font-20 weight-4">created at</div>
+          </template>
           <template #default="scope">
             <span>
               {{ system.$commonFun.momentFun(scope.row.created_at) }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="updated_at" label="updated at" min-width="120">
+        <el-table-column prop="updated_at" min-width="120">
+          <template #header>
+            <div class="font-20 weight-4">updated at</div>
+          </template>
           <template #default="scope">
             <span>
               {{ system.$commonFun.momentFun(scope.row.updated_at) }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="task_end_at" label="Estimated End At" min-width="120">
+        <el-table-column prop="task_end_at" min-width="120">
+          <template #header>
+            <div class="font-20 weight-4">Estimated End At</div>
+          </template>
           <template #default="scope">
             <span>
               {{ system.$commonFun.momentFun(scope.row.task_end_at) }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="task_status" label="Task Status" min-width="120">
+        <el-table-column prop="task_status" min-width="120">
+          <template #header>
+            <div class="font-20 weight-4">Task Status</div>
+          </template>
           <template #default="scope">
             <div>
               <span v-if="scope.row.task_status && scope.row.task_status.toLowerCase() === 'task failed'" class="flex-row center">
@@ -122,7 +140,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="payment status" min-width="135">
+        <el-table-column prop="status" min-width="135">
+          <template #header>
+            <div class="font-20 weight-4">payment status</div>
+          </template>
           <!-- column-key="status" filterable :filters="[
         { text: 'Claim Failed', value: 'Claim Failed' },
         { text: 'Rewardable', value: 'Rewardable' },
@@ -190,22 +211,28 @@
                   </template>
                 </el-popover>
               </span>
-              <el-button type="primary" v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'rewardable'" plain @click="rewardFun(scope.row, 1)">Claim Reward
+              <el-button v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'rewardable'" plain @click="rewardFun(scope.row, 1)">Claim Reward
               </el-button>
-              <el-button type="primary" v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'terminate failed'" plain @click="retryFun(scope.row)">Retry Terminate
+              <el-button v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'terminate failed'" plain @click="retryFun(scope.row)">Retry Terminate
               </el-button>
               <span v-else>{{ scope.row.status }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="token" label="token" min-width="100">
+        <el-table-column prop="token" min-width="100">
+          <template #header>
+            <div class="font-20 weight-4">token</div>
+          </template>
           <template #default="scope">
             <span>
               {{ scope.row.token || '-' }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="transaction_hash" label="transaction hash" min-width="120">
+        <el-table-column prop="transaction_hash" min-width="120">
+          <template #header>
+            <div class="font-20 weight-4">transaction hash</div>
+          </template>
           <template #default="scope">
             <span v-if="scope.row.amount && scope.row.amount.indexOf('-') > -1">-</span>
             <span v-else-if="scope.row.transaction_hash === '1'" class="flex-row center">
@@ -224,7 +251,10 @@
             <a v-else :href="`${scope.row.url_tx}${scope.row.transaction_hash}`" target="_blank">{{scope.row.transaction_hash}}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" label="Amount (SWAN)" min-width="90">
+        <el-table-column prop="amount" min-width="90">
+          <template #header>
+            <div class="font-20 weight-4"></div>
+          </template>
           <template #default="scope">
             <!--            Also if the amount is 0.00000, it will be displayed as Free in the table-->
             <span v-if="scope.row.amount && scope.row.amount.indexOf('-') > -1">-</span>
@@ -499,8 +529,6 @@ export default defineComponent({
 
     let getnetID = NaN
     onMounted(async () => {
-    })
-    onActivated(async () => {
       getnetID = await system.$commonFun.web3Init.eth.net.getId()
       init()
     })
@@ -535,7 +563,6 @@ export default defineComponent({
     box-sizing: border-box;
     word-break: break-word;
     color: @white-color;
-    font-size: 14px;
     text-align: left;
 
     .title {
@@ -548,10 +575,16 @@ export default defineComponent({
 
     :deep(.status-style) {
       margin: 0;
+      font-size: inherit;
       .el-radio-group {
+        font-size: inherit;
         .el-radio {
+          font-size: inherit;
           color: #000;
           text-transform: capitalize;
+          .el-radio__label {
+            font-size: inherit;
+          }
           .el-radio__input {
             &.is-checked {
               .el-radio__inner {

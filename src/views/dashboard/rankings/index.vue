@@ -70,10 +70,14 @@
     <div class="providers-network font-16">
       <div class="providers-cp" v-if="activeName === 'FCP'">
         <div class="search-body flex-row font-18">
+          <span class="font-22">Contract Address: </span>
+          <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="Contract Address" @chang="searchProvider" @input="searchProvider" />
           <span class="font-22">Name: </span>
-          <el-input v-model="networkInput" placeholder="please input CP name" class="font-14" @chang="searchProvider" @input="searchProvider" />
-          <el-button type="info" :disabled="!networkInput ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkInput ? true:false" round @click="searchProvider">
+          <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="Owner Addr" @chang="searchProvider" @input="searchProvider" />
+          <span class="font-22">NodeID: </span>
+          <el-input class="zk-input" v-model="networkInput.node_id" placeholder="Node ID" @chang="searchProvider" @input="searchProvider" />
+          <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+          <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id ? true:false" round @click="searchProvider">
             <el-icon>
               <Search />
             </el-icon>
@@ -108,7 +112,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.active_deployment" width="130">
+          <el-table-column prop="computer_provider.active_deployment" width="150">
             <template #header>
               <div class="font-20 weight-4">Active deployment</div>
             </template>
@@ -254,7 +258,7 @@
       </div>
     </div>
 
-    <vm-dialog v-if="vmOperate.centerDialogVisible" :centerDialogVisible="vmOperate.centerDialogVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
+    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
   </section>
 </template>
 
@@ -316,7 +320,11 @@ export default defineComponent({
           label: 'ECP Ranking List'
         }]
     })
-    const networkInput = ref('')
+    const networkInput = reactive({
+      contract_address: '',
+      owner_addr: '',
+      node_id: ''
+    })
     const networkZK = reactive({
       contract_address: '',
       owner_addr: '',
@@ -324,7 +332,7 @@ export default defineComponent({
     })
     const activeName = ref('FCP')
     const vmOperate = reactive({
-      centerDialogVisible: false,
+      centerDrawerVisible: false,
       row: {}
     })
 
@@ -343,7 +351,10 @@ export default defineComponent({
       const params = {
         limit: pagin.pageSize,
         offset: page * pagin.pageSize,
-        search_string: networkInput.value
+        // search_string: networkInput.value
+        contract_address: networkInput.contract_address,
+        owner_addr: networkInput.owner_addr,
+        node_id: networkInput.node_id
       }
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
@@ -569,12 +580,12 @@ export default defineComponent({
         case 'ranking':
           vmOperate.row = row
           vmOperate.row.type = 'stop'
-          vmOperate.centerDialogVisible = true
+          vmOperate.centerDrawerVisible = true
           break;
       }
     }
     function hardClose (dialog, type) {
-      vmOperate.centerDialogVisible = dialog
+      vmOperate.centerDrawerVisible = dialog
     }
     onActivated(async () => {
       reset('init')
@@ -630,8 +641,9 @@ export default defineComponent({
         padding: 0.06rem 0.22rem;
         font-size: inherit;
         font-family: inherit;
-        border-color: #b6c0d1;
+        border: 1px solid #b6c0d1;
         border-radius: 0.07rem;
+        box-shadow: none;
         .el-select__selected-item {
           position: relative;
           top: auto;

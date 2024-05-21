@@ -63,7 +63,7 @@ export default defineComponent({
     overflow: hidden;
     .el-header {
       height: auto;
-      padding: 0.25rem 0.5rem;
+      padding: 0.15rem 0.5rem;
       background-color: @white-color;
     }
     .el-container {

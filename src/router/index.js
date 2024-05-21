@@ -15,6 +15,8 @@ const aar = () =>
     import ("@/views/dashboard/aar/index");
 const accountInfo = () =>
     import ("@/views/dashboard/accountInfo/index");
+const resource = () =>
+    import ("@/views/dashboard/resource/index");
 
 const routes = [{
         path: '/',
@@ -29,7 +31,7 @@ const routes = [{
                 component: main,
                 meta: {
                     keepAlive: true,
-                    title: ''
+                    title: 'Orchestrator'
                 }
             },
             {
@@ -38,7 +40,7 @@ const routes = [{
                 component: rankings,
                 meta: {
                     keepAlive: true,
-                    title: ''
+                    title: 'Rankings'
                 },
                 // beforeEnter: (to, from, next) => {
                 //     if (!sessionStorage.getItem('access_token_swan')) {
@@ -56,7 +58,16 @@ const routes = [{
                 component: aar,
                 meta: {
                     keepAlive: true,
-                    title: ''
+                    title: 'Atom Accelerator Race'
+                }
+            },
+            {
+                path: '/resource',
+                name: 'resource',
+                component: resource,
+                meta: {
+                    keepAlive: true,
+                    title: 'Resource'
                 }
             },
             {
@@ -65,17 +76,17 @@ const routes = [{
                 component: accountInfo,
                 meta: {
                     keepAlive: true,
-                    title: ''
+                    title: 'Account Info'
                 },
-                beforeEnter: (to, from, next) => {
-                    if (!sessionStorage.getItem('access_token_swan')) {
-                        next({
-                            path: '/overview'
-                        })
-                    } else {
-                        next()
-                    }
-                }
+                // beforeEnter: (to, from, next) => {
+                //     if (!sessionStorage.getItem('access_token_swan')) {
+                //         next({
+                //             path: '/overview'
+                //         })
+                //     } else {
+                //         next()
+                //     }
+                // }
             }
         ]
     },
@@ -86,8 +97,9 @@ const routes = [{
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    // history: createWebHashHistory(process.env.BASE_URL),
+    // history: process.env.NODE_ENV === 'testnet' ? createWebHashHistory(process.env.BASE_URL) : createWebHistory(process.env.BASE_URL),
+    history: createWebHashHistory(process.env.BASE_URL),
+    // history: createWebHistory(process.env.BASE_URL),
     routes
 })
 
