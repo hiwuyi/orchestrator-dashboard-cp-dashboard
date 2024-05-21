@@ -1,0 +1,41 @@
+{
+  "name": "swanhub",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "vite",
+    "build:prod": "vite build --mode production",
+    "build:testnet": "vite build --mode testnet",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@wagmi/connectors": "^5.0.2",
+    "@web3modal/core": "^4.2.1",
+    "@web3modal/wagmi": "^4.2.1",
+    "axios": "^1.7.0",
+    "echarts": "^5.5.0",
+    "element-plus": "^2.6.3",
+    "moment": "^2.30.1",
+    "qs": "^6.12.1",
+    "viem": "^2.10.11",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.3.3",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "less": "^4.2.0",
+    "prettier": "^3.2.5",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "vite": "^5.2.7"
+  }
+}
