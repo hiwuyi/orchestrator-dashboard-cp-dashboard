@@ -1,154 +1,35 @@
 <template>
   <div class="flex-row center">
-    <el-drawer v-model="props.centerDrawerVisible" direction="rtl" size="50%" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="drawer-body">
-      <div class="drawer-content font-18">
-        <div class="flex-row space-between name-title">
-          <b class="font-27 font-bold">{{props.list.type === 'FCP' ? 'FCPname1' : 'ECPname1'}}</b>
-          <router-link :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
-        </div>
+    <el-dialog v-model="props.centerDrawerVisible" :title="`${props.list.type} Collateral`" :show-close="true" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="dialog-body">
+      <div class="dialog-content font-18">
         <el-row class="font-18 note">
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>Contract Address:</p>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>Available Balance:</p>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="18" :xl="18" class="flex-row baseline">
-            <p class="color">{{props.list.owner_addr || props.list.name || '-'}}</p>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>0.9984 sETH</p>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>Active Deployment:</p>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>{{props.list.type}} Collateral Balance:</p>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p class="color" v-if="props.list.computer_provider">{{props.list.computer_provider.active_deployment || '-'}}</p>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>0.9984 sETH</p>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>Region:</p>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>{{props.list.type}} Locked Balance:</p>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p class="color">{{props.list.region || '-'}}</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>Score:</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p class="color" v-if="props.list.computer_provider">{{props.list.computer_provider.score || '-'}}</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>Uptime:</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p class="color">{{system.$commonFun.unifyNumber(props.list.uptime)}}%</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-            <p>GPU:</p>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="18" :xl="18" class="flex-row baseline">
-            <div class="badge flex-row">
-              <div class="flex-row machines-style">
-                <span v-for="(gpu, g) in props.list.gpu_list" :key="g">
-                  {{gpu}}
-                </span>
-              </div>
-            </div>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>0.9984 sETH</p>
           </el-col>
         </el-row>
-
-        <div class="flex-row space-between name-title">
-          <b class="font-27 font-bold">Machine Amount：3</b>
-        </div>
-        <div class="font-18 note b">
-          <el-row>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p>MachineID:</p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p class="color text-right" v-if="props.list.resources">{{props.list.resources[0].machine_id}}</p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p>Current CPU usage:</p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p class="color text-right" v-if="props.list.resources">
-                <span class="green">{{system.$commonFun.replaceFormat(props.list.resources[0].cpu.free)}}</span> free
-                <span class="green">{{system.$commonFun.replaceFormat(props.list.resources[0].cpu.total)}}</span> total
-                <span class="green">{{system.$commonFun.replaceFormat(props.list.resources[0].cpu.total-props.list.resources[0].cpu.free)}}</span> used
-              </p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p>Current Memory usage(GiB):</p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p class="color text-right" v-if="props.list.resources">
-                <span class="orange">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].memory.free))}}</span> free
-                <span class="orange">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].memory.total))}}</span> total
-                <span class="orange">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].memory.total-props.list.resources[0].memory.free))}}</span> used
-              </p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p>Current Storage usage(GiB):</p>
-            </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
-              <p class="color text-right" v-if="props.list.resources">
-                <span class="blue">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].storage.free))}}</span> free
-                <span class="blue">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].storage.total))}}</span> total
-                <span class="blue">{{system.$commonFun.replaceFormat(system.$commonFun.byteStorage(props.list.resources[0].storage.total-props.list.resources[0].storage.free))}}</span> used
-              </p>
-            </el-col>
-            <el-col v-show="collapse.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-              <div class="grid-content">
-                <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
-              </div>
-            </el-col>
-          </el-row>
-          <div v-show="collapse.MachineShow" class="flex-row space-between name-title">
-            <b class="font-22">GPU Source</b>
-          </div>
-          <el-table v-show="collapse.MachineShow" :data="gpuListData" style="width: 100%" empty-text="No Data">
-            <el-table-column type="model" min-width="70">
-              <template #header>
-                <div class="font-20 weight-4">GPU</div>
-              </template>
-              <template #default="scope">
-                <div>{{scope.row.model}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column type="status" min-width="70">
-              <template #header>
-                <div class="font-20 weight-4">Status</div>
-              </template>
-              <template #default="scope">
-                <div>{{scope.row.status}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column type="free" min-width="70">
-              <template #header>
-                <div class="font-20 weight-4">Free</div>
-              </template>
-              <template #default="scope">
-                <div>{{scope.row.free}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column type="total" min-width="70">
-              <template #header>
-                <div class="font-20 weight-4">Total</div>
-              </template>
-              <template #default="scope">
-                <div>{{scope.row.total}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column type="used" min-width="70">
-              <template #header>
-                <div class="font-20 weight-4">Used</div>
-              </template>
-              <template #default="scope">
-                <div>{{scope.row.used}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div class="flex-row center">
-            <el-button @click="collapse.MachineShow = !collapse.MachineShow">{{collapse.MachineShow?'Fold':'Unfold'}}</el-button>
-          </div>
-        </div>
       </div>
-    </el-drawer>
+      <template #footer>
+        <div class="dialog-footer flex-row flex-end font-18">
+          <el-button @click="closeHandle()">Cancel</el-button>
+          <el-button @click="closeHandle()" type="primary">OK</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -171,12 +52,11 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   Warning
 } from '@element-plus/icons-vue'
-import { ElIcon, ElDialog, ElButton, ElCheckbox } from "element-plus"
 import * as echarts from "echarts"
 export default defineComponent({
   name: 'Popup',
   components: {
-    Warning, ElIcon, ElDialog, ElButton, ElCheckbox
+    Warning
   },
   props: {
     centerDrawerVisible: { type: Boolean, default: false },
@@ -192,10 +72,6 @@ export default defineComponent({
     const store = useStore()
     const system = getCurrentInstance().appContext.config.globalProperties
     const cpLoad = ref(false)
-    const gpuListData = ref([])
-    const collapse = reactive({
-      MachineShow: true
-    })
 
     function closeHandle (type) {
       context.emit('hardClose', false, type)
@@ -263,14 +139,11 @@ export default defineComponent({
     onMounted(async () => {
       await system.$commonFun.timeout(500)
       changetype()
-      if (props.list.resources && props.list.resources[0].gpu) gpuListData.value = props.list.resources[0].gpu.gpus || []
     })
     return {
       system,
       props,
       cpLoad,
-      gpuListData,
-      collapse,
       closeHandle
     }
   }
@@ -279,20 +152,19 @@ export default defineComponent({
 
 <style lang="less">
 .el-overlay {
-  .drawer-body {
-    width: 50%;
+  .dialog-body {
+    width: 35%;
     max-width: 900px;
     min-width: 300px;
     border-radius: 6px;
     word-break: break-word;
     color: #6c6f72;
-    .el-drawer__header {
-      display: none;
+    .el-dialog__header {
       padding: 0;
     }
-    .el-drawer__body {
-      .drawer-content {
-        padding: 0.18rem 0.3rem;
+    .el-dialog__body {
+      .dialog-content {
+        padding: 0.12rem 0;
         line-height: 1.4;
         cursor: text;
         .name-title {
@@ -309,7 +181,7 @@ export default defineComponent({
         }
         .note {
           padding: 0.12rem 0.25rem;
-          margin: 0.27rem 0;
+          margin: 0.16rem 0;
           border: 1px solid @border-color;
           border-radius: 0.1rem;
           &.b {
@@ -384,7 +256,34 @@ export default defineComponent({
                 background-color: @theme-color;
                 font-size: inherit;
                 border: 0;
+                &.ascending {
+                  .caret-wrapper {
+                    .sort-caret {
+                      &.ascending {
+                        border-bottom-color: #fff;
+                      }
+                      &.descending {
+                        border-top-color: #d0dcf9;
+                      }
+                    }
+                  }
+                }
+                &.descending {
+                  .caret-wrapper {
+                    .sort-caret {
+                      &.ascending {
+                        border-bottom-color: #d0dcf9;
+                      }
+                      &.descending {
+                        border-top-color: #fff;
+                      }
+                    }
+                  }
+                }
                 .cell {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                   color: @white-color;
                   word-break: break-word;
                   text-transform: capitalize;
@@ -392,6 +291,22 @@ export default defineComponent({
                   line-height: 1.1;
                   @media screen and (max-width: 540px) {
                     font-size: 12px;
+                  }
+                  .el-table__column-filter-trigger {
+                    i {
+                      margin: 0 0 0 4px;
+                      color: @white-color;
+                    }
+                  }
+                  .caret-wrapper {
+                    .sort-caret {
+                      &.ascending {
+                        border-bottom-color: #d0dcf9;
+                      }
+                      &.descending {
+                        border-top-color: #d0dcf9;
+                      }
+                    }
                   }
                 }
               }
@@ -628,9 +543,9 @@ export default defineComponent({
         }
       }
     }
-    .el-drawer__footer {
+    .el-dialog__footer {
       padding: 0;
-      .drawer-footer {
+      .dialog-footer {
       }
     }
   }

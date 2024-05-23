@@ -11,6 +11,7 @@
             <div class="providers-cp s">
               <div class="flex-row space-between name-title">
                 <b class="font-27 font-bold">Account Info</b>
+                <a @click="loginMethod" class="font-17">Claim Account</a>
               </div>
               <div class="font-22 note b">
                 <el-row>
@@ -30,19 +31,42 @@
                     <p>Owner Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.cpu_total)}}</p>
+                    <div class="flex-row center copy-style">
+                      {{system.$commonFun.hiddAddress(ringGraphData.data.cpu_total)}}
+                      <svg @click="system.$commonFun.copyContent(ringGraphData.data.cpu_total, 'Copied')" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      </svg>
+                      <svg @click="system.$commonFun.goLink(`${system.$explorerLink}${ringGraphData.data.cpu_total}`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="16" height="16">
+                        <path d="M892 928.1H134c-19.9 0-36-16.1-36-36v-758c0-19.9 16.1-36 36-36h314.1c19.9 0 36 16.1 36 36s-16.1 36-36 36H170v686h686V579.6c0-19.9 16.1-36 36-36s36 16.1 36 36v312.5c0 19.9-16.1 36-36 36z" fill="#2c2c2c" p-id="2409"></path>
+                        <path d="M927.9 131.6v-0.5c-0.1-1.7-0.4-3.3-0.7-4.9 0-0.1 0-0.2-0.1-0.3-0.4-1.7-0.9-3.3-1.5-4.9v-0.1c-0.6-1.6-1.4-3.1-2.2-4.6 0-0.1-0.1-0.1-0.1-0.2-0.8-1.4-1.7-2.8-2.7-4.1-0.1-0.1-0.2-0.3-0.3-0.4-0.5-0.6-0.9-1.1-1.4-1.7 0-0.1-0.1-0.1-0.1-0.2-0.5-0.6-1-1.1-1.6-1.6l-0.4-0.4c-0.5-0.5-1.1-1-1.6-1.5l-0.1-0.1c-0.6-0.5-1.2-1-1.9-1.4-0.1-0.1-0.3-0.2-0.4-0.3-1.4-1-2.8-1.8-4.3-2.6l-0.1-0.1c-1.6-0.8-3.2-1.5-4.9-2-1.6-0.5-3.3-1-5-1.2-0.1 0-0.2 0-0.3-0.1l-2.4-0.3h-0.3c-0.7-0.1-1.3-0.1-2-0.1H640.1c-19.9 0-36 16.1-36 36s16.1 36 36 36h165L487.6 487.6c-14.1 14.1-14.1 36.9 0 50.9 7 7 16.2 10.5 25.5 10.5 9.2 0 18.4-3.5 25.5-10.5L856 221v162.8c0 19.9 16.1 36 36 36s36-16.1 36-36V134.1c0-0.8 0-1.7-0.1-2.5z"
+                          fill="#2c2c2c" p-id="2410"></path>
+                      </svg>
+                    </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Worker Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.memory_total)}}</p>
+                    <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.memory_total, 'Copied')">
+                      {{system.$commonFun.hiddAddress(ringGraphData.data.memory_total)}}
+                      <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      </svg>
+                    </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Benefciary Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{system.$commonFun.replaceFormat(ringGraphData.data.gpu_total)}}</p>
+                    <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.gpu_total, 'Copied')">
+                      {{system.$commonFun.hiddAddress(ringGraphData.data.gpu_total)}}
+                      <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      </svg>
+                    </div>
                   </el-col>
                 </el-row>
               </div>
@@ -71,22 +95,22 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div class="collateral font-18">FCP Collateral</div>
+                    <div class="collateral font-18" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
                     <div class="flex-row space-between font-16 width">
-                      <span>FCP Collateral Balance:</span>
+                      <span>ECP Collateral Balance:</span>
                       <span class="text-right">0.1444 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
                     <div class="flex-row space-between font-16 width">
-                      <span>FCP Locked Balance: </span>
+                      <span>ECP Locked Balance: </span>
                       <span>0.1234 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div class="collateral font-18">FCP Collateral</div>
+                    <div class="collateral font-18" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
                   </el-col>
                 </el-row>
               </div>
@@ -99,22 +123,22 @@
         <el-row :gutter="32">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="grid-content">
-              <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
-                  </el-select>
-                </div>
+              <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+              <div class="date">
+                <el-select v-model="weekList.value" placeholder="Select" size="small">
+                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="grid-content">
-              <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
-                  </el-select>
-                </div>
+              <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+              <div class="date">
+                <el-select v-model="weekList.value" placeholder="Select" size="small">
+                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -190,8 +214,8 @@
                 <div class="font-20 weight-4">GPU</div>
               </template>
               <template #default="scope">
-                <div class="badge">
-                  <div class="flex-row machines-style">
+                <div class="badge flex-row center">
+                  <div class="flex-row center machines-style">
                     <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
                       {{gpu}}
                     </span>
@@ -225,7 +249,7 @@
           <el-select v-model="infoList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
             <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
-          <!-- <span class="font-22">Task UUID: </span>
+          <span class="font-22">Task UUID: </span>
           <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task UUID" @chang="searchZKProvider" @input="searchZKProvider" />
           <span class="font-22">NodeID: </span>
           <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
@@ -235,16 +259,19 @@
               <Search />
             </el-icon>
             Search
-          </el-button> -->
+          </el-button>
         </div>
         <payment-history v-if="activeName === 'Space'"></payment-history>
         <ubi-history v-else></ubi-history>
       </div>
     </div>
+
+    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
   </section>
 </template>
 
 <script>
+import vmDialog from "@/components/vmDialog"
 import paymentHistory from "@/components/paymentHistory"
 import ubiHistory from "@/components/UBIHistory"
 import { defineComponent, computed, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
@@ -257,7 +284,7 @@ import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
-    Search, paymentHistory, ubiHistory
+    Search, paymentHistory, ubiHistory, vmDialog
   },
   setup () {
     const store = useStore()
@@ -296,11 +323,11 @@ export default defineComponent({
       options: [
         {
           value: 'Space',
-          label: 'Space Reward History'
+          label: 'FCP Reward List'
         },
         {
           value: 'UBI',
-          label: 'UBI Reward History'
+          label: 'ZK Proof List'
         }]
     })
     const networkInput = ref('')
@@ -321,22 +348,34 @@ export default defineComponent({
       providersTotal: {}
     })
     const weekList = reactive({
-      value: 'Week',
+      value: '7',
       options: [
         {
-          value: 'Week',
-          label: '1 Week'
+          value: '7',
+          label: '7 DAYS'
         },
         {
-          value: 'Month',
-          label: '1 Month'
+          value: '14',
+          label: '14 DAYS'
         },
         {
-          value: 'Year',
-          label: '1 Year'
+          value: '30',
+          label: '30 DAYS'
         }]
     })
 
+    async function handleSelect (key, row, type) {
+      switch (key) {
+        case 'cpProfile':
+          vmOperate.row = row
+          vmOperate.row.type = type
+          vmOperate.centerDrawerVisible = metaAddress.value === '' ? false : true
+          break;
+      }
+    }
+    function hardClose (dialog, type) {
+      vmOperate.centerDrawerVisible = dialog
+    }
     function reset (type) {
       pagin.total = 0
       pagin.total_deployments = 0
@@ -355,6 +394,7 @@ export default defineComponent({
         activeName.value = 'UBI'
         infoList.value = 'UBI'
       }
+      init()
     }
     const handleClick = async (value) => {
       activeName.value = value || 'Space'
@@ -408,8 +448,8 @@ export default defineComponent({
       }
       // ?${system.$Qs.stringify(params)}
       // ?${new URLSearchParams(params).toString()}
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
-      const providerRes_test = {
+      const providerRes_test = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
+      const providerRes = {
         "data": {
           "list_providers_cnt": 4,
           "providers": [
@@ -859,7 +899,7 @@ export default defineComponent({
       } else {
         providersData.value = []
         cpLoad.value = false
-        if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
+        // if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
       }
       providersTableLoad.value = false
     }
@@ -1186,6 +1226,25 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }
+    let lastTime = 0
+    async function throttle () {
+      // Prevent multiple signatures
+      let now = new Date().valueOf();
+      if (lastTime > 0 && (now - lastTime) <= 2000) return false
+      lastTime = now
+      return true
+    }
+    async function loginMethod () {
+      const time = await throttle()
+      if (!time) return false
+      system.$commonFun.Init(async (addr, chain) => {
+        providersLoad.value = true
+        // getnetID.value = await system.$commonFun.web3Init.eth.net.getId()
+        await system.$commonFun.timeout(500)
+        if (accessToken.value !== '') providersLoad.value = false
+        else system.$commonFun.login()
+      })
+    }
     onActivated(async () => {
       reset('init')
       changetype()
@@ -1208,7 +1267,8 @@ export default defineComponent({
       badgeIcon01,
       badgeIcon02,
       accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData, weekList,
-      handleSizeChange, handleCurrentChange, searchProvider, clearProvider, handleClick
+      handleSizeChange, handleCurrentChange, searchProvider, clearProvider, handleClick, loginMethod, handleSelect,
+      hardClose
     }
   }
 })
@@ -1222,6 +1282,13 @@ export default defineComponent({
   letter-spacing: 1px;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
+  }
+  .copy-style {
+    cursor: pointer;
+    flex-wrap: wrap;
+    svg {
+      margin: 0 0 0 0.05rem;
+    }
   }
   :deep(.header-title) {
     padding: 0.1rem 0;
@@ -1291,6 +1358,18 @@ export default defineComponent({
       margin: 0.45rem 0 0;
       background-color: @white-color;
       border-radius: 0.25rem;
+      .name-title {
+        color: #000;
+        text-transform: capitalize;
+        cursor: text;
+        a {
+          padding: 0.08rem 0.06rem;
+          background-color: @theme-color;
+          border-radius: 0.08rem;
+          color: @white-color;
+          line-height: 1;
+        }
+      }
       .note {
         .el-row {
           margin: 0.1rem 0 0.34rem;
@@ -1675,13 +1754,6 @@ export default defineComponent({
             cursor: pointer;
             &:hover {
               text-decoration: underline;
-            }
-          }
-          .copy-style {
-            cursor: pointer;
-            flex-wrap: wrap;
-            svg {
-              margin: 0 0 0 0.05rem;
             }
           }
           .badge {

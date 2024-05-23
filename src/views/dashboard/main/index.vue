@@ -14,7 +14,7 @@
         <el-col :xs="24" :sm="24" :md="24" :lg="15" :xl="15" class="flex-row baseline">
           <div class="title flex-row">
             <b class="font-27 font-bold">Providers Overview</b>
-            <a href="https://proxima-explorer.swanchain.io/" target="_blank" class="flex-row font-18">
+            <a :href="system.$explorerLink" target="_blank" class="flex-row font-18">
               Swan Proxima Chain explorer
               <i></i>
             </a>
@@ -287,7 +287,7 @@
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row">
                   <div class="title title-link flex-row center">
-                    <a href="https://proxima-explorer.swanchain.io/" target="_blank" class="flex-row nowrap font-14">
+                    <a :href="system.$explorerLink" target="_blank" class="flex-row nowrap font-14">
                       Swan Proxima Chain explorer
                       <i></i>
                     </a>
@@ -301,7 +301,7 @@
           <div class="title flex-row">
             <b class="font-27 font-bold">Location Overview</b>
           </div>
-          <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+          <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
           <div class="title flex-row">
@@ -311,7 +311,7 @@
           <el-row :gutter="32" style="width:100%">
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -321,7 +321,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -331,7 +331,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -341,7 +341,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />

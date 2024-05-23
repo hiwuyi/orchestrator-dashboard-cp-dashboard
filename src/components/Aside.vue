@@ -21,10 +21,10 @@
           <span class="font-17">ECP</span>
         </el-menu-item>
       </el-sub-menu> -->
-      <el-menu-item index="accountInfo">
+      <!-- <el-menu-item index="accountInfo">
         <i class="icon icon-AccountInfo"></i>
         <span class="font-22">CP Profile</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item index="resource">
         <i class="icon icon-Resource"></i>
         <span class="font-22">Resource</span>

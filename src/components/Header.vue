@@ -3,12 +3,22 @@
     <div class="swan-logo flex-row nowrap">
       <img :src="swanLogo" @click="system.$commonFun.goLink('https://www.swanchain.io/')" />
       <div class="flex-row nowrap swan-right font-17">
-        <!-- <div class="nav pcShow">
-          <router-link :to="{name: 'dashboard'}" :class="{'active': route.name === 'dashboard'}">Dashboard</router-link>
-          <router-link :to="{ name: 'myCPInfo'}" :class="{'active': route.name === 'myCPInfo'}" v-if="accessToken !== ''">CP Profile</router-link>
-          <router-link :to="{ name: 'paymentHistory'}" :class="{'active': route.name === 'paymentHistory'}" v-if="accessToken !== ''">Reward History</router-link>
-          <router-link :to="{ name: 'UBIHistory'}" :class="{'active': route.name === 'UBIHistory'}" v-if="accessToken !== ''">UBI Reward History</router-link>
-        </div> -->
+        <div class="flex-row header-title">
+          <el-select v-model="explorerList.value" @change="handleClick" placeholder="Select" size="small">
+            <template #prefix>
+              <div class="flex-row">
+                <i class="icon icon-swanProxima"></i>
+                {{explorerList.value}}
+              </div>
+            </template>
+            <el-option v-for="item in explorerList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="flex-row">
+                <i class="icon icon-swanProxima"></i>
+                {{item.label}}
+              </div>
+            </el-option>
+          </el-select>
+        </div>
         <div class="header-right flex-row nowrap" v-if="accessToken !== ''">
           <div class="set ">
             <div class="info-style flex-row">
@@ -81,7 +91,7 @@
             </el-dropdown>
           </div> -->
         </div>
-        <el-button type="primary" @click="loginMethod" v-else>Login</el-button>
+        <!-- <el-button type="primary" @click="loginMethod" v-else>Login</el-button> -->
       </div>
     </div>
 
@@ -261,6 +271,14 @@ export default defineComponent({
       address: '',
       amount: NaN,
       tx_hash: ''
+    })
+    const explorerList = reactive({
+      value: 'SwanProximaChain',
+      options: [
+        {
+          value: 'SwanProximaChain',
+          label: 'Swan Proxima Chain'
+        }]
     })
     const txLink = process.env.VUE_APP_ATOMBLOCKURL
     const tokenAddress = process.env.VUE_APP_OPSWAN_SWANTOKEN_ADDRESS
@@ -517,7 +535,7 @@ export default defineComponent({
       tokenShow,
       paginKey,
       ruleForm,
-      info, wrongVisible, bodyWidth, cpCheckCont, cpCollateralCont, txLink,
+      info, wrongVisible, bodyWidth, cpCheckCont, cpCollateralCont, txLink, explorerList,
       getdataList, createCom, deleteToken, handleKeyChange, handleSizeChange,
       loginMethod, handleSelect, wrongMethod, cpCollateral
     }
@@ -581,6 +599,60 @@ export default defineComponent({
         display: none;
         @media screen and (max-width: 767px) {
           display: block;
+        }
+      }
+      :deep(.el-select) {
+        width: auto;
+        margin: 0 0.3rem 0 0;
+        font-size: inherit;
+        .el-tooltip__trigger {
+          margin: 0;
+          width: auto;
+          height: auto;
+          padding: 0.04rem 0.22rem 0.04rem 0.12rem;
+          font-size: inherit;
+          font-family: inherit;
+          border: 1px solid #000;
+          border-radius: 0.3rem;
+          box-shadow: none;
+          .el-select__prefix {
+            margin: 0 0.06rem 0 0;
+            line-height: 1.2;
+            color: #000;
+            .icon {
+              width: 0.35rem;
+              height: 0.35rem;
+              margin: 0 0.07rem 0 0;
+              &.icon-swanProxima {
+                background: url(../assets/images/logo-swan.png) no-repeat center;
+                background-size: 90%;
+              }
+            }
+          }
+          .el-select__selection {
+            display: none;
+            .el-select__selected-item {
+              position: relative;
+              top: auto;
+              margin: 0 0.06rem 0 0;
+              transform: translateY(0px);
+              line-height: 1.2;
+              color: #000;
+              &.is-hidden {
+                display: none;
+              }
+            }
+          }
+          .el-select__suffix {
+            .el-select__icon {
+              background: url(../assets/images/icons/icon-02.png) no-repeat
+                center;
+              background-size: 90%;
+              svg {
+                display: none;
+              }
+            }
+          }
         }
       }
     }

@@ -215,12 +215,12 @@
       </div>
     </div>
 
-    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
+    <vm-drawer v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-drawer>
   </section>
 </template>
 
 <script>
-import vmDialog from "@/components/vmDialog"
+import vmDrawer from "@/components/vmDrawer"
 import { defineComponent, computed, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
@@ -231,7 +231,7 @@ import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
-    Search, vmDialog
+    Search, vmDrawer
   },
   setup () {
     const store = useStore()

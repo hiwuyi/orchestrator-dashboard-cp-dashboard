@@ -61,7 +61,7 @@
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
           <div class="grid-content">
-            <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+            <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
           </div>
         </el-col>
       </el-row>
@@ -73,7 +73,7 @@
           <span class="font-22">Contract Address: </span>
           <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="Contract Address" @chang="searchProvider" @input="searchProvider" />
           <span class="font-22">Name: </span>
-          <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="Owner Addr" @chang="searchProvider" @input="searchProvider" />
+          <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="CP Name" @chang="searchProvider" @input="searchProvider" />
           <span class="font-22">NodeID: </span>
           <el-input class="zk-input" v-model="networkInput.node_id" placeholder="Node ID" @chang="searchProvider" @input="searchProvider" />
           <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
@@ -90,15 +90,29 @@
               <div class="font-20 weight-4">Ranking</div>
             </template>
           </el-table-column>
+          <el-table-column prop="owner_addr" min-width="120">
+            <template #header>
+              <div class="font-20 weight-4">Contract Address</div>
+            </template>
+            <template #default="scope">
+              <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.owner_addr, 'Copied')">
+                {{system.$commonFun.hiddAddress(scope.row.owner_addr)}}
+                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
+                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                </svg>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="name" min-width="120">
             <template #header>
               <div class="font-20 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <div class="name-style" @click="handleSelect('ranking', scope.row)">{{scope.row.name}}</div>
+              <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="node_id" min-width="100">
+          <el-table-column prop="node_id" min-width="110">
             <template #header>
               <div class="font-20 weight-4">NodeID</div>
             </template>
@@ -112,16 +126,23 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.active_deployment" width="150">
+          <el-table-column prop="computer_provider.active_deployment" sortable width="150">
             <template #header>
               <div class="font-20 weight-4">Active deployment</div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.score" width="120">
+          <el-table-column prop="computer_provider.status" min-width="100" column-key="computer_provider.status" filterable :filters="[
+            { text: 'Active', value: 'Active' }
+          ]" filter-placement="bottom-end" :filter-multiple="false">
+            <template #header>
+              <div class="font-20 weight-4">status</div>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column prop="computer_provider.score" width="120">
             <template #header>
               <div class="font-20 weight-4">Score</div>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="gpu_list" min-width="140">
             <template #header>
               <div class="font-20 weight-4">GPU</div>
@@ -191,7 +212,7 @@
               <div class="font-20 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <div class="name-style" @click="handleSelect('ranking', scope.row)">{{scope.row.name}}</div>
+              <div class="name-style" @click="handleSelect('ranking', scope.row, 'ECP')">{{scope.row.name}}</div>
             </template>
           </el-table-column>
           <el-table-column prop="node_id" min-width="120">
@@ -222,7 +243,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="status" min-width="100">
+          <el-table-column prop="status" min-width="100" column-key="status" filterable :filters="[
+            { text: 'Online', value: 'Online' },
+            { text: 'Suspended', value: 'Suspended' },
+            { text: 'Offline', value: 'Offline' }
+          ]" filter-placement="bottom-end" :filter-multiple="false">
             <template #header>
               <div class="font-20 weight-4">status</div>
             </template>
@@ -258,12 +283,12 @@
       </div>
     </div>
 
-    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
+    <vm-drawer v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-drawer>
   </section>
 </template>
 
 <script>
-import vmDialog from "@/components/vmDialog"
+import vmDrawer from "@/components/vmDrawer"
 import { defineComponent, computed, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
@@ -274,7 +299,7 @@ import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
-    Search, vmDialog
+    Search, vmDrawer
   },
   setup () {
     const store = useStore()
@@ -359,7 +384,7 @@ export default defineComponent({
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
         pagin.total = providerRes.data.list_providers_cnt || 0
-        providersData.value = await getList(providerRes.data.providers)
+        providersData.value = await getList(providerRes.data.providers, 'FCP')
       } else {
         providersData.value = []
         if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
@@ -379,29 +404,40 @@ export default defineComponent({
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.code === 0) {
         paginZK.total = providerRes.data.total || 0
-        providerBody.ubiTableData = providerRes.data.list || []
+        providerBody.ubiTableData = await getList(providerRes.data.list, 'ECP')
       } else {
         providerBody.ubiTableData = []
         if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
       }
       providersTableLoad.value = false
     }
-    async function getList (list) {
+    async function getList (list, type) {
       let l = list || []
-      l.forEach((element) => {
-        element.gpu_list = []
-        try {
-          if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
-            element.computer_provider.machines.forEach((machines) => {
-              if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
-                machines.specs.gpu.details.forEach((gpu) => {
-                  if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
-                })
-              }
+      if (type === 'ECP') {
+        l.forEach((element) => {
+          try {
+            element.resources.forEach((machines) => {
+              machines.MachineShow = true
             })
-          }
-        } catch{ }
-      })
+          } catch{ }
+        })
+      } else {
+        l.forEach((element) => {
+          element.gpu_list = []
+          try {
+            if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
+              element.computer_provider.machines.forEach((machines) => {
+                machines.MachineShow = true
+                if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
+                  machines.specs.gpu.details.forEach((gpu) => {
+                    if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
+                  })
+                }
+              })
+            }
+          } catch{ }
+        })
+      }
       return l
     }
     const searchProvider = system.$commonFun.debounce(async function () {
@@ -634,12 +670,12 @@ export default defineComponent({
       if (activeName.value === 'ECP') changeZKtype()
       else changetype()
     }
-    async function handleSelect (key, row) {
+    async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
       switch (key) {
         case 'ranking':
           vmOperate.row = row
-          vmOperate.row.type = 'stop'
+          vmOperate.row.type = type
           vmOperate.centerDrawerVisible = true
           break;
       }
@@ -1005,7 +1041,34 @@ export default defineComponent({
           background-color: @theme-color;
           font-size: inherit;
           border: 0;
+          &.ascending {
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #fff;
+                }
+                &.descending {
+                  border-top-color: #d0dcf9;
+                }
+              }
+            }
+          }
+          &.descending {
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #d0dcf9;
+                }
+                &.descending {
+                  border-top-color: #fff;
+                }
+              }
+            }
+          }
           .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: @white-color;
             word-break: break-word;
             text-transform: capitalize;
@@ -1013,6 +1076,22 @@ export default defineComponent({
             line-height: 1.1;
             @media screen and (max-width: 540px) {
               font-size: 12px;
+            }
+            .el-table__column-filter-trigger {
+              i {
+                margin: 0 0 0 4px;
+                color: @white-color;
+              }
+            }
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #d0dcf9;
+                }
+                &.descending {
+                  border-top-color: #d0dcf9;
+                }
+              }
             }
           }
         }

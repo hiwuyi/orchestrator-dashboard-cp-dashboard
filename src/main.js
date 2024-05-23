@@ -15,10 +15,11 @@ import qs from 'qs'
 
 const app = createApp(App)
 app.config.globalProperties.$commonFun = commonFun
+app.config.globalProperties.$explorerLink = process.env.VUE_APP_ATOMBLOCKURL
 app.config.globalProperties.$Qs = qs
 app.use(ElementPlus, {
-        locale: en,
-    })
+    locale: en,
+})
     .use(i18n)
     .use(store)
     .use(router)
