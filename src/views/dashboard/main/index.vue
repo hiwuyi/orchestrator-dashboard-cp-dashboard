@@ -312,21 +312,41 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
                 <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
                 <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
                 <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
                 <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
               </div>
             </el-col>
           </el-row>
@@ -423,6 +443,22 @@ export default defineComponent({
         },
         {
           value: 'Yearly'
+        }]
+    })
+    const weekList = reactive({
+      value: 'Week',
+      options: [
+        {
+          value: 'Week',
+          label: '1 Week'
+        },
+        {
+          value: 'Month',
+          label: '1 Month'
+        },
+        {
+          value: 'Year',
+          label: '1 Year'
         }]
     })
 
@@ -608,6 +644,35 @@ export default defineComponent({
           bottom: '2%',
           containLabel: true
         },
+        toolbox: {
+          orient: 'vertical',
+          top: '2%',
+          right: '2%',
+          feature: {
+            dataZoom: { show: false },
+            restore: {
+              show: true,
+              textStyle: {
+                color: 'transparent' // 文字颜色设置为透明
+              },
+              iconStyle: {
+                borderColor: '#fff', // 边框颜色
+                borderWidth: 2, // 边框宽度
+                color: 'transparent' // 填充颜色
+              },
+              emphasis: {
+                iconStyle: {
+                  borderColor: '#fff', // 边框颜色
+                  borderWidth: 2, // 边框宽度
+                  color: 'transparent' // 填充颜色
+                }
+              }
+            },
+          },
+          textStyle: {
+            color: '#fff',
+          }
+        },
         tooltip: {
           trigger: "item",
           formatter: function (val) {
@@ -623,16 +688,29 @@ export default defineComponent({
           }
         },
         legend: {
-          // 图例显示的位置
           orient: 'vertical',
-          left: 'left',
+          left: '2%',
+          bottom: '2%',
+          itemGap: 5,
+          itemWidth: 10,
+          itemHeight: 10,
+          icon: 'roundRect',
           // 图例标签的格式器，可以定制文本
-          formatter: function (name) {
-              return echarts.format.truncateText(name, 90);
-          },
+          // formatter: function (name) {
+          //     return echarts.format.truncateText(name, 50);
+          // },
           // 图例文本样式
           textStyle: {
-              fontSize: 12
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, -1]
           }
         },
         geo: {
@@ -652,14 +730,14 @@ export default defineComponent({
           toolbox: {
             show: true,
             feature: {
-                // 启用缩放工具
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                // 启用还原工具
-                restore: {},
-                // 启用拖拽平移工具
-                move: {}
+              // 启用缩放工具
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              // 启用还原工具
+              restore: {},
+              // 启用拖拽平移工具
+              move: {}
             }
           },
           itemStyle: {
@@ -690,25 +768,25 @@ export default defineComponent({
               // borderWidth: 1,
               // borderColor: '#fff',
               // color: 'rgba(89, 152, 14, 1)',
-              color: '#000',
+              color: '#cf3cc9',
               shadowBlur: 2,
               shadowColor: '#7ca3fb'
             },
             data: [
-            {
+              {
                 "city": "阿尔及利亚",
                 "value": [
-                    -178.535,
-                    35.8639
+                  -178.535,
+                  35.8639
                 ]
-            },
-            {
+              },
+              {
                 "city": "阿尔及利亚111",
                 "value": [
-                    78.535,
-                    -35.8639
+                  78.535,
+                  -35.8639
                 ]
-            }],
+              }],
             roam: true,
             symbolSize: 8,
             zlevel: 1
@@ -721,7 +799,7 @@ export default defineComponent({
               // borderWidth: 1,
               // borderColor: '#fff',
               // color: 'rgba(89, 152, 14, 1)',
-              color: '#cf3cc9',
+              color: '#ff9413',
               shadowBlur: 2,
               shadowColor: '#7ca3fb'
             },
@@ -764,20 +842,49 @@ export default defineComponent({
       const machart_edge = echarts.init(document.getElementById("chart-Edge"));
       const option1 = {
         title: {
+          left: '2%',
           text: 'Resource',
           textStyle: {
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
             fontFamily: 'Gilroy-Medium',
-            fontSize: 16
+            fontSize: 15
           }
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         legend: {
-          data: ['VCPU', 'Memory', 'Storage']
+          data: ['CPU', 'Memory', 'Storage'],
+          left: '150px',
+          right: '150px',
+          top: '2%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         grid: {
           left: '3%',
@@ -795,34 +902,38 @@ export default defineComponent({
         },
         series: [
           {
-            name: 'VCPU',
+            name: 'CPU',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [120, 132, 101, 134, 90, 230, 210],
+            color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: [220, 182, 191, 234, 290, 330, 310],
+            color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
             stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: [150, 232, 201, 154, 190, 330, 410],
+            color: '#6067f5'
           }
         ]
       }
       const option2 = {
         title: {
+          left: '2%',
           text: 'Fog Computing Provider',
           textStyle: {
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
             fontFamily: 'Gilroy-Medium',
-            fontSize: 16
+            fontSize: 15
           }
         },
         tooltip: {
@@ -832,7 +943,16 @@ export default defineComponent({
             crossStyle: {
               color: '#999'
             }
-          }
+          },
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         grid: {
           left: '3%',
@@ -842,7 +962,24 @@ export default defineComponent({
         },
         legend: {
           data: ['FCP', 'Changes'],
-          right: '4%'
+          right: '150px',
+          top: '2%',
+          icon: 'roundRect',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         xAxis: [
           {
@@ -856,23 +993,23 @@ export default defineComponent({
         yAxis: [
           {
             type: 'value',
-            name: 'FCP',
-            min: 0,
-            max: 240,
-            interval: 80,
-            axisLabel: {
-              formatter: '{value}'
-            }
+            // name: 'FCP',
+            // min: 0,
+            // max: 240,
+            // interval: 80,
+            // axisLabel: {
+            //   formatter: '{value}'
+            // }
           },
           {
             type: 'value',
-            name: 'Changes',
-            min: 0,
-            max: 24,
-            interval: 8,
-            axisLabel: {
-              formatter: '{value}'
-            }
+            // name: 'Changes',
+            // min: 0,
+            // max: 24,
+            // interval: 8,
+            // axisLabel: {
+            //   formatter: '{value}'
+            // }
           }
         ],
         series: [
@@ -882,6 +1019,22 @@ export default defineComponent({
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' ml';
+              }
+            },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#3f7bff' },
+                { offset: 0.5, color: '#73a2ff' },
+                { offset: 1, color: '#a6ceff' }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#3f7bff' },
+                  { offset: 0.7, color: '#73a2ff' },
+                  { offset: 1, color: '#a6ceff' }
+                ])
               }
             },
             data: [
@@ -897,26 +1050,56 @@ export default defineComponent({
                 return value + ' °C';
               }
             },
+            color: '#ff9413',
             data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
           }
         ]
       }
       const option3 = {
         title: {
+          left: '2%',
           text: 'GPU',
           textStyle: {
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
             fontFamily: 'Gilroy-Medium',
-            fontSize: 16
+            fontSize: 15
           }
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         legend: {
-          data: ['GPU']
+          data: ['GPU'],
+          left: '150px',
+          right: '150px',
+          top: '2%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         grid: {
           left: '3%',
@@ -937,19 +1120,21 @@ export default defineComponent({
             name: 'GPU',
             type: 'line',
             stack: 'Total',
+            color: '#cf3cc9',
             data: [150, 232, 201, 154, 190, 330, 410]
           }
         ]
       }
       const option4 = {
         title: {
+          left: '2%',
           text: 'Edge Computing Provider',
           textStyle: {
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
             fontFamily: 'Gilroy-Medium',
-            fontSize: 16
+            fontSize: 15
           }
         },
         tooltip: {
@@ -959,7 +1144,25 @@ export default defineComponent({
             crossStyle: {
               color: '#999'
             }
-          }
+          },
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
+          // formatter: function (params) {
+          //   var color = params[0].color; // 获取系列颜色
+          //   console.log(color)
+          //   var icon = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+          //   var seriesName = params[0].seriesName; // 系列名称
+          //   var value = params[0].value; // 数据值
+          //   return icon + seriesName + ': ' + value; // 返回自定义的 tooltip 内容
+          // }
+          // formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
         grid: {
           left: '3%',
@@ -969,7 +1172,24 @@ export default defineComponent({
         },
         legend: {
           data: ['ECP', 'Changes'],
-          right: '4%'
+          right: '150px',
+          top: '2%',
+          icon: 'roundRect',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         xAxis: [
           {
@@ -983,23 +1203,23 @@ export default defineComponent({
         yAxis: [
           {
             type: 'value',
-            name: 'ECP',
-            min: 0,
-            max: 1500,
-            interval: 750,
-            axisLabel: {
-              formatter: '{value}'
-            }
+            // name: 'ECP',
+            // min: 0,
+            // max: 1500,
+            // interval: 750,
+            // axisLabel: {
+            //   formatter: '{value}'
+            // }
           },
           {
             type: 'value',
-            name: 'Changes',
-            min: 0,
-            max: 150,
-            interval: 75,
-            axisLabel: {
-              formatter: '{value}'
-            }
+            // name: 'Changes',
+            // min: 0,
+            // max: 150,
+            // interval: 75,
+            // axisLabel: {
+            //   formatter: '{value}'
+            // }
           }
         ],
         series: [
@@ -1009,6 +1229,22 @@ export default defineComponent({
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' ml';
+              }
+            },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#ff920e' },
+                { offset: 0.5, color: '#ffa438' },
+                { offset: 1, color: '#ffb85a' }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#ff920e' },
+                  { offset: 0.7, color: '#ffa438' },
+                  { offset: 1, color: '#ffb85a' }
+                ])
               }
             },
             data: [
@@ -1024,6 +1260,7 @@ export default defineComponent({
                 return value + ' °C';
               }
             },
+            color: '#6067f5',
             data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
           }
         ]
@@ -1063,7 +1300,7 @@ export default defineComponent({
       small,
       background,
       providerBody,
-      accessToken, expands, activeName, cpLoad, AvgZKRewards,
+      accessToken, expands, activeName, cpLoad, AvgZKRewards, weekList,
       handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, expandChange, getRowKeys, handleClick
     }
   }
@@ -1134,6 +1371,7 @@ export default defineComponent({
           line-height: 1;
         }
         .grid-content {
+          position: relative;
           height: calc(100% - 0.3rem);
           padding: 0.18rem 0.14rem 0.12rem;
           background: @white-color;
@@ -1207,6 +1445,22 @@ export default defineComponent({
               }
               @media screen and (max-width: 768px) {
                 font-size: 15px;
+              }
+            }
+          }
+          .date {
+            position: absolute;
+            right: calc(0.14rem + 2%);
+            top: 0.18rem;
+            width: 90px;
+            .el-select {
+              .el-select__wrapper {
+                border: 1px solid #565656;
+                border-radius: 0.5rem;
+                box-shadow: none;
+                .el-select__placeholder {
+                  color: #95a3bd;
+                }
               }
             }
           }

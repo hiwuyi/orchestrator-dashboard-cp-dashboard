@@ -17,16 +17,20 @@
                 </keep-alive>
               </transition>
             </router-view>
-            <el-backtop :right="20" :bottom="20" />
+            <el-backtop :right="20" :bottom="120" />
           </div>
         </el-main>
       </el-container>
+      <el-footer>
+        <v-foot></v-foot>
+      </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
 import vHead from './Header.vue'
+import vFoot from './Footer.vue'
 import vAside from './Aside.vue'
 import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
@@ -43,7 +47,7 @@ export default defineComponent({
     return {}
   },
   components: {
-    vHead, vAside
+    vHead, vFoot, vAside
   }
 })
 </script>
@@ -58,16 +62,17 @@ export default defineComponent({
     }
   }
   .container {
-    height: 100vh;
+    min-height: 100vh;
     padding: 0;
     overflow: hidden;
-    .el-header {
+    .el-header,
+    .el-footer {
       height: auto;
       padding: 0.15rem 0.5rem;
       background-color: @white-color;
     }
     .el-container {
-      height: calc(100vh - 1rem);
+      // height: calc(100vh - 1rem);
       .el-aside {
         width: 12%;
         min-width: 180px;

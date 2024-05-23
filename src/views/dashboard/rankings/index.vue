@@ -456,11 +456,37 @@ export default defineComponent({
       const machart_resource = echarts.init(document.getElementById("chart-Resource"));
       const option1 = {
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage', 'GPU'],
-          right: '4%'
+          right: '4%',
+          top: '2%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         grid: {
           left: '3%',
@@ -481,25 +507,29 @@ export default defineComponent({
             name: 'CPU',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [120, 132, 101, 134, 90, 230, 210],
+            color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: [220, 182, 191, 234, 290, 330, 310],
+            color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
             stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: [150, 232, 201, 154, 190, 330, 410],
+            color: '#6067f5'
           },
           {
             name: 'GPU',
             type: 'line',
             stack: 'Total',
-            data: [320, 282, 91, 134, 190, 230, 210]
+            data: [320, 282, 91, 134, 190, 230, 210],
+            color: '#cf3cc9'
           }
         ]
       }
@@ -513,11 +543,37 @@ export default defineComponent({
       const machart_resource = echarts.init(document.getElementById("chart-Resource"));
       const option1 = {
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage', 'GPU'],
-          right: '4%'
+          right: '4%',
+          top: '2%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         grid: {
           left: '3%',
@@ -538,25 +594,29 @@ export default defineComponent({
             name: 'CPU',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [120, 132, 101, 134, 90, 230, 210],
+            color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: [220, 182, 191, 234, 290, 330, 310],
+            color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
             stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: [150, 232, 201, 154, 190, 330, 410],
+            color: '#6067f5'
           },
           {
             name: 'GPU',
             type: 'line',
             stack: 'Total',
-            data: [320, 282, 91, 134, 190, 230, 210]
+            data: [320, 282, 91, 134, 190, 230, 210],
+            color: '#cf3cc9'
           }
         ]
       }

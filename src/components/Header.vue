@@ -546,9 +546,10 @@ export default defineComponent({
   :deep(.el-button) {
     border: 0;
     border-radius: 0.08rem;
-    background: linear-gradient(45deg, #025bd5, #3c73ec);
+    background-color: #5580e9;
+    // background: linear-gradient(45deg, #025bd5, #3c73ec);
     color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     font-family: inherit;
   }

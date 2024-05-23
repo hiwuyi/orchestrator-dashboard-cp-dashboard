@@ -100,11 +100,21 @@
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="grid-content">
               <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="grid-content">
               <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(0, 0, 0, 0)"></div>
+                <div class="date">
+                  <el-select v-model="weekList.value" placeholder="Select" size="small">
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </div>
             </div>
           </el-col>
         </el-row>
@@ -309,6 +319,22 @@ export default defineComponent({
       cpScore: {},
       transactionDriveProgram: {},
       providersTotal: {}
+    })
+    const weekList = reactive({
+      value: 'Week',
+      options: [
+        {
+          value: 'Week',
+          label: '1 Week'
+        },
+        {
+          value: 'Month',
+          label: '1 Month'
+        },
+        {
+          value: 'Year',
+          label: '1 Year'
+        }]
     })
 
     function reset (type) {
@@ -853,7 +879,16 @@ export default defineComponent({
           }
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         grid: {
           left: '3%',
@@ -863,7 +898,24 @@ export default defineComponent({
         },
         legend: {
           data: ['Job Failed', 'Job Success'],
-          right: '4%'
+          right: '150px',
+          top: '1%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         xAxis: [
           {
@@ -883,14 +935,46 @@ export default defineComponent({
             type: 'bar',
             data: [
               2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
-            ]
+            ],
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#3f7bff' },
+                { offset: 0.5, color: '#73a2ff' },
+                { offset: 1, color: '#a6ceff' }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#3f7bff' },
+                  { offset: 0.7, color: '#73a2ff' },
+                  { offset: 1, color: '#a6ceff' }
+                ])
+              }
+            },
           },
           {
             name: 'Job Success',
             type: 'bar',
             data: [
               2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
-            ]
+            ],
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#ff920f' },
+                { offset: 0.5, color: '#ffa53c' },
+                { offset: 1, color: '#ffb664' }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#ff920f' },
+                  { offset: 0.7, color: '#ffa53c' },
+                  { offset: 1, color: '#ffb664' }
+                ])
+              }
+            },
           }
         ]
       }
@@ -906,11 +990,37 @@ export default defineComponent({
           }
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         legend: {
           data: ['Claimed Count', 'Waiting'],
-          right: '4%'
+          right: '150px',
+          top: '1%',
+          icon: 'circle',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#95a3bd',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium',
+            // lineHeight: 14,
+            rich: {
+              a: {
+                verticalAlign: 'middle',
+              },
+            },
+            padding: [0, 0, -2, 2]
+          }
         },
         grid: {
           left: '3%',
@@ -931,13 +1041,15 @@ export default defineComponent({
             name: 'Claimed Count',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [120, 132, 101, 134, 90, 230, 210],
+            color: '#ff9413'
           },
           {
             name: 'Waiting',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: [220, 182, 191, 234, 290, 330, 310],
+            color: '#6067f5'
           }
         ]
       }
@@ -1095,7 +1207,7 @@ export default defineComponent({
       background,
       badgeIcon01,
       badgeIcon02,
-      accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData,
+      accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData, weekList,
       handleSizeChange, handleCurrentChange, searchProvider, clearProvider, handleClick
     }
   }
@@ -1246,12 +1358,29 @@ export default defineComponent({
           line-height: 1;
         }
         .grid-content {
+          position: relative;
           width: calc(100% - 0.28rem);
           height: calc(100% - 0.3rem);
           padding: 0.18rem 0.14rem 0.12rem;
           background: @white-color;
           border-radius: 0.18rem;
           box-shadow: 0 0 12px #e6e7eb;
+          .date {
+            position: absolute;
+            right: calc(0.14rem + 2%);
+            top: 0.18rem;
+            width: 90px;
+            .el-select {
+              .el-select__wrapper {
+                border: 1px solid #565656;
+                border-radius: 0.5rem;
+                box-shadow: none;
+                .el-select__placeholder {
+                  color: #95a3bd;
+                }
+              }
+            }
+          }
         }
         .chart-trends {
           width: 100%;

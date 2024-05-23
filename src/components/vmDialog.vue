@@ -1,9 +1,6 @@
 <template>
   <div class="flex-row center">
-    <el-drawer v-model="props.centerDrawerVisible"  direction="rtl" size="50%"
-    :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" 
-    @before-close="closeHandle()" @close="closeHandle()" align-center 
-    class="drawer-body">
+    <el-drawer v-model="props.centerDrawerVisible" direction="rtl" size="50%" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="drawer-body">
       <div class="drawer-content font-18">
         <div class="flex-row space-between name-title">
           <b class="font-27 font-bold">{{props.list.type === 'FCP' ? 'FCPname1' : 'ECPname1'}}</b>
@@ -208,7 +205,16 @@ export default defineComponent({
       const machart_name = echarts.init(document.getElementById("chart-name"));
       const option1 = {
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          color: '#fff',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 11,
+            fontFamily: 'Gilroy-Medium'
+          },
+          icon: 'roundRect',
         },
         grid: {
           left: '3%',
@@ -229,19 +235,22 @@ export default defineComponent({
             name: 'VCPU',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [120, 132, 101, 134, 90, 230, 210],
+            color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            data: [220, 182, 191, 234, 290, 330, 310],
+            color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
             stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: [150, 232, 201, 154, 190, 330, 410],
+            color: '#6067f5'
           }
         ]
       }
