@@ -50,7 +50,8 @@
                 <div class="flex-row font-18 text-capitalize">message</div>
               </template>
               <div class="server font-18">
-                <p class="flex-row center">Signature for swan {{metaAddress}} {{sortanow}}</p>
+                <!--  {{sortanow}} -->
+                <p class="flex-row center">Signing message for CP Account {{metaAddress}} on Swan Provider Dashboard at {{sortanow}}</p>
               </div>
             </el-form-item>
             <el-form-item prop="sign_code">
@@ -160,7 +161,7 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const metaAddress = computed(() => (store.state.metaAddress))
     const cpLoad = ref(false)
-    const sortanow = ref()
+    const sortanow = ref('')
     const ruleForm = reactive({
       name: '',
       email: '',
@@ -221,8 +222,9 @@ export default defineComponent({
       }
     }
     onMounted(async () => {
-      const rightnow = (Date.now() / 1000).toFixed(0)
-      sortanow.value = rightnow - (rightnow % 600)
+      // const rightnow = (Date.now() / 1000).toFixed(0)
+      // sortanow.value = rightnow - (rightnow % 600)
+      sortanow.value = system.$commonFun.getDateTime()
     })
     return {
       system,

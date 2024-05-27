@@ -73,7 +73,7 @@
               <div class="name-style">{{scope.row.contract_address}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="node_id" min-width="100">
+          <el-table-column prop="node_id" min-width="120">
             <template #header>
               <div class="font-20 weight-4">NodeID</div>
             </template>
@@ -121,7 +121,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.score" width="130">
+          <el-table-column prop="computer_provider.score" width="160">
             <template #header>
               <div class="font-20 weight-4">Contribution Score</div>
             </template>
@@ -167,7 +167,7 @@
           </el-col>
         </el-row>
 
-        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersECPLoad">
           <el-table-column type="index" min-width="70">
             <template #header>
               <div class="font-20 weight-4">Ranking</div>
@@ -276,6 +276,7 @@ export default defineComponent({
     const badgeIcon03 = require("@/assets/images/icons/badge-3.png")
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
+    const providersECPLoad = ref(false)
     const providersData = ref([])
     const providerBody = reactive({
       ubiTableData: []
@@ -352,7 +353,7 @@ export default defineComponent({
       providersTableLoad.value = false
     }
     async function getUBITable () {
-      providersTableLoad.value = true
+      providersECPLoad.value = true
       const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
       const params = {
         page_size: paginZK.pageSize,
@@ -369,7 +370,7 @@ export default defineComponent({
         providerBody.ubiTableData = []
         if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
       }
-      providersTableLoad.value = false
+      providersECPLoad.value = false
     }
     async function getList (list) {
       let l = list || []
@@ -422,6 +423,7 @@ export default defineComponent({
       providersData.value = []
       providersLoad.value = false
       providersTableLoad.value = false
+      providersECPLoad.value = false
       networkInput.name = ''
       networkInput.contract_address = ''
       networkZK.owner_addr = ''
@@ -452,7 +454,7 @@ export default defineComponent({
       //     vmOperate.centerDrawerVisible = true
       //     break;
       // }
-      router.push({ name: 'accountInfo', params: { type: 'FCP' } })
+      router.push({ name: 'accountInfo', params: { type: activeName.value } })
     }
     function hardClose (dialog, type) {
       vmOperate.centerDrawerVisible = dialog
@@ -466,6 +468,7 @@ export default defineComponent({
       metaAddress,
       providersLoad,
       providersTableLoad,
+      providersECPLoad,
       providersData,
       providerBody,
       networkInput,

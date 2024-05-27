@@ -496,6 +496,26 @@ function AddFormat (num1, num2) {
   }
 }
 
+
+function getDateTime () {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // 月份是从0开始的，所以需要加1
+  const day = now.getDate();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  // 格式化月份和日期，保持两位数
+  const formattedMonth = month < 10 ? '0' + month : month;
+  const formattedDay = day < 10 ? '0' + day : day;
+  const formattedHours = hours < 10 ? '0' + hours : hours;
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+  const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+  return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
 let paginationWidth = document.documentElement.clientWidth >= 768
 window.addEventListener("resize", function () {
   const newParams = document.documentElement.clientWidth >= 768
@@ -531,5 +551,6 @@ export default {
   floorFormat,
   unifyNumber,
   AddFormat,
+  getDateTime,
   paginationWidth
 }

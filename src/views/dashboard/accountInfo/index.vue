@@ -25,7 +25,7 @@
                     <p>Account type:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <div class="collateral m font-18">ECP</div>
+                    <div class="collateral m font-18">{{activeName}}</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Owner Address:</p>
@@ -327,7 +327,7 @@ export default defineComponent({
           label: 'FCP Reward List'
         },
         {
-          value: 'UBI',
+          value: 'ECP',
           label: 'ZK Proof List'
         },
         {
@@ -406,8 +406,8 @@ export default defineComponent({
         activeName.value = 'FCP'
         infoList.value = 'FCP'
       } else {
-        activeName.value = 'UBI'
-        infoList.value = 'UBI'
+        activeName.value = 'ECP'
+        infoList.value = 'ECP'
       }
       init()
     }

@@ -451,7 +451,7 @@ export default defineComponent({
       } else if (key === 'overview') router.push({ path: '/overview' })
       else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
       else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
-      else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'Space' } })
+      else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'FCP' } })
       else if (key === 'resource') router.push({ name: 'resource' })
     }
     async function cpCollateral () {

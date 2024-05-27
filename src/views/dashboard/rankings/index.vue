@@ -144,7 +144,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.active_deployment" sortable width="150">
+          <el-table-column prop="computer_provider.active_deployment" sortable width="170">
             <template #header>
               <div class="font-20 weight-4">Active deployment</div>
             </template>
