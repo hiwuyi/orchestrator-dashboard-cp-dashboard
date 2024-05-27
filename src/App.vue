@@ -136,6 +136,13 @@ export default {
 .text-right {
   text-align: right;
 }
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-white {
+  white-space: nowrap;
+}
 
 .flex-row {
   display: flex;

@@ -39,7 +39,7 @@
             </svg>
           </a>
         </div>
-        <a :href="`mailto:${emailAddress}`" class="font-16">{{emailAddress}}</a>
+        <!-- <a :href="`mailto:${emailAddress}`" class="font-16">{{emailAddress}}</a> -->
       </div>
     </el-col>
   </el-row>
@@ -115,29 +115,29 @@ export default defineComponent({
         @media screen and (max-width: 1600px) {
           height: 25px;
         }
+        @media screen and (max-width: 768px) {
+          height: 20px;
+        }
       }
     }
     .media-list {
       width: 100%;
       a {
         display: block;
-        margin: 0 12px 0 0;
+        margin: 0 0 0 0.12rem;
         @media screen and (min-width: 2160px) {
-          margin: 0 10px 0 0;
+          margin: 0 0 0 0.1rem;
         }
         @media screen and (max-width: 768px) {
-          margin: 0 18px 0 0;
+          margin: 0 0 0 0.18rem;
         }
         @media screen and (max-width: 600px) {
-          margin: 0 24px 0 0;
-        }
-        @media screen and (max-width: 540px) {
-          margin: 0 36px 0 0;
+          margin: 0 0.24rem 0 0;
         }
         svg {
           display: block;
-          width: 0.25rem;
-          height: 0.25rem;
+          width: 0.22rem;
+          height: 0.22rem;
           cursor: pointer;
           fill: #000;
           opacity: 1;
@@ -147,12 +147,8 @@ export default defineComponent({
             height: 15px;
           }
           @media screen and (max-width: 768px) {
-            width: 40px;
-            height: 40px;
-          }
-          @media screen and (max-width: 600px) {
-            width: 60px;
-            height: 60px;
+            width: 0.3rem;
+            height: 0.3rem;
           }
           &:hover {
             opacity: 0.9;

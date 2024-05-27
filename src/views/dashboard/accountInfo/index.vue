@@ -11,7 +11,7 @@
             <div class="providers-cp s">
               <div class="flex-row space-between name-title">
                 <b class="font-27 font-bold">Account Info</b>
-                <a @click="loginMethod" class="font-17">Claim Account</a>
+                <a @click="handleSelect('claimAccount', {}, 'claimAccount')" class="font-17">Claim Account</a>
               </div>
               <div class="font-22 note b">
                 <el-row>
@@ -25,7 +25,7 @@
                     <p>Account type:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{ringGraphData.data.average_score_total || '-'}}</p>
+                    <div class="collateral m font-18">ECP</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Owner Address:</p>
@@ -33,9 +33,9 @@
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
                       {{system.$commonFun.hiddAddress(ringGraphData.data.cpu_total)}}
-                      <svg @click="system.$commonFun.copyContent(ringGraphData.data.cpu_total, 'Copied')" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      <svg @click="system.$commonFun.copyContent(ringGraphData.data.cpu_total, 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
+                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
                       </svg>
                       <svg @click="system.$commonFun.goLink(`${system.$explorerLink}${ringGraphData.data.cpu_total}`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="16" height="16">
                         <path d="M892 928.1H134c-19.9 0-36-16.1-36-36v-758c0-19.9 16.1-36 36-36h314.1c19.9 0 36 16.1 36 36s-16.1 36-36 36H170v686h686V579.6c0-19.9 16.1-36 36-36s36 16.1 36 36v312.5c0 19.9-16.1 36-36 36z" fill="#2c2c2c" p-id="2409"></path>
@@ -50,9 +50,9 @@
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.memory_total, 'Copied')">
                       {{system.$commonFun.hiddAddress(ringGraphData.data.memory_total)}}
-                      <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      <svg data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
+                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
                       </svg>
                     </div>
                   </el-col>
@@ -62,9 +62,9 @@
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.gpu_total, 'Copied')">
                       {{system.$commonFun.hiddAddress(ringGraphData.data.gpu_total)}}
-                      <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                        <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                      <svg data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
+                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
                       </svg>
                     </div>
                   </el-col>
@@ -95,7 +95,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div class="collateral font-18" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
+                    <div :class="{'collateral font-18':true,'is-disabled': !metaAddress}" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
                     <div class="flex-row space-between font-16 width">
@@ -110,7 +110,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div class="collateral font-18" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
+                    <div :class="{'collateral font-18':true,'is-disabled': !metaAddress}" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
                   </el-col>
                 </el-row>
               </div>
@@ -126,7 +126,9 @@
               <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
                 <el-select v-model="weekList.value" placeholder="Select" size="small">
-                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                    <div class="font-22">{{item.label}}</div>
+                  </el-option>
                 </el-select>
               </div>
             </div>
@@ -136,7 +138,9 @@
               <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
                 <el-select v-model="weekList.value" placeholder="Select" size="small">
-                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                    <div class="font-22">{{item.label}}</div>
+                  </el-option>
                 </el-select>
               </div>
             </div>
@@ -187,90 +191,121 @@
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.storage_total)}}</p>
             </el-col>
           </el-row>
-          <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
-            <el-table-column prop="name" min-width="120">
-              <template #header>
-                <div class="font-20 weight-4">Name</div>
-              </template>
-              <template #default="scope">
-                <div class="badge">
-                  {{scope.row.name}}
-                </div>
-              </template>
-            </el-table-column>
-            <!-- <el-table-column prop="country" label="Country" /> -->
-            <el-table-column prop="computer_provider.status" width="120">
-              <template #header>
-                <div class="font-20 weight-4">status</div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="computer_provider.score" width="120">
-              <template #header>
-                <div class="font-20 weight-4">Score</div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="gpu_list" min-width="140">
-              <template #header>
-                <div class="font-20 weight-4">GPU</div>
-              </template>
-              <template #default="scope">
-                <div class="badge flex-row center">
-                  <div class="flex-row center machines-style">
-                    <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
-                      {{gpu}}
-                    </span>
+          <div class="font-16">
+            <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+              <el-table-column prop="name" min-width="120">
+                <template #header>
+                  <div class="font-20 weight-4">Name</div>
+                </template>
+                <template #default="scope">
+                  <div class="badge flex-row center font-16 name-style" @click="handleSelect('ranking', scope.row, 'ECP')">
+                    {{scope.row.name}}
                   </div>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="region" min-width="100">
-              <template #header>
-                <div class="font-20 weight-4">Region</div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="uptime">
-              <template #header>
-                <div class="font-20 weight-4">Uptime</div>
-              </template>
-              <template #default="scope">
-                <div>
-                  {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-          />
+                </template>
+              </el-table-column>
+              <el-table-column prop="type">
+                <template #header>
+                  <div class="font-20 weight-4">type</div>
+                </template>
+                <template #default="scope">
+                  <div class="badge flex-row center font-16">
+                    FCP
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- <el-table-column prop="country" label="Country" /> -->
+              <el-table-column prop="computer_provider.status" width="120">
+                <template #header>
+                  <div class="font-20 weight-4">status</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="computer_provider.score" width="120">
+                <template #header>
+                  <div class="font-20 weight-4">Score</div>
+                </template>
+                <template #default="scope">
+                  <div class="badge flex-row center font-16">
+                    {{scope.row.type === 'FCP'?scope.row.computer_provider.score:'-'}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="multi_address" width="120">
+                <template #header>
+                  <div class="font-20 weight-4">Multi Address</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="gpu_list" min-width="140">
+                <template #header>
+                  <div class="font-20 weight-4">GPU</div>
+                </template>
+                <template #default="scope">
+                  <div class="badge flex-row center">
+                    <div class="flex-row center machines-style">
+                      <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
+                        {{gpu}}
+                      </span>
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="region" min-width="100">
+                <template #header>
+                  <div class="font-20 weight-4">Region</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="task" min-width="140">
+                <template #header>
+                  <div class="font-20 weight-4">Completed(%)</div>
+                </template>
+                <template #default="scope">
+                  <div v-if="scope.row.type === 'ECP'">
+                    {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+                  </div>
+                  <span v-else>-</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="uptime">
+                <template #header>
+                  <div class="font-20 weight-4">Uptime</div>
+                </template>
+                <template #default="scope">
+                  <div v-if="scope.row.type === 'FCP'">
+                    {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                  </div>
+                  <span v-else>-</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div class="flex-row center pagination-style font-16">
+              Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+              <!-- hide-on-single-page -->
+              <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+                :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="providers-cp">
         <div class="search-body flex-row font-18">
           <el-select v-model="infoList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="font-18">{{item.label}}</div>
+            </el-option>
           </el-select>
-          <span class="font-22">Task UUID: </span>
-          <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task UUID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">NodeID: </span>
-          <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
         </div>
-        <payment-history v-if="activeName === 'Space'"></payment-history>
+        <payment-history v-if="activeName === 'FCP'"></payment-history>
         <ubi-history v-else></ubi-history>
       </div>
     </div>
 
-    <vm-dialog v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
+    <vm-drawer v-if="vmOperate.centerDrawerVisible && vmOperate.type === 'drawer'" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-drawer>
+    <vm-dialog v-else-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-dialog>
   </section>
 </template>
 
 <script>
+import vmDrawer from "@/components/vmDrawer"
 import vmDialog from "@/components/vmDialog"
 import paymentHistory from "@/components/paymentHistory"
 import ubiHistory from "@/components/UBIHistory"
@@ -284,7 +319,7 @@ import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
-    Search, paymentHistory, ubiHistory, vmDialog
+    Search, paymentHistory, ubiHistory, vmDrawer, vmDialog
   },
   setup () {
     const store = useStore()
@@ -293,8 +328,6 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
-    const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
     const providersData = ref([])
@@ -308,21 +341,14 @@ export default defineComponent({
       total_deployments: 0,
       active_applications: 0
     })
-    const paginZK = reactive({
-      pageSize: 5,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
     const small = ref(false)
     const background = ref(false)
     const cpLoad = ref(false)
     const infoList = reactive({
-      value: 'Space',
+      value: 'FCP',
       options: [
         {
-          value: 'Space',
+          value: 'FCP',
           label: 'FCP Reward List'
         },
         {
@@ -331,15 +357,11 @@ export default defineComponent({
         }]
     })
     const networkInput = ref('')
-    const networkZK = reactive({
-      contract_address: '',
-      owner_addr: '',
-      node_id: ''
-    })
     const activeName = ref('FCP')
     const vmOperate = reactive({
       centerDrawerVisible: false,
-      row: {}
+      row: {},
+      type: 'dialog'
     })
     const ringGraphData = reactive({
       data: {},
@@ -366,10 +388,23 @@ export default defineComponent({
 
     async function handleSelect (key, row, type) {
       switch (key) {
+        case 'claimAccount':
+          vmOperate.row = row
+          vmOperate.row.type = type
+          vmOperate.type = 'dialog'
+          vmOperate.centerDrawerVisible = true
+          break;
         case 'cpProfile':
           vmOperate.row = row
           vmOperate.row.type = type
+          vmOperate.type = 'dialog'
           vmOperate.centerDrawerVisible = metaAddress.value === '' ? false : true
+          break;
+        case 'ranking':
+          vmOperate.row = row
+          vmOperate.row.type = type
+          vmOperate.type = 'drawer'
+          vmOperate.centerDrawerVisible = true
           break;
       }
     }
@@ -387,9 +422,9 @@ export default defineComponent({
       providersTableLoad.value = false
       providersLoad.value = false
       networkInput.value = ''
-      if (route.params.type === 'Space') {
-        activeName.value = 'Space'
-        infoList.value = 'Space'
+      if (route.params.type === 'FCP') {
+        activeName.value = 'FCP'
+        infoList.value = 'FCP'
       } else {
         activeName.value = 'UBI'
         infoList.value = 'UBI'
@@ -397,7 +432,7 @@ export default defineComponent({
       init()
     }
     const handleClick = async (value) => {
-      activeName.value = value || 'Space'
+      activeName.value = value || 'FCP'
       router.push({ name: 'accountInfo', params: { type: activeName.value } })
       cpLoad.value = true
       await system.$commonFun.timeout(500)
@@ -1220,31 +1255,6 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }, 700)
-    function clearProvider () {
-      networkInput.value = ''
-      pagin.pageSize = 10
-      pagin.pageNo = 1
-      init()
-    }
-    let lastTime = 0
-    async function throttle () {
-      // Prevent multiple signatures
-      let now = new Date().valueOf();
-      if (lastTime > 0 && (now - lastTime) <= 2000) return false
-      lastTime = now
-      return true
-    }
-    async function loginMethod () {
-      const time = await throttle()
-      if (!time) return false
-      system.$commonFun.Init(async (addr, chain) => {
-        providersLoad.value = true
-        // getnetID.value = await system.$commonFun.web3Init.eth.net.getId()
-        await system.$commonFun.timeout(500)
-        if (accessToken.value !== '') providersLoad.value = false
-        else system.$commonFun.login()
-      })
-    }
     onActivated(async () => {
       reset('init')
       changetype()
@@ -1259,15 +1269,11 @@ export default defineComponent({
       providersData,
       providerBody,
       networkInput,
-      networkZK,
       pagin,
-      paginZK,
       small,
       background,
-      badgeIcon01,
-      badgeIcon02,
       accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData, weekList,
-      handleSizeChange, handleCurrentChange, searchProvider, clearProvider, handleClick, loginMethod, handleSelect,
+      handleSizeChange, handleCurrentChange, searchProvider, handleClick, handleSelect,
       hardClose
     }
   }
@@ -1398,6 +1404,13 @@ export default defineComponent({
               color: @white-color;
               line-height: 1;
               cursor: pointer;
+              &.m {
+                margin: 0;
+              }
+              &.is-disabled {
+                opacity: 0.8;
+                cursor: no-drop;
+              }
             }
           }
         }
@@ -1815,11 +1828,27 @@ export default defineComponent({
       background-color: rgb(38, 39, 47);
       height: 0;
     }
+    .pagination-style {
+      color: #878c93;
+    }
     .el-pagination {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
+      font-size: inherit;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
         color: #878c93;
       }
@@ -1829,9 +1858,15 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
+        font-size: inherit;
         color: #878c93;
         border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {

@@ -1,8 +1,85 @@
 <template>
   <div class="flex-row center">
-    <el-dialog v-model="props.centerDrawerVisible" :title="`${props.list.type} Collateral`" :show-close="true" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="dialog-body">
+    <el-dialog v-model="props.centerDrawerVisible" :show-close="true" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="dialog-body">
+      <template #header>
+        <div class="flex-row font-24 header-title">
+          <span v-if="props.list.type === 'claimAccount'">Signature Verifcation</span>
+          <span v-else>{{`${props.list.type} Collateral`}}</span>
+        </div>
+      </template>
+
       <div class="dialog-content font-18">
-        <el-row class="font-18 note">
+        <div v-if="props.list.type === 'claimAccount'">
+          <el-form ref="ruleAddRef" :model="ruleForm" :rules="rules" label-position="top" class="demo-ruleForm font-18" status-icon @submit.native.prevent>
+            <el-form-item prop="owner_address">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">Owner Address</div>
+              </template>
+              <label class="label">
+                <div class="flex-row">
+                  {{metaAddress}} ffffff
+                </div>
+              </label>
+            </el-form-item>
+            <el-form-item prop="name">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">Account Name
+                  <span class="red">*</span>
+                </div>
+              </template>
+              <label class="label" for="name">
+                <div class="flex-row">
+                  <el-input v-model="ruleForm.name" placeholder=" " />
+                </div>
+              </label>
+            </el-form-item>
+            <el-form-item prop="email">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">Email Address
+                  <span class="red">*</span>
+                </div>
+              </template>
+              <label class="label" for="email">
+                <div class="flex-row">
+                  <el-input v-model="ruleForm.email" placeholder=" " />
+                </div>
+              </label>
+            </el-form-item>
+            <el-form-item prop="message">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">message</div>
+              </template>
+              <div class="server font-18">
+                <p class="flex-row center">Signature for swan {{metaAddress}} {{sortanow}}</p>
+              </div>
+            </el-form-item>
+            <el-form-item prop="sign_code">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">Sign code</div>
+              </template>
+              <div class="flex-row nowrap copy-style width">
+                <div class="server sign-code font-18">{{'lotus wallet sign xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}}</div>
+                <svg @click="system.$commonFun.copyContent('lotus wallet sign xxxxxxxxxxxxxxxxx', 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
+                  <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
+                </svg>
+              </div>
+            </el-form-item>
+            <el-form-item prop="signature">
+              <template #label>
+                <div class="flex-row font-18 text-capitalize">signature
+                  <span class="red">*</span>
+                </div>
+              </template>
+              <label class="label" for="signature">
+                <div class="flex-row">
+                  <el-input v-model="ruleForm.signature" placeholder="Copy the above sign code, sign it and enter the signature" />
+                </div>
+              </label>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-row class="font-18 note" v-else v-loading="ruleForm.show">
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
             <p>Available Balance:</p>
           </el-col>
@@ -21,12 +98,21 @@
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
             <p>0.9984 sETH</p>
           </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <p>Collateral Amount:</p>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+            <div class="flex-row nowrap">
+              <el-input-number v-model="ruleForm.amount" controls-position="right" />
+              <span class="text-white">&nbsp;sETH</span>
+            </div>
+          </el-col>
         </el-row>
       </div>
       <template #footer>
         <div class="dialog-footer flex-row flex-end font-18">
           <el-button @click="closeHandle()">Cancel</el-button>
-          <el-button @click="closeHandle()" type="primary">OK</el-button>
+          <el-button @click="cpCollateral" :disabled="!ruleForm.amount" type="primary">Submit</el-button>
         </div>
       </template>
     </el-dialog>
@@ -53,6 +139,8 @@ import {
   Warning
 } from '@element-plus/icons-vue'
 import * as echarts from "echarts"
+import CollateralABI from '@/utils/abi/CollateralContract.json'
+
 export default defineComponent({
   name: 'Popup',
   components: {
@@ -63,88 +151,88 @@ export default defineComponent({
     list: {
       type: Object,
       default: {
-        type: 'stop',
-        public_ipv4: ''
+        type: 'FCP'
       }
     }
   },
   setup (props, context) {
     const store = useStore()
     const system = getCurrentInstance().appContext.config.globalProperties
+    const metaAddress = computed(() => (store.state.metaAddress))
     const cpLoad = ref(false)
+    const sortanow = ref()
+    const ruleForm = reactive({
+      name: '',
+      email: '',
+      sign_code: '',
+      signature: '',
+      amount: NaN,
+      show: false,
+      tx_hash: ''
+    })
+    const rules = reactive({
+      name: [
+        { required: true, message: 'This field is required.', trigger: 'blur' },
+      ],
+      email: [
+        { required: true, message: 'This field is required.', trigger: 'blur' },
+        {
+          type: 'email',
+          message: 'Please input correct email address',
+          trigger: ['blur', 'change'],
+        }
+      ],
+      signature: [
+        { required: true, message: 'This field is required.', trigger: 'blur' },
+      ]
+    })
+    const collateralAddress = process.env.VUE_APP_COLLATERAL_CONTACT
+    const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
 
     function closeHandle (type) {
       context.emit('hardClose', false, type)
     }
-    const changetype = () => {
-      cpLoad.value = true
-      const machart_name = echarts.init(document.getElementById("chart-name"));
-      const option1 = {
-        tooltip: {
-          trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
-          color: '#fff',
-          borderWidth: 0,
-          textStyle: {
-            color: '#fff',
-            fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
-          },
-          icon: 'roundRect',
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: 'VCPU',
-            type: 'line',
-            stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210],
-            color: '#7ecf51'
-          },
-          {
-            name: 'Memory',
-            type: 'line',
-            stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310],
-            color: '#ff9413'
-          },
-          {
-            name: 'Storage',
-            type: 'line',
-            stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410],
-            color: '#6067f5'
-          }
-        ]
+    function cpCollateral () {
+      ruleForm.show = true
+      try {
+        if (Number(ruleForm.amount) >= 0) cpDeposit()
+        else ruleForm.show = false
+      } catch{
+        ruleForm.show = false
       }
-      machart_name.setOption(option1);
-      window.addEventListener("resize", function () {
-        machart_name.resize();
-      })
-      cpLoad.value = false
+    }
+    async function cpDeposit () {
+      try {
+        const amount = system.$commonFun.web3Init.utils.toWei(String(ruleForm.amount), 'ether')
+
+        let payMethod = collateralContract.methods.deposit(metaAddress.value)
+        let payGasLimit = await payMethod.estimateGas({ from: metaAddress.value })
+        const tx = await payMethod.send({ from: metaAddress.value, gasLimit: Math.floor(payGasLimit * 5), value: amount })
+          .on('transactionHash', async (transactionHash) => {
+            console.log('transactionHash:', transactionHash)
+            ruleForm.tx_hash = transactionHash
+            ruleForm.show = false
+          })
+          .on('error', () => ruleForm.show = false)
+      } catch (err) {
+        console.log('err', err)
+        if (err && err.message) system.$commonFun.messageTip('error', err.message)
+        ruleForm.show = false
+      }
     }
     onMounted(async () => {
-      await system.$commonFun.timeout(500)
-      changetype()
+      const rightnow = (Date.now() / 1000).toFixed(0)
+      sortanow.value = rightnow - (rightnow % 600)
     })
     return {
       system,
       props,
+      metaAddress,
       cpLoad,
-      closeHandle
+      sortanow,
+      ruleForm,
+      rules,
+      closeHandle, cpCollateral
     }
   }
 })
@@ -156,6 +244,7 @@ export default defineComponent({
     width: 35%;
     max-width: 900px;
     min-width: 300px;
+    padding-top: 5px;
     border-radius: 6px;
     word-break: break-word;
     color: #6c6f72;
@@ -241,304 +330,116 @@ export default defineComponent({
               }
             }
           }
-          .el-table {
-            width: 100%;
-            margin: 0.2rem auto;
-            background-color: transparent;
-            font-size: inherit;
-            border-radius: 0.1rem;
-            border: 1px solid #c6cddc;
-            tr {
-              background-color: transparent;
-              th {
-                word-break: break-word;
-                padding: 0.18rem 0;
-                background-color: @theme-color;
+        }
+        .el-form {
+          width: 100%;
+          padding: 0.1rem 0 0;
+          .el-form-item {
+            margin: 0 0 15px;
+            --font-size: inherit;
+            &:last-child {
+              margin-bottom: 10px;
+            }
+            .el-form-item__label {
+              &:before {
+                display: none;
+              }
+              .red {
+                padding: 0 0 0 0.1rem;
+                color: #f56c6c;
+              }
+            }
+            .el-form-item__content {
+              line-height: 1.2;
+              @media screen and (max-width: 768px) {
+                width: 100%;
+              }
+              @media screen and (max-width: 600px) {
+                width: 100%;
+                flex: auto;
+              }
+              .spacing {
+                width: 25px;
+              }
+              .label {
+                width: 100%;
+                text-align: left;
+                color: #606060;
+                .unit {
+                  margin: 0 0 0 8px;
+                  white-space: nowrap;
+                }
+              }
+              .el-input,
+              .el-textarea,
+              .el-select {
+                width: 100%;
+                margin: 0;
+                font-family: inherit;
                 font-size: inherit;
-                border: 0;
-                &.ascending {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #fff;
-                      }
-                      &.descending {
-                        border-top-color: #d0dcf9;
-                      }
-                    }
+                &.is-disabled {
+                  background-color: #e5e7ed;
+                  border-radius: 5px;
+                  .el-input__wrapper,
+                  .el-textarea__inner,
+                  .el-select__wrapper {
+                    border-color: #e5e7ed;
                   }
                 }
-                &.descending {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #d0dcf9;
-                      }
-                      &.descending {
-                        border-top-color: #fff;
-                      }
-                    }
+                .el-input__wrapper,
+                .el-textarea__inner,
+                .el-select__wrapper {
+                  width: 100%;
+                  height: auto;
+                  padding: 8px 12px;
+                  background-color: transparent;
+                  font-family: inherit;
+                  font-size: inherit;
+                  line-height: 1.2;
+                  border-radius: 5px;
+                  border: 1px solid @theme-color;
+                  box-shadow: none;
+                  &.el-select__wrapper {
+                    padding: 11px 12px;
                   }
-                }
-                .cell {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  color: @white-color;
-                  word-break: break-word;
-                  text-transform: capitalize;
-                  text-align: center;
-                  line-height: 1.1;
-                  @media screen and (max-width: 540px) {
-                    font-size: 12px;
+                  @media screen and (max-width: 768px) {
+                    width: 100%;
                   }
-                  .el-table__column-filter-trigger {
-                    i {
-                      margin: 0 0 0 4px;
-                      color: @white-color;
-                    }
-                  }
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #d0dcf9;
-                      }
-                      &.descending {
-                        border-top-color: #d0dcf9;
-                      }
-                    }
+                  .el-input__inner {
+                    height: auto;
+                    color: @primary-color;
+                    line-height: 1.2;
                   }
                 }
               }
-              td {
-                padding: 0.08rem 0;
-                background-color: @white-color;
-                font-size: inherit;
-                color: #3d3d3d;
-                border-color: #c6cddc;
-                text-align: center;
-                .cell {
-                  line-height: 1.1;
-                }
-                i {
-                  margin-right: 5px;
-                  color: @text-color;
-                  font-size: 18px;
-                  @media screen and (max-width: 1260px) {
-                    font-size: 16px;
-                  }
-                }
-                .service-body {
-                  padding: 0 0.25rem 0.1rem;
-                  // color: #333;
-                  // border-top: rgb(220, 223, 230) 1px solid;
-                  // border-bottom: rgb(220, 223, 230) 1px solid;
-                  .tit {
-                    margin: 0.2rem 0 0;
-                    font-size: 16px;
-                    font-weight: 500;
-                    text-transform: capitalize;
-                    @media screen and (max-width: 1260px) {
-                      font-size: 14px;
-                    }
-                  }
-                  .desc {
-                    padding: 0 0 0.1rem;
-                    font-size: 14px;
-                    @media screen and (max-width: 1260px) {
-                      font-size: 12px;
-                    }
-                  }
-                  .list {
-                    padding: 0.1rem 0 0;
-                    .li-title {
-                      width: 100%;
-                      padding: 0 0 0.1rem;
-                      border-bottom: 1px solid #26272f;
-                    }
-                    ul {
-                      display: flex;
-                      align-items: stretch;
-                      justify-content: space-between;
-                      flex-wrap: wrap;
-                      margin: 0 auto 0.25rem;
-                      @media screen and (max-width: 768px) {
-                        justify-content: flex-start;
-                      }
-                      li {
-                        width: 27%;
-                        margin-right: 6%;
-                        @media screen and (max-width: 768px) {
-                          width: auto;
-                          margin-right: 0.5rem;
-                        }
-                        &.m-r {
-                          margin-right: 0;
-                        }
-                        .flex-row {
-                          flex-wrap: wrap;
-                          .li-body {
-                            width: 27%;
-                            margin-right: 6%;
-                            @media screen and (max-width: 768px) {
-                              width: auto;
-                              margin-right: 0.5rem;
-                            }
-                          }
-                        }
-                        .li-body {
-                          position: relative;
-                          padding: 0.15rem;
-                          margin: 0.3rem 0;
-                          background-color: #0d0e12;
-                          border-radius: 5px;
-                          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-                          -webkit-backdrop-filter: blur(5px);
-                          backdrop-filter: blur(5px);
-                          border: 1px solid rgba(255, 255, 255, 0.2);
-                          border-radius: 0.1rem;
-                          animation: glow 1s ease-in-out infinite alternate;
-                          @media screen and (max-width: 768px) {
-                            padding: 0.15rem 0.3rem;
-                          }
-                          p {
-                            padding: 3px 0;
-                            font-size: 14px;
-                            line-height: 1.3;
-                            text-align: center;
-                            @media screen and (max-width: 1260px) {
-                              font-size: 12px;
-                            }
-                            strong,
-                            b {
-                              margin-right: 5px;
-                              font-size: 17px;
-                              @media screen and (max-width: 1260px) {
-                                font-size: 15px;
-                              }
-                              @media screen and (max-width: 540px) {
-                                font-size: 13px;
-                              }
-                            }
-                            &.t {
-                              text-transform: capitalize; // color: #808290;
-                            }
-                            &.t-capitalize {
-                              text-transform: uppercase;
-                            }
-                            &:nth-child(2) {
-                              strong {
-                                color: #4db470;
-                              }
-                            }
-                            &:nth-child(3) {
-                              strong {
-                                color: #488fc3;
-                              }
-                            }
-                            &:nth-child(4) {
-                              strong {
-                                color: #9266a9;
-                              }
-                            }
-                          }
-                          &.li-gpu {
-                            &::before {
-                              position: absolute;
-                              content: "";
-                              right: 0.1rem;
-                              top: 0.1rem;
-                              width: 7px;
-                              height: 7px;
-                              background-color: orange;
-                              border-radius: 7px;
-                            }
-                          }
-                          &.li-status {
-                            &::before {
-                              background-color: #8bc34a;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                  .el-divider--horizontal {
-                    margin: 0.1rem 0;
-                  }
-                }
-                .name-style {
-                  color: @theme-color;
-                  cursor: pointer;
-                  &:hover {
-                    text-decoration: underline;
-                  }
-                }
-                .copy-style {
-                  cursor: pointer;
-                  flex-wrap: wrap;
-                  svg {
-                    margin: 0 0 0 0.05rem;
-                  }
-                }
-                .badge {
-                  display: flex;
-                  align-items: center;
-                  white-space: normal;
-                  word-break: break-word;
-                  .img {
-                    width: 0.23rem;
-                    height: 0.23rem;
-                    margin-right: 0.15rem;
-                    @media screen and (max-width: 1260px) {
-                      width: 20px;
-                      height: 20px;
-                    }
-                  }
-                  .machines-style {
-                    flex-wrap: wrap;
-                    span {
-                      padding: 3px 10px;
-                      margin: 3px 5px 3px 0;
-                      background-color: @theme-color;
-                      font-size: 12px;
-                      border-radius: 45px;
-                      word-break: break-word;
-                      line-height: 1;
-                      color: @white-color;
-                    }
-                  }
-                }
-                &.el-table__expanded-cell {
-                  padding: 0.32rem 0.64rem;
-                  // border: 1px solid @white-color;
-                  &:hover {
-                    background-color: @primary-color !important;
-                  }
-                }
-              }
-              // &.expanded,
-              // &:hover {
-              //   td {
-              //     background-color: rgba(255, 255, 255, 0.85);
-              //     color: #000;
-              //     i {
-              //       color: #000;
-              //     }
-              //   }
-              // }
-              &.expanded {
-                border: 1px solid @white-color;
-                border-collapse: collapse;
+              .el-form-item__error {
+                font-size: 12px;
               }
             }
           }
-          .el-table--border .el-table__inner-wrapper::after,
-          .el-table--border::after,
-          .el-table--border::before,
-          .el-table__inner-wrapper::before {
-            background-color: rgb(38, 39, 47);
-            height: 0;
+        }
+        .copy-style {
+          cursor: pointer;
+          flex-wrap: wrap;
+          svg {
+            margin: 0 0 0 0.05rem;
+          }
+        }
+        .server {
+          width: 100%;
+          padding: 13px 10px;
+          margin: 0;
+          background-color: #e5e7ed;
+          border-radius: 6px;
+          color: #7f828c;
+          &.sign-code {
+            width: calc(100% - 50px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          b {
+            padding: 0 0 0 6px;
           }
         }
       }

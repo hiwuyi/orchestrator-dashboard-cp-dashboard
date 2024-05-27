@@ -222,7 +222,9 @@
                   <div class="grid-content">
                     <h6 class="font-14 weight-4 text-center flex-row nowrap">
                       <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
-                        <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value" />
+                        <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
+                          <div class="font-14">{{item.value}}</div>
+                        </el-option>
                       </el-select>
                       Avg ZK rewards
                     </h6>
@@ -314,7 +316,9 @@
                 <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                      <div class="font-14">{{item.label}}</div>
+                    </el-option>
                   </el-select>
                 </div>
               </div>
@@ -324,7 +328,9 @@
                 <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                      <div class="font-14">{{item.label}}</div>
+                    </el-option>
                   </el-select>
                 </div>
               </div>
@@ -334,7 +340,9 @@
                 <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                      <div class="font-14">{{item.label}}</div>
+                    </el-option>
                   </el-select>
                 </div>
               </div>
@@ -344,7 +352,9 @@
                 <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                      <div class="font-14">{{item.label}}</div>
+                    </el-option>
                   </el-select>
                 </div>
               </div>
@@ -863,6 +873,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage'],
@@ -905,21 +926,21 @@ export default defineComponent({
             name: 'CPU',
             type: 'line',
             stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
             stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
             stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
           }
         ]
@@ -953,6 +974,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ': ' + item.value + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         grid: {
           left: '3%',
@@ -1078,6 +1110,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ' 23Used 26Free' + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         legend: {
           data: ['GPU'],
@@ -1154,15 +1197,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
-          // formatter: function (params) {
-          //   var color = params[0].color; // 获取系列颜色
-          //   console.log(color)
-          //   var icon = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
-          //   var seriesName = params[0].seriesName; // 系列名称
-          //   var value = params[0].value; // 数据值
-          //   return icon + seriesName + ': ' + value; // 返回自定义的 tooltip 内容
-          // }
-          // formatter: '{b0}: {c0}<br />{b1}: {c1}'
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ': ' + item.value + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         grid: {
           left: '3%',
@@ -1807,8 +1852,20 @@ export default defineComponent({
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
-        color: @white-color;
+        color: #878c93;
       }
       .btn-next,
       .btn-prev,
@@ -1816,14 +1873,21 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
-        color: @white-color;
-        border: 1px solid #f4f4f5;
+        font-size: inherit;
+        color: #878c93;
+        border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
-          background-color: @theme-color;
-          border-color: @theme-color;
+          background-color: #f9fafb;
+          border-color: @border-color;
+          color: #606060;
         }
         &:not(.disabled):hover {
         }

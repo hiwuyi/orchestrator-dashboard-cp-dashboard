@@ -333,7 +333,7 @@ async function performSignin (sig) {
 
 async function signOutFun () {
   store.dispatch('setAccessToken', '')
-  // store.dispatch('setMetaAddress', '')
+  store.dispatch('setMetaAddress', '')
 }
 
 function hiddAddress (val) {
@@ -496,6 +496,12 @@ function AddFormat (num1, num2) {
   }
 }
 
+let paginationWidth = document.documentElement.clientWidth >= 768
+window.addEventListener("resize", function () {
+  const newParams = document.documentElement.clientWidth >= 768
+  if (newParams !== paginationWidth) window.location.reload()
+})
+
 export default {
   sendRequest,
   timeout,
@@ -524,5 +530,6 @@ export default {
   debounce,
   floorFormat,
   unifyNumber,
-  AddFormat
+  AddFormat,
+  paginationWidth
 }

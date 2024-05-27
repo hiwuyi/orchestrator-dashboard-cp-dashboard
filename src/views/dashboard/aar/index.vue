@@ -2,7 +2,9 @@
   <section id="container">
     <div class="flex-row header-title font-32">
       <el-select v-model="aarList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-        <el-option v-for="item in aarList.options" :key="item.value" :label="item.label" :value="item.value" />
+        <el-option v-for="item in aarList.options" :key="item.value" :label="item.label" :value="item.value">
+          <div class="font-22">{{item.label}}</div>
+        </el-option>
       </el-select>
       <div class="font-18">
         Welcome to the Atom Accelerator Race campaign! You can join the campaign at:
@@ -16,19 +18,33 @@
         <b class="font-27 font-bold">{{ activeName === 'FCP' ? 'FCP' :'ECP'}} Rankings</b>
       </div>
       <div class="providers-cp" v-if="activeName === 'FCP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Name: </span>
-          <el-input v-model="networkInput" placeholder="please input CP name" class="font-14" @chang="searchProvider" @input="searchProvider" />
-          <el-button type="info" :disabled="!networkInput ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkInput ? true:false" round @click="searchProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
+        <el-row class="search-body font-18">
+          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Contract Address: </span>
+              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="please enter Contract Address" @chang="searchProvider" @input="searchProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Name: </span>
+              <el-input class="zk-input" v-model="networkInput.name" placeholder="please enter Name" @chang="searchProvider" @input="searchProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.name  ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.name ? true:false" round @click="searchProvider">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
         <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-          <el-table-column type="index" min-width="70">
+          <el-table-column type="index" min-width="80">
             <template #header>
               <div class="font-20 weight-4">Ranking</div>
             </template>
@@ -36,6 +52,7 @@
               <div class="badge flex-row center">
                 <img v-if="scope.$index === 0 && pagin.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
                 <img v-else-if="scope.$index === 1 && pagin.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
+                <img v-else-if="scope.$index === 2 && pagin.pageNo <= 1" :src="badgeIcon03" alt="" class="img">
                 <span v-else class="img"></span> {{scope.$index+1}}
               </div>
             </template>
@@ -45,7 +62,15 @@
               <div class="font-20 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <div class="name-style">{{scope.row.name}}</div>
+              <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="contract_address" min-width="120">
+            <template #header>
+              <div class="font-20 weight-4">Contract Address</div>
+            </template>
+            <template #default="scope">
+              <div class="name-style">{{scope.row.contract_address}}</div>
             </template>
           </el-table-column>
           <el-table-column prop="node_id" min-width="100">
@@ -62,14 +87,14 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.active_deployment" width="150">
+          <el-table-column prop="gpu_hours" width="150">
             <template #header>
-              <div class="font-20 weight-4">Active deployment</div>
+              <div class="font-20 weight-4">GPU hours</div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.score" width="120">
+          <el-table-column prop="cpu_hours" width="150">
             <template #header>
-              <div class="font-20 weight-4">Score</div>
+              <div class="font-20 weight-4">CPU hours</div>
             </template>
           </el-table-column>
           <el-table-column prop="gpu_list" min-width="140">
@@ -86,11 +111,6 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">Region</div>
-            </template>
-          </el-table-column>
           <el-table-column prop="uptime">
             <template #header>
               <div class="font-20 weight-4">Uptime</div>
@@ -101,27 +121,52 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="computer_provider.score" width="130">
+            <template #header>
+              <div class="font-20 weight-4">Contribution Score</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="region" min-width="100">
+            <template #header>
+              <div class="font-20 weight-4">Reward Score</div>
+            </template>
+          </el-table-column>
         </el-table>
-        <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        />
+        <div class="flex-row center pagination-style">
+          Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+          <!-- hide-on-single-page -->
+          <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+            :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+        </div>
       </div>
 
       <div class="providers-cp" v-if="activeName === 'ECP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Contract Address: </span>
-          <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">Name: </span>
-          <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">NodeID: </span>
-          <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
+        <el-row class="search-body flex-row font-18">
+          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Contract Address: </span>
+              <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Name: </span>
+              <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+
         <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="index" min-width="70">
             <template #header>
@@ -131,8 +176,17 @@
               <div class="badge flex-row center">
                 <img v-if="scope.$index === 0 && paginZK.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
                 <img v-else-if="scope.$index === 1 && paginZK.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
+                <img v-else-if="scope.$index === 2 && pagin.pageNo <= 1" :src="badgeIcon03" alt="" class="img">
                 <span v-else class="img"></span> {{scope.$index+1}}
               </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="name" min-width="120">
+            <template #header>
+              <div class="font-20 weight-4">Name</div>
+            </template>
+            <template #default="scope">
+              <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
             </template>
           </el-table-column>
           <el-table-column prop="owner_addr" min-width="120">
@@ -143,50 +197,18 @@
               <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="name" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Name</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style">{{scope.row.name}}</div>
-            </template>
-          </el-table-column>
           <el-table-column prop="node_id" min-width="120">
             <template #header>
               <div class="font-20 weight-4">nodeID</div>
             </template>
             <template #default="scope">
-              <div class="flex-row copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
+              <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
                 {{system.$commonFun.hiddAddress(scope.row.node_id)}}
                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
                   <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
                 </svg>
               </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_tags" min-width="140">
-            <template #header>
-              <div class="font-20 weight-4">GPU</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_tags" :key="g">
-                    {{gpu}}
-                  </span>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">status</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">Region</div>
             </template>
           </el-table-column>
           <el-table-column prop="task">
@@ -199,19 +221,28 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="task" min-width="140">
+          <el-table-column prop="completion_rate" min-width="100">
             <template #header>
-              <div class="font-20 weight-4">Completed(%)</div>
+              <div class="font-20 weight-4">Completion Rate</div>
             </template>
-            <template #default="scope">
-              <div>
-                {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
-              </div>
+          </el-table-column>
+          <el-table-column prop="completion_rate" min-width="100">
+            <template #header>
+              <div class="font-20 weight-4">Contribution Score</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="completion_rate" min-width="100">
+            <template #header>
+              <div class="font-20 weight-4">Reward Score</div>
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination hide-on-single-page :page-size="paginZK.pageSize" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="paginZK.total" @size-change="handleSizeChange"
-          @current-change="handleZKCurrentChange" />
+        <div class="flex-row center pagination-style">
+          Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;
+          <!-- hide-on-single-page -->
+          <el-pagination :page-size="paginZK.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+            :total="paginZK.total" @size-change="handleSizeChange" @current-change="handleZKCurrentChange" />
+        </div>
       </div>
     </div>
 
@@ -242,6 +273,7 @@ export default defineComponent({
     const router = useRouter()
     const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
     const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
+    const badgeIcon03 = require("@/assets/images/icons/badge-3.png")
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
     const providersData = ref([])
@@ -256,7 +288,7 @@ export default defineComponent({
       active_applications: 0
     })
     const paginZK = reactive({
-      pageSize: 5,
+      pageSize: 10,
       pageNo: 1,
       total: 0,
       total_deployments: 0,
@@ -277,7 +309,10 @@ export default defineComponent({
           label: 'Atom Accelerator Race (ECP)'
         }]
     })
-    const networkInput = ref('')
+    const networkInput = reactive({
+      contract_address: '',
+      name: ''
+    })
     const networkZK = reactive({
       contract_address: '',
       owner_addr: '',
@@ -304,7 +339,7 @@ export default defineComponent({
       const params = {
         limit: pagin.pageSize,
         offset: page * pagin.pageSize,
-        search_string: networkInput.value
+        search_string: networkInput.name
       }
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
@@ -364,7 +399,8 @@ export default defineComponent({
       getUBITable()
     }, 700)
     function clearProvider () {
-      networkInput.value = ''
+      networkInput.contract_address = ''
+      networkInput.name = ''
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
@@ -386,7 +422,8 @@ export default defineComponent({
       providersData.value = []
       providersLoad.value = false
       providersTableLoad.value = false
-      networkInput.value = ''
+      networkInput.name = ''
+      networkInput.contract_address = ''
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
@@ -405,6 +442,20 @@ export default defineComponent({
       router.push({ name: 'aar', params: { type: activeName.value } })
       cpLoad.value = true
       await system.$commonFun.timeout(500)
+    }
+    async function handleSelect (key, row, type) {
+      // console.log(key, index, row) 
+      // switch (key) {
+      //   case 'ranking':
+      //     vmOperate.row = row
+      //     vmOperate.row.type = type
+      //     vmOperate.centerDrawerVisible = true
+      //     break;
+      // }
+      router.push({ name: 'accountInfo', params: { type: 'FCP' } })
+    }
+    function hardClose (dialog, type) {
+      vmOperate.centerDrawerVisible = dialog
     }
     onActivated(async () => {
       reset('init')
@@ -425,8 +476,10 @@ export default defineComponent({
       background,
       badgeIcon01,
       badgeIcon02,
+      badgeIcon03,
       accessToken, cpLoad, aarList, activeName, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick
+      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick,
+      handleSelect, hardClose
     }
   }
 })
@@ -701,10 +754,14 @@ export default defineComponent({
       justify-content: flex-start;
       flex-wrap: wrap;
       margin: 0.4rem 0 0;
+      .child {
+        height: 100%;
+        span {
+          white-space: nowrap;
+        }
+      }
       .el-input {
-        width: 30%;
-        max-width: 250px;
-        min-width: 150px;
+        width: 100%;
         margin: 0 0.16rem 0 0.1rem;
         font-size: inherit;
         .el-input__wrapper {
@@ -1011,10 +1068,26 @@ export default defineComponent({
       background-color: rgb(38, 39, 47);
       height: 0;
     }
+    .pagination-style {
+      color: #878c93;
+    }
     .el-pagination {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: inherit;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
         color: #878c93;
       }
@@ -1024,9 +1097,15 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
+        font-size: inherit;
         color: #878c93;
         border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {

@@ -4,15 +4,16 @@
       <img :src="swanLogo" @click="system.$commonFun.goLink('https://www.swanchain.io/')" />
       <div class="flex-row nowrap swan-right font-17">
         <div class="flex-row header-title">
-          <el-select v-model="explorerList.value" @change="handleClick" placeholder="Select" size="small">
+          <!-- @change="handleClick" -->
+          <el-select v-model="explorerList.value" placeholder="Select" size="small">
             <template #prefix>
-              <div class="flex-row">
+              <div class="flex-row font-17">
                 <i class="icon icon-swanProxima"></i>
                 {{explorerList.value}}
               </div>
             </template>
             <el-option v-for="item in explorerList.options" :key="item.value" :label="item.label" :value="item.value">
-              <div class="flex-row">
+              <div class="flex-row font-17">
                 <i class="icon icon-swanProxima"></i>
                 {{item.label}}
               </div>
@@ -91,7 +92,57 @@
             </el-dropdown>
           </div> -->
         </div>
-        <!-- <el-button type="primary" @click="loginMethod" v-else>Login</el-button> -->
+        <el-button type="primary" @click="loginMethod" v-else>Login</el-button>
+
+        <div class="header-right flex-row nowrap">
+          <div class="set mobileShow">
+            <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end" :hide-on-click="false">
+              <div class="el-dropdown-link setting-style loginImg flex-row">
+                <el-icon>
+                  <Menu />
+                </el-icon>
+              </div>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="overview">
+                    <div class="profile router-link b">
+                      <div class="flex-row">
+                        <i class="icon icon-Overview"></i>
+                        <span>Overview</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="rankings">
+                    <div class="profile router-link b">
+                      <div class="flex-row">
+                        <i class="icon icon-Rankings"></i>
+                        <span>Rankings</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="resource">
+                    <div class="profile router-link b">
+                      <div class="flex-row">
+                        <i class="icon icon-Resource"></i>
+                        <span>Resource</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="aar">
+                    <div class="profile router-link b">
+                      <div class="flex-row">
+                        <i class="icon icon-AAR"></i>
+                        <span>Atom Accelerator Race
+                          <i class="icon icon-new"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -211,7 +262,7 @@ import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentI
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
 import {
-  CircleCheck, DocumentCopy, Avatar, Delete, View
+  CircleCheck, DocumentCopy, Avatar, Delete, View, Menu
 } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import * as echarts from "echarts"
@@ -219,7 +270,7 @@ import SpaceTokenABI from '@/utils/abi/SwanToken.json'
 import CollateralABI from '@/utils/abi/CollateralContract.json'
 export default defineComponent({
   components: {
-    CircleCheck, DocumentCopy, Avatar, Delete, View
+    CircleCheck, DocumentCopy, Avatar, Delete, View, Menu
   },
   setup () {
     const store = useStore()
@@ -273,10 +324,10 @@ export default defineComponent({
       tx_hash: ''
     })
     const explorerList = reactive({
-      value: 'SwanProximaChain',
+      value: 'Swan Proxima Chain',
       options: [
         {
-          value: 'SwanProximaChain',
+          value: 'Swan Proxima Chain',
           label: 'Swan Proxima Chain'
         }]
     })
@@ -397,7 +448,11 @@ export default defineComponent({
         await system.$commonFun.signOutFun()
         // await system.$commonFun.timeout(50)
         window.location.reload()
-      }
+      } else if (key === 'overview') router.push({ path: '/overview' })
+      else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
+      else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
+      else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'Space' } })
+      else if (key === 'resource') router.push({ name: 'resource' })
     }
     async function cpCollateral () {
       cpCollateralCont.show = true
@@ -564,7 +619,7 @@ export default defineComponent({
   :deep(.el-button) {
     border: 0;
     border-radius: 0.08rem;
-    background-color: #5580e9;
+    background-color: @theme-color;
     // background: linear-gradient(45deg, #025bd5, #3c73ec);
     color: white;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
@@ -591,19 +646,19 @@ export default defineComponent({
       }
       .pcShow {
         display: block;
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 768px) {
           display: none;
         }
       }
       .mobileShow {
         display: none;
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 768px) {
           display: block;
         }
       }
       :deep(.el-select) {
         width: auto;
-        margin: 0 0.3rem 0 0;
+        margin: 0 0.1rem 0 0;
         font-size: inherit;
         .el-tooltip__trigger {
           margin: 0;
@@ -620,8 +675,8 @@ export default defineComponent({
             line-height: 1.2;
             color: #000;
             .icon {
-              width: 0.35rem;
-              height: 0.35rem;
+              width: 0.3rem;
+              height: 0.3rem;
               margin: 0 0.07rem 0 0;
               &.icon-swanProxima {
                 background: url(../assets/images/logo-swan.png) no-repeat center;
@@ -683,12 +738,13 @@ export default defineComponent({
         height: 35px;
         padding: 0;
         margin: 0 0 0 0.1rem;
-        background: linear-gradient(45deg, #025bd5, #3c73ec) !important;
+        background-color: @theme-color;
+        // background: linear-gradient(45deg, #025bd5, #3c73ec) !important;
         cursor: pointer;
         border-radius: 0.08rem;
         transition: all 0.2s;
         &:hover {
-          background-color: transparent !important;
+          // background-color: transparent !important;
         }
         * {
           cursor: pointer;
@@ -715,13 +771,14 @@ export default defineComponent({
           vertical-align: middle;
         }
         .info-style {
-          background: linear-gradient(45deg, #025bd5, #3c73ec);
+          background-color: @theme-color;
+          // background: linear-gradient(45deg, #025bd5, #3c73ec);
           color: @white-color;
           cursor: text;
           border-radius: 0.08rem;
           transition: all 0.2s;
           &:hover {
-            background-color: transparent !important;
+            // background-color: transparent !important;
           }
           .address {
             padding: 5px 0.1rem;
@@ -1380,6 +1437,39 @@ export default defineComponent({
           }
           .link {
             padding: 2px 0;
+          }
+          .icon {
+            width: 0.23rem;
+            height: 0.23rem;
+            margin: 0 0.1rem 0 0;
+            &.icon-Overview {
+              background: url(../assets/images/menu-01-01.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-Rankings {
+              background: url(../assets/images/menu-02-01.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-AccountInfo {
+              background: url(../assets/images/menu-03-01.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-Resource {
+              background: url(../assets/images/menu-04-01.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-AAR {
+              background: url(../assets/images/menu-05-01.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-new {
+              display: inline-block;
+              width: 0.35rem;
+              height: 0.15rem;
+              margin: 0.03rem 0 0;
+              background: url(../assets/images/new.png) no-repeat center;
+              background-size: auto 100%;
+            }
           }
         }
       }

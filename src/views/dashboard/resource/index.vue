@@ -24,15 +24,21 @@
         <div class="search-body flex-row font-17">
           <span class="font-22">Chipset: </span>
           <el-select v-model="chipsetList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in chipsetList.options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in chipsetList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="font-17">{{item.label}}</div>
+            </el-option>
           </el-select>
           <span class="font-22">vRAM: </span>
           <el-select v-model="vRAMList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in vRAMList.options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in vRAMList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="font-17">{{item.label}}</div>
+            </el-option>
           </el-select>
           <span class="font-22">Interface: </span>
           <el-select v-model="interfaceList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in interfaceList.options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in interfaceList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="font-17">{{item.label}}</div>
+            </el-option>
           </el-select>
           <span class="font-22">Price from </span>
           <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
@@ -86,7 +92,7 @@
                   </el-row>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8" class="flex-row flex-end align-end">
-                  <router-link to="" class="font-17" :class="{'is-disabled': gpu.rentnow}">RENT NOW</router-link>
+                  <a :href="gpu.rentnow ? 'javascript:void(0);' : 'https://lagrangedao.org/'" target="_blank" class="font-17" :class="{'is-disabled': gpu.rentnow}">RENT NOW</a>
                 </el-col>
               </el-row>
             </div>
@@ -867,6 +873,18 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
         color: #878c93;
       }
@@ -876,9 +894,15 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
+        font-size: inherit;
         color: #878c93;
         border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {

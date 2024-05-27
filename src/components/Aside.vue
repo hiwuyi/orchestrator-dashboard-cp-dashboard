@@ -9,22 +9,10 @@
         <i class="icon icon-Rankings"></i>
         <span class="font-22">Rankings</span>
       </el-menu-item>
-      <!-- <el-sub-menu index="rankings">
-        <template #title>
-          <i class="icon icon-Rankings"></i>
-          <span class="font-22">Rankings</span>
-        </template>
-        <el-menu-item index="FCP">
-          <span class="font-17">FCP</span>
-        </el-menu-item>
-        <el-menu-item index="ECP">
-          <span class="font-17">ECP</span>
-        </el-menu-item>
-      </el-sub-menu> -->
-      <!-- <el-menu-item index="accountInfo">
+      <el-menu-item index="accountInfo" v-if="metaAddress">
         <i class="icon icon-AccountInfo"></i>
         <span class="font-22">CP Profile</span>
-      </el-menu-item> -->
+      </el-menu-item>
       <el-menu-item index="resource">
         <i class="icon icon-Resource"></i>
         <span class="font-22">Resource</span>
@@ -47,6 +35,7 @@ export default defineComponent({
     const store = useStore()
     const bodyWidth = ref(document.body.clientWidth < 992)
     const system = getCurrentInstance().appContext.config.globalProperties
+    const metaAddress = computed(() => (store.state.metaAddress))
     const route = useRoute()
     const router = useRouter()
     const activeIndex = ref('overview')
@@ -56,7 +45,7 @@ export default defineComponent({
       if (key === 'overview') router.push({ path: '/overview' })
       else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
       else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
-      else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'Space' } })
+      else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'FCP' } })
       else if (key === 'resource') router.push({ name: 'resource' })
     }
     async function activeMenu (row) {
@@ -84,6 +73,7 @@ export default defineComponent({
     })
     return {
       activeIndex,
+      metaAddress,
       handleSelect
     }
   },

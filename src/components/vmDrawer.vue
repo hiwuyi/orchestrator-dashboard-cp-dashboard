@@ -4,7 +4,7 @@
       <div class="drawer-content font-18" v-if="props.list.type === 'FCP'">
         <div class="flex-row space-between name-title">
           <b class="font-27 font-bold">{{props.list.name}}</b>
-          <router-link :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
+          <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
         </div>
         <el-row class="font-18 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
@@ -155,7 +155,7 @@
       <div class="drawer-content font-18" v-if="props.list.type === 'ECP'">
         <div class="flex-row space-between name-title">
           <b class="font-27 font-bold">{{props.list.name}}</b>
-          <router-link :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
+          <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'Space'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
         </div>
         <el-row class="font-18 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
@@ -345,6 +345,7 @@ export default defineComponent({
     const store = useStore()
     const system = getCurrentInstance().appContext.config.globalProperties
     const cpLoad = ref(false)
+    const route = useRoute()
 
     function closeHandle (type) {
       context.emit('hardClose', false, type)
@@ -364,6 +365,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         grid: {
           left: '3%',
@@ -414,6 +426,7 @@ export default defineComponent({
       changetype()
     })
     return {
+      route,
       system,
       props,
       cpLoad,
@@ -531,25 +544,29 @@ export default defineComponent({
                 font-size: inherit;
                 border: 0;
                 &.ascending {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #fff;
-                      }
-                      &.descending {
-                        border-top-color: #d0dcf9;
+                  .cell {
+                    .caret-wrapper {
+                      .sort-caret {
+                        &.ascending {
+                          border-bottom-color: #fff;
+                        }
+                        &.descending {
+                          border-top-color: #d0dcf9;
+                        }
                       }
                     }
                   }
                 }
                 &.descending {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #d0dcf9;
-                      }
-                      &.descending {
-                        border-top-color: #fff;
+                  .cell {
+                    .caret-wrapper {
+                      .sort-caret {
+                        &.ascending {
+                          border-bottom-color: #d0dcf9;
+                        }
+                        &.descending {
+                          border-top-color: #fff;
+                        }
                       }
                     }
                   }

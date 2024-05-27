@@ -1,23 +1,47 @@
 <template>
   <div id="payment">
     <div class="payment-history container-landing font-16">
+      <el-row class="search-container font-18">
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <div class="flex-row nowrap child">
+            <span class="font-22">Task UUID: </span>
+            <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task UUID" @chang="searchZKProvider" @input="searchZKProvider" />
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <div class="flex-row nowrap child">
+            <span class="font-22">NodeID: </span>
+            <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
+          <div class="flex-row nowrap child">
+            <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+            <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
+              <el-icon>
+                <Search />
+              </el-icon>
+              Search
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
+
       <el-table v-loading="paymentLoad" :data="paymentData" stripe style="width: 100%">
         <el-table-column prop="task_id" width="90">
           <template #header>
             <div class="font-20 weight-4">Task ID</div>
           </template>
         </el-table-column>
-        <el-table-column prop="type" min-width="90">
+        <el-table-column prop="type" column-key="type" filterable :filters="[
+            { text: 'CPU', value: 'CPU' },
+            { text: 'GPU', value: 'GPU' }
+          ]" filter-placement="bottom-end" :filter-multiple="false" min-width="90">
           <template #header>
             <div class="font-20 weight-4">Task Type</div>
           </template>
           <template #default="scope">
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="zk_type" min-width="110">
-          <template #header>
-            <div class="font-20 weight-4">ZK Type</div>
           </template>
         </el-table-column>
         <el-table-column prop="node_id" min-width="100">
@@ -34,9 +58,14 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="zk_type" min-width="110">
+          <template #header>
+            <div class="font-20 weight-4">ZK Type</div>
+          </template>
+        </el-table-column>
         <el-table-column prop="started_at" min-width="135">
           <template #header>
-            <div class="font-20 weight-4">Started AT</div>
+            <div class="font-20 weight-4">Start Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.started_at)}}</span>
@@ -44,7 +73,7 @@
         </el-table-column>
         <el-table-column prop="ended_at" min-width="135">
           <template #header>
-            <div class="font-20 weight-4">ended at</div>
+            <div class="font-20 weight-4">End Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.ended_at)}}</span>
@@ -52,7 +81,7 @@
         </el-table-column>
         <el-table-column prop="tx_hash" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">transaction hash</div>
+            <div class="font-20 weight-4">Reward TX Hash</div>
           </template>
           <template #default="scope">
             <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank">{{scope.row.tx_hash}}</a>
@@ -60,12 +89,16 @@
         </el-table-column>
         <el-table-column prop="amount">
           <template #header>
-            <div class="font-20 weight-4">Amount (SWAN)</div>
+            <div class="font-20 weight-4">reward</div>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="flex-row" :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-      />
+      <div class="flex-row center pagination-style">
+        Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentLoad.length : 0 + paymentLoad.length }} /&nbsp;
+        <!-- hide-on-single-page -->
+        <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+          :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,8 +107,14 @@ import { defineComponent, computed, onMounted, onActivated, watch, ref, reactive
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
+import {
+  Search
+} from '@element-plus/icons-vue'
 export default defineComponent({
   name: 'Payment History',
+  components: {
+    Search
+  },
   setup () {
     const store = useStore()
     const system = getCurrentInstance().appContext.config.globalProperties
@@ -88,6 +127,11 @@ export default defineComponent({
       pageSize: 10,
       pageNo: 1,
       total: 0
+    })
+    const networkZK = reactive({
+      contract_address: '',
+      owner_addr: '',
+      node_id: ''
     })
     const small = ref(false)
     const background = ref(false)
@@ -125,18 +169,30 @@ export default defineComponent({
       }
       paymentLoad.value = false
     }
-    onMounted(async () => init())
-    watch(route, (to, from) => {
-      if (to.name === "UBIHistory") init()
-    })
+    const searchZKProvider = system.$commonFun.debounce(async function () {
+      pagin.pageNo = 1
+      getUBITable()
+    }, 700)
+    function clearProvider () {
+      networkZK.contract_address = ''
+      networkZK.owner_addr = ''
+      networkZK.node_id = ''
+      pagin.pageSize = 10
+      pagin.pageNo = 1
+      // init()
+    }
+    // onMounted(async () => init())
+    // watch(route, (to, from) => {
+    //   if (to.name === "UBIHistory") init()
+    // })
     return {
       paymentData,
       paymentLoad,
       system,
       route,
       router,
-      pagin, background, small,
-      handleSizeChange, handleCurrentChange
+      pagin, background, small, networkZK,
+      handleSizeChange, handleCurrentChange, searchZKProvider, clearProvider
     }
   },
 })
@@ -146,11 +202,9 @@ export default defineComponent({
   width: 100%;
   :deep(.payment-history) {
     height: calc(100% - 1.2rem);
-    padding-top: 0.2rem;
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
-    color: @white-color;
     text-align: left;
     .title {
       margin: 0 0 0.4rem;
@@ -158,6 +212,108 @@ export default defineComponent({
       font-size: 0.24rem;
       color: @white-color;
       text-transform: capitalize;
+    }
+    .search-container {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0 0 0.2rem;
+      .el-select {
+        width: auto;
+        margin: 0 0.3rem 0 0;
+        font-size: inherit;
+        .el-tooltip__trigger {
+          margin: 0;
+          width: auto;
+          height: auto;
+          padding: 0.06rem 0.22rem;
+          font-size: inherit;
+          font-family: inherit;
+          border: 1px solid #b6c0d1;
+          border-radius: 0.07rem;
+          box-shadow: none;
+          .el-select__selected-item {
+            position: relative;
+            top: auto;
+            margin: 0 0.16rem 0 0;
+            transform: translateY(0px);
+            line-height: 1.2;
+            color: @theme-color;
+            &.is-hidden {
+              display: none;
+            }
+          }
+          .el-select__suffix {
+            .el-select__icon {
+              background: url(../assets/images/icons/icon-03.png) no-repeat
+                center;
+              background-size: 100%;
+              svg {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      .child {
+        height: 100%;
+        span {
+          white-space: nowrap;
+        }
+      }
+      .el-input {
+        width: 100%;
+        // max-width: 250px;
+        // min-width: 150px;
+        margin: 0 0.16rem 0 0.1rem;
+        font-size: inherit;
+        .el-input__wrapper {
+          background-color: @white-color;
+          border: 1px solid @border-color;
+          border-radius: 0.08rem;
+          box-shadow: none;
+          .el-input__inner {
+            width: 100%;
+            height: 0.3rem;
+            line-height: 0.3rem;
+            color: #333;
+            @media screen and (max-width: 768px) {
+              width: 100%;
+            }
+            &:hover,
+            &:active,
+            &:focus {
+              border-color: @theme-color;
+            }
+          }
+        }
+      }
+      .el-button {
+        height: 0.3rem;
+        padding: 0 0.1rem;
+        font-family: inherit;
+        font-size: inherit;
+        border: 0;
+        line-height: 0.3rem;
+        .el-icon {
+          width: 0.2rem;
+          height: 0.2rem;
+          margin: 0 0.08rem 0 0;
+          svg {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        &.el-button--info {
+          background-color: #d0dcf9;
+          border-color: #d0dcf9;
+          color: @theme-color;
+        }
+        &:hover,
+        &.is-disabled {
+          opacity: 0.9;
+        }
+      }
     }
     .el-table {
       width: 100%;
@@ -174,7 +330,38 @@ export default defineComponent({
           background-color: @theme-color;
           font-size: inherit;
           border: 0;
+          &.ascending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #fff;
+                  }
+                  &.descending {
+                    border-top-color: #d0dcf9;
+                  }
+                }
+              }
+            }
+          }
+          &.descending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #d0dcf9;
+                  }
+                  &.descending {
+                    border-top-color: #fff;
+                  }
+                }
+              }
+            }
+          }
           .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: @white-color;
             word-break: break-word;
             text-transform: capitalize;
@@ -182,6 +369,22 @@ export default defineComponent({
             line-height: 1.1;
             @media screen and (max-width: 540px) {
               font-size: 12px;
+            }
+            .el-table__column-filter-trigger {
+              i {
+                margin: 0 0 0 4px;
+                color: @white-color;
+              }
+            }
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #d0dcf9;
+                }
+                &.descending {
+                  border-top-color: #d0dcf9;
+                }
+              }
             }
           }
         }
@@ -446,11 +649,27 @@ export default defineComponent({
       background-color: rgb(38, 39, 47);
       height: 0;
     }
+    .pagination-style {
+      color: rgb(181, 183, 200);
+    }
     .el-pagination {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
+      font-size: inherit;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
         color: #878c93;
       }
@@ -460,9 +679,15 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
+        font-size: inherit;
         color: #878c93;
         border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {

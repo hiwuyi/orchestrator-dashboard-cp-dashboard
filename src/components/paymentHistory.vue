@@ -1,23 +1,37 @@
 <template>
   <div id="payment">
     <div class="payment-history container-landing font-16">
-      <div class="status-style flex-row font-18">
-        <el-radio-group v-model="statusRadio" class="ml-4" @change="radioFilterChange">
-          <el-radio value="" size="large">payment status</el-radio>
-          <el-radio value="Claim Failed" size="large">Claim Failed</el-radio>
-          <el-radio value="Rewardable" size="large">reward claimable</el-radio>
-          <el-radio value="Pending" size="large">Pending</el-radio>
-          <el-radio value="Cooling Down" size="large">Cooling Down</el-radio>
-          <el-radio value="Reward Claimed" size="large">Reward Claimed</el-radio>
-          <el-radio value="Terminate Failed" size="large">Terminate Failed</el-radio>
-        </el-radio-group>
-      </div>
+      <el-row class="search-container font-18">
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <div class="flex-row nowrap child">
+            <span class="font-22">Task UUID: </span>
+            <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task UUID" @chang="searchZKProvider" @input="searchZKProvider" />
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <div class="flex-row nowrap child">
+            <span class="font-22">NodeID: </span>
+            <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
+          <div class="flex-row nowrap child">
+            <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+            <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
+              <el-icon>
+                <Search />
+              </el-icon>
+              Search
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
 
       <el-table v-loading="paymentLoad" element-loading-text="Please do not refresh the page" :data="paymentData" stripe style="width: 100%" @filter-change="handleFilterChange">
         <!-- <el-table-column prop="chain_id" label="chain id" min-width="110" /> -->
         <el-table-column prop="job" min-width="100">
           <template #header>
-            <div class="font-20 weight-4">task uuid</div>
+            <div class="font-20 weight-4">task UUID</div>
           </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.task_uuid, 'Copied')">
@@ -29,7 +43,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="hardware_type" min-width="60">
+        <el-table-column prop="hardware_type" column-key="hardware_type" filterable :filters="[
+            { text: 'CPU', value: 'CPU' },
+            { text: 'GPU', value: 'GPU' }
+          ]" filter-placement="bottom-end" :filter-multiple="false" min-width="80">
           <template #header>
             <div class="font-20 weight-4">Task Type</div>
           </template>
@@ -53,17 +70,17 @@
         </el-table-column>
         <el-table-column prop="created_at" min-width="120">
           <!-- column-key="created_at" filterable :filters="[
-        { text: '60', value: '60' },
-        { text: '50', value: '50' },
-        { text: '40', value: '40' },
-        { text: '30', value: '30' },
-        { text: '20', value: '20' },
-        { text: '10', value: '10' },
-        { text: '5', value: '5' },
-        { text: '1', value: '1' },
-      ]" filter-placement="bottom-end" :filter-multiple="false" -->
+            { text: '60', value: '60' },
+            { text: '50', value: '50' },
+            { text: '40', value: '40' },
+            { text: '30', value: '30' },
+            { text: '20', value: '20' },
+            { text: '10', value: '10' },
+            { text: '5', value: '5' },
+            { text: '1', value: '1' },
+          ]" filter-placement="bottom-end" :filter-multiple="false" -->
           <template #header>
-            <div class="font-20 weight-4">created at</div>
+            <div class="font-20 weight-4">Creation Time</div>
           </template>
           <template #default="scope">
             <span>
@@ -73,7 +90,7 @@
         </el-table-column>
         <el-table-column prop="updated_at" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">updated at</div>
+            <div class="font-20 weight-4">End Time</div>
           </template>
           <template #default="scope">
             <span>
@@ -81,7 +98,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="task_end_at" min-width="120">
+        <!-- <el-table-column prop="task_end_at" min-width="120">
           <template #header>
             <div class="font-20 weight-4">Estimated End At</div>
           </template>
@@ -90,7 +107,7 @@
               {{ system.$commonFun.momentFun(scope.row.task_end_at) }}
             </span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="task_status" min-width="120">
           <template #header>
             <div class="font-20 weight-4">Task Status</div>
@@ -140,25 +157,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" min-width="135">
+        <!-- column-key="status" filterable :filters="[
+            { text: 'Claim Failed', value: 'Claim Failed' },
+            { text: 'Rewardable', value: 'Rewardable' },
+            { text: 'Pending', value: 'Pending' },
+            { text: 'Cooling Down', value: 'Cooling Down' },
+            { text: 'Reward Claimed', value: 'Reward Claimed' },
+            { text: 'Terminate Failed', value: 'Terminate Failed' },
+          ]" filter-placement="bottom-end" :filter-multiple="false" -->
+        <!-- <el-table-column prop="status" min-width="135">
           <template #header>
             <div class="font-20 weight-4">payment status</div>
           </template>
-          <!-- column-key="status" filterable :filters="[
-        { text: 'Claim Failed', value: 'Claim Failed' },
-        { text: 'Rewardable', value: 'Rewardable' },
-        { text: 'Pending', value: 'Pending' },
-        { text: 'Cooling Down', value: 'Cooling Down' },
-        { text: 'Reward Claimed', value: 'Reward Claimed' },
-        { text: 'Terminate Failed', value: 'Terminate Failed' },
-      ]" filter-placement="bottom-end" :filter-multiple="false" -->
           <template #default="scope">
             <div>
-              <!-- <span v-if="scope.row.chain_id === 80001 && scope.row.order.updated_at < 1700508000 && scope.row.status.toLowerCase() === 'refundable'">Pending</span> -->
-              <!-- <el-button type="primary" v-if="scope.row.status.toLowerCase() === 'accepted' || scope.row.status.toLowerCase() === 'refundable'" plain @click="rewardFun(scope.row)">Refund</el-button> -->
-              <!--              <span v-if="scope.row.status && scope.row.status.toLowerCase() === 'waiting_for_cooling_down'">Cooling Down</span>-->
-              <!--              <span v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'pending'">Job Running</span>-->
-              <!--              <span v-else-if="scope.row.status && scope.row.status.toLowerCase() === 'completed'">Reward Claimed</span>-->
               <span v-if="scope.row.status && scope.row.status.toLowerCase() === 'reward claimed'" class="flex-row center">
                 {{ scope.row.status }}
                 <el-popover placement="top" :width="200" effect="dark" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" content="Rewards have been claimed or have been automatically distributed to the CP's wallet">
@@ -228,7 +240,7 @@
               {{ scope.row.token || '-' }}
             </span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="transaction_hash" min-width="120">
           <template #header>
             <div class="font-20 weight-4">transaction hash</div>
@@ -251,35 +263,23 @@
             <a v-else :href="`${scope.row.url_tx}${scope.row.transaction_hash}`" target="_blank">{{scope.row.transaction_hash}}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" min-width="90">
+        <el-table-column prop="Reward">
           <template #header>
-            <div class="font-20 weight-4"></div>
+            <div class="font-20 weight-4">Reward</div>
           </template>
           <template #default="scope">
-            <!--            Also if the amount is 0.00000, it will be displayed as Free in the table-->
-            <span v-if="scope.row.amount && scope.row.amount.indexOf('-') > -1">-</span>
-            <span v-else-if="scope.row.amount === '0.00000'">Free Task</span>
-            <span v-else-if="scope.row.transaction_hash === '1' && scope.row.amount ==='0.00000'" class="flex-row center">
-              {{ scope.row.amount }}
-              <el-popover placement="top" :width="200" effect="dark" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" content="We are getting error to log your payment info, so you see the amount is 0, however, your reward are successfully send to your wallet.">
-                <template #reference>
-                  <div class="flex-row">
-                    <svg t="1708417763428" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7201" width="14" height="14">
-                      <path d="M512 64a448 448 0 1 1 0 896A448 448 0 0 1 512 64z m0 71.972571a375.954286 375.954286 0 1 0 0 752.054858A375.954286 375.954286 0 0 0 512 135.972571z m35.181714 266.020572c12.361143 0 21.796571 2.486857 28.672 8.045714 7.314286 5.997714 11.044571 14.043429 11.044572 23.917714 0 10.971429-11.190857 52.589714-33.060572 123.172572l-4.096 13.677714C517.778286 676.498286 512.731429 698.514286 512.731429 720.384c0 3.510857 0.731429 6.070857 2.194285 7.68 1.462857 1.755429 2.340571 2.340571 2.706286 2.340571 8.265143 0 35.766857-20.333714 78.262857-59.245714l8.777143 0.146286 19.456 18.944-0.146286 9.289143-2.779428 2.56c-45.568 41.691429-77.677714 67.584-98.889143 79.213714l-1.682286 0.877714c-21.357714 11.702857-39.058286 17.773714-53.248 17.773715a44.324571 44.324571 0 0 1-32.914286-12.726858 49.371429 49.371429 0 0 1-11.922285-34.596571c0-42.130286 13.531429-97.645714 64.219428-257.243429a57.197714 57.197714 0 0 0 3.291429-17.92V476.891429c0-2.56-0.438857-2.706286-2.852572-2.706286a41.179429 41.179429 0 0 0-19.748571 6.802286l-0.512 0.219428c-7.972571 4.900571-25.380571 20.260571-55.808 49.005714l-8.265143 0.438858-22.089143-16.822858-0.731428-9.508571 2.048-2.194286c33.572571-35.84 63.634286-61.001143 91.209143-76.288 28.525714-15.872 53.174857-23.844571 73.874285-23.844571z m51.565715-157.988572c11.776 0 22.162286 4.169143 30.134857 12.141715 8.045714 7.972571 12.141714 18.285714 12.141714 30.866285a64.658286 64.658286 0 0 1-17.554286 41.910858 51.2 51.2 0 0 1-39.131428 18.505142 40.448 40.448 0 0 1-29.622857-12.141714 43.373714 43.373714 0 0 1-12.141715-31.670857c0-16.676571 5.339429-30.427429 16.603429-42.276571a53.101714 53.101714 0 0 1 39.497143-17.334858z"
-                        fill="#ffffff" p-id="7202"></path>
-                    </svg>
-                  </div>
-                </template>
-              </el-popover>
+            <span>
+              {{ scope.row.Reward }}
             </span>
-            <span v-else>{{ scope.row.amount || '-' }}</span>
           </template>
-          <!--            <span>{{ scope.row.amount && scope.row.amount.indexOf('-') > -1 ? '-' : scope.row.amount || '-' }}</span>-->
-          <!--          </template>-->
         </el-table-column>
       </el-table>
-      <el-pagination class="flex-row" :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-      />
+      <div class="flex-row center pagination-style">
+        Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentLoad.length : 0 + paymentLoad.length }} /&nbsp;
+        <!-- hide-on-single-page -->
+        <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+          :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      </div>
     </div>
 
     <el-dialog v-model="txhashVisible" title="Payment Detail" :width="bodyWidth" :append-to-body="false" custom-class="wrongNet" class="wrongNet" :before-close="handleClose">
@@ -317,9 +317,15 @@ import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import BiddingABI from '@/utils/abi/Bidding.json'
 import TaskABI from '@/utils/abi/Task.json'
+import {
+  Search
+} from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'Payment History',
+  components: {
+    Search
+  },
   setup () {
     const store = useStore()
     const system = getCurrentInstance().appContext.config.globalProperties
@@ -343,6 +349,11 @@ export default defineComponent({
         days_ago: '',
         status_filter: ''
       }
+    })
+    const networkZK = reactive({
+      contract_address: '',
+      owner_addr: '',
+      node_id: ''
     })
     const small = ref(false)
     const background = ref(false)
@@ -526,11 +537,23 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }
+    const searchZKProvider = system.$commonFun.debounce(async function () {
+      pagin.pageNo = 1
+      getUBITable()
+    }, 700)
+    function clearProvider () {
+      networkZK.contract_address = ''
+      networkZK.owner_addr = ''
+      networkZK.node_id = ''
+      pagin.pageSize = 10
+      pagin.pageNo = 1
+      // init()
+    }
 
     let getnetID = NaN
     onMounted(async () => {
-      getnetID = await system.$commonFun.web3Init.eth.net.getId()
-      init()
+      // getnetID = await system.$commonFun.web3Init.eth.net.getId()
+      // init()
     })
     watch(route, (to, from) => {
       if (to.name === "paymentHistory") init()
@@ -547,9 +570,9 @@ export default defineComponent({
       rowAll,
       pagin,
       background,
-      small, bodyWidth, statusRadio,
+      small, bodyWidth, statusRadio, networkZK,
       rewardFun, reviewFun, checkFun, handleClose, handleSizeChange, handleCurrentChange,
-      retryFun, handleFilterChange, radioFilterChange
+      retryFun, handleFilterChange, radioFilterChange, searchZKProvider, clearProvider
     }
   },
 })
@@ -562,9 +585,110 @@ export default defineComponent({
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
-    color: @white-color;
     text-align: left;
 
+    .search-container {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0 0 0.2rem;
+      .el-select {
+        width: auto;
+        margin: 0 0.3rem 0 0;
+        font-size: inherit;
+        .el-tooltip__trigger {
+          margin: 0;
+          width: auto;
+          height: auto;
+          padding: 0.06rem 0.22rem;
+          font-size: inherit;
+          font-family: inherit;
+          border: 1px solid #b6c0d1;
+          border-radius: 0.07rem;
+          box-shadow: none;
+          .el-select__selected-item {
+            position: relative;
+            top: auto;
+            margin: 0 0.16rem 0 0;
+            transform: translateY(0px);
+            line-height: 1.2;
+            color: @theme-color;
+            &.is-hidden {
+              display: none;
+            }
+          }
+          .el-select__suffix {
+            .el-select__icon {
+              background: url(../assets/images/icons/icon-03.png) no-repeat
+                center;
+              background-size: 100%;
+              svg {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      .child {
+        height: 100%;
+        span {
+          white-space: nowrap;
+        }
+      }
+      .el-input {
+        width: 100%;
+        // max-width: 250px;
+        // min-width: 150px;
+        margin: 0 0.16rem 0 0.1rem;
+        font-size: inherit;
+        .el-input__wrapper {
+          background-color: @white-color;
+          border: 1px solid @border-color;
+          border-radius: 0.08rem;
+          box-shadow: none;
+          .el-input__inner {
+            width: 100%;
+            height: 0.3rem;
+            line-height: 0.3rem;
+            color: #333;
+            @media screen and (max-width: 768px) {
+              width: 100%;
+            }
+            &:hover,
+            &:active,
+            &:focus {
+              border-color: @theme-color;
+            }
+          }
+        }
+      }
+      .el-button {
+        height: 0.3rem;
+        padding: 0 0.1rem;
+        font-family: inherit;
+        font-size: inherit;
+        border: 0;
+        line-height: 0.3rem;
+        .el-icon {
+          width: 0.2rem;
+          height: 0.2rem;
+          margin: 0 0.08rem 0 0;
+          svg {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        &.el-button--info {
+          background-color: #d0dcf9;
+          border-color: #d0dcf9;
+          color: @theme-color;
+        }
+        &:hover,
+        &.is-disabled {
+          opacity: 0.9;
+        }
+      }
+    }
     .title {
       margin: 0;
       font-weight: bold;
@@ -690,6 +814,55 @@ export default defineComponent({
           @media screen and (max-width: 768px) {
             font-size: 13px;
           }
+          &.ascending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #fff;
+                  }
+                  &.descending {
+                    border-top-color: #d0dcf9;
+                  }
+                }
+              }
+            }
+          }
+          &.descending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #d0dcf9;
+                  }
+                  &.descending {
+                    border-top-color: #fff;
+                  }
+                }
+              }
+            }
+          }
+          .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .el-table__column-filter-trigger {
+            i {
+              margin: 0 0 0 4px;
+              color: @white-color;
+            }
+          }
+          .caret-wrapper {
+            .sort-caret {
+              &.ascending {
+                border-bottom-color: #d0dcf9;
+              }
+              &.descending {
+                border-top-color: #d0dcf9;
+              }
+            }
+          }
         }
       }
 
@@ -697,11 +870,13 @@ export default defineComponent({
         height: 0;
       }
     }
-
+    .pagination-style {
+      color: rgb(181, 183, 200);
+    }
     :deep(.el-pagination) {
       margin: 0.4rem auto;
       justify-content: center;
-
+      font-size: inherit;
       .btn-next,
       .btn-prev,
       .el-pager li {

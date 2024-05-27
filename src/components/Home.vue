@@ -78,6 +78,10 @@ export default defineComponent({
         min-width: 180px;
         padding: 0.25rem 0.15rem;
         background-color: @theme-color;
+        @media screen and (max-width: 768px) {
+          display: none;
+          width: 0;
+        }
       }
       .el-main {
         padding: 0.2rem 0.5rem;

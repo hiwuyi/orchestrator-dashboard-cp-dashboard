@@ -2,7 +2,9 @@
   <section id="container">
     <div class="flex-row header-title font-32">
       <el-select v-model="rankingList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-        <el-option v-for="item in rankingList.options" :key="item.value" :label="item.label" :value="item.value" />
+        <el-option v-for="item in rankingList.options" :key="item.value" :label="item.label" :value="item.value">
+          <div class="font-22">{{item.label}}</div>
+        </el-option>
       </el-select>
       <div class="font-18">
         {{ activeName === 'FCP' ? '(Fog Computing Provider)' :'(Edge Computing Provider)'}}
@@ -69,21 +71,37 @@
 
     <div class="providers-network font-16">
       <div class="providers-cp" v-if="activeName === 'FCP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Contract Address: </span>
-          <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="Contract Address" @chang="searchProvider" @input="searchProvider" />
-          <span class="font-22">Name: </span>
-          <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="CP Name" @chang="searchProvider" @input="searchProvider" />
-          <span class="font-22">NodeID: </span>
-          <el-input class="zk-input" v-model="networkInput.node_id" placeholder="Node ID" @chang="searchProvider" @input="searchProvider" />
-          <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id ? true:false" round @click="searchProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
+        <el-row class="search-body flex-row font-18">
+          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Contract Address: </span>
+              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="Contract Address" @chang="searchProvider" @input="searchProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Name: </span>
+              <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="CP Name" @chang="searchProvider" @input="searchProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
+            <div class="flex-row nowrap child">
+              <span class="font-22">NodeID: </span>
+              <el-input class="zk-input" v-model="networkInput.node_id" placeholder="Node ID" @chang="searchProvider" @input="searchProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.owner_addr && !networkInput.node_id ? true:false" round @click="searchProvider">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
         <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="index" min-width="70">
             <template #header>
@@ -131,18 +149,11 @@
               <div class="font-20 weight-4">Active deployment</div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.status" min-width="100" column-key="computer_provider.status" filterable :filters="[
-            { text: 'Active', value: 'Active' }
-          ]" filter-placement="bottom-end" :filter-multiple="false">
-            <template #header>
-              <div class="font-20 weight-4">status</div>
-            </template>
-          </el-table-column>
-          <!-- <el-table-column prop="computer_provider.score" width="120">
+          <el-table-column prop="computer_provider.score" width="120">
             <template #header>
               <div class="font-20 weight-4">Score</div>
             </template>
-          </el-table-column> -->
+          </el-table-column>
           <el-table-column prop="gpu_list" min-width="140">
             <template #header>
               <div class="font-20 weight-4">GPU</div>
@@ -157,7 +168,9 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="region" min-width="100">
+          <el-table-column prop="region" min-width="100" column-key="region" filterable :filters="[
+            { text: 'Active', value: 'Active' }
+          ]" filter-placement="bottom-end" :filter-multiple="false">
             <template #header>
               <div class="font-20 weight-4">Region</div>
             </template>
@@ -173,26 +186,46 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        />
+        <div class="flex-row center pagination-style">
+          Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+          <!-- hide-on-single-page -->
+          <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+            :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+        </div>
       </div>
 
       <div class="providers-cp" v-if="activeName === 'ECP'">
-        <div class="search-body flex-row font-18">
-          <span class="font-22">Contract Address: </span>
-          <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">Name: </span>
-          <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
-          <span class="font-22">NodeID: </span>
-          <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
+        <el-row class="search-body flex-row font-18">
+          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Contract Address: </span>
+              <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
+            <div class="flex-row nowrap child">
+              <span class="font-22">Name: </span>
+              <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
+            <div class="flex-row nowrap child">
+              <span class="font-22">NodeID: </span>
+              <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
         <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="index" min-width="70">
             <template #header>
@@ -278,8 +311,13 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination hide-on-single-page :page-size="paginZK.pageSize" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="paginZK.total" @size-change="handleSizeChange"
-          @current-change="handleZKCurrentChange" />
+
+        <div class="flex-row center pagination-style">
+          Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;
+          <!-- hide-on-single-page -->
+          <el-pagination :page-size="paginZK.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+            :total="paginZK.total" @size-change="handleSizeChange" @current-change="handleZKCurrentChange" />
+        </div>
       </div>
     </div>
 
@@ -308,8 +346,6 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
-    const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
     const providersData = ref([])
@@ -324,7 +360,7 @@ export default defineComponent({
       active_applications: 0
     })
     const paginZK = reactive({
-      pageSize: 5,
+      pageSize: 10,
       pageNo: 1,
       total: 0,
       total_deployments: 0,
@@ -502,6 +538,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage', 'GPU'],
@@ -589,6 +636,17 @@ export default defineComponent({
             fontFamily: 'Gilroy-Medium'
           },
           icon: 'roundRect',
+          formatter: function (params) {
+            // params 是一个数组，包含了每个系列的数据信息
+            var result = params[0].name + '<br/>'; // X轴的值
+            params.forEach(function (item) {
+              // 遍历每个系列的数据
+              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
+              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
+              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
+            });
+            return result;
+          }
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage', 'GPU'],
@@ -700,8 +758,6 @@ export default defineComponent({
       paginZK,
       small,
       background,
-      badgeIcon01,
-      badgeIcon02,
       accessToken, cpLoad, rankingList, activeName, vmOperate,
       handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick,
       handleSelect, hardClose
@@ -972,10 +1028,14 @@ export default defineComponent({
       justify-content: flex-start;
       flex-wrap: wrap;
       margin: 0.4rem 0 0;
+      .child {
+        height: 100%;
+        span {
+          white-space: nowrap;
+        }
+      }
       .el-input {
-        width: 30%;
-        max-width: 250px;
-        min-width: 150px;
+        width: 100%;
         margin: 0 0.16rem 0 0.1rem;
         font-size: inherit;
         .el-input__wrapper {
@@ -1042,25 +1102,29 @@ export default defineComponent({
           font-size: inherit;
           border: 0;
           &.ascending {
-            .caret-wrapper {
-              .sort-caret {
-                &.ascending {
-                  border-bottom-color: #fff;
-                }
-                &.descending {
-                  border-top-color: #d0dcf9;
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #fff;
+                  }
+                  &.descending {
+                    border-top-color: #d0dcf9;
+                  }
                 }
               }
             }
           }
           &.descending {
-            .caret-wrapper {
-              .sort-caret {
-                &.ascending {
-                  border-bottom-color: #d0dcf9;
-                }
-                &.descending {
-                  border-top-color: #fff;
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #d0dcf9;
+                  }
+                  &.descending {
+                    border-top-color: #fff;
+                  }
                 }
               }
             }
@@ -1325,10 +1389,26 @@ export default defineComponent({
       background-color: rgb(38, 39, 47);
       height: 0;
     }
+    .pagination-style {
+      color: #878c93;
+    }
     .el-pagination {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: inherit;
+      .el-select__wrapper,
+      .el-input,
+      .el-input__inner,
+      .el-pager {
+        font-family: "Gilroy-Medium";
+        font-size: inherit;
+        @media screen and (max-width: 996px) {
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+        }
+      }
       .el-pagination__total {
         color: #878c93;
       }
@@ -1338,9 +1418,15 @@ export default defineComponent({
         min-width: 32px;
         margin: 0 4px;
         background-color: transparent;
+        font-size: inherit;
         color: #878c93;
         border: 1px solid transparent;
         border-radius: 5px;
+        @media screen and (max-width: 996px) {
+          width: 26px;
+          min-width: 26px;
+          height: 26px;
+        }
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
