@@ -531,7 +531,7 @@ export default defineComponent({
       const option1 = {
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -624,7 +624,7 @@ export default defineComponent({
       const option1 = {
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {

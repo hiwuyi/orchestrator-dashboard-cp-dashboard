@@ -864,7 +864,7 @@ export default defineComponent({
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -967,7 +967,7 @@ export default defineComponent({
               color: '#999'
             }
           },
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -1104,7 +1104,7 @@ export default defineComponent({
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -1190,7 +1190,7 @@ export default defineComponent({
               color: '#999'
             }
           },
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -1561,7 +1561,8 @@ export default defineComponent({
                 }
               }
             }
-            .el-tabs__nav-next, .el-tabs__nav-prev {
+            .el-tabs__nav-next,
+            .el-tabs__nav-prev {
               line-height: 24px;
             }
           }

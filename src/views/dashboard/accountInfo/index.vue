@@ -195,7 +195,7 @@
             <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
               <el-table-column prop="name" min-width="120">
                 <template #header>
-                  <div class="font-20 weight-4">Name</div>
+                  <div class="font-20 weight-4">Machine ID</div>
                 </template>
                 <template #default="scope">
                   <div class="badge flex-row center font-16 name-style" @click="handleSelect('ranking', scope.row, 'ECP')">
@@ -203,35 +203,10 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="type">
-                <template #header>
-                  <div class="font-20 weight-4">type</div>
-                </template>
-                <template #default="scope">
-                  <div class="badge flex-row center font-16">
-                    FCP
-                  </div>
-                </template>
-              </el-table-column>
               <!-- <el-table-column prop="country" label="Country" /> -->
               <el-table-column prop="computer_provider.status" width="120">
                 <template #header>
                   <div class="font-20 weight-4">status</div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="computer_provider.score" width="120">
-                <template #header>
-                  <div class="font-20 weight-4">Score</div>
-                </template>
-                <template #default="scope">
-                  <div class="badge flex-row center font-16">
-                    {{scope.row.type === 'FCP'?scope.row.computer_provider.score:'-'}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="multi_address" width="120">
-                <template #header>
-                  <div class="font-20 weight-4">Multi Address</div>
                 </template>
               </el-table-column>
               <el-table-column prop="gpu_list" min-width="140">
@@ -289,7 +264,7 @@
       <div class="providers-cp">
         <div class="search-body flex-row font-18">
           <el-select v-model="infoList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value">
+            <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled">
               <div class="font-18">{{item.label}}</div>
             </el-option>
           </el-select>
@@ -354,6 +329,11 @@ export default defineComponent({
         {
           value: 'UBI',
           label: 'ZK Proof List'
+        },
+        {
+          disabled: true,
+          value: 'Transaction',
+          label: 'Transaction List'
         }]
     })
     const networkInput = ref('')
@@ -955,7 +935,7 @@ export default defineComponent({
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -1066,7 +1046,7 @@ export default defineComponent({
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(149, 163, 189, 0.7)',
+          backgroundColor: 'rgba(111, 111, 111, 0.95)',
           color: '#fff',
           borderWidth: 0,
           textStyle: {
@@ -1083,7 +1063,7 @@ export default defineComponent({
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
-          itemGap: 20,
+          itemGap: 40,
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,

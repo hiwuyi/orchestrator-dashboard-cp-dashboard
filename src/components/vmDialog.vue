@@ -103,7 +103,7 @@
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
             <div class="flex-row nowrap">
-              <el-input-number v-model="ruleForm.amount" controls-position="right" />
+              <el-input-number v-model="ruleForm.amount" :min="0" controls-position="right" />
               <span class="text-white">&nbsp;sETH</span>
             </div>
           </el-col>
