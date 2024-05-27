@@ -17,7 +17,7 @@
               </template>
               <label class="label">
                 <div class="flex-row">
-                  {{metaAddress}} ffffff
+                  {{metaAddress || '-'}}
                 </div>
               </label>
             </el-form-item>
@@ -58,8 +58,8 @@
                 <div class="flex-row font-18 text-capitalize">Sign code</div>
               </template>
               <div class="flex-row nowrap copy-style width">
-                <div class="server sign-code font-18">{{'lotus wallet sign xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}}</div>
-                <svg @click="system.$commonFun.copyContent('lotus wallet sign xxxxxxxxxxxxxxxxx', 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="server sign-code font-18">{{'computing-provider wallet sign XXXX XXXXXXXXXXXXXXXXXXXXXXXX'}}</div>
+                <svg @click="system.$commonFun.copyContent('computing-provider wallet sign XXXX XXXXXXXXXXXXXXXXXXXXXXXX', 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
                   <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
                 </svg>
@@ -437,6 +437,7 @@ export default defineComponent({
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            cursor: text;
           }
           b {
             padding: 0 0 0 6px;

@@ -9,7 +9,7 @@
         <i class="icon icon-Rankings"></i>
         <span class="font-22">Rankings</span>
       </el-menu-item>
-      <el-menu-item index="accountInfo" v-if="metaAddress">
+      <el-menu-item index="accountInfo" v-if="metaAddress && accessToken">
         <i class="icon icon-AccountInfo"></i>
         <span class="font-22">CP Profile</span>
       </el-menu-item>
@@ -36,6 +36,7 @@ export default defineComponent({
     const bodyWidth = ref(document.body.clientWidth < 992)
     const system = getCurrentInstance().appContext.config.globalProperties
     const metaAddress = computed(() => (store.state.metaAddress))
+    const accessToken = computed(() => (store.state.accessToken))
     const route = useRoute()
     const router = useRouter()
     const activeIndex = ref('overview')
@@ -74,6 +75,7 @@ export default defineComponent({
     return {
       activeIndex,
       metaAddress,
+      accessToken,
       handleSelect
     }
   },

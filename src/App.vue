@@ -265,8 +265,8 @@ export default {
   }
   .circular {
     @media screen and (max-width: 540px) {
-      width: 150px !important;
-      height: 150px !important;
+      width: 35px !important;
+      height: 35px !important;
     }
   }
   .el-loading-text {

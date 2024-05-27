@@ -1115,14 +1115,12 @@ export default defineComponent({
           {
             name: 'Claimed Count',
             type: 'line',
-            stack: 'Total',
             data: [120, 132, 101, 134, 90, 230, 210],
             color: '#ff9413'
           },
           {
             name: 'Waiting',
             type: 'line',
-            stack: 'Total',
             data: [220, 182, 191, 234, 290, 330, 310],
             color: '#6067f5'
           }

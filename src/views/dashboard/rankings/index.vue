@@ -226,7 +226,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersECPLoad">
           <el-table-column type="index" min-width="70">
             <template #header>
               <div class="font-20 weight-4">Ranking</div>
@@ -348,6 +348,7 @@ export default defineComponent({
     const router = useRouter()
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
+    const providersECPLoad = ref(false)
     const providersData = ref([])
     const providerBody = reactive({
       ubiTableData: []
@@ -428,7 +429,7 @@ export default defineComponent({
       providersTableLoad.value = false
     }
     async function getUBITable () {
-      providersTableLoad.value = true
+      providersECPLoad.value = true
       const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
       const params = {
         page_size: paginZK.pageSize,
@@ -445,7 +446,7 @@ export default defineComponent({
         providerBody.ubiTableData = []
         if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
       }
-      providersTableLoad.value = false
+      providersECPLoad.value = false
     }
     async function getList (list, type) {
       let l = list || []
@@ -508,6 +509,7 @@ export default defineComponent({
       providersData.value = []
       providersLoad.value = false
       providersTableLoad.value = false
+      providersECPLoad.value = false
       networkInput.value = ''
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
@@ -583,36 +585,31 @@ export default defineComponent({
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            // 使用 formatter 函数格式化标签
+            formatter: '{value}%'
+          },
+          minInterval: 50
         },
         series: [
           {
             name: 'CPU',
             type: 'line',
-            stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [10, 13, 11, 34, 50, 90, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
-            stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [35, 12, 59, 24, 29, 83, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
-            stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [6, 23, 20, 75, 59, 30, 41],
             color: '#6067f5'
-          },
-          {
-            name: 'GPU',
-            type: 'line',
-            stack: 'Total',
-            data: [320, 282, 91, 134, 190, 230, 210],
-            color: '#cf3cc9'
           }
         ]
       }
@@ -681,36 +678,31 @@ export default defineComponent({
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            // 使用 formatter 函数格式化标签
+            formatter: '{value}%'
+          },
+          minInterval: 50
         },
         series: [
           {
             name: 'CPU',
             type: 'line',
-            stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
-            stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
-            stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
-          },
-          {
-            name: 'GPU',
-            type: 'line',
-            stack: 'Total',
-            data: [320, 282, 91, 134, 190, 230, 210],
-            color: '#cf3cc9'
           }
         ]
       }
@@ -750,6 +742,7 @@ export default defineComponent({
       metaAddress,
       providersLoad,
       providersTableLoad,
+      providersECPLoad,
       providersData,
       providerBody,
       networkInput,

@@ -313,7 +313,7 @@
           <el-row :gutter="32" style="width:100%">
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
@@ -337,7 +337,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
               <div class="grid-content">
-                <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
                 <div class="date">
                   <el-select v-model="weekList.value" placeholder="Select" size="small">
                     <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
@@ -919,27 +919,29 @@ export default defineComponent({
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            // 使用 formatter 函数格式化标签
+            formatter: '{value}%'
+          },
+          interval: 50
         },
         series: [
           {
             name: 'CPU',
             type: 'line',
-            stack: 'Total',
             data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
-            stack: 'Total',
             data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
-            stack: 'Total',
             data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
           }
@@ -1032,6 +1034,7 @@ export default defineComponent({
             // axisLabel: {
             //   formatter: '{value}'
             // }
+            // minInterval: 30
           },
           {
             type: 'value',
@@ -1162,7 +1165,6 @@ export default defineComponent({
           {
             name: 'GPU',
             type: 'line',
-            stack: 'Total',
             color: '#cf3cc9',
             data: [150, 232, 201, 154, 190, 330, 410]
           }
@@ -1537,6 +1539,7 @@ export default defineComponent({
           }
         }
         .el-tabs {
+          max-width: 100%;
           .el-tabs__header {
             padding: 0 0 0.2rem;
             margin: 0;
@@ -1557,6 +1560,9 @@ export default defineComponent({
                   color: @white-color;
                 }
               }
+            }
+            .el-tabs__nav-next, .el-tabs__nav-prev {
+              line-height: 24px;
             }
           }
         }

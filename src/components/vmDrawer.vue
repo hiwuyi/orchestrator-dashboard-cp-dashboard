@@ -389,28 +389,30 @@ export default defineComponent({
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            // 使用 formatter 函数格式化标签
+            formatter: '{value}%'
+          },
+          minInterval: 50
         },
         series: [
           {
-            name: 'VCPU',
+            name: 'CPU',
             type: 'line',
-            stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
-            stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
-            stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
           }
         ]
