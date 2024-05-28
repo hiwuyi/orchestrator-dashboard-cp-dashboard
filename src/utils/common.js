@@ -5,6 +5,8 @@ import {
   ElMessage
 } from 'element-plus'
 import router from '../router'
+import config from './config.js'
+import { disconnect } from '@wagmi/core'
 let lastTime = 0
 
 async function sendRequest (apilink, type, jsonObject, api_token) {
@@ -260,7 +262,8 @@ async function login () {
   }
   const time = await throttle()
   if (!time) return [false, '']
-  const [signature, signErr] = await sign()
+  const [signature, signErr] = await sign(config)
+  store.dispatch('setSignature', signature)
   if (!signature) return [false, signErr]
   const token = await performSignin(signature)
   return [!!token, '']
@@ -304,11 +307,12 @@ async function sign (nonce) {
   }).then(sig => {
     signErr = ''
     signature = sig
-  }).catch(err => {
+  }).catch(async err => {
     console.log(err)
     signature = ''
     signErr = err && err.code ? String(err.code) : err
     signOutFun()
+    // await disconnect(config)
   })
   return [signature, signErr]
 }
@@ -331,9 +335,13 @@ async function performSignin (sig) {
   }
 }
 
-async function signOutFun () {
+async function signOutFun (status) {
+  if (store.state.accessToken || status) {
+    await disconnect(config.config)
+    store.dispatch('setMetaAddress', '')
+  }
   store.dispatch('setAccessToken', '')
-  store.dispatch('setMetaAddress', '')
+  store.dispatch('setSignature', '')
 }
 
 function hiddAddress (val) {

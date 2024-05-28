@@ -4,8 +4,8 @@
       <el-row class="search-container font-18">
         <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
           <div class="flex-row nowrap child">
-            <span class="font-22">Task UUID: </span>
-            <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task UUID" @chang="searchZKProvider" @input="searchZKProvider" />
+            <span class="font-22">Task ID: </span>
+            <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task ID" @chang="searchZKProvider" @input="searchZKProvider" />
           </div>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
@@ -30,7 +30,7 @@
       <el-table v-loading="paymentLoad" :data="paymentData" stripe style="width: 100%">
         <el-table-column prop="task_id" width="90">
           <template #header>
-            <div class="font-20 weight-4">Task ID</div>
+            <div class="font-18 weight-4">Task ID</div>
           </template>
         </el-table-column>
         <el-table-column prop="type" column-key="type" filterable :filters="[
@@ -38,7 +38,7 @@
             { text: 'GPU', value: 'GPU' }
           ]" filter-placement="bottom-end" :filter-multiple="false" min-width="90">
           <template #header>
-            <div class="font-20 weight-4">Task Type</div>
+            <div class="font-18 weight-4">Task Type</div>
           </template>
           <template #default="scope">
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
@@ -46,7 +46,7 @@
         </el-table-column>
         <el-table-column prop="node_id" min-width="100">
           <template #header>
-            <div class="font-20 weight-4">NODE ID</div>
+            <div class="font-18 weight-4">NODE ID</div>
           </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
@@ -60,12 +60,12 @@
         </el-table-column>
         <el-table-column prop="zk_type" min-width="110">
           <template #header>
-            <div class="font-20 weight-4">ZK Type</div>
+            <div class="font-18 weight-4">ZK Type</div>
           </template>
         </el-table-column>
         <el-table-column prop="started_at" min-width="135">
           <template #header>
-            <div class="font-20 weight-4">Start Time</div>
+            <div class="font-18 weight-4">Start Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.started_at)}}</span>
@@ -73,7 +73,7 @@
         </el-table-column>
         <el-table-column prop="ended_at" min-width="135">
           <template #header>
-            <div class="font-20 weight-4">End Time</div>
+            <div class="font-18 weight-4">End Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.ended_at)}}</span>
@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column prop="tx_hash" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">Reward TX Hash</div>
+            <div class="font-18 weight-4">Reward TX Hash</div>
           </template>
           <template #default="scope">
             <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank">{{scope.row.tx_hash}}</a>
@@ -89,7 +89,7 @@
         </el-table-column>
         <el-table-column prop="amount">
           <template #header>
-            <div class="font-20 weight-4">reward</div>
+            <div class="font-18 weight-4">reward</div>
           </template>
         </el-table-column>
       </el-table>
@@ -362,6 +362,7 @@ export default defineComponent({
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
             color: @white-color;
             word-break: break-word;
             text-transform: capitalize;
@@ -404,6 +405,7 @@ export default defineComponent({
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            padding: 0 6px;
             line-height: 1.5;
             word-break: break-word;
             text-align: center;

@@ -20,14 +20,20 @@
             </el-option>
           </el-select>
         </div>
+
+        <div class="web3Modal-style">
+          <!-- web3Modal testnet-->
+          <web3-modal />
+        </div>
+
         <div class="header-right flex-row nowrap" v-if="accessToken !== ''">
-          <div class="set ">
+          <!-- <div class="set ">
             <div class="info-style flex-row">
               <div class="address" @click="wrongMethod">
                 {{system.$commonFun.hiddAddress(metaAddress)}}
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="set">
             <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end" :hide-on-click="false">
               <div class="el-dropdown-link setting-style loginImg flex-row">
@@ -37,7 +43,7 @@
               </div>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item command="apiKey">
+                  <!-- <el-dropdown-item command="apiKey">
                     <div class="profile router-link b">Show API-Key</div>
                   </el-dropdown-item>
                   <el-dropdown-item command="cpCollateral">
@@ -45,7 +51,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="cpCollateralCheck">
                     <div class="profile router-link b">CP Collateral Check</div>
-                  </el-dropdown-item>
+                  </el-dropdown-item> -->
                   <el-dropdown-item command="sign_out">
                     <span class="link">Sign Out</span>
                   </el-dropdown-item>
@@ -92,7 +98,6 @@
             </el-dropdown>
           </div> -->
         </div>
-        <el-button type="primary" @click="loginMethod" v-else>Login</el-button>
 
         <div class="header-right flex-row nowrap">
           <div class="set mobileShow">
@@ -258,6 +263,7 @@
 </template>
 
 <script>
+import web3Modal from "@/components/web3Modal"
 import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
@@ -270,7 +276,7 @@ import SpaceTokenABI from '@/utils/abi/SwanToken.json'
 import CollateralABI from '@/utils/abi/CollateralContract.json'
 export default defineComponent({
   components: {
-    CircleCheck, DocumentCopy, Avatar, Delete, View, Menu
+    CircleCheck, DocumentCopy, Avatar, Delete, View, Menu, web3Modal
   },
   setup () {
     const store = useStore()
@@ -730,6 +736,11 @@ export default defineComponent({
         @media screen and (max-width: 599px) {
           padding: 6px 2px;
         }
+      }
+    }
+    .web3Modal-style {
+      button {
+        background-color: @theme-color !important;
       }
     }
     .header-right {

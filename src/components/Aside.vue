@@ -17,12 +17,16 @@
         <i class="icon icon-Resource"></i>
         <span class="font-22">Resource</span>
       </el-menu-item>
-      <el-menu-item index="aar">
-        <i class="icon icon-AAR"></i>
-        <span class="font-17">Atom Accelerator Race
-          <i class="icon icon-new"></i>
-        </span>
-      </el-menu-item>
+      <el-sub-menu index="aar">
+        <template #title>
+          <i class="icon icon-AAR"></i>
+          <span class="font-17">Atom Accelerator Race
+            <i class="icon icon-new"></i>
+          </span>
+        </template>
+        <el-menu-item index="aar-fcp">FCP Ranking</el-menu-item>
+        <el-menu-item index="aar-ecp">ECP Ranking</el-menu-item>
+      </el-sub-menu>
     </el-menu>
   </div>
 </template>
@@ -45,15 +49,18 @@ export default defineComponent({
       // console.log('handleOpen', key)
       if (key === 'overview') router.push({ path: '/overview' })
       else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
-      else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
+      else if (key === 'aar-fcp') router.push({ name: 'aarFCP' })
+      else if (key === 'aar-ecp') router.push({ name: 'aarECP' })
       else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'FCP' } })
       else if (key === 'resource') router.push({ name: 'resource' })
     }
     async function activeMenu (row) {
       const nameMenu = row || route.name
+      const nameType = route.params.type || ''
       if (nameMenu.indexOf('overview') > -1 || nameMenu.indexOf('dashboard') > -1) activeIndex.value = 'overview'
       else if (nameMenu.indexOf('rankings') > -1) activeIndex.value = 'rankings'
-      else if (nameMenu.indexOf('aar') > -1) activeIndex.value = 'aar'
+      else if (nameMenu.indexOf('aarFCP') > -1 || nameMenu.indexOf('aar/FCP') > -1) activeIndex.value = 'aar-fcp'
+      else if (nameMenu.indexOf('aarECP') > -1 || nameMenu.indexOf('aar/ECP') > -1) activeIndex.value = 'aar-ecp'
       else if (nameMenu.indexOf('accountInfo') > -1) activeIndex.value = 'accountInfo'
       else if (nameMenu.indexOf('resource') > -1) activeIndex.value = 'resource'
       else activeIndex.value = nameMenu
@@ -63,7 +70,7 @@ export default defineComponent({
       // info.network = name || `Chain ID: ${chainId}`
       // info.unit = unit
       // info.url = url || ''
-      // console.log(chainId, activeIndex.value)
+      // console.log(activeIndex.value, nameMenu)
     }
     onMounted(() => {
       activeMenu()
@@ -105,7 +112,7 @@ export default defineComponent({
         color: @white-color;
       }
       span {
-        width: calc(100% - 0.33rem);
+        width: calc(100% - 0.33rem - 7px);
       }
       .icon {
         width: 0.23rem;
@@ -147,6 +154,10 @@ export default defineComponent({
         .el-menu-item {
           margin: 0 0 0 0.4rem;
         }
+      }
+      .el-sub-menu__icon-arrow {
+        right: 0;
+        font-size: 16px;
       }
     }
   }

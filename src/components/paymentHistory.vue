@@ -31,7 +31,7 @@
         <!-- <el-table-column prop="chain_id" label="chain id" min-width="110" /> -->
         <el-table-column prop="job" min-width="100">
           <template #header>
-            <div class="font-20 weight-4">task UUID</div>
+            <div class="font-18 weight-4">task UUID</div>
           </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.task_uuid, 'Copied')">
@@ -48,7 +48,7 @@
             { text: 'GPU', value: 'GPU' }
           ]" filter-placement="bottom-end" :filter-multiple="false" min-width="80">
           <template #header>
-            <div class="font-20 weight-4">Task Type</div>
+            <div class="font-18 weight-4">Task Type</div>
           </template>
           <template #default="scope">
             <span>{{ scope.row.hardware_type }}</span>
@@ -56,7 +56,7 @@
         </el-table-column>
         <el-table-column prop="node_id" min-width="100">
           <template #header>
-            <div class="font-20 weight-4">NODE ID</div>
+            <div class="font-18 weight-4">NODE ID</div>
           </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
@@ -80,7 +80,7 @@
             { text: '1', value: '1' },
           ]" filter-placement="bottom-end" :filter-multiple="false" -->
           <template #header>
-            <div class="font-20 weight-4">Creation Time</div>
+            <div class="font-18 weight-4">Creation Time</div>
           </template>
           <template #default="scope">
             <span>
@@ -90,7 +90,7 @@
         </el-table-column>
         <el-table-column prop="updated_at" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">End Time</div>
+            <div class="font-18 weight-4">End Time</div>
           </template>
           <template #default="scope">
             <span>
@@ -100,7 +100,7 @@
         </el-table-column>
         <!-- <el-table-column prop="task_end_at" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">Estimated End At</div>
+            <div class="font-18 weight-4">Estimated End At</div>
           </template>
           <template #default="scope">
             <span>
@@ -110,7 +110,7 @@
         </el-table-column> -->
         <el-table-column prop="task_status" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">Task Status</div>
+            <div class="font-18 weight-4">Task Status</div>
           </template>
           <template #default="scope">
             <div>
@@ -167,7 +167,7 @@
           ]" filter-placement="bottom-end" :filter-multiple="false" -->
         <!-- <el-table-column prop="status" min-width="135">
           <template #header>
-            <div class="font-20 weight-4">payment status</div>
+            <div class="font-18 weight-4">payment status</div>
           </template>
           <template #default="scope">
             <div>
@@ -233,7 +233,7 @@
         </el-table-column>
         <el-table-column prop="token" min-width="100">
           <template #header>
-            <div class="font-20 weight-4">token</div>
+            <div class="font-18 weight-4">token</div>
           </template>
           <template #default="scope">
             <span>
@@ -243,7 +243,7 @@
         </el-table-column> -->
         <el-table-column prop="transaction_hash" min-width="120">
           <template #header>
-            <div class="font-20 weight-4">transaction hash</div>
+            <div class="font-18 weight-4">transaction hash</div>
           </template>
           <template #default="scope">
             <span v-if="scope.row.amount && scope.row.amount.indexOf('-') > -1">-</span>
@@ -265,7 +265,7 @@
         </el-table-column>
         <el-table-column prop="Reward">
           <template #header>
-            <div class="font-20 weight-4">Reward</div>
+            <div class="font-18 weight-4">Reward</div>
           </template>
           <template #default="scope">
             <span>
@@ -556,7 +556,7 @@ export default defineComponent({
       // init()
     })
     watch(route, (to, from) => {
-      if (to.name === "paymentHistory") init()
+      // if (to.name === "paymentHistory") init()
     })
     return {
       paymentData,
@@ -581,7 +581,7 @@ export default defineComponent({
 #payment {
   width: 100%;
 
-  .payment-history {
+  :deep(.payment-history) {
     margin: 0 auto;
     box-sizing: border-box;
     word-break: break-word;
@@ -697,7 +697,7 @@ export default defineComponent({
       text-transform: capitalize;
     }
 
-    :deep(.status-style) {
+    .status-style {
       margin: 0;
       font-size: inherit;
       .el-radio-group {
@@ -727,8 +727,9 @@ export default defineComponent({
       }
     }
 
-    :deep(.el-table) {
+    .el-table {
       background-color: transparent;
+      margin: 0 auto 0.24rem;
       // border-radius: 0.1rem;
       border: 1px solid rgb(30, 32, 39);
 
@@ -756,7 +757,7 @@ export default defineComponent({
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            padding: 0 5px;
+            padding: 0 6px;
             line-height: 1.5;
             word-break: break-word;
             text-align: center;
@@ -843,6 +844,7 @@ export default defineComponent({
             }
           }
           .cell {
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -873,7 +875,7 @@ export default defineComponent({
     .pagination-style {
       color: rgb(181, 183, 200);
     }
-    :deep(.el-pagination) {
+    .el-pagination {
       margin: 0.4rem auto;
       justify-content: center;
       font-size: inherit;

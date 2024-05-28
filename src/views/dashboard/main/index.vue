@@ -1,12 +1,17 @@
 <template>
   <section id="container">
-    <div class="flex-row header-title">
+    <div class="flex-row space-between header-title">
       <h1 class="color font-33 font-bold">Swan Provider Status Overview</h1>
-      <div class="font-18">
+      <!-- <div class="font-18">
         Use this status page to check an Swan Provider information and status.
         <br> This list is refreshed every 5 minutes. Below snapshot taken at
         <span class="color">{{gmtTime}}</span>
-      </div>
+      </div> -->
+
+      <a :href="system.$explorerLink" target="_blank" class="flex-row font-18">
+        Swan Proxima Chain explorer
+        <i></i>
+      </a>
     </div>
 
     <div class="providers-overview">
@@ -14,10 +19,10 @@
         <el-col :xs="24" :sm="24" :md="24" :lg="15" :xl="15" class="flex-row baseline">
           <div class="title flex-row">
             <b class="font-27 font-bold">Providers Overview</b>
-            <a :href="system.$explorerLink" target="_blank" class="flex-row font-18">
+            <!-- <a :href="system.$explorerLink" target="_blank" class="flex-row font-18">
               Swan Proxima Chain explorer
               <i></i>
-            </a>
+            </a> -->
           </div>
 
           <el-tabs v-model="activeName" class="demo-tabs">
@@ -287,14 +292,6 @@
                     </b>
                   </div>
                 </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row">
-                  <div class="title title-link flex-row center">
-                    <a :href="system.$explorerLink" target="_blank" class="flex-row nowrap font-14">
-                      Swan Proxima Chain explorer
-                      <i></i>
-                    </a>
-                  </div>
-                </el-col>
               </el-row>
             </el-tab-pane>
           </el-tabs>
@@ -359,6 +356,96 @@
                 </div>
               </div>
             </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+              <div class="grid-content font-16">
+                <p class="font-22">FCP List</p>
+                <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
+                  <el-table-column type="index" width="70">
+                    <template #header>
+                      <div class="font-18 weight-4">Ranking</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="name" min-width="120">
+                    <template #header>
+                      <div class="font-18 weight-4">Name</div>
+                    </template>
+                    <template #default="scope">
+                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="computer_provider.active_deployment" sortable min-width="170">
+                    <template #header>
+                      <div class="font-18 weight-4">Active deployment</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="computer_provider.score" width="80">
+                    <template #header>
+                      <div class="font-18 weight-4">Score</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="uptime" width="80">
+                    <template #header>
+                      <div class="font-18 weight-4">Uptime</div>
+                    </template>
+                    <template #default="scope">
+                      <div>
+                        {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+              <div class="grid-content font-16">
+                <p class="font-22">ECP List</p>
+                <!-- providerBody.ubiTableData -->
+                <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
+                  <el-table-column type="index" width="70">
+                    <template #header>
+                      <div class="font-18 weight-4">Ranking</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="name" min-width="120">
+                    <template #header>
+                      <div class="font-18 weight-4">Name</div>
+                    </template>
+                    <template #default="scope">
+                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
+                      { text: 'Online', value: 'Online' },
+                      { text: 'Suspended', value: 'Suspended' },
+                      { text: 'Offline', value: 'Offline' }
+                    ]" filter-placement="bottom-end" :filter-multiple="false">
+                    <template #header>
+                      <div class="font-18 weight-4">status</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="task">
+                    <template #header>
+                      <div class="font-18 weight-4">Total Task</div>
+                    </template>
+                    <template #default="scope">
+                      <div>
+                        {{scope.row.task?scope.row.task.total : ''}}
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="task" width="120">
+                    <template #header>
+                      <div class="font-18 weight-4">Completed(%)</div>
+                    </template>
+                    <template #default="scope">
+                      <div>
+                        {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-col>
           </el-row>
         </el-col>
       </el-row>
@@ -374,6 +461,7 @@ import {
   CircleCheck, DocumentCopy, Avatar
 } from '@element-plus/icons-vue'
 import * as echarts from "echarts"
+import worldGeoJSON from '@/assets/js/world.json'
 
 export default defineComponent({
   components: {
@@ -725,7 +813,7 @@ export default defineComponent({
         },
         geo: {
           show: true,
-          map: 'world',
+          map: 'worldHq',
           label: {
             normal: {
               show: false
@@ -1329,7 +1417,11 @@ export default defineComponent({
       // cpLoad.value = true
       // await system.$commonFun.timeout(500)
     }
+    function handleCP (row) {
+      router.push({ name: 'accountInfo' })
+    }
     onActivated(async () => {
+      echarts.registerMap('worldHq', worldGeoJSON)
       reset('init')
     })
     return {
@@ -1348,7 +1440,8 @@ export default defineComponent({
       background,
       providerBody,
       accessToken, expands, activeName, cpLoad, AvgZKRewards, weekList,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, expandChange, getRowKeys, handleClick
+      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider,
+      expandChange, getRowKeys, handleClick, handleCP
     }
   }
 })
@@ -1364,11 +1457,26 @@ export default defineComponent({
     font-size: 14px;
   }
   .header-title {
-    padding: 0.15rem 0;
+    padding: 0.1rem 0;
     border-bottom: 2px solid #aaaaac;
     line-height: 1.15;
     h1 {
       margin: 0 0.3rem 0 0;
+    }
+    a {
+      padding: 0.07rem 0.1rem;
+      margin: 0 0 0 0.1rem;
+      background-color: @white-color;
+      border: 1px solid #c1c9d8;
+      border-radius: 0.07rem;
+      color: @theme-color;
+      i {
+        width: 0.25rem;
+        height: 0.25rem;
+        margin: 0 0 0 0.07rem;
+        background: url(../../../assets/images/icons/icon-01.png) no-repeat;
+        background-size: 100%;
+      }
     }
   }
   :deep(.el-button) {
@@ -1387,7 +1495,7 @@ export default defineComponent({
     padding: 0;
     .title {
       width: 100%;
-      margin: 0 0 0.17rem;
+      margin: 0 0 0.1rem;
       a {
         padding: 0.07rem 0.1rem;
         margin: 0 0 0 0.1rem;
@@ -1510,6 +1618,311 @@ export default defineComponent({
                 }
               }
             }
+          }
+          .el-table {
+            width: 100%;
+            margin: 0.14rem auto;
+            background-color: transparent;
+            font-size: inherit;
+            border-radius: 0.1rem;
+            border: 1px solid #c6cddc;
+            tr {
+              background-color: transparent;
+              th {
+                word-break: break-word;
+                padding: 0.18rem 0;
+                background-color: @theme-color;
+                font-size: inherit;
+                border: 0;
+                &.ascending {
+                  .cell {
+                    .caret-wrapper {
+                      .sort-caret {
+                        &.ascending {
+                          border-bottom-color: #fff;
+                        }
+                        &.descending {
+                          border-top-color: #d0dcf9;
+                        }
+                      }
+                    }
+                  }
+                }
+                &.descending {
+                  .cell {
+                    .caret-wrapper {
+                      .sort-caret {
+                        &.ascending {
+                          border-bottom-color: #d0dcf9;
+                        }
+                        &.descending {
+                          border-top-color: #fff;
+                        }
+                      }
+                    }
+                  }
+                }
+                .cell {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0;
+                  color: @white-color;
+                  word-break: break-word;
+                  text-transform: capitalize;
+                  text-align: center;
+                  line-height: 1.1;
+                  @media screen and (max-width: 540px) {
+                    font-size: 12px;
+                  }
+                  .el-table__column-filter-trigger {
+                    i {
+                      margin: 0 0 0 4px;
+                      color: @white-color;
+                    }
+                  }
+                  .caret-wrapper {
+                    .sort-caret {
+                      &.ascending {
+                        border-bottom-color: #d0dcf9;
+                      }
+                      &.descending {
+                        border-top-color: #d0dcf9;
+                      }
+                    }
+                  }
+                }
+              }
+              td {
+                padding: 0.08rem 0;
+                background-color: @white-color;
+                font-size: inherit;
+                color: #3d3d3d;
+                border-color: #c6cddc;
+                text-align: center;
+                .cell {
+                  padding: 0 6px;
+                  line-height: 1.1;
+                }
+                i {
+                  margin-right: 5px;
+                  color: @text-color;
+                  font-size: 18px;
+                  @media screen and (max-width: 1260px) {
+                    font-size: 16px;
+                  }
+                }
+                .service-body {
+                  padding: 0 0.25rem 0.1rem;
+                  // color: #333;
+                  // border-top: rgb(220, 223, 230) 1px solid;
+                  // border-bottom: rgb(220, 223, 230) 1px solid;
+                  .tit {
+                    margin: 0.2rem 0 0;
+                    font-size: 16px;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                    @media screen and (max-width: 1260px) {
+                      font-size: 14px;
+                    }
+                  }
+                  .desc {
+                    padding: 0 0 0.1rem;
+                    font-size: 14px;
+                    @media screen and (max-width: 1260px) {
+                      font-size: 12px;
+                    }
+                  }
+                  .list {
+                    padding: 0.1rem 0 0;
+                    .li-title {
+                      width: 100%;
+                      padding: 0 0 0.1rem;
+                      border-bottom: 1px solid #26272f;
+                    }
+                    ul {
+                      display: flex;
+                      align-items: stretch;
+                      justify-content: space-between;
+                      flex-wrap: wrap;
+                      margin: 0 auto 0.25rem;
+                      @media screen and (max-width: 768px) {
+                        justify-content: flex-start;
+                      }
+                      li {
+                        width: 27%;
+                        margin-right: 6%;
+                        @media screen and (max-width: 768px) {
+                          width: auto;
+                          margin-right: 0.5rem;
+                        }
+                        &.m-r {
+                          margin-right: 0;
+                        }
+                        .flex-row {
+                          flex-wrap: wrap;
+                          .li-body {
+                            width: 27%;
+                            margin-right: 6%;
+                            @media screen and (max-width: 768px) {
+                              width: auto;
+                              margin-right: 0.5rem;
+                            }
+                          }
+                        }
+                        .li-body {
+                          position: relative;
+                          padding: 0.15rem;
+                          margin: 0.3rem 0;
+                          background-color: #0d0e12;
+                          border-radius: 5px;
+                          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+                          -webkit-backdrop-filter: blur(5px);
+                          backdrop-filter: blur(5px);
+                          border: 1px solid rgba(255, 255, 255, 0.2);
+                          border-radius: 0.1rem;
+                          animation: glow 1s ease-in-out infinite alternate;
+                          @media screen and (max-width: 768px) {
+                            padding: 0.15rem 0.3rem;
+                          }
+                          p {
+                            padding: 3px 0;
+                            font-size: 14px;
+                            line-height: 1.3;
+                            text-align: center;
+                            @media screen and (max-width: 1260px) {
+                              font-size: 12px;
+                            }
+                            strong,
+                            b {
+                              margin-right: 5px;
+                              font-size: 17px;
+                              @media screen and (max-width: 1260px) {
+                                font-size: 15px;
+                              }
+                              @media screen and (max-width: 540px) {
+                                font-size: 13px;
+                              }
+                            }
+                            &.t {
+                              text-transform: capitalize; // color: #808290;
+                            }
+                            &.t-capitalize {
+                              text-transform: uppercase;
+                            }
+                            &:nth-child(2) {
+                              strong {
+                                color: #4db470;
+                              }
+                            }
+                            &:nth-child(3) {
+                              strong {
+                                color: #488fc3;
+                              }
+                            }
+                            &:nth-child(4) {
+                              strong {
+                                color: #9266a9;
+                              }
+                            }
+                          }
+                          &.li-gpu {
+                            &::before {
+                              position: absolute;
+                              content: "";
+                              right: 0.1rem;
+                              top: 0.1rem;
+                              width: 7px;
+                              height: 7px;
+                              background-color: orange;
+                              border-radius: 7px;
+                            }
+                          }
+                          &.li-status {
+                            &::before {
+                              background-color: #8bc34a;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  .el-divider--horizontal {
+                    margin: 0.1rem 0;
+                  }
+                }
+                .name-style {
+                  color: @theme-color;
+                  cursor: pointer;
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+                .copy-style {
+                  cursor: pointer;
+                  flex-wrap: wrap;
+                  svg {
+                    margin: 0 0 0 0.05rem;
+                  }
+                }
+                .badge {
+                  display: flex;
+                  align-items: center;
+                  white-space: normal;
+                  word-break: break-word;
+                  img {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 5px;
+                    @media screen and (max-width: 1260px) {
+                      width: 25px;
+                      height: 25px;
+                    }
+                  }
+                  .machines-style {
+                    flex-wrap: wrap;
+                    span {
+                      padding: 3px 10px;
+                      margin: 3px 5px 3px 0;
+                      background-color: @theme-color;
+                      font-size: 12px;
+                      border-radius: 45px;
+                      word-break: break-word;
+                      line-height: 1;
+                      color: @white-color;
+                    }
+                  }
+                }
+                &.el-table__expanded-cell {
+                  padding: 0.32rem 0.64rem;
+                  // border: 1px solid @white-color;
+                  &:hover {
+                    background-color: @primary-color !important;
+                  }
+                }
+              }
+              // &.expanded,
+              // &:hover {
+              //   td {
+              //     background-color: rgba(255, 255, 255, 0.85);
+              //     color: #000;
+              //     i {
+              //       color: #000;
+              //     }
+              //   }
+              // }
+              &.expanded {
+                border: 1px solid @white-color;
+                border-collapse: collapse;
+              }
+            }
+          }
+          .el-table--border .el-table__inner-wrapper::after,
+          .el-table--border::after,
+          .el-table--border::before,
+          .el-table__inner-wrapper::before {
+            background-color: rgb(38, 39, 47);
+            height: 0;
           }
         }
         .chart-trends {

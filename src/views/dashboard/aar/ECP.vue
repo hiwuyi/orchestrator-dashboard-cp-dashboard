@@ -1,11 +1,7 @@
 <template>
   <section id="container">
     <div class="flex-row header-title font-32">
-      <el-select v-model="aarList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-        <el-option v-for="item in aarList.options" :key="item.value" :label="item.label" :value="item.value">
-          <div class="font-22">{{item.label}}</div>
-        </el-option>
-      </el-select>
+      <h1 class="color font-33 font-bold">Atom Accelerator Race</h1>
       <div class="font-18">
         Welcome to the Atom Accelerator Race campaign! You can join the campaign at:
         <br>
@@ -15,132 +11,10 @@
 
     <div class="providers-network font-16">
       <div class="title flex-row">
-        <b class="font-27 font-bold">{{ activeName === 'FCP' ? 'FCP' :'ECP'}} Rankings</b>
-      </div>
-      <div class="providers-cp" v-if="activeName === 'FCP'">
-        <el-row class="search-body font-18">
-          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
-            <div class="flex-row nowrap child">
-              <span class="font-22">Contract Address: </span>
-              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="please enter Contract Address" @chang="searchProvider" @input="searchProvider" />
-            </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
-            <div class="flex-row nowrap child">
-              <span class="font-22">Name: </span>
-              <el-input class="zk-input" v-model="networkInput.name" placeholder="please enter Name" @chang="searchProvider" @input="searchProvider" />
-            </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
-            <div class="flex-row nowrap child">
-              <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.name  ? true:false" round @click="clearProvider">Clear</el-button>
-              <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.name ? true:false" round @click="searchProvider">
-                <el-icon>
-                  <Search />
-                </el-icon>
-                Search
-              </el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-          <el-table-column type="index" min-width="80">
-            <template #header>
-              <div class="font-20 weight-4">Ranking</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <img v-if="scope.$index === 0 && pagin.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
-                <img v-else-if="scope.$index === 1 && pagin.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
-                <img v-else-if="scope.$index === 2 && pagin.pageNo <= 1" :src="badgeIcon03" alt="" class="img">
-                <span v-else class="img"></span> {{scope.$index+1}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Name</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="contract_address" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">Contract Address</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style">{{scope.row.contract_address}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="node_id" min-width="120">
-            <template #header>
-              <div class="font-20 weight-4">NodeID</div>
-            </template>
-            <template #default="scope">
-              <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
-                {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
-                </svg>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_hours" width="150">
-            <template #header>
-              <div class="font-20 weight-4">GPU hours</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cpu_hours" width="150">
-            <template #header>
-              <div class="font-20 weight-4">CPU hours</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_list" min-width="140">
-            <template #header>
-              <div class="font-20 weight-4">GPU</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
-                    {{gpu}}
-                  </span>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="uptime">
-            <template #header>
-              <div class="font-20 weight-4">Uptime</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="computer_provider.score" width="160">
-            <template #header>
-              <div class="font-20 weight-4">Contribution Score</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-20 weight-4">Reward Score</div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="flex-row center pagination-style">
-          Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
-          <!-- hide-on-single-page -->
-          <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
-            :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-        </div>
+        <b class="font-27 font-bold">ECP Rankings</b>
       </div>
 
-      <div class="providers-cp" v-if="activeName === 'ECP'">
+      <div class="providers-cp">
         <el-row class="search-body flex-row font-18">
           <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
             <div class="flex-row nowrap child">
@@ -168,9 +42,9 @@
         </el-row>
 
         <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersECPLoad">
-          <el-table-column type="index" min-width="70">
+          <el-table-column type="index" width="80">
             <template #header>
-              <div class="font-20 weight-4">Ranking</div>
+              <div class="font-18 weight-4">Ranking</div>
             </template>
             <template #default="scope">
               <div class="badge flex-row center">
@@ -183,15 +57,15 @@
           </el-table-column>
           <el-table-column prop="name" min-width="120">
             <template #header>
-              <div class="font-20 weight-4">Name</div>
+              <div class="font-18 weight-4">Name</div>
             </template>
             <template #default="scope">
               <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="owner_addr" min-width="120">
+          <el-table-column prop="owner_addr" min-width="140">
             <template #header>
-              <div class="font-20 weight-4">Contract Address</div>
+              <div class="font-18 weight-4">Contract Address</div>
             </template>
             <template #default="scope">
               <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
@@ -199,7 +73,7 @@
           </el-table-column>
           <el-table-column prop="node_id" min-width="120">
             <template #header>
-              <div class="font-20 weight-4">nodeID</div>
+              <div class="font-18 weight-4">nodeID</div>
             </template>
             <template #default="scope">
               <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
@@ -213,7 +87,7 @@
           </el-table-column>
           <el-table-column prop="task">
             <template #header>
-              <div class="font-20 weight-4">Total Task</div>
+              <div class="font-18 weight-4">Total Task</div>
             </template>
             <template #default="scope">
               <div>
@@ -223,17 +97,17 @@
           </el-table-column>
           <el-table-column prop="completion_rate" min-width="100">
             <template #header>
-              <div class="font-20 weight-4">Completion Rate</div>
+              <div class="font-18 weight-4">Completion Rate</div>
             </template>
           </el-table-column>
           <el-table-column prop="completion_rate" min-width="100">
             <template #header>
-              <div class="font-20 weight-4">Contribution Score</div>
+              <div class="font-18 weight-4">Contribution Score</div>
             </template>
           </el-table-column>
           <el-table-column prop="completion_rate" min-width="100">
             <template #header>
-              <div class="font-20 weight-4">Reward Score</div>
+              <div class="font-18 weight-4">Reward Score</div>
             </template>
           </el-table-column>
         </el-table>
@@ -298,18 +172,6 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     const cpLoad = ref(false)
-    const aarList = reactive({
-      value: 'FCP',
-      options: [
-        {
-          value: 'FCP',
-          label: 'Atom Accelerator Race (FCP)'
-        },
-        {
-          value: 'ECP',
-          label: 'Atom Accelerator Race (ECP)'
-        }]
-    })
     const networkInput = reactive({
       contract_address: '',
       name: ''
@@ -319,7 +181,6 @@ export default defineComponent({
       owner_addr: '',
       node_id: ''
     })
-    const activeName = ref('FCP')
     const vmOperate = reactive({
       centerDrawerVisible: false,
       row: {}
@@ -405,14 +266,8 @@ export default defineComponent({
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
-      if (activeName.value === 'ECP') {
         paginZK.pageNo = 1
         getUBITable()
-      } else {
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
-      }
     }
     function reset (type) {
       pagin.total = 0
@@ -429,21 +284,8 @@ export default defineComponent({
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
-      if (route.params.type === 'FCP') {
-        activeName.value = 'FCP'
-        aarList.value = 'FCP'
-      } else {
-        activeName.value = 'ECP'
-        aarList.value = 'ECP'
-      }
       init()
       getUBITable()
-    }
-    const handleClick = async (value) => {
-      activeName.value = value || 'FCP'
-      router.push({ name: 'aar', params: { type: activeName.value } })
-      cpLoad.value = true
-      await system.$commonFun.timeout(500)
     }
     async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
@@ -454,7 +296,7 @@ export default defineComponent({
       //     vmOperate.centerDrawerVisible = true
       //     break;
       // }
-      router.push({ name: 'accountInfo', params: { type: activeName.value } })
+      router.push({ name: 'accountInfo', params: { type: 'ECP' } })
     }
     function hardClose (dialog, type) {
       vmOperate.centerDrawerVisible = dialog
@@ -480,8 +322,8 @@ export default defineComponent({
       badgeIcon01,
       badgeIcon02,
       badgeIcon03,
-      accessToken, cpLoad, aarList, activeName, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick,
+      accessToken, cpLoad, vmOperate,
+      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider,
       handleSelect, hardClose
     }
   }
@@ -831,6 +673,7 @@ export default defineComponent({
           font-size: inherit;
           border: 0;
           .cell {
+            padding: 0;
             color: @white-color;
             word-break: break-word;
             text-transform: capitalize;
@@ -849,6 +692,7 @@ export default defineComponent({
           border-color: #c6cddc;
           text-align: center;
           .cell {
+            padding: 0 6px;
             line-height: 1.1;
           }
           i {

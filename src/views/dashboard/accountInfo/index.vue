@@ -195,10 +195,10 @@
             <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
               <el-table-column prop="name" min-width="120">
                 <template #header>
-                  <div class="font-20 weight-4">Machine ID</div>
+                  <div class="font-18 weight-4">Machine ID</div>
                 </template>
                 <template #default="scope">
-                  <div class="badge flex-row center font-16 name-style" @click="handleSelect('ranking', scope.row, 'ECP')">
+                  <div class="badge flex-row center font-16 name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
                     {{scope.row.name}}
                   </div>
                 </template>
@@ -206,12 +206,12 @@
               <!-- <el-table-column prop="country" label="Country" /> -->
               <el-table-column prop="computer_provider.status" width="120">
                 <template #header>
-                  <div class="font-20 weight-4">status</div>
+                  <div class="font-18 weight-4">status</div>
                 </template>
               </el-table-column>
               <el-table-column prop="gpu_list" min-width="140">
                 <template #header>
-                  <div class="font-20 weight-4">GPU</div>
+                  <div class="font-18 weight-4">GPU</div>
                 </template>
                 <template #default="scope">
                   <div class="badge flex-row center">
@@ -225,12 +225,12 @@
               </el-table-column>
               <el-table-column prop="region" min-width="100">
                 <template #header>
-                  <div class="font-20 weight-4">Region</div>
+                  <div class="font-18 weight-4">Region</div>
                 </template>
               </el-table-column>
               <el-table-column prop="task" min-width="140">
                 <template #header>
-                  <div class="font-20 weight-4">Completed(%)</div>
+                  <div class="font-18 weight-4">Completed(%)</div>
                 </template>
                 <template #default="scope">
                   <div v-if="scope.row.type === 'ECP'">
@@ -241,7 +241,7 @@
               </el-table-column>
               <el-table-column prop="uptime">
                 <template #header>
-                  <div class="font-20 weight-4">Uptime</div>
+                  <div class="font-18 weight-4">Uptime</div>
                 </template>
                 <template #default="scope">
                   <div v-if="scope.row.type === 'FCP'">
@@ -263,14 +263,26 @@
 
       <div class="providers-cp">
         <div class="search-body flex-row font-18">
-          <el-select v-model="infoList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in infoList.options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled">
-              <div class="font-18">{{item.label}}</div>
-            </el-option>
-          </el-select>
+          <el-tabs v-model="activeName" class="demo-tabs">
+            <el-tab-pane name="FCP">
+              <template #label>
+                <span class="font-22">FCP Reward List</span>
+              </template>
+            </el-tab-pane>
+            <el-tab-pane name="ECP">
+              <template #label>
+                <span class="font-22">ZK Proof List</span>
+              </template>
+            </el-tab-pane>
+            <el-tab-pane name="Transaction" disabled>
+              <template #label>
+                <span class="font-22">Transaction List</span>
+              </template>
+            </el-tab-pane>
+          </el-tabs>
+          <payment-history v-if="activeName === 'FCP'"></payment-history>
+          <ubi-history v-else-if="activeName === 'ECP'"></ubi-history>
         </div>
-        <payment-history v-if="activeName === 'FCP'"></payment-history>
-        <ubi-history v-else></ubi-history>
       </div>
     </div>
 
@@ -319,23 +331,6 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     const cpLoad = ref(false)
-    const infoList = reactive({
-      value: 'FCP',
-      options: [
-        {
-          value: 'FCP',
-          label: 'FCP Reward List'
-        },
-        {
-          value: 'ECP',
-          label: 'ZK Proof List'
-        },
-        {
-          disabled: true,
-          value: 'Transaction',
-          label: 'Transaction List'
-        }]
-    })
     const networkInput = ref('')
     const activeName = ref('FCP')
     const vmOperate = reactive({
@@ -402,20 +397,7 @@ export default defineComponent({
       providersTableLoad.value = false
       providersLoad.value = false
       networkInput.value = ''
-      if (route.params.type === 'FCP') {
-        activeName.value = 'FCP'
-        infoList.value = 'FCP'
-      } else {
-        activeName.value = 'ECP'
-        infoList.value = 'ECP'
-      }
       init()
-    }
-    const handleClick = async (value) => {
-      activeName.value = value || 'FCP'
-      router.push({ name: 'accountInfo', params: { type: activeName.value } })
-      cpLoad.value = true
-      await system.$commonFun.timeout(500)
     }
     function handleSizeChange (val) { }
     async function handleCurrentChange (currentPage) {
@@ -1250,8 +1232,8 @@ export default defineComponent({
       pagin,
       small,
       background,
-      accessToken, cpLoad, infoList, activeName, vmOperate, ringGraphData, weekList,
-      handleSizeChange, handleCurrentChange, searchProvider, handleClick, handleSelect,
+      accessToken, cpLoad, activeName, vmOperate, ringGraphData, weekList,
+      handleSizeChange, handleCurrentChange, searchProvider, handleSelect,
       hardClose
     }
   }
@@ -1466,95 +1448,8 @@ export default defineComponent({
       justify-content: flex-start;
       flex-wrap: wrap;
       margin: 0;
-      .el-select {
-        width: auto;
-        margin: 0 0.3rem 0 0;
-        font-size: inherit;
-        .el-tooltip__trigger {
-          margin: 0;
-          width: auto;
-          height: auto;
-          padding: 0.06rem 0.22rem;
-          font-size: inherit;
-          font-family: inherit;
-          border: 1px solid #b6c0d1;
-          border-radius: 0.07rem;
-          box-shadow: none;
-          .el-select__selected-item {
-            position: relative;
-            top: auto;
-            margin: 0 0.16rem 0 0;
-            transform: translateY(0px);
-            line-height: 1.2;
-            color: @theme-color;
-            &.is-hidden {
-              display: none;
-            }
-          }
-          .el-select__suffix {
-            .el-select__icon {
-              background: url(../../../assets/images/icons/icon-03.png)
-                no-repeat center;
-              background-size: 100%;
-              svg {
-                display: none;
-              }
-            }
-          }
-        }
-      }
-      .el-input {
-        width: 30%;
-        max-width: 250px;
-        min-width: 150px;
-        margin: 0 0.16rem 0 0.1rem;
-        font-size: inherit;
-        .el-input__wrapper {
-          background-color: @white-color;
-          border: 1px solid @border-color;
-          border-radius: 0.08rem;
-          box-shadow: none;
-          .el-input__inner {
-            width: 100%;
-            height: 0.3rem;
-            line-height: 0.3rem;
-            color: #333;
-            @media screen and (max-width: 768px) {
-              width: 100%;
-            }
-            &:hover,
-            &:active,
-            &:focus {
-              border-color: @theme-color;
-            }
-          }
-        }
-      }
-      .el-button {
-        height: 0.3rem;
-        padding: 0 0.1rem;
-        font-family: inherit;
-        font-size: inherit;
-        border: 0;
-        line-height: 0.3rem;
-        .el-icon {
-          width: 0.2rem;
-          height: 0.2rem;
-          margin: 0 0.08rem 0 0;
-          svg {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        &.el-button--info {
-          background-color: #d0dcf9;
-          border-color: #d0dcf9;
-          color: @theme-color;
-        }
-        &:hover,
-        &.is-disabled {
-          opacity: 0.9;
-        }
+      .el-tabs {
+        width: 100%;
       }
     }
     .el-table {
@@ -1573,6 +1468,7 @@ export default defineComponent({
           font-size: inherit;
           border: 0;
           .cell {
+            padding: 0;
             color: @white-color;
             word-break: break-word;
             text-transform: capitalize;
@@ -1591,6 +1487,7 @@ export default defineComponent({
           border-color: #c6cddc;
           text-align: center;
           .cell {
+            padding: 0 6px;
             line-height: 1.1;
           }
           i {

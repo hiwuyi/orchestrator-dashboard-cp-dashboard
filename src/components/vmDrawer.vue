@@ -104,7 +104,7 @@
           <el-table v-show="machines.MachineShow && machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
             <el-table-column type="product_name" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">GPU</div>
+                <div class="font-18 weight-4">GPU</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.product_name}}</div>
@@ -115,7 +115,7 @@
               { text: 'Available', value: 'Available' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
               <template #header>
-                <div class="font-20 weight-4">Status</div>
+                <div class="font-18 weight-4">Status</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.status}}</div>
@@ -123,7 +123,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.free" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Free</div>
+                <div class="font-18 weight-4">Free</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.free}}</div>
@@ -131,7 +131,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.total" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Total</div>
+                <div class="font-18 weight-4">Total</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.total}}</div>
@@ -139,7 +139,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.used" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Used</div>
+                <div class="font-18 weight-4">Used</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.used}}</div>
@@ -255,7 +255,7 @@
           <el-table v-show="machinesECP.MachineShow && machinesECP.gpu" :data="machinesECP.gpu.gpus" style="width: 100%" empty-text="No Data">
             <el-table-column type="model" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">GPU</div>
+                <div class="font-18 weight-4">GPU</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.model}}</div>
@@ -266,7 +266,7 @@
               { text: 'Available', value: 'Available' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
               <template #header>
-                <div class="font-20 weight-4">Status</div>
+                <div class="font-18 weight-4">Status</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.status}}</div>
@@ -274,7 +274,7 @@
             </el-table-column>
             <el-table-column type="free" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Free</div>
+                <div class="font-18 weight-4">Free</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.free}}</div>
@@ -282,7 +282,7 @@
             </el-table-column>
             <el-table-column type="total" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Total</div>
+                <div class="font-18 weight-4">Total</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.total}}</div>
@@ -290,7 +290,7 @@
             </el-table-column>
             <el-table-column type="used" min-width="70">
               <template #header>
-                <div class="font-20 weight-4">Used</div>
+                <div class="font-18 weight-4">Used</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.total-scope.row.free}}</div>
@@ -299,6 +299,105 @@
           </el-table>
           <div class="flex-row center">
             <el-button @click="machinesECP.MachineShow = !machinesECP.MachineShow">{{machinesECP.MachineShow?'Fold':'Unfold'}}</el-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-content font-18" v-if="props.list.type === 'resourceList'">
+        <div class="font-18 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
+          <el-row>
+            <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
+              <p>MachineID: </p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
+              <p class="color text-right" v-if="machines.specs">{{machines.machine_id}}</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
+              <p>Current CPU usage:</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
+              <p class="color text-right" v-if="machines.specs">
+                <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.free)}}</span> free
+                <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.total)}}</span> total
+                <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.used)}}</span> used
+              </p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
+              <p>Current Memory usage(GiB):</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
+              <p class="color text-right" v-if="machines.specs">
+                <span class="orange">{{machines.specs.memory.free}}</span> free
+                <span class="orange">{{machines.specs.memory.total}}</span> total
+                <span class="orange">{{machines.specs.memory.used}}</span> used
+              </p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
+              <p>Current Storage usage(GiB):</p>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
+              <p class="color text-right" v-if="machines.specs">
+                <span class="blue">{{machines.specs.storage.free}}</span> free
+                <span class="blue">{{machines.specs.storage.total}}</span> total
+                <span class="blue">{{machines.specs.storage.used}}</span> used
+              </p>
+            </el-col>
+            <el-col v-show="machines.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
+              <div class="grid-content">
+                <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+              </div>
+            </el-col>
+          </el-row>
+          <div v-show="machines.MachineShow" class="flex-row space-between name-title">
+            <b class="font-22">GPU Source</b>
+          </div>
+          <el-table v-show="machines.MachineShow && machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
+            <el-table-column type="product_name" min-width="70">
+              <template #header>
+                <div class="font-18 weight-4">GPU</div>
+              </template>
+              <template #default="scope">
+                <div>{{scope.row.product_name}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column type="status" min-width="70" column-key="status" filterable :filters="[
+              { text: 'Occupied', value: 'Occupied' },
+              { text: 'Available', value: 'Available' }
+            ]" filter-placement="bottom-end" :filter-multiple="false">
+              <template #header>
+                <div class="font-18 weight-4">Status</div>
+              </template>
+              <template #default="scope">
+                <div>{{scope.row.status}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column type="fb_memory_usage.free" min-width="70">
+              <template #header>
+                <div class="font-18 weight-4">Free</div>
+              </template>
+              <template #default="scope">
+                <div>{{scope.row.fb_memory_usage.free}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column type="fb_memory_usage.total" min-width="70">
+              <template #header>
+                <div class="font-18 weight-4">Total</div>
+              </template>
+              <template #default="scope">
+                <div>{{scope.row.fb_memory_usage.total}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column type="fb_memory_usage.used" min-width="70">
+              <template #header>
+                <div class="font-18 weight-4">Used</div>
+              </template>
+              <template #default="scope">
+                <div>{{scope.row.fb_memory_usage.used}}</div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="flex-row center">
+            <el-button @click="machines.MachineShow = !machines.MachineShow">{{machines.MachineShow?'Fold':'Unfold'}}</el-button>
           </div>
         </div>
       </div>
