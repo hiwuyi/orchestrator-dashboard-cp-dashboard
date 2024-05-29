@@ -1,36 +1,37 @@
 <template>
-  <section id="aarFCP-container">
+  <section id="rankingECP-container">
     <div class="flex-row header-title font-32">
-      <h1 class="color font-33 font-bold">Atom Accelerator Race</h1>
+      <h1 class="color font-33 font-bold">ECP Ranking List</h1>
       <div class="font-18">
-        Welcome to the Atom Accelerator Race campaign! You can join the campaign at:
-        <br>
-        <span class="color link" @click="system.$commonFun.goLink('https://proxima-testnet.swanchain.io')">https://proxima-testnet.swanchain.io</span>
+        (Edge Computing Provider)
       </div>
     </div>
 
     <div class="providers-network font-16">
-      <div class="title flex-row">
-        <b class="font-27 font-bold">FCP Rankings</b>
-      </div>
       <div class="providers-cp">
-        <el-row class="search-body font-18">
-          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+        <el-row class="search-body flex-row font-18">
+          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
             <div class="flex-row nowrap child">
               <span class="font-22">Contract Address: </span>
-              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="please enter Contract Address" @chang="searchProvider" @input="searchProvider" />
+              <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="please enter Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
             <div class="flex-row nowrap child">
               <span class="font-22">Name: </span>
-              <el-input class="zk-input" v-model="networkInput.name" placeholder="please enter Name" @chang="searchProvider" @input="searchProvider" />
+              <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter CP name" @chang="searchZKProvider" @input="searchZKProvider" />
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
+          <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
             <div class="flex-row nowrap child">
-              <el-button type="info" :disabled="!networkInput.contract_address && !networkInput.name  ? true:false" round @click="clearProvider">Clear</el-button>
-              <el-button type="primary" :disabled="!networkInput.contract_address && !networkInput.name ? true:false" round @click="searchProvider">
+              <span class="font-22">NodeID: </span>
+              <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
                 <el-icon>
                   <Search />
                 </el-icon>
@@ -39,18 +40,18 @@
             </div>
           </el-col>
         </el-row>
-        <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-          <el-table-column type="index" width="80">
+        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersECPLoad">
+          <el-table-column type="index" min-width="70">
             <template #header>
               <div class="font-18 weight-4">Ranking</div>
             </template>
+          </el-table-column>
+          <el-table-column prop="owner_addr" min-width="140">
+            <template #header>
+              <div class="font-18 weight-4">Contract Address</div>
+            </template>
             <template #default="scope">
-              <div class="badge flex-row center">
-                <img v-if="scope.$index === 0 && pagin.pageNo <= 1" :src="badgeIcon01" alt="" class="img">
-                <img v-else-if="scope.$index === 1 && pagin.pageNo <= 1" :src="badgeIcon02" alt="" class="img">
-                <img v-else-if="scope.$index === 2 && pagin.pageNo <= 1" :src="badgeIcon03" alt="" class="img">
-                <span v-else class="img"></span> {{scope.$index+1}}
-              </div>
+              <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
             </template>
           </el-table-column>
           <el-table-column prop="name" min-width="120">
@@ -58,23 +59,15 @@
               <div class="font-18 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
+              <div class="name-style" @click="handleSelect('ranking', scope.row, 'ECP')">{{scope.row.name}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="contract_address" min-width="160">
+          <el-table-column prop="node_id" min-width="120">
             <template #header>
-              <div class="font-18 weight-4">Contract Address</div>
+              <div class="font-18 weight-4">nodeID</div>
             </template>
             <template #default="scope">
-              <div class="name-style">{{scope.row.contract_address}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="node_id" min-width="130">
-            <template #header>
-              <div class="font-18 weight-4">NodeID</div>
-            </template>
-            <template #default="scope">
-              <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
+              <div class="flex-row copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
                 {{system.$commonFun.hiddAddress(scope.row.node_id)}}
                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
@@ -83,56 +76,61 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="gpu_hours" width="110">
-            <template #header>
-              <div class="font-18 weight-4">GPU hours</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cpu_hours" width="110">
-            <template #header>
-              <div class="font-18 weight-4">CPU hours</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_list" min-width="120">
+          <el-table-column prop="gpu_tags" min-width="140">
             <template #header>
               <div class="font-18 weight-4">GPU</div>
             </template>
             <template #default="scope">
               <div class="badge flex-row center">
                 <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_list" :key="g">
+                  <span v-for="(gpu, g) in scope.row.gpu_tags" :key="g">
                     {{gpu}}
                   </span>
                 </div>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="uptime" width="80">
+          <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
+            { text: 'Online', value: 'Online' },
+            { text: 'Suspended', value: 'Suspended' },
+            { text: 'Offline', value: 'Offline' }
+          ]" filter-placement="bottom-end" :filter-multiple="false">
             <template #header>
-              <div class="font-18 weight-4">Uptime</div>
+              <div class="font-18 weight-4">status</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="region" min-width="100">
+            <template #header>
+              <div class="font-18 weight-4">Region</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="task">
+            <template #header>
+              <div class="font-18 weight-4">Total Task</div>
             </template>
             <template #default="scope">
               <div>
-                {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                {{scope.row.task?scope.row.task.total : ''}}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="computer_provider.score" min-width="160">
+          <el-table-column prop="task" width="120">
             <template #header>
-              <div class="font-18 weight-4">Contribution Score</div>
+              <div class="font-18 weight-4">Completed(%)</div>
             </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="120">
-            <template #header>
-              <div class="font-18 weight-4">Reward Score</div>
+            <template #default="scope">
+              <div>
+                {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+              </div>
             </template>
           </el-table-column>
         </el-table>
+
         <div class="flex-row center pagination-style">
-          Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+          Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;
           <!-- hide-on-single-page -->
-          <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
-            :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+          <el-pagination :page-size="paginZK.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+            :total="paginZK.total" @size-change="handleSizeChange" @current-change="handleZKCurrentChange" />
         </div>
       </div>
     </div>
@@ -149,7 +147,6 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   Search
 } from '@element-plus/icons-vue'
-import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
@@ -162,22 +159,9 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const badgeIcon01 = require("@/assets/images/icons/badge-1.png")
-    const badgeIcon02 = require("@/assets/images/icons/badge-2.png")
-    const badgeIcon03 = require("@/assets/images/icons/badge-3.png")
-    const providersLoad = ref(false)
-    const providersTableLoad = ref(false)
     const providersECPLoad = ref(false)
-    const providersData = ref([])
     const providerBody = reactive({
       ubiTableData: []
-    })
-    const pagin = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
     })
     const paginZK = reactive({
       pageSize: 10,
@@ -189,10 +173,6 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     const cpLoad = ref(false)
-    const networkInput = reactive({
-      contract_address: '',
-      name: ''
-    })
     const networkZK = reactive({
       contract_address: '',
       owner_addr: '',
@@ -204,31 +184,9 @@ export default defineComponent({
     })
 
     function handleSizeChange (val) { }
-    async function handleCurrentChange (currentPage) {
-      pagin.pageNo = currentPage
-      init()
-    }
     async function handleZKCurrentChange (currentPage) {
       paginZK.pageNo = currentPage
       getUBITable()
-    }
-    async function init () {
-      providersTableLoad.value = true
-      const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
-      const params = {
-        limit: pagin.pageSize,
-        offset: page * pagin.pageSize,
-        search_string: networkInput.name
-      }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
-      if (providerRes && providerRes.status === 'success') {
-        pagin.total = providerRes.data.list_providers_cnt || 0
-        providersData.value = await getList(providerRes.data.providers)
-      } else {
-        providersData.value = []
-        if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
-      }
-      providersTableLoad.value = false
     }
     async function getUBITable () {
       providersECPLoad.value = true
@@ -243,78 +201,69 @@ export default defineComponent({
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.code === 0) {
         paginZK.total = providerRes.data.total || 0
-        providerBody.ubiTableData = providerRes.data.list || []
+        providerBody.ubiTableData = await getList(providerRes.data.list, 'ECP')
       } else {
         providerBody.ubiTableData = []
         if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
       }
       providersECPLoad.value = false
     }
-    async function getList (list) {
+    async function getList (list, type) {
       let l = list || []
-      l.forEach((element) => {
-        element.gpu_list = []
-        try {
-          if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
-            element.computer_provider.machines.forEach((machines) => {
-              if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
-                machines.specs.gpu.details.forEach((gpu) => {
-                  if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
-                })
-              }
+      if (type === 'ECP') {
+        l.forEach((element) => {
+          try {
+            element.resources.forEach((machines) => {
+              machines.MachineShow = true
             })
-          }
-        } catch{ }
-      })
+          } catch{ }
+        })
+      } else {
+        l.forEach((element) => {
+          element.gpu_list = []
+          try {
+            if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
+              element.computer_provider.machines.forEach((machines) => {
+                machines.MachineShow = true
+                if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
+                  machines.specs.gpu.details.forEach((gpu) => {
+                    if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
+                  })
+                }
+              })
+            }
+          } catch{ }
+        })
+      }
       return l
     }
-    const searchProvider = system.$commonFun.debounce(async function () {
-      pagin.pageSize = 10
-      pagin.pageNo = 1
-      init()
-    }, 700)
     const searchZKProvider = system.$commonFun.debounce(async function () {
       paginZK.pageNo = 1
       getUBITable()
     }, 700)
     function clearProvider () {
-      networkInput.contract_address = ''
-      networkInput.name = ''
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
+      paginZK.pageNo = 1
+      getUBITable()
     }
     function reset (type) {
-      pagin.total = 0
-      pagin.total_deployments = 0
-      pagin.active_applications = 0
-      pagin.pageSize = 10
-      pagin.pageNo = 1
-      providersData.value = []
-      providersLoad.value = false
-      providersTableLoad.value = false
       providersECPLoad.value = false
-      networkInput.name = ''
-      networkInput.contract_address = ''
       networkZK.owner_addr = ''
       networkZK.contract_address = ''
       networkZK.node_id = ''
-      init()
       getUBITable()
     }
     async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
-      // switch (key) {
-      //   case 'ranking':
-      //     vmOperate.row = row
-      //     vmOperate.row.type = type
-      //     vmOperate.centerDrawerVisible = true
-      //     break;
-      // }
-      router.push({ name: 'accountInfo', params: { type: 'FCP' } })
+      switch (key) {
+        case 'ranking':
+          vmOperate.row = row
+          vmOperate.row.type = type
+          vmOperate.centerDrawerVisible = true
+          break;
+      }
     }
     function hardClose (dialog, type) {
       vmOperate.centerDrawerVisible = dialog
@@ -326,22 +275,14 @@ export default defineComponent({
       system,
       route,
       metaAddress,
-      providersLoad,
-      providersTableLoad,
       providersECPLoad,
-      providersData,
       providerBody,
-      networkInput,
       networkZK,
-      pagin,
       paginZK,
       small,
       background,
-      badgeIcon01,
-      badgeIcon02,
-      badgeIcon03,
       accessToken, cpLoad, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider,
+      handleSizeChange, handleZKCurrentChange, searchZKProvider, clearProvider,
       handleSelect, hardClose
     }
   }
@@ -349,7 +290,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-#aarFCP-container {
+#rankingECP-container {
   padding: 0 0 0.4rem;
   font-size: 16px;
   line-height: 1.6;
@@ -362,12 +303,6 @@ export default defineComponent({
     line-height: 1.15;
     h1 {
       margin: 0 0.3rem 0 0;
-    }
-    .link {
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
     }
     .el-select {
       width: auto;
@@ -424,8 +359,7 @@ export default defineComponent({
     padding: 0;
     .title {
       width: 100%;
-      margin: 0.22rem 0 0;
-      line-height: 1;
+      margin: 0 0 0.17rem;
       a {
         padding: 0.07rem 0.1rem;
         margin: 0 0 0 0.1rem;
@@ -615,7 +549,7 @@ export default defineComponent({
     .search-body {
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin: 0.4rem 0 0;
+      margin: 0.22rem 0 0;
       .child {
         height: 100%;
         span {
@@ -689,7 +623,38 @@ export default defineComponent({
           background-color: @theme-color;
           font-size: inherit;
           border: 0;
+          &.ascending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #fff;
+                  }
+                  &.descending {
+                    border-top-color: #d0dcf9;
+                  }
+                }
+              }
+            }
+          }
+          &.descending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #d0dcf9;
+                  }
+                  &.descending {
+                    border-top-color: #fff;
+                  }
+                }
+              }
+            }
+          }
           .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 0;
             color: @white-color;
             word-break: break-word;
@@ -698,6 +663,22 @@ export default defineComponent({
             line-height: 1.1;
             @media screen and (max-width: 540px) {
               font-size: 12px;
+            }
+            .el-table__column-filter-trigger {
+              i {
+                margin: 0 0 0 4px;
+                color: @white-color;
+              }
+            }
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #d0dcf9;
+                }
+                &.descending {
+                  border-top-color: #d0dcf9;
+                }
+              }
             }
           }
         }
@@ -878,13 +859,13 @@ export default defineComponent({
             align-items: center;
             white-space: normal;
             word-break: break-word;
-            .img {
-              width: 0.23rem;
-              height: 0.23rem;
-              margin-right: 0.15rem;
+            img {
+              width: 30px;
+              height: 30px;
+              margin-right: 5px;
               @media screen and (max-width: 1260px) {
-                width: 20px;
-                height: 20px;
+                width: 25px;
+                height: 25px;
               }
             }
             .machines-style {

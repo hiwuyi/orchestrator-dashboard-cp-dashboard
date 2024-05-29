@@ -1,7 +1,7 @@
 <template>
-  <section id="container">
+  <section id="main-container">
     <div class="flex-row space-between header-title">
-      <h1 class="color font-33 font-bold">Swan Provider Status Overview</h1>
+      <h1 class="font-24 font-bold">Swan Provider Overview</h1>
       <!-- <div class="font-18">
         Use this status page to check an Swan Provider information and status.
         <br> This list is refreshed every 5 minutes. Below snapshot taken at
@@ -15,438 +15,464 @@
     </div>
 
     <div class="providers-overview">
-      <el-row :gutter="50">
-        <el-col :xs="24" :sm="24" :md="24" :lg="15" :xl="15" class="flex-row baseline">
-          <div class="title flex-row">
-            <b class="font-27 font-bold">Providers Overview</b>
-            <!-- <a :href="system.$explorerLink" target="_blank" class="flex-row font-18">
-              Swan Proxima Chain explorer
-              <i></i>
-            </a> -->
-          </div>
+      <el-row :gutter="42">
+        <el-col :xs="24" :sm="24" :md="24" :lg="13" :xl="13" class="flex-row baseline">
+          <div class="module-container">
+            <div class="title flex-row">
+              <i class="icon icon-figures"></i>
+              <span class="font-16 weight-4">Provider Figures</span>
+            </div>
 
-          <el-tabs v-model="activeName" class="demo-tabs">
-            <el-tab-pane name="Overview">
-              <template #label>
-                <span class="font-22">Overview Data</span>
-              </template>
-              <el-row :gutter="18">
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Active FCP Number</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Active ECP numbers</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total ZK tasks</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Applications</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total GPU hours</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total ZK rewards (SWAN)</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-tab-pane>
-            <el-tab-pane name="FCP">
-              <template #label>
-                <span class="font-22">FCP Summary</span>
-              </template>
-              <el-row :gutter="18">
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Active FCP Number</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Active Applications</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Deployments</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total jobs</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total running jobs</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total GPU hours</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total CPU hours</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-tab-pane>
-            <el-tab-pane name="ECP">
-              <template #label>
-                <span class="font-22">ECP Summary</span>
-              </template>
-              <el-row :gutter="18">
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Active ECP Number</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total ZK rewards (SWAN)</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total ZK tasks</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">GPU ZK task</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">CPU ZK task</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Verified ZK task</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center flex-row nowrap">
-                      <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
-                        <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
-                          <div class="font-14">{{item.value}}</div>
-                        </el-option>
-                      </el-select>
-                      Avg ZK rewards
-                    </h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-tab-pane>
-            <el-tab-pane name="Swan">
-              <template #label>
-                <span class="font-22">Swan Proxima Chain</span>
-              </template>
-              <el-row :gutter="18">
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Addresses</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Contracts(24H)</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                    <h6 class="font-14 weight-4 text-right t">24h change</h6>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Transactions Today</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Transactions</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                  <div class="grid-content">
-                    <h6 class="font-14 weight-4 text-center">Total Accounts</h6>
-                    <b v-loading="providersLoad" class="flex-row center font-24 text-center">
-                      {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      <span class="span font-18" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</span>
-                    </b>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-tab-pane>
-          </el-tabs>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="9" :xl="9" class="flex-row baseline">
-          <div class="title flex-row">
-            <b class="font-27 font-bold">Location Overview</b>
+            <el-tabs v-model="activeName" class="demo-tabs">
+              <el-tab-pane name="Overview">
+                <template #label>
+                  <span class="font-14">Overview Data</span>
+                </template>
+                <el-row :gutter="18">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Active ECP numbers</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Applications</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+              <el-tab-pane name="FCP">
+                <template #label>
+                  <span class="font-14">FCP Summary</span>
+                </template>
+                <el-row :gutter="18">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Active Applications</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Deployments</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total jobs</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total running jobs</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total CPU hours</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+              <el-tab-pane name="ECP">
+                <template #label>
+                  <span class="font-14">ECP Summary</span>
+                </template>
+                <el-row :gutter="18">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Active ECP Number</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">GPU ZK task</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">CPU ZK task</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Verified ZK task</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center flex-row nowrap">
+                        <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
+                          <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
+                            <div class="font-14">{{item.value}}</div>
+                          </el-option>
+                        </el-select>
+                        Avg ZK rewards
+                      </h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+              <el-tab-pane name="Swan">
+                <template #label>
+                  <span class="font-14">Swan Proxima Chain</span>
+                </template>
+                <el-row :gutter="18">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Addresses</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Contracts(24H)</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Transactions Today</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Transactions</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                    <div class="grid-content">
+                      <h6 class="font-12 weight-4 text-center">Total Accounts</h6>
+                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                      </b>
+                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+            </el-tabs>
           </div>
-          <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-          <div class="title flex-row">
-            <b class="font-27 font-bold">Trends</b>
+        <el-col :xs="24" :sm="24" :md="24" :lg="11" :xl="11" class="flex-row baseline">
+          <div class="module-container world">
+            <div class="title flex-row">
+              <i class="icon icon-world"></i>
+              <span class="font-16 weight-4">Location Overview</span>
+            </div>
+            <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
           </div>
-
-          <el-row :gutter="32" style="width:100%">
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content">
-                <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                      <div class="font-14">{{item.label}}</div>
-                    </el-option>
-                  </el-select>
-                </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <div class="module-container">
+            <div class="title flex-row">
+              <i class="icon icon-gpu"></i>
+              <span class="font-16 weight-4">GPU</span>
+            </div>
+            <div class='chart-trends' id='chart-GPU' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+            <div class="date">
+              <el-select v-model="weekList.value" placeholder="Select" size="small">
+                <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <div class="module-container">
+            <div class="title flex-row">
+              <i class="icon icon-provider"></i>
+              <span class="font-16 weight-4">Fog Computing Provider</span>
+            </div>
+            <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+            <div class="date">
+              <el-select v-model="weekList.value" placeholder="Select" size="small">
+                <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <div class="module-container">
+            <div class="title flex-row">
+              <i class="icon icon-resource"></i>
+              <span class="font-16 weight-4">Resource</span>
+            </div>
+            <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+            <div class="date">
+              <el-select v-model="weekList.value" placeholder="Select" size="small">
+                <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <div class="module-container">
+            <div class="title flex-row">
+              <i class="icon icon-provider"></i>
+              <span class="font-16 weight-4">Edge Computing Provider</span>
+            </div>
+            <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+            <div class="date">
+              <el-select v-model="weekList.value" placeholder="Select" size="small">
+                <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+          <div class="module-container font-16">
+            <div class="title flex-row space-between">
+              <div class="flex-row">
+                <i class="icon icon-provider"></i>
+                <span class="font-16 weight-4">FCP List</span>
               </div>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content">
-                <div class='chart-trends' id='chart-Fog' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                      <div class="font-14">{{item.label}}</div>
-                    </el-option>
-                  </el-select>
-                </div>
+              <router-link :to="{name: 'rankingsFCP'}" class="font-13 flex-row">more &nbsp;
+                <small>&gt;&gt;</small>
+              </router-link>
+            </div>
+            <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
+              <el-table-column type="index" width="70">
+                <template #header>
+                  <div class="font-18 weight-4">Ranking</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="name" min-width="120">
+                <template #header>
+                  <div class="font-18 weight-4">Name</div>
+                </template>
+                <template #default="scope">
+                  <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="computer_provider.active_deployment" sortable min-width="170">
+                <template #header>
+                  <div class="font-18 weight-4">Active deployment</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="computer_provider.score" width="80">
+                <template #header>
+                  <div class="font-18 weight-4">Score</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="uptime" width="80">
+                <template #header>
+                  <div class="font-18 weight-4">Uptime</div>
+                </template>
+                <template #default="scope">
+                  <div>
+                    {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+          <div class="module-container font-16">
+            <div class="title flex-row space-between">
+              <div class="flex-row">
+                <i class="icon icon-provider"></i>
+                <span class="font-16 weight-4">ECP List</span>
               </div>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content">
-                <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                      <div class="font-14">{{item.label}}</div>
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content">
-                <div class='chart-trends' id='chart-Edge' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
-                <div class="date">
-                  <el-select v-model="weekList.value" placeholder="Select" size="small">
-                    <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                      <div class="font-14">{{item.label}}</div>
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content font-16">
-                <p class="font-22">FCP List</p>
-                <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-                  <el-table-column type="index" width="70">
-                    <template #header>
-                      <div class="font-18 weight-4">Ranking</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="name" min-width="120">
-                    <template #header>
-                      <div class="font-18 weight-4">Name</div>
-                    </template>
-                    <template #default="scope">
-                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="computer_provider.active_deployment" sortable min-width="170">
-                    <template #header>
-                      <div class="font-18 weight-4">Active deployment</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="computer_provider.score" width="80">
-                    <template #header>
-                      <div class="font-18 weight-4">Score</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="uptime" width="80">
-                    <template #header>
-                      <div class="font-18 weight-4">Uptime</div>
-                    </template>
-                    <template #default="scope">
-                      <div>
-                        {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
-                      </div>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-              <div class="grid-content font-16">
-                <p class="font-22">ECP List</p>
-                <!-- providerBody.ubiTableData -->
-                <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-                  <el-table-column type="index" width="70">
-                    <template #header>
-                      <div class="font-18 weight-4">Ranking</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="name" min-width="120">
-                    <template #header>
-                      <div class="font-18 weight-4">Name</div>
-                    </template>
-                    <template #default="scope">
-                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
+              <router-link :to="{name: 'rankingsECP'}" class="font-13 flex-row">more &nbsp;
+                <small>&gt;&gt;</small>
+              </router-link>
+            </div>
+            <!-- providerBody.ubiTableData -->
+            <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
+              <el-table-column type="index" width="70">
+                <template #header>
+                  <div class="font-18 weight-4">Ranking</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="name" min-width="120">
+                <template #header>
+                  <div class="font-18 weight-4">Name</div>
+                </template>
+                <template #default="scope">
+                  <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
                       { text: 'Online', value: 'Online' },
                       { text: 'Suspended', value: 'Suspended' },
                       { text: 'Offline', value: 'Offline' }
                     ]" filter-placement="bottom-end" :filter-multiple="false">
-                    <template #header>
-                      <div class="font-18 weight-4">status</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="task">
-                    <template #header>
-                      <div class="font-18 weight-4">Total Task</div>
-                    </template>
-                    <template #default="scope">
-                      <div>
-                        {{scope.row.task?scope.row.task.total : ''}}
-                      </div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="task" width="120">
-                    <template #header>
-                      <div class="font-18 weight-4">Completed(%)</div>
-                    </template>
-                    <template #default="scope">
-                      <div>
-                        {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
-                      </div>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-            </el-col>
-          </el-row>
+                <template #header>
+                  <div class="font-18 weight-4">status</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="task">
+                <template #header>
+                  <div class="font-18 weight-4">Total Task</div>
+                </template>
+                <template #default="scope">
+                  <div>
+                    {{scope.row.task?scope.row.task.total : ''}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="task" width="120">
+                <template #header>
+                  <div class="font-18 weight-4">Completed(%)</div>
+                </template>
+                <template #default="scope">
+                  <div>
+                    {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -736,10 +762,10 @@ export default defineComponent({
       chart.setOption({
         roam: true,
         grid: {
-          top: '2%',
-          left: '2%',
-          right: '2%',
-          bottom: '2%',
+          top: '0',
+          left: '0',
+          right: '0',
+          bottom: '0',
           containLabel: true
         },
         toolbox: {
@@ -787,8 +813,8 @@ export default defineComponent({
         },
         legend: {
           orient: 'vertical',
-          left: '2%',
-          bottom: '2%',
+          left: '0',
+          bottom: '0',
           itemGap: 5,
           itemWidth: 10,
           itemHeight: 10,
@@ -801,7 +827,7 @@ export default defineComponent({
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -866,7 +892,7 @@ export default defineComponent({
               // borderWidth: 1,
               // borderColor: '#fff',
               // color: 'rgba(89, 152, 14, 1)',
-              color: '#cf3cc9',
+              color: '#9a5aff',
               shadowBlur: 2,
               shadowColor: '#7ca3fb'
             },
@@ -897,7 +923,7 @@ export default defineComponent({
               // borderWidth: 1,
               // borderColor: '#fff',
               // color: 'rgba(89, 152, 14, 1)',
-              color: '#ff9413',
+              color: '#bbff00',
               shadowBlur: 2,
               shadowColor: '#7ca3fb'
             },
@@ -939,26 +965,16 @@ export default defineComponent({
       const machart_gpu = echarts.init(document.getElementById("chart-GPU"));
       const machart_edge = echarts.init(document.getElementById("chart-Edge"));
       const option1 = {
-        title: {
-          left: '2%',
-          text: 'Resource',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
-            fontSize: 15
-          }
-        },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
           formatter: function (params) {
@@ -975,9 +991,8 @@ export default defineComponent({
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage'],
-          left: '150px',
-          right: '150px',
-          top: '2%',
+          left: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -985,7 +1000,7 @@ export default defineComponent({
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -996,7 +1011,7 @@ export default defineComponent({
           }
         },
         grid: {
-          left: '3%',
+          left: '0',
           right: '4%',
           bottom: '3%',
           containLabel: true
@@ -1018,35 +1033,30 @@ export default defineComponent({
           {
             name: 'CPU',
             type: 'line',
+            showSymbol: false,
+            smooth: true,
             data: [10, 13, 11, 34, 90, 30, 20],
-            color: '#7ecf51'
+            color: '#699bff'
           },
           {
             name: 'Memory',
             type: 'line',
+            showSymbol: false,
+            smooth: true,
             data: [20, 12, 19, 24, 29, 33, 31],
-            color: '#ff9413'
+            color: '#52ce7c'
           },
           {
             name: 'Storage',
             type: 'line',
+            showSymbol: false,
+            smooth: true,
             data: [15, 23, 20, 15, 19, 30, 41],
-            color: '#6067f5'
+            color: '#0046b7'
           }
         ]
       }
       const option2 = {
-        title: {
-          left: '2%',
-          text: 'Fog Computing Provider',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
-            fontSize: 15
-          }
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -1055,13 +1065,14 @@ export default defineComponent({
               color: '#999'
             }
           },
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
           formatter: function (params) {
@@ -1077,23 +1088,23 @@ export default defineComponent({
           }
         },
         grid: {
-          left: '3%',
+          left: '0',
           right: '4%',
           bottom: '3%',
           containLabel: true
         },
         legend: {
-          data: ['FCP', 'Changes'],
-          right: '150px',
-          top: '2%',
-          icon: 'roundRect',
+          data: ['FCP', 'Delta'],
+          right: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
           itemGap: 20,
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -1107,9 +1118,7 @@ export default defineComponent({
           {
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            axisPointer: {
-              type: 'shadow'
-            }
+            boundaryGap: false,
           }
         ],
         yAxis: [
@@ -1122,7 +1131,7 @@ export default defineComponent({
             // axisLabel: {
             //   formatter: '{value}'
             // }
-            // minInterval: 30
+            minInterval: 150
           },
           {
             type: 'value',
@@ -1138,67 +1147,63 @@ export default defineComponent({
         series: [
           {
             name: 'FCP',
-            type: 'bar',
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' ml';
-              }
-            },
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
             itemStyle: {
+              color: 'rgba(105,155,255,1)'
+            },
+            areaStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#3f7bff' },
-                { offset: 0.5, color: '#73a2ff' },
-                { offset: 1, color: '#a6ceff' }
+                {
+                  offset: 0,
+                  color: 'rgba(105,155,255,1)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgba(105,155,255,0.3)'
+                }
               ])
             },
-            emphasis: {
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: '#3f7bff' },
-                  { offset: 0.7, color: '#73a2ff' },
-                  { offset: 1, color: '#a6ceff' }
-                ])
-              }
-            },
-            data: [
-              2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
-            ]
+            data: [220, 172, 141, 94, 120, 130, 110]
           },
           {
-            name: 'Changes',
+            name: 'Delta',
             type: 'line',
-            yAxisIndex: 1,
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' °C';
-              }
-            },
-            color: '#ff9413',
-            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+            smooth: true,
+            showSymbol: false,
+            // tooltip: {
+            //   valueFormatter: function (value) {
+            //     return value + ' °C';
+            //   }
+            // },
+            color: '#52ce7c',
+            data: [120, 132, 101, 134, 90, 230, 210]
           }
         ]
       }
       const option3 = {
-        title: {
-          left: '2%',
-          text: 'GPU',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
-            fontSize: 15
-          }
-        },
+        // title: {
+        //   left: '2%',
+        //   text: 'GPU',
+        //   textStyle: {
+        //     color: '#000',
+        //     fontStyle: 'normal',
+        //     fontWeight: '400',
+        //     fontFamily: 'HELVETICA-ROMAN',
+        //     fontSize: 15
+        //   }
+        // },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
           formatter: function (params) {
@@ -1215,9 +1220,8 @@ export default defineComponent({
         },
         legend: {
           data: ['GPU'],
-          left: '150px',
-          right: '150px',
-          top: '2%',
+          left: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1225,7 +1229,7 @@ export default defineComponent({
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -1236,7 +1240,7 @@ export default defineComponent({
           }
         },
         grid: {
-          left: '3%',
+          left: '0',
           right: '4%',
           bottom: '3%',
           containLabel: true
@@ -1253,23 +1257,14 @@ export default defineComponent({
           {
             name: 'GPU',
             type: 'line',
-            color: '#cf3cc9',
+            showSymbol: false,
+            color: '#93c605',
+            smooth: true,
             data: [150, 232, 201, 154, 190, 330, 410]
           }
         ]
       }
       const option4 = {
-        title: {
-          left: '2%',
-          text: 'Edge Computing Provider',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
-            fontSize: 15
-          }
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -1278,13 +1273,14 @@ export default defineComponent({
               color: '#999'
             }
           },
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
           formatter: function (params) {
@@ -1300,23 +1296,23 @@ export default defineComponent({
           }
         },
         grid: {
-          left: '3%',
+          left: '0',
           right: '4%',
           bottom: '3%',
           containLabel: true
         },
         legend: {
-          data: ['ECP', 'Changes'],
-          right: '150px',
-          top: '2%',
-          icon: 'roundRect',
+          data: ['ECP', 'Delta'],
+          right: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
           itemGap: 20,
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -1330,9 +1326,7 @@ export default defineComponent({
           {
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            axisPointer: {
-              type: 'shadow'
-            }
+            boundaryGap: false,
           }
         ],
         yAxis: [
@@ -1345,6 +1339,7 @@ export default defineComponent({
             // axisLabel: {
             //   formatter: '{value}'
             // }
+            minInterval: 150
           },
           {
             type: 'value',
@@ -1360,43 +1355,38 @@ export default defineComponent({
         series: [
           {
             name: 'ECP',
-            type: 'bar',
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' ml';
-              }
-            },
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
             itemStyle: {
+              color: 'rgba(147,198,5,1)'
+            },
+            areaStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#ff920e' },
-                { offset: 0.5, color: '#ffa438' },
-                { offset: 1, color: '#ffb85a' }
+                {
+                  offset: 0,
+                  color: 'rgba(147,198,5,1)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgba(147,198,5,0.3)'
+                }
               ])
             },
-            emphasis: {
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: '#ff920e' },
-                  { offset: 0.7, color: '#ffa438' },
-                  { offset: 1, color: '#ffb85a' }
-                ])
-              }
-            },
-            data: [
-              2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
-            ]
+            data: [220, 172, 141, 94, 120, 130, 110]
           },
           {
-            name: 'Changes',
+            name: 'Delta',
             type: 'line',
-            yAxisIndex: 1,
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' °C';
-              }
-            },
-            color: '#6067f5',
-            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+            smooth: true,
+            showSymbol: false,
+            // tooltip: {
+            //   valueFormatter: function (value) {
+            //     return value + ' °C';
+            //   }
+            // },
+            color: '#0046b7',
+            data: [120, 132, 101, 134, 90, 230, 210]
           }
         ]
       }
@@ -1448,17 +1438,16 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-#container {
+#main-container {
   padding: 0 0 0.4rem;
   font-size: 16px;
   line-height: 1.6;
-  letter-spacing: 1px;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
   }
   .header-title {
     padding: 0.1rem 0;
-    border-bottom: 2px solid #aaaaac;
+    border-bottom: 1px solid #858586;
     line-height: 1.15;
     h1 {
       margin: 0 0.3rem 0 0;
@@ -1466,14 +1455,11 @@ export default defineComponent({
     a {
       padding: 0.07rem 0.1rem;
       margin: 0 0 0 0.1rem;
-      background-color: @white-color;
-      border: 1px solid #c1c9d8;
-      border-radius: 0.07rem;
       color: @theme-color;
       i {
         width: 0.25rem;
         height: 0.25rem;
-        margin: 0 0 0 0.07rem;
+        margin: 0 0 0 0.12rem;
         background: url(../../../assets/images/icons/icon-01.png) no-repeat;
         background-size: 100%;
       }
@@ -1497,11 +1483,7 @@ export default defineComponent({
       width: 100%;
       margin: 0 0 0.1rem;
       a {
-        padding: 0.07rem 0.1rem;
         margin: 0 0 0 0.1rem;
-        background-color: @white-color;
-        border: 1px solid #c1c9d8;
-        border-radius: 0.07rem;
         color: @theme-color;
         i {
           width: 0.25rem;
@@ -1514,12 +1496,71 @@ export default defineComponent({
     }
     .el-row {
       .el-col {
-        margin: 0.22rem 0 0;
+        margin: 0.22rem 0;
         &.flex-row {
           display: flex;
         }
         &.m {
-          margin: 0.22rem 0;
+        }
+        .module-container {
+          position: relative;
+          width: calc(100% - 0.64rem);
+          height: calc(100% - 0.5rem);
+          padding: 0.25rem 0.32rem;
+          background-color: @white-color;
+          border-radius: 0.14rem;
+          &.world {
+            background-color: @theme-color;
+            .title {
+              color: @white-color;
+            }
+          }
+          .el-col {
+            margin: 0;
+          }
+          .title {
+            margin: 0;
+            .icon {
+              width: 0.24rem;
+              height: 0.24rem;
+              margin: 0 0.09rem 0 0;
+              &.icon-world {
+                background: url(../../../assets/images/icons/icon-05.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+              &.icon-figures {
+                background: url(../../../assets/images/icons/icon-04.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+              &.icon-gpu {
+                background: url(../../../assets/images/icons/icon-08.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+              &.icon-resource {
+                background: url(../../../assets/images/icons/icon-06.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+              &.icon-provider {
+                background: url(../../../assets/images/icons/icon-07.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+              &.icon-list {
+                background: url(../../../assets/images/icons/icon-09.png)
+                  no-repeat;
+                background-size: 100%;
+              }
+            }
+          }
+          .grid-content {
+            height: calc(100% - 0.53rem);
+            margin: 0.23rem 0 0;
+            background: #edf2ff;
+          }
         }
         .title-link {
           margin: auto;
@@ -1531,160 +1572,122 @@ export default defineComponent({
           padding: 0.18rem 0.14rem 0.12rem;
           background: @white-color;
           border-radius: 0.18rem;
-          box-shadow: 0 0 12px #e6e7eb;
-          h6 {
-            width: 100%;
-            line-height: 1.2;
-            text-transform: capitalize;
-            color: @border-color;
-            &.t {
-              width: auto;
-              padding: 0 0.2rem;
-            }
-            small {
-              margin: 0 0 0 5px;
-              font-family: "Montserrat-Regular";
-              font-weight: normal;
-              color: #a0a0a0;
-              font-size: 0.13rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.15rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 12px;
-              }
-            }
-            .el-select {
-              font-size: inherit;
-              .el-tooltip__trigger {
-                margin: 0;
-                width: 80px;
-                padding: 2px 4px;
-              }
-            }
+          // box-shadow: 0 0 12px #e6e7eb;
+        }
+        h6 {
+          width: 100%;
+          line-height: 1.2;
+          text-transform: capitalize;
+          color: #7c889b;
+          &.t {
+            width: auto;
+            padding: 0.03rem 0.16rem 0;
           }
-          b {
-            position: relative;
-            padding: 6px 0 12px;
-            margin: 0 0 2px;
-            line-height: 1;
-            .span {
-              position: absolute;
-              bottom: 0;
-              right: 0.2rem;
-              &.up {
-                color: #38a169;
-              }
-              &.down {
-                color: #e53e3e;
-              }
-              small {
-                margin: 0;
-                font-family: "Montserrat-Regular";
-                font-weight: normal;
-                color: #a0a0a0;
-                font-size: 0.14rem;
-                @media screen and (min-width: 1800px) {
-                  font-size: 0.16rem;
-                }
-                @media screen and (max-width: 768px) {
-                  font-size: 13px;
-                }
-              }
-            }
-            small {
-              margin: 0 0 0 4px;
+          &.up {
+            color: #38a169;
+          }
+          &.down {
+            color: #e53e3e;
+          }
+          small {
+            margin: 0;
+            font-family: "Montserrat-Regular";
+            font-weight: normal;
+            color: #a0a0a0;
+            font-size: 0.14rem;
+            @media screen and (min-width: 1800px) {
               font-size: 0.16rem;
-              @media screen and (min-width: 1800px) {
-                font-size: 0.18rem;
-              }
-              @media screen and (max-width: 768px) {
-                font-size: 15px;
-              }
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 13px;
             }
           }
-          .date {
-            position: absolute;
-            right: calc(0.14rem + 2%);
-            top: 0.18rem;
-            width: 90px;
-            .el-select {
-              .el-select__wrapper {
-                border: 1px solid #565656;
-                border-radius: 0.5rem;
-                box-shadow: none;
-                .el-select__placeholder {
-                  color: #95a3bd;
-                }
-              }
+          small {
+            margin: 0 0 0 5px;
+            font-family: "Montserrat-Regular";
+            font-weight: normal;
+            color: #a0a0a0;
+            font-size: 0.13rem;
+            @media screen and (min-width: 1800px) {
+              font-size: 0.15rem;
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 12px;
             }
           }
-          .el-table {
-            width: 100%;
-            margin: 0.14rem auto;
-            background-color: transparent;
+          .el-select {
             font-size: inherit;
-            border-radius: 0.1rem;
-            border: 1px solid #c6cddc;
-            tr {
-              background-color: transparent;
-              th {
-                word-break: break-word;
-                padding: 0.18rem 0;
-                background-color: @theme-color;
-                font-size: inherit;
-                border: 0;
-                &.ascending {
-                  .cell {
-                    .caret-wrapper {
-                      .sort-caret {
-                        &.ascending {
-                          border-bottom-color: #fff;
-                        }
-                        &.descending {
-                          border-top-color: #d0dcf9;
-                        }
-                      }
-                    }
+            .el-tooltip__trigger {
+              margin: 0;
+              width: 80px;
+              padding: 2px 4px;
+            }
+          }
+        }
+        b {
+          position: relative;
+          padding: 0.1rem 0 0;
+          margin: 0;
+          line-height: 1;
+          small {
+            margin: 0 0 0 4px;
+            font-size: 0.16rem;
+            @media screen and (min-width: 1800px) {
+              font-size: 0.18rem;
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 15px;
+            }
+          }
+        }
+        .date {
+          position: absolute;
+          right: calc(0.14rem + 2%);
+          top: 0.18rem;
+          width: 90px;
+          .el-select {
+            .el-select__wrapper {
+              width: 85px;
+              border: 1px solid #c9d0dd;
+              border-radius: 0.5rem;
+              box-shadow: none;
+              .el-select__placeholder {
+                color: #95a3bd;
+              }
+              .el-select__suffix {
+                .el-select__icon {
+                  background: url(../../../assets/images/icons/icon-03.png)
+                    no-repeat center;
+                  background-size: 8px;
+                  svg {
+                    display: none;
                   }
                 }
-                &.descending {
-                  .cell {
-                    .caret-wrapper {
-                      .sort-caret {
-                        &.ascending {
-                          border-bottom-color: #d0dcf9;
-                        }
-                        &.descending {
-                          border-top-color: #fff;
-                        }
-                      }
-                    }
-                  }
-                }
+              }
+            }
+          }
+        }
+        .el-table {
+          width: 100%;
+          margin: 0.24rem auto 0.2rem;
+          background-color: transparent;
+          font-size: inherit;
+          border-radius: 0.1rem;
+          border: 1px solid #e3e7ee;
+          tr {
+            background-color: transparent;
+            th {
+              word-break: break-word;
+              padding: 0.18rem 0;
+              background-color: @theme-color;
+              font-size: inherit;
+              border: 0;
+              &.ascending {
                 .cell {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  padding: 0;
-                  color: @white-color;
-                  word-break: break-word;
-                  text-transform: capitalize;
-                  text-align: center;
-                  line-height: 1.1;
-                  @media screen and (max-width: 540px) {
-                    font-size: 12px;
-                  }
-                  .el-table__column-filter-trigger {
-                    i {
-                      margin: 0 0 0 4px;
-                      color: @white-color;
-                    }
-                  }
                   .caret-wrapper {
                     .sort-caret {
                       &.ascending {
-                        border-bottom-color: #d0dcf9;
+                        border-bottom-color: #fff;
                       }
                       &.descending {
                         border-top-color: #d0dcf9;
@@ -1693,243 +1696,287 @@ export default defineComponent({
                   }
                 }
               }
-              td {
-                padding: 0.08rem 0;
-                background-color: @white-color;
-                font-size: inherit;
-                color: #3d3d3d;
-                border-color: #c6cddc;
-                text-align: center;
+              &.descending {
                 .cell {
-                  padding: 0 6px;
-                  line-height: 1.1;
-                }
-                i {
-                  margin-right: 5px;
-                  color: @text-color;
-                  font-size: 18px;
-                  @media screen and (max-width: 1260px) {
-                    font-size: 16px;
-                  }
-                }
-                .service-body {
-                  padding: 0 0.25rem 0.1rem;
-                  // color: #333;
-                  // border-top: rgb(220, 223, 230) 1px solid;
-                  // border-bottom: rgb(220, 223, 230) 1px solid;
-                  .tit {
-                    margin: 0.2rem 0 0;
-                    font-size: 16px;
-                    font-weight: 500;
-                    text-transform: capitalize;
-                    @media screen and (max-width: 1260px) {
-                      font-size: 14px;
-                    }
-                  }
-                  .desc {
-                    padding: 0 0 0.1rem;
-                    font-size: 14px;
-                    @media screen and (max-width: 1260px) {
-                      font-size: 12px;
-                    }
-                  }
-                  .list {
-                    padding: 0.1rem 0 0;
-                    .li-title {
-                      width: 100%;
-                      padding: 0 0 0.1rem;
-                      border-bottom: 1px solid #26272f;
-                    }
-                    ul {
-                      display: flex;
-                      align-items: stretch;
-                      justify-content: space-between;
-                      flex-wrap: wrap;
-                      margin: 0 auto 0.25rem;
-                      @media screen and (max-width: 768px) {
-                        justify-content: flex-start;
+                  .caret-wrapper {
+                    .sort-caret {
+                      &.ascending {
+                        border-bottom-color: #d0dcf9;
                       }
-                      li {
-                        width: 27%;
-                        margin-right: 6%;
-                        @media screen and (max-width: 768px) {
-                          width: auto;
-                          margin-right: 0.5rem;
-                        }
-                        &.m-r {
-                          margin-right: 0;
-                        }
-                        .flex-row {
-                          flex-wrap: wrap;
-                          .li-body {
-                            width: 27%;
-                            margin-right: 6%;
-                            @media screen and (max-width: 768px) {
-                              width: auto;
-                              margin-right: 0.5rem;
-                            }
-                          }
-                        }
-                        .li-body {
-                          position: relative;
-                          padding: 0.15rem;
-                          margin: 0.3rem 0;
-                          background-color: #0d0e12;
-                          border-radius: 5px;
-                          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-                          -webkit-backdrop-filter: blur(5px);
-                          backdrop-filter: blur(5px);
-                          border: 1px solid rgba(255, 255, 255, 0.2);
-                          border-radius: 0.1rem;
-                          animation: glow 1s ease-in-out infinite alternate;
-                          @media screen and (max-width: 768px) {
-                            padding: 0.15rem 0.3rem;
-                          }
-                          p {
-                            padding: 3px 0;
-                            font-size: 14px;
-                            line-height: 1.3;
-                            text-align: center;
-                            @media screen and (max-width: 1260px) {
-                              font-size: 12px;
-                            }
-                            strong,
-                            b {
-                              margin-right: 5px;
-                              font-size: 17px;
-                              @media screen and (max-width: 1260px) {
-                                font-size: 15px;
-                              }
-                              @media screen and (max-width: 540px) {
-                                font-size: 13px;
-                              }
-                            }
-                            &.t {
-                              text-transform: capitalize; // color: #808290;
-                            }
-                            &.t-capitalize {
-                              text-transform: uppercase;
-                            }
-                            &:nth-child(2) {
-                              strong {
-                                color: #4db470;
-                              }
-                            }
-                            &:nth-child(3) {
-                              strong {
-                                color: #488fc3;
-                              }
-                            }
-                            &:nth-child(4) {
-                              strong {
-                                color: #9266a9;
-                              }
-                            }
-                          }
-                          &.li-gpu {
-                            &::before {
-                              position: absolute;
-                              content: "";
-                              right: 0.1rem;
-                              top: 0.1rem;
-                              width: 7px;
-                              height: 7px;
-                              background-color: orange;
-                              border-radius: 7px;
-                            }
-                          }
-                          &.li-status {
-                            &::before {
-                              background-color: #8bc34a;
-                            }
-                          }
-                        }
+                      &.descending {
+                        border-top-color: #fff;
                       }
                     }
-                  }
-                  .el-divider--horizontal {
-                    margin: 0.1rem 0;
-                  }
-                }
-                .name-style {
-                  color: @theme-color;
-                  cursor: pointer;
-                  &:hover {
-                    text-decoration: underline;
-                  }
-                }
-                .copy-style {
-                  cursor: pointer;
-                  flex-wrap: wrap;
-                  svg {
-                    margin: 0 0 0 0.05rem;
-                  }
-                }
-                .badge {
-                  display: flex;
-                  align-items: center;
-                  white-space: normal;
-                  word-break: break-word;
-                  img {
-                    width: 30px;
-                    height: 30px;
-                    margin-right: 5px;
-                    @media screen and (max-width: 1260px) {
-                      width: 25px;
-                      height: 25px;
-                    }
-                  }
-                  .machines-style {
-                    flex-wrap: wrap;
-                    span {
-                      padding: 3px 10px;
-                      margin: 3px 5px 3px 0;
-                      background-color: @theme-color;
-                      font-size: 12px;
-                      border-radius: 45px;
-                      word-break: break-word;
-                      line-height: 1;
-                      color: @white-color;
-                    }
-                  }
-                }
-                &.el-table__expanded-cell {
-                  padding: 0.32rem 0.64rem;
-                  // border: 1px solid @white-color;
-                  &:hover {
-                    background-color: @primary-color !important;
                   }
                 }
               }
-              // &.expanded,
-              // &:hover {
-              //   td {
-              //     background-color: rgba(255, 255, 255, 0.85);
-              //     color: #000;
-              //     i {
-              //       color: #000;
-              //     }
-              //   }
-              // }
-              &.expanded {
-                border: 1px solid @white-color;
-                border-collapse: collapse;
+              .cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                color: @white-color;
+                word-break: break-word;
+                text-transform: capitalize;
+                text-align: center;
+                line-height: 1.1;
+                @media screen and (max-width: 540px) {
+                  font-size: 12px;
+                }
+                .el-table__column-filter-trigger {
+                  i {
+                    margin: 0 0 0 4px;
+                    color: @white-color;
+                  }
+                }
+                .caret-wrapper {
+                  .sort-caret {
+                    &.ascending {
+                      border-bottom-color: #d0dcf9;
+                    }
+                    &.descending {
+                      border-top-color: #d0dcf9;
+                    }
+                  }
+                }
               }
             }
+            td {
+              padding: 0.08rem 0;
+              background-color: @white-color;
+              font-size: inherit;
+              color: #3d3d3d;
+              border-color: #e3e7ee;
+              text-align: center;
+              .cell {
+                padding: 0 6px;
+                line-height: 1.1;
+              }
+              i {
+                margin-right: 5px;
+                color: @text-color;
+                font-size: 18px;
+                @media screen and (max-width: 1260px) {
+                  font-size: 16px;
+                }
+              }
+              .service-body {
+                padding: 0 0.25rem 0.1rem;
+                // color: #333;
+                // border-top: rgb(220, 223, 230) 1px solid;
+                // border-bottom: rgb(220, 223, 230) 1px solid;
+                .tit {
+                  margin: 0.2rem 0 0;
+                  font-size: 16px;
+                  font-weight: 500;
+                  text-transform: capitalize;
+                  @media screen and (max-width: 1260px) {
+                    font-size: 14px;
+                  }
+                }
+                .desc {
+                  padding: 0 0 0.1rem;
+                  font-size: 14px;
+                  @media screen and (max-width: 1260px) {
+                    font-size: 12px;
+                  }
+                }
+                .list {
+                  padding: 0.1rem 0 0;
+                  .li-title {
+                    width: 100%;
+                    padding: 0 0 0.1rem;
+                    border-bottom: 1px solid #26272f;
+                  }
+                  ul {
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    margin: 0 auto 0.25rem;
+                    @media screen and (max-width: 768px) {
+                      justify-content: flex-start;
+                    }
+                    li {
+                      width: 27%;
+                      margin-right: 6%;
+                      @media screen and (max-width: 768px) {
+                        width: auto;
+                        margin-right: 0.5rem;
+                      }
+                      &.m-r {
+                        margin-right: 0;
+                      }
+                      .flex-row {
+                        flex-wrap: wrap;
+                        .li-body {
+                          width: 27%;
+                          margin-right: 6%;
+                          @media screen and (max-width: 768px) {
+                            width: auto;
+                            margin-right: 0.5rem;
+                          }
+                        }
+                      }
+                      .li-body {
+                        position: relative;
+                        padding: 0.15rem;
+                        margin: 0.3rem 0;
+                        background-color: #0d0e12;
+                        border-radius: 5px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+                        -webkit-backdrop-filter: blur(5px);
+                        backdrop-filter: blur(5px);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 0.1rem;
+                        animation: glow 1s ease-in-out infinite alternate;
+                        @media screen and (max-width: 768px) {
+                          padding: 0.15rem 0.3rem;
+                        }
+                        p {
+                          padding: 3px 0;
+                          font-size: 14px;
+                          line-height: 1.3;
+                          text-align: center;
+                          @media screen and (max-width: 1260px) {
+                            font-size: 12px;
+                          }
+                          strong,
+                          b {
+                            margin-right: 5px;
+                            font-size: 17px;
+                            @media screen and (max-width: 1260px) {
+                              font-size: 15px;
+                            }
+                            @media screen and (max-width: 540px) {
+                              font-size: 13px;
+                            }
+                          }
+                          &.t {
+                            text-transform: capitalize; // color: #808290;
+                          }
+                          &.t-capitalize {
+                            text-transform: uppercase;
+                          }
+                          &:nth-child(2) {
+                            strong {
+                              color: #4db470;
+                            }
+                          }
+                          &:nth-child(3) {
+                            strong {
+                              color: #488fc3;
+                            }
+                          }
+                          &:nth-child(4) {
+                            strong {
+                              color: #9266a9;
+                            }
+                          }
+                        }
+                        &.li-gpu {
+                          &::before {
+                            position: absolute;
+                            content: "";
+                            right: 0.1rem;
+                            top: 0.1rem;
+                            width: 7px;
+                            height: 7px;
+                            background-color: orange;
+                            border-radius: 7px;
+                          }
+                        }
+                        &.li-status {
+                          &::before {
+                            background-color: #8bc34a;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                .el-divider--horizontal {
+                  margin: 0.1rem 0;
+                }
+              }
+              .name-style {
+                color: @theme-color;
+                cursor: pointer;
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+              .copy-style {
+                cursor: pointer;
+                flex-wrap: wrap;
+                svg {
+                  margin: 0 0 0 0.05rem;
+                }
+              }
+              .badge {
+                display: flex;
+                align-items: center;
+                white-space: normal;
+                word-break: break-word;
+                img {
+                  width: 30px;
+                  height: 30px;
+                  margin-right: 5px;
+                  @media screen and (max-width: 1260px) {
+                    width: 25px;
+                    height: 25px;
+                  }
+                }
+                .machines-style {
+                  flex-wrap: wrap;
+                  span {
+                    padding: 3px 10px;
+                    margin: 3px 5px 3px 0;
+                    background-color: @theme-color;
+                    font-size: 12px;
+                    border-radius: 45px;
+                    word-break: break-word;
+                    line-height: 1;
+                    color: @white-color;
+                  }
+                }
+              }
+              &.el-table__expanded-cell {
+                padding: 0.32rem 0.64rem;
+                // border: 1px solid @white-color;
+                &:hover {
+                  background-color: @primary-color !important;
+                }
+              }
+            }
+            // &.expanded,
+            // &:hover {
+            //   td {
+            //     background-color: rgba(255, 255, 255, 0.85);
+            //     color: #000;
+            //     i {
+            //       color: #000;
+            //     }
+            //   }
+            // }
+            &.expanded {
+              border: 1px solid @white-color;
+              border-collapse: collapse;
+            }
           }
-          .el-table--border .el-table__inner-wrapper::after,
-          .el-table--border::after,
-          .el-table--border::before,
-          .el-table__inner-wrapper::before {
-            background-color: rgb(38, 39, 47);
-            height: 0;
-          }
+        }
+        .el-table--border .el-table__inner-wrapper::after,
+        .el-table--border::after,
+        .el-table--border::before,
+        .el-table__inner-wrapper::before {
+          background-color: rgb(38, 39, 47);
+          height: 0;
         }
         .chart-trends {
           width: 100%;
-          margin: 0 auto;
+          margin: -0.3rem auto 0;
           height: 2.3rem;
-          @media screen and (max-width: 540px) {
+          @media screen and (max-width: 768px) {
             height: 300px;
           }
         }
@@ -1937,8 +1984,9 @@ export default defineComponent({
           width: 100%;
           margin: 0 auto;
           height: 3.15rem;
-          background-color: @theme-color;
-          border-radius: 0.2rem;
+          @media screen and (max-width: 768px) {
+            height: 300px;
+          }
           @media screen and (max-width: 540px) {
             height: 400px;
           }
@@ -1952,11 +2000,10 @@ export default defineComponent({
           }
         }
         .el-tabs {
-          max-width: 100%;
+          width: 100%;
           .el-tabs__header {
-            padding: 0 0 0.2rem;
+            padding: 0.22rem 0 0;
             margin: 0;
-            border-bottom: 1px solid @border-color;
             .el-tabs__active-bar,
             .el-tabs__nav-wrap:after {
               display: none;
@@ -1964,13 +2011,17 @@ export default defineComponent({
             .el-tabs__nav {
               .el-tabs__item {
                 height: auto;
-                padding: 0.1rem 0.18rem;
-                margin: 0 0.16rem 0 0;
-                border-radius: 0.08rem;
+                padding: 0.08rem 0.13rem;
+                margin: 0 0.15rem 0 0;
+                background-color: #f3f4f8;
+                border: 1px solid #ced4e1;
+                border-radius: 0.5rem;
+                color: #313132;
                 line-height: 1.1;
                 &.is-active {
-                  background-color: @theme-color;
-                  color: @white-color;
+                  background-color: #edf2ff;
+                  border-color: #8eb0ff;
+                  color: @theme-color;
                 }
               }
             }
@@ -2276,7 +2327,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: "Gilroy-Medium";
+        font-family: "HELVETICA-ROMAN";
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;

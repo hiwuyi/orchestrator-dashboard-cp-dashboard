@@ -9,8 +9,10 @@ const dashboard = () =>
     import("@/views/dashboard/index");
 const main = () =>
     import("@/views/dashboard/main/index");
-const rankings = () =>
-    import("@/views/dashboard/rankings/index");
+const rankingsFCP = () =>
+    import("@/views/dashboard/rankings/FCP");
+const rankingsECP = () =>
+    import("@/views/dashboard/rankings/ECP");
 const aarFCP = () =>
     import("@/views/dashboard/aar/FCP");
 const aarECP = () =>
@@ -37,9 +39,27 @@ const routes = [{
         }
     },
     {
-        path: '/rankings/:type',
-        name: 'rankings',
-        component: rankings,
+        path: '/rankings/FCP',
+        name: 'rankingsFCP',
+        component: rankingsFCP,
+        meta: {
+            keepAlive: true,
+            title: 'Rankings'
+        },
+        // beforeEnter: (to, from, next) => {
+        //     if (!sessionStorage.getItem('access_token_swan')) {
+        //         next({
+        //             path: '/overview'
+        //         })
+        //     } else {
+        //         next()
+        //     }
+        // }
+    },
+    {
+        path: '/rankings/ECP',
+        name: 'rankingsECP',
+        component: rankingsECP,
         meta: {
             keepAlive: true,
             title: 'Rankings'

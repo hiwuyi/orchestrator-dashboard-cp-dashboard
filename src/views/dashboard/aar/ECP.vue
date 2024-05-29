@@ -1,5 +1,5 @@
 <template>
-  <section id="container">
+  <section id="aarECP-container">
     <div class="flex-row header-title font-32">
       <h1 class="color font-33 font-bold">Atom Accelerator Race</h1>
       <div class="font-18">
@@ -331,11 +331,10 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-#container {
+#aarECP-container {
   padding: 0 0 0.4rem;
   font-size: 16px;
   line-height: 1.6;
-  letter-spacing: 1px;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
   }
@@ -927,7 +926,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: "Gilroy-Medium";
+        font-family: 'HELVETICA-ROMAN';
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;

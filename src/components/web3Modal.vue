@@ -28,10 +28,9 @@ createWeb3Modal({
   wagmiConfig: config,
   projectId,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
-  themeMode: 'light',
+  themeMode: 'dark',
   themeVariables: {
     '--w3m-accent': '#447dff',
-    // '--w3m-font-family': 'Gilroy-Medium',
     // '--w3m-color-mix-strength': 40,
     // '--w3m-font-size-master': '17',
     // '--wcm-text-small-regular-weight': 'normal',
@@ -92,6 +91,6 @@ async function test () {
 <template>
   <div class="flex-row">
     <w3m-button balance="hide" size="sm" @click="test" />
-    <el-button type="primary" @click="login2" v-if="metaAddress && signature === ''" class="m-button">Login</el-button>
+    <el-button @click="login2" v-if="metaAddress !== '' && signature === ''" class="m-button">Login</el-button>
   </div>
 </template>

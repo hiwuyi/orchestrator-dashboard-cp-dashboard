@@ -342,6 +342,7 @@ async function signOutFun (status) {
   }
   store.dispatch('setAccessToken', '')
   store.dispatch('setSignature', '')
+  store.dispatch('setMetaAddress', '')
 }
 
 function hiddAddress (val) {

@@ -1,5 +1,5 @@
 <template>
-  <section id="container">
+  <section id="cp-container">
     <div class="flex-row header-title font-32">
       <h1 class="color font-32 font-bold">CP Profile</h1>
     </div>
@@ -11,7 +11,7 @@
             <div class="providers-cp s">
               <div class="flex-row space-between name-title">
                 <b class="font-27 font-bold">Account Info</b>
-                <a @click="handleSelect('claimAccount', {}, 'claimAccount')" class="font-17">Claim Account</a>
+                <a @click="handleSelect('claimAccount', {}, 'claimAccount')" :class="{'font-17':true,'is-disabled': !signature}">Claim Account</a>
               </div>
               <div class="font-22 note b">
                 <el-row>
@@ -95,7 +95,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div :class="{'collateral font-18':true,'is-disabled': !metaAddress}" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
+                    <div :class="{'collateral font-18':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
                     <div class="flex-row space-between font-16 width">
@@ -110,7 +110,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div :class="{'collateral font-18':true,'is-disabled': !metaAddress}" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
+                    <div :class="{'collateral font-18':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
                   </el-col>
                 </el-row>
               </div>
@@ -312,6 +312,7 @@ export default defineComponent({
     const store = useStore()
     const metaAddress = computed(() => (store.state.metaAddress))
     const accessToken = computed(() => (store.state.accessToken))
+    const signature = computed(() => (store.state.signature))
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
@@ -367,13 +368,13 @@ export default defineComponent({
           vmOperate.row = row
           vmOperate.row.type = type
           vmOperate.type = 'dialog'
-          vmOperate.centerDrawerVisible = true
+          vmOperate.centerDrawerVisible = signature.value === '' ? false : true
           break;
         case 'cpProfile':
           vmOperate.row = row
           vmOperate.row.type = type
           vmOperate.type = 'dialog'
-          vmOperate.centerDrawerVisible = metaAddress.value === '' ? false : true
+          vmOperate.centerDrawerVisible = signature.value === '' ? false : true
           break;
         case 'ranking':
           vmOperate.row = row
@@ -911,19 +912,20 @@ export default defineComponent({
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             fontSize: 16
           }
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
         },
@@ -944,7 +946,7 @@ export default defineComponent({
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -1022,19 +1024,20 @@ export default defineComponent({
             color: '#000',
             fontStyle: 'normal',
             fontWeight: '400',
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             fontSize: 16
           }
         },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
         },
@@ -1049,7 +1052,7 @@ export default defineComponent({
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
+            fontFamily: 'HELVETICA-ROMAN',
             // lineHeight: 14,
             rich: {
               a: {
@@ -1077,12 +1080,14 @@ export default defineComponent({
           {
             name: 'Claimed Count',
             type: 'line',
+            smooth: true,
             data: [120, 132, 101, 134, 90, 230, 210],
             color: '#ff9413'
           },
           {
             name: 'Waiting',
             type: 'line',
+            smooth: true,
             data: [220, 182, 191, 234, 290, 330, 310],
             color: '#6067f5'
           }
@@ -1224,6 +1229,7 @@ export default defineComponent({
       system,
       route,
       metaAddress,
+      signature,
       providersLoad,
       providersTableLoad,
       providersData,
@@ -1241,11 +1247,10 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-#container {
+#cp-container {
   padding: 0 0 0.4rem;
   font-size: 16px;
   line-height: 1.6;
-  letter-spacing: 1px;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
   }
@@ -1334,6 +1339,10 @@ export default defineComponent({
           border-radius: 0.08rem;
           color: @white-color;
           line-height: 1;
+        }
+        .is-disabled {
+          opacity: 0.8;
+          cursor: no-drop;
         }
       }
       .note {
@@ -1716,7 +1725,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: "Gilroy-Medium";
+        font-family: "HELVETICA-ROMAN";
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;

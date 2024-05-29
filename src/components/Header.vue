@@ -608,7 +608,6 @@ export default defineComponent({
 #container {
   font-size: 17px;
   line-height: 1.6;
-  letter-spacing: 1px;
   @media screen and (max-width: 1600px) {
     font-size: 15px;
   }
@@ -671,6 +670,7 @@ export default defineComponent({
           width: auto;
           height: auto;
           padding: 0.04rem 0.22rem 0.04rem 0.12rem;
+          background-color: transparent;
           font-size: inherit;
           font-family: inherit;
           border: 1px solid #000;
@@ -706,7 +706,7 @@ export default defineComponent({
           }
           .el-select__suffix {
             .el-select__icon {
-              background: url(../assets/images/icons/icon-02.png) no-repeat
+              background: url(../assets/images/icons/icon-03.png) no-repeat
                 center;
               background-size: 90%;
               svg {

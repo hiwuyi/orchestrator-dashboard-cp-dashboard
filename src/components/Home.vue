@@ -70,14 +70,17 @@ export default defineComponent({
       height: auto;
       padding: 0.15rem 0.5rem;
       background-color: @white-color;
+      // &.el-header{
+      // background-color: @theme-color;
+      // }
     }
     .el-container {
       // height: calc(100vh - 1rem);
       .el-aside {
-        width: 12%;
-        min-width: 180px;
+        width: auto;
+        // min-width: 180px;
         padding: 0.25rem 0.15rem;
-        background-color: @theme-color;
+        background-color: @white-color;
         @media screen and (max-width: 768px) {
           display: none;
           width: 0;

@@ -1,93 +1,31 @@
 <template>
-  <section id="container">
+  <section id="rankingFCP-container">
     <div class="flex-row header-title font-32">
-      <el-select v-model="rankingList.value" class="font-bold" @change="handleClick" placeholder="Select" size="small">
-        <el-option v-for="item in rankingList.options" :key="item.value" :label="item.label" :value="item.value">
-          <div class="font-22">{{item.label}}</div>
-        </el-option>
-      </el-select>
+      <h1 class="color font-33 font-bold">FCP Ranking List</h1>
       <div class="font-18">
-        {{ activeName === 'FCP' ? '(Fog Computing Provider)' :'(Edge Computing Provider)'}}
+        (Fog Computing Provider)
       </div>
     </div>
 
-    <div class="providers-overview">
-      <el-row :gutter="50">
-        <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="flex-row baseline">
-          <div class="usage-style flex-row">
-            <label class="font-22">Current VCPU usage: </label>
-            <div class="progress">
-              <el-progress :percentage="70" color="#7ecf51" :stroke-width="16" />
-              <div class="text flex-row space-between">
-                <small class="font-14">1648 VCPU Used</small>
-                <small class="font-14">2000 VCPU Free</small>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="flex-row baseline">
-          <div class="usage-style flex-row">
-            <label class="font-22">Current Storage usage: </label>
-            <div class="progress">
-              <el-progress :percentage="40" color="#6067f5" :stroke-width="16" />
-              <div class="text flex-row space-between">
-                <small class="font-14">16.45 TB Used</small>
-                <small class="font-14">80.12 TB Free</small>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="flex-row baseline">
-          <div class="usage-style flex-row">
-            <label class="font-22">Current Memory usage: </label>
-            <div class="progress">
-              <el-progress :percentage="30" color="#ff9413" :stroke-width="16" />
-              <div class="text flex-row space-between">
-                <small class="font-14">1.21 TB Used</small>
-                <small class="font-14">22 TB Free</small>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="flex-row baseline">
-          <div class="usage-style flex-row">
-            <label class="font-22">Current GPU usage: </label>
-            <div class="progress">
-              <el-progress :percentage="60" color="#cf3cc9" :stroke-width="16" />
-              <div class="text flex-row space-between">
-                <small class="font-14">16 Used</small>
-                <small class="font-14">26 Free</small>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-          <div class="grid-content">
-            <div class='chart-trends' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-
     <div class="providers-network font-16">
-      <div class="providers-cp" v-if="activeName === 'FCP'">
+      <div class="providers-cp">
         <el-row class="search-body flex-row font-18">
           <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
             <div class="flex-row nowrap child">
               <span class="font-22">Contract Address: </span>
-              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="Contract Address" @chang="searchProvider" @input="searchProvider" />
+              <el-input class="zk-input" v-model="networkInput.contract_address" placeholder="please enter Contract Address" @chang="searchProvider" @input="searchProvider" />
             </div>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
             <div class="flex-row nowrap child">
               <span class="font-22">Name: </span>
-              <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="CP Name" @chang="searchProvider" @input="searchProvider" />
+              <el-input class="zk-input" v-model="networkInput.owner_addr" placeholder="please enter CP name" @chang="searchProvider" @input="searchProvider" />
             </div>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
             <div class="flex-row nowrap child">
               <span class="font-22">NodeID: </span>
-              <el-input class="zk-input" v-model="networkInput.node_id" placeholder="Node ID" @chang="searchProvider" @input="searchProvider" />
+              <el-input class="zk-input" v-model="networkInput.node_id" placeholder="please enter NodeID" @chang="searchProvider" @input="searchProvider" />
             </div>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
@@ -193,132 +131,6 @@
             :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </div>
       </div>
-
-      <div class="providers-cp" v-if="activeName === 'ECP'">
-        <el-row class="search-body flex-row font-18">
-          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
-            <div class="flex-row nowrap child">
-              <span class="font-22">Contract Address: </span>
-              <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
-            </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-            <div class="flex-row nowrap child">
-              <span class="font-22">Name: </span>
-              <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
-            </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
-            <div class="flex-row nowrap child">
-              <span class="font-22">NodeID: </span>
-              <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-            </div>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
-            <div class="flex-row nowrap child">
-              <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
-              <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
-                <el-icon>
-                  <Search />
-                </el-icon>
-                Search
-              </el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-table :data="providerBody.ubiTableData" style="width: 100%" empty-text="No Data" v-loading="providersECPLoad">
-          <el-table-column type="index" min-width="70">
-            <template #header>
-              <div class="font-18 weight-4">Ranking</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="owner_addr" min-width="140">
-            <template #header>
-              <div class="font-18 weight-4">Contract Address</div>
-            </template>
-            <template #default="scope">
-              <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" min-width="120">
-            <template #header>
-              <div class="font-18 weight-4">Name</div>
-            </template>
-            <template #default="scope">
-              <div class="name-style" @click="handleSelect('ranking', scope.row, 'ECP')">{{scope.row.name}}</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="node_id" min-width="120">
-            <template #header>
-              <div class="font-18 weight-4">nodeID</div>
-            </template>
-            <template #default="scope">
-              <div class="flex-row copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
-                {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
-                </svg>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gpu_tags" min-width="140">
-            <template #header>
-              <div class="font-18 weight-4">GPU</div>
-            </template>
-            <template #default="scope">
-              <div class="badge flex-row center">
-                <div class="flex-row center machines-style">
-                  <span v-for="(gpu, g) in scope.row.gpu_tags" :key="g">
-                    {{gpu}}
-                  </span>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
-            { text: 'Online', value: 'Online' },
-            { text: 'Suspended', value: 'Suspended' },
-            { text: 'Offline', value: 'Offline' }
-          ]" filter-placement="bottom-end" :filter-multiple="false">
-            <template #header>
-              <div class="font-18 weight-4">status</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="region" min-width="100">
-            <template #header>
-              <div class="font-18 weight-4">Region</div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="task">
-            <template #header>
-              <div class="font-18 weight-4">Total Task</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{scope.row.task?scope.row.task.total : ''}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="task" width="120">
-            <template #header>
-              <div class="font-18 weight-4">Completed(%)</div>
-            </template>
-            <template #default="scope">
-              <div>
-                {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <div class="flex-row center pagination-style">
-          Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;
-          <!-- hide-on-single-page -->
-          <el-pagination :page-size="paginZK.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
-            :total="paginZK.total" @size-change="handleSizeChange" @current-change="handleZKCurrentChange" />
-        </div>
-      </div>
     </div>
 
     <vm-drawer v-if="vmOperate.centerDrawerVisible" :centerDrawerVisible="vmOperate.centerDrawerVisible" :list="vmOperate.row" @hardClose="hardClose"></vm-drawer>
@@ -333,7 +145,6 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   Search
 } from '@element-plus/icons-vue'
-import * as echarts from "echarts"
 
 export default defineComponent({
   components: {
@@ -346,21 +157,9 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const providersLoad = ref(false)
     const providersTableLoad = ref(false)
-    const providersECPLoad = ref(false)
     const providersData = ref([])
-    const providerBody = reactive({
-      ubiTableData: []
-    })
     const pagin = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
-    const paginZK = reactive({
       pageSize: 10,
       pageNo: 1,
       total: 0,
@@ -370,29 +169,11 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     const cpLoad = ref(false)
-    const rankingList = reactive({
-      value: 'FCP',
-      options: [
-        {
-          value: 'FCP',
-          label: 'FCP Ranking List'
-        },
-        {
-          value: 'ECP',
-          label: 'ECP Ranking List'
-        }]
-    })
     const networkInput = reactive({
       contract_address: '',
       owner_addr: '',
       node_id: ''
     })
-    const networkZK = reactive({
-      contract_address: '',
-      owner_addr: '',
-      node_id: ''
-    })
-    const activeName = ref('FCP')
     const vmOperate = reactive({
       centerDrawerVisible: false,
       row: {}
@@ -402,10 +183,6 @@ export default defineComponent({
     async function handleCurrentChange (currentPage) {
       pagin.pageNo = currentPage
       init()
-    }
-    async function handleZKCurrentChange (currentPage) {
-      paginZK.pageNo = currentPage
-      getUBITable()
     }
     async function init () {
       providersTableLoad.value = true
@@ -427,26 +204,6 @@ export default defineComponent({
         if (providerRes.status) system.$commonFun.messageTip(providerRes.status, providerRes.message)
       }
       providersTableLoad.value = false
-    }
-    async function getUBITable () {
-      providersECPLoad.value = true
-      const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
-      const params = {
-        page_size: paginZK.pageSize,
-        page_no: page,
-        contract_address: networkZK.contract_address,
-        owner_addr: networkZK.owner_addr,
-        node_id: networkZK.node_id
-      }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
-      if (providerRes && providerRes.code === 0) {
-        paginZK.total = providerRes.data.total || 0
-        providerBody.ubiTableData = await getList(providerRes.data.list, 'ECP')
-      } else {
-        providerBody.ubiTableData = []
-        if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
-      }
-      providersECPLoad.value = false
     }
     async function getList (list, type) {
       let l = list || []
@@ -482,23 +239,11 @@ export default defineComponent({
       pagin.pageNo = 1
       init()
     }, 700)
-    const searchZKProvider = system.$commonFun.debounce(async function () {
-      paginZK.pageNo = 1
-      getUBITable()
-    }, 700)
     function clearProvider () {
       networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (activeName.value === 'ECP') {
-        paginZK.pageNo = 1
-        getUBITable()
-      } else {
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
-      }
+      pagin.pageSize = 10
+      pagin.pageNo = 1
+      init()
     }
     function reset (type) {
       pagin.total = 0
@@ -507,238 +252,9 @@ export default defineComponent({
       pagin.pageSize = 10
       pagin.pageNo = 1
       providersData.value = []
-      providersLoad.value = false
       providersTableLoad.value = false
-      providersECPLoad.value = false
       networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.contract_address = ''
-      networkZK.node_id = ''
-      if (route.params.type === 'FCP') {
-        activeName.value = 'FCP'
-        rankingList.value = 'FCP'
-        changetype()
-      } else {
-        activeName.value = 'ECP'
-        rankingList.value = 'ECP'
-        changeZKtype()
-      }
       init()
-      getUBITable()
-    }
-    const changetype = () => {
-      const machart_resource = echarts.init(document.getElementById("chart-Resource"));
-      const option1 = {
-        tooltip: {
-          trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
-          color: '#fff',
-          borderWidth: 0,
-          textStyle: {
-            color: '#fff',
-            fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
-          },
-          icon: 'roundRect',
-          formatter: function (params) {
-            // params 是一个数组，包含了每个系列的数据信息
-            var result = params[0].name + '<br/>'; // X轴的值
-            params.forEach(function (item) {
-              // 遍历每个系列的数据
-              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
-              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
-              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
-            });
-            return result;
-          }
-        },
-        legend: {
-          data: ['CPU', 'Memory', 'Storage', 'GPU'],
-          right: '4%',
-          top: '2%',
-          icon: 'circle',
-          itemWidth: 10,
-          itemHeight: 10,
-          itemGap: 20,
-          textStyle: {
-            color: '#95a3bd',
-            fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
-            // lineHeight: 14,
-            rich: {
-              a: {
-                verticalAlign: 'middle',
-              },
-            },
-            padding: [0, 0, -2, 2]
-          }
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value',
-          axisLabel: {
-            // 使用 formatter 函数格式化标签
-            formatter: '{value}%'
-          },
-          minInterval: 50
-        },
-        series: [
-          {
-            name: 'CPU',
-            type: 'line',
-            data: [10, 13, 11, 34, 50, 90, 20],
-            color: '#7ecf51',
-            smooth: true
-          },
-          {
-            name: 'Memory',
-            type: 'line',
-            data: [35, 12, 59, 24, 29, 83, 31],
-            color: '#ff9413',
-            smooth: true
-          },
-          {
-            name: 'Storage',
-            type: 'line',
-            data: [6, 23, 20, 75, 59, 30, 41],
-            color: '#6067f5',
-            smooth: true
-          },
-          {
-            name: 'GPU',
-            type: 'line',
-            data: [26, 63, 30, 85, 50, 10, 21],
-            color: '#cf3cc9',
-            smooth: true
-          }
-        ]
-      }
-      machart_resource.setOption(option1);
-      window.addEventListener("resize", function () {
-        machart_resource.resize();
-      })
-      cpLoad.value = false
-    }
-    const changeZKtype = () => {
-      const machart_resource = echarts.init(document.getElementById("chart-Resource"));
-      const option1 = {
-        tooltip: {
-          trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
-          color: '#fff',
-          borderWidth: 0,
-          textStyle: {
-            color: '#fff',
-            fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
-          },
-          icon: 'roundRect',
-          formatter: function (params) {
-            // params 是一个数组，包含了每个系列的数据信息
-            var result = params[0].name + '<br/>'; // X轴的值
-            params.forEach(function (item) {
-              // 遍历每个系列的数据
-              var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
-              let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
-              result += colorDot + item.seriesName + ' Usage: ' + item.value + '% 11/11 GiB' + '<br/>'; // 系列名和对应的值
-            });
-            return result;
-          }
-        },
-        legend: {
-          data: ['CPU', 'Memory', 'Storage', 'GPU'],
-          right: '4%',
-          top: '2%',
-          icon: 'circle',
-          itemWidth: 10,
-          itemHeight: 10,
-          itemGap: 20,
-          textStyle: {
-            color: '#95a3bd',
-            fontSize: 11,
-            fontFamily: 'Gilroy-Medium',
-            // lineHeight: 14,
-            rich: {
-              a: {
-                verticalAlign: 'middle',
-              },
-            },
-            padding: [0, 0, -2, 2]
-          }
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value',
-          axisLabel: {
-            // 使用 formatter 函数格式化标签
-            formatter: '{value}%'
-          },
-          minInterval: 50
-        },
-        series: [
-          {
-            name: 'CPU',
-            type: 'line',
-            data: [10, 13, 11, 34, 90, 30, 20],
-            color: '#7ecf51',
-            smooth: true
-          },
-          {
-            name: 'Memory',
-            type: 'line',
-            data: [20, 12, 19, 24, 29, 33, 31],
-            color: '#ff9413',
-            smooth: true
-          },
-          {
-            name: 'Storage',
-            type: 'line',
-            data: [15, 23, 20, 15, 19, 30, 41],
-            color: '#6067f5',
-            smooth: true
-          },
-          {
-            name: 'GPU',
-            type: 'line',
-            data: [26, 63, 30, 85, 50, 10, 21],
-            color: '#cf3cc9',
-            smooth: true
-          }
-        ]
-      }
-      machart_resource.setOption(option1);
-      window.addEventListener("resize", function () {
-        machart_resource.resize();
-      })
-      cpLoad.value = false
-    }
-    const handleClick = async (value) => {
-      activeName.value = value || 'FCP'
-      router.push({ name: 'rankings', params: { type: activeName.value } })
-      cpLoad.value = true
-      await system.$commonFun.timeout(500)
-      if (activeName.value === 'ECP') changeZKtype()
-      else changetype()
     }
     async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
@@ -760,19 +276,14 @@ export default defineComponent({
       system,
       route,
       metaAddress,
-      providersLoad,
       providersTableLoad,
-      providersECPLoad,
       providersData,
-      providerBody,
       networkInput,
-      networkZK,
       pagin,
-      paginZK,
       small,
       background,
-      accessToken, cpLoad, rankingList, activeName, vmOperate,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, handleClick,
+      accessToken, cpLoad, vmOperate,
+      handleSizeChange, handleCurrentChange, searchProvider, clearProvider,
       handleSelect, hardClose
     }
   }
@@ -780,11 +291,10 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-#container {
+#rankingFCP-container {
   padding: 0 0 0.4rem;
   font-size: 16px;
   line-height: 1.6;
-  letter-spacing: 1px;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
   }
@@ -1040,7 +550,7 @@ export default defineComponent({
     .search-body {
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin: 0.4rem 0 0;
+      margin: 0.22rem 0 0;
       .child {
         height: 100%;
         span {
@@ -1416,7 +926,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: "Gilroy-Medium";
+        font-family: 'HELVETICA-ROMAN';
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;

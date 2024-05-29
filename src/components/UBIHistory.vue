@@ -664,7 +664,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: "Gilroy-Medium";
+        font-family: 'HELVETICA-ROMAN';
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;

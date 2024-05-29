@@ -16,6 +16,9 @@ export default {
   margin: 30px auto;
   border-top: 1px solid #8c878d;
 }
+.m-button {
+  margin: 0 0 0 0.1rem;
+}
 .lang-max {
   width: 70%;
   max-width: 1340px;
@@ -106,9 +109,15 @@ export default {
 .font-14 {
   font-size: 0.14rem;
 }
+.font-13 {
+  font-size: 0.13rem;
+}
+.font-12 {
+  font-size: 0.12rem;
+}
 
 .font-bold {
-  font-family: "gilroy-bold";
+  font-family: "HELVETICA-bold";
 }
 
 .weight-3 {

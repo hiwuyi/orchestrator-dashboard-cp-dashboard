@@ -455,13 +455,14 @@ export default defineComponent({
       const option1 = {
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(111, 111, 111, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           color: '#fff',
           borderWidth: 0,
+          borderRadius: 9,
           textStyle: {
             color: '#fff',
             fontSize: 11,
-            fontFamily: 'Gilroy-Medium'
+            fontFamily: 'HELVETICA-ROMAN'
           },
           icon: 'roundRect',
           formatter: function (params) {
@@ -499,18 +500,21 @@ export default defineComponent({
           {
             name: 'CPU',
             type: 'line',
+            smooth: true,
             data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
           {
             name: 'Memory',
             type: 'line',
+            smooth: true,
             data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
           {
             name: 'Storage',
             type: 'line',
+            smooth: true,
             data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
           }
