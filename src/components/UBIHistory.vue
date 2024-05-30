@@ -1,16 +1,16 @@
 <template>
   <div id="payment">
     <div class="payment-history container-landing font-16">
-      <el-row class="search-container font-18">
-        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+      <el-row class="search-container font-14">
+        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
           <div class="flex-row nowrap child">
-            <span class="font-22">Task ID: </span>
+            <span class="font-14">Task ID: </span>
             <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task ID" @chang="searchZKProvider" @input="searchZKProvider" />
           </div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
           <div class="flex-row nowrap child">
-            <span class="font-22">NodeID: </span>
+            <span class="font-14">NodeID: </span>
             <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
           </div>
         </el-col>
@@ -30,7 +30,7 @@
       <el-table v-loading="paymentLoad" :data="paymentData" stripe style="width: 100%">
         <el-table-column prop="task_id" width="90">
           <template #header>
-            <div class="font-18 weight-4">Task ID</div>
+            <div class="font-14 weight-4">Task ID</div>
           </template>
         </el-table-column>
         <el-table-column prop="type" column-key="type" filterable :filters="[
@@ -38,7 +38,7 @@
             { text: 'GPU', value: 'GPU' }
           ]" filter-placement="bottom-end" :filter-multiple="false" min-width="90">
           <template #header>
-            <div class="font-18 weight-4">Task Type</div>
+            <div class="font-14 weight-4">Task Type</div>
           </template>
           <template #default="scope">
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
@@ -46,7 +46,7 @@
         </el-table-column>
         <el-table-column prop="node_id" min-width="100">
           <template #header>
-            <div class="font-18 weight-4">NODE ID</div>
+            <div class="font-14 weight-4">NODE ID</div>
           </template>
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
@@ -58,22 +58,25 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="zk_type" min-width="110">
+        <el-table-column prop="zk_type" min-width="110" column-key="zk_type" filterable :filters="[
+            { text: 'CPU', value: 'CPU' },
+            { text: 'GPU', value: 'GPU' }
+          ]" filter-placement="bottom-end" :filter-multiple="false">
           <template #header>
-            <div class="font-18 weight-4">ZK Type</div>
+            <div class="font-14 weight-4">ZK Type</div>
           </template>
         </el-table-column>
-        <el-table-column prop="started_at" min-width="135">
+        <el-table-column prop="started_at" min-width="135" sortable>
           <template #header>
-            <div class="font-18 weight-4">Start Time</div>
+            <div class="font-14 weight-4">Start Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.started_at)}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="ended_at" min-width="135">
+        <el-table-column prop="ended_at" min-width="135" sortable>
           <template #header>
-            <div class="font-18 weight-4">End Time</div>
+            <div class="font-14 weight-4">End Time</div>
           </template>
           <template #default="scope">
             <span>{{system.$commonFun.momentFun(scope.row.ended_at)}}</span>
@@ -81,7 +84,7 @@
         </el-table-column>
         <el-table-column prop="tx_hash" min-width="120">
           <template #header>
-            <div class="font-18 weight-4">Reward TX Hash</div>
+            <div class="font-14 weight-4">Reward TX Hash</div>
           </template>
           <template #default="scope">
             <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank">{{scope.row.tx_hash}}</a>
@@ -89,14 +92,14 @@
         </el-table-column>
         <el-table-column prop="amount">
           <template #header>
-            <div class="font-18 weight-4">reward</div>
+            <div class="font-14 weight-4">reward</div>
           </template>
         </el-table-column>
       </el-table>
       <div class="flex-row center pagination-style">
         Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentLoad.length : 0 + paymentLoad.length }} /&nbsp;
         <!-- hide-on-single-page -->
-        <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+        <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
           :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </div>
@@ -217,7 +220,7 @@ export default defineComponent({
       justify-content: flex-start;
       flex-wrap: wrap;
       margin: 0;
-      padding: 0 0 0.2rem;
+      padding: 0 0 0.4rem;
       .el-select {
         width: auto;
         margin: 0 0.3rem 0 0;
@@ -324,6 +327,11 @@ export default defineComponent({
       border: 1px solid #c6cddc;
       tr {
         background-color: transparent;
+        &:hover {
+          td {
+            background-color: #f3f6ff;
+          }
+        }
         th {
           word-break: break-word;
           padding: 0.18rem 0;
@@ -664,7 +672,7 @@ export default defineComponent({
       .el-input,
       .el-input__inner,
       .el-pager {
-        font-family: 'HELVETICA-ROMAN';
+        font-family: "HELVETICA-ROMAN";
         font-size: inherit;
         @media screen and (max-width: 996px) {
           height: 26px;
@@ -693,11 +701,26 @@ export default defineComponent({
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
+          width: 24px;
+          min-width: 24px;
+          height: 24px;
+          line-height: 24px;
           background-color: #f9fafb;
           border-color: @border-color;
           color: #606060;
         }
         &:not(.disabled):hover {
+        }
+        .el-pager li {
+          color: #606060;
+        }
+        .el-select {
+          width: 100px;
+        }
+        .el-input,
+        .el-select__wrapper {
+          min-height: 24px;
+          height: 24px;
         }
       }
     }

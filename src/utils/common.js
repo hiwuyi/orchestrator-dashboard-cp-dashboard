@@ -506,8 +506,8 @@ function AddFormat (num1, num2) {
 }
 
 
-function getDateTime () {
-  const now = new Date();
+function getDateTime (time) {
+  const now = time ? new Date(time) : new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1; // 月份是从0开始的，所以需要加1
   const day = now.getDate();
@@ -523,6 +523,39 @@ function getDateTime () {
   const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
 
   return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+function dataGPU (data) {
+  // console.log(data)
+  let datum = [], timeArr = []
+  // 排序
+  data.sort((itema, itemb) => {
+    return itema.timestamp - itemb.timestamp
+  })
+  // 循环处理数组
+  data.forEach((item, index) => {
+    // let time_end = momentFun(item.timestamp)
+    // let time = new Date(parseInt(item.timestamp) * 1000)
+    // let time_end = addZero(time.getFullYear()) + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+    let time_end = getDateTime(parseInt(item.timestamp) * 1000)
+    if (timeArr.indexOf(time_end) === -1) {
+      timeArr.push(time_end)
+      datum.push(item.score)
+    } else {
+      datum[timeArr.indexOf(time_end)] = datum[timeArr.indexOf(time_end)] + item.score
+    }
+  })
+  return {
+    datum: datum,
+    timeArr: timeArr
+  }
+}
+
+function addZero (n) {
+  if (n <= 9) {
+    return `0${n}`
+  }
+  return n
 }
 
 let paginationWidth = document.documentElement.clientWidth >= 768
@@ -561,5 +594,6 @@ export default {
   unifyNumber,
   AddFormat,
   getDateTime,
+  dataGPU,
   paginationWidth
 }

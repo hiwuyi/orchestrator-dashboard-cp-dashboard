@@ -1,12 +1,12 @@
 <template>
   <div class="flex-row center">
     <el-drawer v-model="props.centerDrawerVisible" direction="rtl" size="50%" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="drawer-body">
-      <div class="drawer-content font-18" v-if="props.list.type === 'FCP'">
+      <div class="drawer-content font-14" v-if="props.list.type === 'FCP'">
         <div class="flex-row space-between name-title">
-          <b class="font-27 font-bold">{{props.list.name}}</b>
+          <b class="font-16 weight-4">{{props.list.name}}</b>
           <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'FCP'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
         </div>
-        <el-row class="font-18 note">
+        <el-row class="font-14 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
             <p>Contract Address:</p>
           </el-col>
@@ -52,9 +52,9 @@
         </el-row>
 
         <div class="flex-row space-between name-title" v-if="props.list.computer_provider">
-          <b class="font-27 font-bold">Machine Amount：{{props.list.computer_provider.machines.length}}</b>
+          <b class="font-16 weight-4">Machine Amount：{{props.list.computer_provider.machines.length}}</b>
         </div>
-        <div class="font-18 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
+        <div class="font-14 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
           <el-row>
             <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
               <p>MachineID: </p>
@@ -99,12 +99,12 @@
             </el-col>
           </el-row>
           <div v-show="machines.MachineShow" class="flex-row space-between name-title">
-            <b class="font-22">GPU Source</b>
+            <b class="font-16 weight-4">GPU Source</b>
           </div>
           <el-table v-show="machines.MachineShow && machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
             <el-table-column type="product_name" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">GPU</div>
+                <div class="font-14 weight-4">GPU</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.product_name}}</div>
@@ -115,7 +115,7 @@
               { text: 'Available', value: 'Available' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
               <template #header>
-                <div class="font-18 weight-4">Status</div>
+                <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.status}}</div>
@@ -123,7 +123,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.free" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Free</div>
+                <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.free}}</div>
@@ -131,7 +131,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.total" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Total</div>
+                <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.total}}</div>
@@ -139,7 +139,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.used" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Used</div>
+                <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.used}}</div>
@@ -152,12 +152,12 @@
         </div>
       </div>
 
-      <div class="drawer-content font-18" v-if="props.list.type === 'ECP'">
+      <div class="drawer-content font-14" v-if="props.list.type === 'ECP'">
         <div class="flex-row space-between name-title">
-          <b class="font-27 font-bold">{{props.list.name}}</b>
+          <b class="font-16 weight-4">{{props.list.name}}</b>
           <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'FCP'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
         </div>
-        <el-row class="font-18 note">
+        <el-row class="font-14 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
             <p>Contract Address:</p>
           </el-col>
@@ -203,9 +203,9 @@
         </el-row>
 
         <div class="flex-row space-between name-title" v-if="props.list.resources">
-          <b class="font-27 font-bold">Machine Amount：{{props.list.resources.length}}</b>
+          <b class="font-16 weight-4">Machine Amount：{{props.list.resources.length}}</b>
         </div>
-        <div class="font-18 note b" v-if="props.list.resources" v-for="(machinesECP, mECP) in props.list.resources" :key="mECP">
+        <div class="font-14 note b" v-if="props.list.resources" v-for="(machinesECP, mECP) in props.list.resources" :key="mECP">
           <el-row>
             <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
               <p>MachineID: </p>
@@ -250,12 +250,12 @@
             </el-col>
           </el-row>
           <div v-show="machinesECP.MachineShow" class="flex-row space-between name-title">
-            <b class="font-22">GPU Source</b>
+            <b class="font-16 weight-4">GPU Source</b>
           </div>
           <el-table v-show="machinesECP.MachineShow && machinesECP.gpu" :data="machinesECP.gpu.gpus" style="width: 100%" empty-text="No Data">
             <el-table-column type="model" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">GPU</div>
+                <div class="font-14 weight-4">GPU</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.model}}</div>
@@ -266,7 +266,7 @@
               { text: 'Available', value: 'Available' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
               <template #header>
-                <div class="font-18 weight-4">Status</div>
+                <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.status}}</div>
@@ -274,7 +274,7 @@
             </el-table-column>
             <el-table-column type="free" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Free</div>
+                <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.free}}</div>
@@ -282,7 +282,7 @@
             </el-table-column>
             <el-table-column type="total" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Total</div>
+                <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.total}}</div>
@@ -290,7 +290,7 @@
             </el-table-column>
             <el-table-column type="used" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Used</div>
+                <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.total-scope.row.free}}</div>
@@ -303,8 +303,8 @@
         </div>
       </div>
 
-      <div class="drawer-content font-18" v-if="props.list.type === 'resourceList'">
-        <div class="font-18 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
+      <div class="drawer-content font-14" v-if="props.list.type === 'resourceList'">
+        <div class="font-14 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
           <el-row>
             <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
               <p>MachineID: </p>
@@ -349,12 +349,12 @@
             </el-col>
           </el-row>
           <div v-show="machines.MachineShow" class="flex-row space-between name-title">
-            <b class="font-22">GPU Source</b>
+            <b class="font-16 weight-4">GPU Source</b>
           </div>
           <el-table v-show="machines.MachineShow && machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
             <el-table-column type="product_name" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">GPU</div>
+                <div class="font-14 weight-4">GPU</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.product_name}}</div>
@@ -365,7 +365,7 @@
               { text: 'Available', value: 'Available' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
               <template #header>
-                <div class="font-18 weight-4">Status</div>
+                <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.status}}</div>
@@ -373,7 +373,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.free" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Free</div>
+                <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.free}}</div>
@@ -381,7 +381,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.total" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Total</div>
+                <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.total}}</div>
@@ -389,7 +389,7 @@
             </el-table-column>
             <el-table-column type="fb_memory_usage.used" min-width="70">
               <template #header>
-                <div class="font-18 weight-4">Used</div>
+                <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
                 <div>{{scope.row.fb_memory_usage.used}}</div>
@@ -486,6 +486,9 @@ export default defineComponent({
         xAxis: {
           type: 'category',
           boundaryGap: false,
+          axisTick: {
+            show: false
+          },
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
@@ -501,6 +504,7 @@ export default defineComponent({
             name: 'CPU',
             type: 'line',
             smooth: true,
+            showSymbol: false,
             data: [10, 13, 11, 34, 90, 30, 20],
             color: '#7ecf51'
           },
@@ -508,6 +512,7 @@ export default defineComponent({
             name: 'Memory',
             type: 'line',
             smooth: true,
+            showSymbol: false,
             data: [20, 12, 19, 24, 29, 33, 31],
             color: '#ff9413'
           },
@@ -515,6 +520,7 @@ export default defineComponent({
             name: 'Storage',
             type: 'line',
             smooth: true,
+            showSymbol: false,
             data: [15, 23, 20, 15, 19, 30, 41],
             color: '#6067f5'
           }
@@ -642,6 +648,11 @@ export default defineComponent({
             border: 1px solid #c6cddc;
             tr {
               background-color: transparent;
+              &:hover {
+                td {
+                  background-color: #f3f6ff;
+                }
+              }
               th {
                 word-break: break-word;
                 padding: 0.18rem 0;
@@ -935,6 +946,10 @@ export default defineComponent({
           .el-table__inner-wrapper::before {
             background-color: rgb(38, 39, 47);
             height: 0;
+          }
+          .el-button {
+            font-family: inherit;
+            font-size: inherit;
           }
         }
       }

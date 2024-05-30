@@ -286,7 +286,7 @@ export default defineComponent({
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
-    const swanLogo = require("@/assets/images/logo.png")
+    const swanLogo = require("@/assets/images/logo-white.png")
     const providersLoad = ref(false)
     const providersData = ref([])
     const small = ref(false)
@@ -624,7 +624,7 @@ export default defineComponent({
   :deep(.el-button) {
     border: 0;
     border-radius: 0.08rem;
-    background-color: @theme-color;
+    background-color: #88acff;
     // background: linear-gradient(45deg, #025bd5, #3c73ec);
     color: white;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
@@ -636,7 +636,6 @@ export default defineComponent({
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0;
-    cursor: pointer;
     img {
       height: 0.45rem;
       @media screen and (max-width: 767px) {
@@ -673,13 +672,13 @@ export default defineComponent({
           background-color: transparent;
           font-size: inherit;
           font-family: inherit;
-          border: 1px solid #000;
+          border: 1px solid @white-color;
           border-radius: 0.3rem;
           box-shadow: none;
           .el-select__prefix {
             margin: 0 0.06rem 0 0;
             line-height: 1.2;
-            color: #000;
+            color: @white-color;
             .icon {
               width: 0.3rem;
               height: 0.3rem;
@@ -706,7 +705,7 @@ export default defineComponent({
           }
           .el-select__suffix {
             .el-select__icon {
-              background: url(../assets/images/icons/icon-03.png) no-repeat
+              background: url(../assets/images/icons/icon-02.png) no-repeat
                 center;
               background-size: 90%;
               svg {
@@ -745,11 +744,11 @@ export default defineComponent({
     }
     .header-right {
       .setting-style {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
         padding: 0;
         margin: 0 0 0 0.1rem;
-        background-color: @theme-color;
+        background-color: @white-color;
         // background: linear-gradient(45deg, #025bd5, #3c73ec) !important;
         cursor: pointer;
         border-radius: 0.08rem;
@@ -766,7 +765,7 @@ export default defineComponent({
           width: 18px;
           height: 18px;
           margin: 0 auto;
-          color: @white-color;
+          color: @theme-color;
         }
         .el-sub-menu__icon-arrow {
           display: none;

@@ -68,11 +68,11 @@ export default defineComponent({
     .el-header,
     .el-footer {
       height: auto;
-      padding: 0.15rem 0.5rem;
+      padding: 0.2rem 0.5rem;
       background-color: @white-color;
-      // &.el-header{
-      // background-color: @theme-color;
-      // }
+      &.el-header {
+        background-color: @theme-color;
+      }
     }
     .el-container {
       // height: calc(100vh - 1rem);

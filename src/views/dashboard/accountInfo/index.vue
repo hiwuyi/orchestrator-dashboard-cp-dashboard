@@ -1,19 +1,19 @@
 <template>
   <section id="cp-container">
-    <div class="flex-row header-title font-32">
-      <h1 class="color font-32 font-bold">CP Profile</h1>
+    <div class="flex-row header-title">
+      <h1 class="font-24 font-bold">CP Profile</h1>
     </div>
 
     <div class="providers-network font-16">
       <div class="providers">
         <el-row :gutter="32">
-          <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
-            <div class="providers-cp s">
-              <div class="flex-row space-between name-title">
-                <b class="font-27 font-bold">Account Info</b>
-                <a @click="handleSelect('claimAccount', {}, 'claimAccount')" :class="{'font-17':true,'is-disabled': !signature}">Claim Account</a>
+          <el-col :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
+            <div class="providers-cp s font-14">
+              <div class="flex-row name-title">
+                <b class="font-16 weight-4">Account Info</b>
+                <a @click="handleSelect('claimAccount', {}, 'claimAccount')" :class="{'is-disabled': false}">Claim Account</a>
               </div>
-              <div class="font-22 note b">
+              <div class="note b">
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>CP Contract Address:</p>
@@ -25,7 +25,7 @@
                     <p>Account type:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <div class="collateral m font-18">{{activeName}}</div>
+                    <div class="collateral m b-ecp" :class="{'b-fcp': activeName === 'FCP'}">{{activeName}}</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Owner Address:</p>
@@ -72,45 +72,45 @@
               </div>
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-            <div class="providers-cp s">
+          <el-col :xs="24" :sm="24" :md="24" :lg="9" :xl="9">
+            <div class="providers-cp s font-14">
               <div class="flex-row space-between name-title">
-                <b class="font-27 font-bold">Balance Info</b>
+                <b class="font-16 weight-4">Balance Info</b>
               </div>
-              <div class="font-22 note b">
+              <div class="note b">
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <p class="color">Available Balance：0.9984 sETH</p>
+                    <p class="color font-18">Available Balance：0.9984 sETH</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
-                    <div class="flex-row space-between font-16 width">
+                    <div class="flex-row space-between width">
                       <span>FCP Collateral Balance:</span>
                       <span class="text-right">0.1444 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
-                    <div class="flex-row space-between font-16 width">
+                    <div class="flex-row space-between width">
                       <span>FCP Locked Balance: </span>
                       <span>0.1234 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div :class="{'collateral font-18':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
+                    <div :class="{'collateral':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'FCP')">FCP Collateral</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
-                    <div class="flex-row space-between font-16 width">
+                    <div class="flex-row space-between width">
                       <span>ECP Collateral Balance:</span>
                       <span class="text-right">0.1444 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline s">
-                    <div class="flex-row space-between font-16 width">
+                    <div class="flex-row space-between width">
                       <span>ECP Locked Balance: </span>
                       <span>0.1234 SETH</span>
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-                    <div :class="{'collateral font-18':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
+                    <div :class="{'collateral':true,'is-disabled': !signature}" @click="handleSelect('cpProfile', {}, 'ECP')">ECP Collateral</div>
                   </el-col>
                 </el-row>
               </div>
@@ -122,24 +122,32 @@
       <div class="providers">
         <el-row :gutter="32">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-            <div class="grid-content">
+            <div class="module-container">
+              <div class="title flex-row">
+                <span class="font-16 weight-4">Job completion</span>
+                <span class="font-12 subtitle">Job completion total： 101</span>
+              </div>
               <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
                 <el-select v-model="weekList.value" placeholder="Select" size="small">
                   <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                    <div class="font-22">{{item.label}}</div>
+                    <div class="font-14">{{item.label}}</div>
                   </el-option>
                 </el-select>
               </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-            <div class="grid-content">
+            <div class="module-container">
+              <div class="title flex-row">
+                <span class="font-16 weight-4">Reward claimed</span>
+                <span class="font-12 subtitle">Reward claimed total： 87</span>
+              </div>
               <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
                 <el-select v-model="weekList.value" placeholder="Select" size="small">
                   <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                    <div class="font-22">{{item.label}}</div>
+                    <div class="font-14">{{item.label}}</div>
                   </el-option>
                 </el-select>
               </div>
@@ -150,9 +158,9 @@
 
       <div class="providers-cp">
         <div class="flex-row space-between name-title">
-          <b class="font-27 font-bold">Resource List</b>
+          <b class="font-16 weight-4">Resource List</b>
         </div>
-        <div class="font-22 note b">
+        <div class="font-14 note b">
           <el-row>
             <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Total Number Of Node:</p>
@@ -191,27 +199,31 @@
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.storage_total)}}</p>
             </el-col>
           </el-row>
-          <div class="font-16">
+          <div class="font-14">
             <el-table :data="providersData" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
               <el-table-column prop="name" min-width="120">
                 <template #header>
-                  <div class="font-18 weight-4">Machine ID</div>
+                  <div class="font-14 weight-4">Machine ID</div>
                 </template>
                 <template #default="scope">
-                  <div class="badge flex-row center font-16 name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
+                  <div class="badge flex-row center name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
                     {{scope.row.name}}
                   </div>
                 </template>
               </el-table-column>
               <!-- <el-table-column prop="country" label="Country" /> -->
-              <el-table-column prop="computer_provider.status" width="120">
+              <el-table-column prop="computer_provider.status" width="120" column-key="status" filterable :filters="[
+                { text: 'Online', value: 'Online' },
+                { text: 'Suspended', value: 'Suspended' },
+                { text: 'Offline', value: 'Offline' }
+              ]" filter-placement="bottom-end" :filter-multiple="false">
                 <template #header>
-                  <div class="font-18 weight-4">status</div>
+                  <div class="font-14 weight-4">status</div>
                 </template>
               </el-table-column>
               <el-table-column prop="gpu_list" min-width="140">
                 <template #header>
-                  <div class="font-18 weight-4">GPU</div>
+                  <div class="font-14 weight-4">GPU</div>
                 </template>
                 <template #default="scope">
                   <div class="badge flex-row center">
@@ -225,12 +237,12 @@
               </el-table-column>
               <el-table-column prop="region" min-width="100">
                 <template #header>
-                  <div class="font-18 weight-4">Region</div>
+                  <div class="font-14 weight-4">Region</div>
                 </template>
               </el-table-column>
               <el-table-column prop="task" min-width="140">
                 <template #header>
-                  <div class="font-18 weight-4">Completed(%)</div>
+                  <div class="font-14 weight-4">Completed(%)</div>
                 </template>
                 <template #default="scope">
                   <div v-if="scope.row.type === 'ECP'">
@@ -239,12 +251,24 @@
                   <span v-else>-</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="uptime">
+              <el-table-column prop="uptime" min-width="130">
                 <template #header>
-                  <div class="font-18 weight-4">Uptime</div>
+                  <div class="font-14 weight-4">Uptime</div>
                 </template>
                 <template #default="scope">
-                  <div v-if="scope.row.type === 'FCP'">
+                  <div class="flex-row center nowrap" v-if="scope.row.type === 'FCP'">
+                    <ul class="flex-row uptime-ul">
+                      <li :class="{'active': scope.row.uptime >= 0.1}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.2}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.3}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.4}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.5}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.6}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.7}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.8}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.9}"></li>
+                      <li :class="{'active': scope.row.uptime >= 1}"></li>
+                    </ul>
                     {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
                   </div>
                   <span v-else>-</span>
@@ -254,7 +278,7 @@
             <div class="flex-row center pagination-style font-16">
               Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
               <!-- hide-on-single-page -->
-              <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, sizes, prev, pager, next, jumper' : 'total, prev, pager, next'"
+              <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
                 :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
             </div>
           </div>
@@ -262,21 +286,21 @@
       </div>
 
       <div class="providers-cp">
-        <div class="search-body flex-row font-18">
+        <div class="search-body flex-row font-14">
           <el-tabs v-model="activeName" class="demo-tabs">
             <el-tab-pane name="FCP">
               <template #label>
-                <span class="font-22">FCP Reward List</span>
+                <span class="font-14">FCP Reward List</span>
               </template>
             </el-tab-pane>
             <el-tab-pane name="ECP">
               <template #label>
-                <span class="font-22">ZK Proof List</span>
+                <span class="font-14">ZK Proof List</span>
               </template>
             </el-tab-pane>
             <el-tab-pane name="Transaction" disabled>
               <template #label>
-                <span class="font-22">Transaction List</span>
+                <span class="font-14">Transaction List</span>
               </template>
             </el-tab-pane>
           </el-tabs>
@@ -368,7 +392,7 @@ export default defineComponent({
           vmOperate.row = row
           vmOperate.row.type = type
           vmOperate.type = 'dialog'
-          vmOperate.centerDrawerVisible = signature.value === '' ? false : true
+          vmOperate.centerDrawerVisible = true
           break;
         case 'cpProfile':
           vmOperate.row = row
@@ -905,17 +929,6 @@ export default defineComponent({
       const machart_job = echarts.init(document.getElementById("chart-job"));
       const machart_reward = echarts.init(document.getElementById("chart-reward"));
       const option1 = {
-        title: {
-          text: 'Job completion',
-          // subtext: 'Fake Data',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'HELVETICA-ROMAN',
-            fontSize: 16
-          }
-        },
         tooltip: {
           trigger: 'axis',
           backgroundColor: 'rgba(0, 0, 0, 1)',
@@ -937,8 +950,8 @@ export default defineComponent({
         },
         legend: {
           data: ['Job Failed', 'Job Success'],
-          right: '150px',
-          top: '1%',
+          right: document.documentElement.clientWidth >= 1280 ? '100px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '4%' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -959,6 +972,9 @@ export default defineComponent({
         xAxis: [
           {
             type: 'category',
+            axisTick: {
+              show: false
+            },
             // prettier-ignore
             data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
           }
@@ -975,22 +991,7 @@ export default defineComponent({
             data: [
               2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
             ],
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#3f7bff' },
-                { offset: 0.5, color: '#73a2ff' },
-                { offset: 1, color: '#a6ceff' }
-              ])
-            },
-            emphasis: {
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: '#3f7bff' },
-                  { offset: 0.7, color: '#73a2ff' },
-                  { offset: 1, color: '#a6ceff' }
-                ])
-              }
-            },
+            color: '#699bff'
           },
           {
             name: 'Job Success',
@@ -998,36 +999,11 @@ export default defineComponent({
             data: [
               2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
             ],
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#ff920f' },
-                { offset: 0.5, color: '#ffa53c' },
-                { offset: 1, color: '#ffb664' }
-              ])
-            },
-            emphasis: {
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: '#ff920f' },
-                  { offset: 0.7, color: '#ffa53c' },
-                  { offset: 1, color: '#ffb664' }
-                ])
-              }
-            },
+            color: '#52ce7c'
           }
         ]
       }
       const option2 = {
-        title: {
-          text: 'Reward claimed',
-          textStyle: {
-            color: '#000',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            fontFamily: 'HELVETICA-ROMAN',
-            fontSize: 16
-          }
-        },
         tooltip: {
           trigger: 'axis',
           backgroundColor: 'rgba(0, 0, 0, 1)',
@@ -1043,12 +1019,12 @@ export default defineComponent({
         },
         legend: {
           data: ['Claimed Count', 'Waiting'],
-          right: '150px',
-          top: '1%',
+          right: document.documentElement.clientWidth >= 1280 ? '100px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '4%' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
-          itemGap: 40,
+          itemGap: 20,
           textStyle: {
             color: '#95a3bd',
             fontSize: 11,
@@ -1071,6 +1047,9 @@ export default defineComponent({
         xAxis: {
           type: 'category',
           boundaryGap: false,
+          axisTick: {
+            show: false
+          },
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
@@ -1081,15 +1060,17 @@ export default defineComponent({
             name: 'Claimed Count',
             type: 'line',
             smooth: true,
+            showSymbol: false,
             data: [120, 132, 101, 134, 90, 230, 210],
-            color: '#ff9413'
+            color: '#699bff'
           },
           {
             name: 'Waiting',
             type: 'line',
             smooth: true,
+            showSymbol: false,
             data: [220, 182, 191, 234, 290, 330, 310],
-            color: '#6067f5'
+            color: '#52ce7c'
           }
         ]
       }
@@ -1204,6 +1185,7 @@ export default defineComponent({
         try {
           if (element.computer_provider.machines && element.computer_provider.machines.length > 0) {
             element.computer_provider.machines.forEach((machines) => {
+              machines.MachineShow = true
               if (machines.specs.gpu.details && machines.specs.gpu.details.length > 0) {
                 machines.specs.gpu.details.forEach((gpu) => {
                   if (element.gpu_list.indexOf(gpu.product_name) < 0) element.gpu_list.push(gpu.product_name)
@@ -1262,8 +1244,9 @@ export default defineComponent({
     }
   }
   :deep(.header-title) {
-    padding: 0.1rem 0;
-    border-bottom: 2px solid #aaaaac;
+    padding: 0.15rem 0 0.2rem;
+    margin: 0 0 0.07rem;
+    border-bottom: 1px solid #858586;
     line-height: 1.15;
     h1 {
       margin: 0 0.3rem 0 0;
@@ -1319,24 +1302,27 @@ export default defineComponent({
   :deep(.providers-network) {
     padding: 0;
     .s {
+      height: calc(100% - 0.4rem) !important;
       margin: 0 !important;
     }
     .providers {
-      margin: 0.3rem 0 0;
+      margin: 0.08rem 0 0.18rem;
     }
     .providers-cp {
-      padding: 0.3rem 0.35rem;
-      margin: 0.45rem 0 0;
+      height: calc(100% - 0.8rem);
+      padding: 0.3rem 0.35rem 0.1rem;
+      margin: 0.4rem 0 0;
       background-color: @white-color;
-      border-radius: 0.25rem;
+      border-radius: 0.2rem;
       .name-title {
         color: #000;
         text-transform: capitalize;
         cursor: text;
         a {
-          padding: 0.08rem 0.06rem;
+          padding: 0.07rem 0.14rem;
+          margin: 0 0 0 0.14rem;
           background-color: @theme-color;
-          border-radius: 0.08rem;
+          border-radius: 0.5rem;
           color: @white-color;
           line-height: 1;
         }
@@ -1347,7 +1333,7 @@ export default defineComponent({
       }
       .note {
         .el-row {
-          margin: 0.1rem 0 0.34rem;
+          margin: 0.1rem 0;
           .el-col {
             margin: 0.08rem 0;
             p {
@@ -1366,7 +1352,7 @@ export default defineComponent({
               }
             }
             .collateral {
-              padding: 0.06rem 0.16rem;
+              padding: 0.05rem 0.12rem 0.03rem;
               margin: 0 0 0.1rem;
               background-color: @theme-color;
               border-radius: 0.2rem;
@@ -1379,6 +1365,15 @@ export default defineComponent({
               &.is-disabled {
                 opacity: 0.8;
                 cursor: no-drop;
+              }
+              &.b-ecp,
+              &.b-fcp {
+                margin: 0;
+                background-color: #52ce7c;
+                border-radius: 0.04rem;
+                &.b-fcp {
+                  background-color: #699bff;
+                }
               }
             }
           }
@@ -1414,6 +1409,35 @@ export default defineComponent({
         &.m {
           margin: 0.22rem 0;
         }
+        .module-container {
+          position: relative;
+          width: calc(100% - 0.64rem);
+          height: calc(100% - 0.5rem);
+          padding: 0.25rem 0.32rem;
+          background-color: @white-color;
+          border-radius: 0.14rem;
+          &.world {
+            background-color: @theme-color;
+            .title {
+              color: @white-color;
+            }
+          }
+          .el-col {
+            margin: 0;
+          }
+          .title {
+            margin: 0;
+            .subtitle {
+              margin: 0 0 0 0.35rem;
+              color: #7c889b;
+            }
+          }
+          .grid-content {
+            height: calc(100% - 0.53rem);
+            margin: 0.23rem 0 0;
+            background: #edf2ff;
+          }
+        }
         .title-link {
           margin: auto;
           line-height: 1;
@@ -1425,19 +1449,30 @@ export default defineComponent({
           padding: 0.18rem 0.14rem 0.12rem;
           background: @white-color;
           border-radius: 0.18rem;
-          box-shadow: 0 0 12px #e6e7eb;
-          .date {
-            position: absolute;
-            right: calc(0.14rem + 2%);
-            top: 0.18rem;
-            width: 90px;
-            .el-select {
-              .el-select__wrapper {
-                border: 1px solid #565656;
-                border-radius: 0.5rem;
-                box-shadow: none;
-                .el-select__placeholder {
-                  color: #95a3bd;
+          // box-shadow: 0 0 12px #e6e7eb;
+        }
+        .date {
+          position: absolute;
+          right: calc(0.14rem + 2%);
+          top: 0.18rem;
+          width: 90px;
+          .el-select {
+            .el-select__wrapper {
+              width: 85px;
+              border: 1px solid #c9d0dd;
+              border-radius: 0.5rem;
+              box-shadow: none;
+              .el-select__placeholder {
+                color: #95a3bd;
+              }
+              .el-select__suffix {
+                .el-select__icon {
+                  background: url(../../../assets/images/icons/icon-03.png)
+                    no-repeat center;
+                  background-size: 8px;
+                  svg {
+                    display: none;
+                  }
                 }
               }
             }
@@ -1445,9 +1480,9 @@ export default defineComponent({
         }
         .chart-trends {
           width: 100%;
-          margin: 0 auto;
+          margin: -0.3rem auto 0;
           height: 2.3rem;
-          @media screen and (max-width: 540px) {
+          @media screen and (max-width: 768px) {
             height: 300px;
           }
         }
@@ -1456,9 +1491,38 @@ export default defineComponent({
     .search-body {
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin: 0;
+      margin: 0 0 0.2rem;
       .el-tabs {
         width: 100%;
+        .el-tabs__header {
+          padding: 0;
+          margin: 0;
+          .el-tabs__active-bar,
+          .el-tabs__nav-wrap:after {
+            display: none;
+          }
+          .el-tabs__nav {
+            .el-tabs__item {
+              height: auto;
+              padding: 0.08rem 0.13rem;
+              margin: 0 0.15rem 0 0;
+              background-color: #f3f4f8;
+              border: 1px solid #ced4e1;
+              border-radius: 0.5rem;
+              color: #313132;
+              line-height: 1.1;
+              &.is-active {
+                background-color: #edf2ff;
+                border-color: #8eb0ff;
+                color: @theme-color;
+              }
+            }
+          }
+          .el-tabs__nav-next,
+          .el-tabs__nav-prev {
+            line-height: 24px;
+          }
+        }
       }
     }
     .el-table {
@@ -1470,13 +1534,49 @@ export default defineComponent({
       border: 1px solid #c6cddc;
       tr {
         background-color: transparent;
+        &:hover {
+          td {
+            background-color: #f3f6ff;
+          }
+        }
         th {
           word-break: break-word;
           padding: 0.18rem 0;
           background-color: @theme-color;
           font-size: inherit;
           border: 0;
+          &.ascending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #fff;
+                  }
+                  &.descending {
+                    border-top-color: #d0dcf9;
+                  }
+                }
+              }
+            }
+          }
+          &.descending {
+            .cell {
+              .caret-wrapper {
+                .sort-caret {
+                  &.ascending {
+                    border-bottom-color: #d0dcf9;
+                  }
+                  &.descending {
+                    border-top-color: #fff;
+                  }
+                }
+              }
+            }
+          }
           .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 0;
             color: @white-color;
             word-break: break-word;
@@ -1485,6 +1585,22 @@ export default defineComponent({
             line-height: 1.1;
             @media screen and (max-width: 540px) {
               font-size: 12px;
+            }
+            .el-table__column-filter-trigger {
+              i {
+                margin: 0 0 0 4px;
+                color: @white-color;
+              }
+            }
+            .caret-wrapper {
+              .sort-caret {
+                &.ascending {
+                  border-bottom-color: #d0dcf9;
+                }
+                &.descending {
+                  border-top-color: #d0dcf9;
+                }
+              }
             }
           }
         }
@@ -1754,12 +1870,27 @@ export default defineComponent({
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
+          width: 24px;
+          min-width: 24px;
+          height: 24px;
+          line-height: 24px;
           background-color: #f9fafb;
           border-color: @border-color;
           color: #606060;
         }
         &:not(.disabled):hover {
         }
+      }
+      .el-pager li {
+        color: #606060;
+      }
+      .el-select {
+        width: 100px;
+      }
+      .el-input,
+      .el-select__wrapper {
+        min-height: 24px;
+        height: 24px;
       }
     }
   }

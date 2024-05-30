@@ -117,7 +117,8 @@ export default {
 }
 
 .font-bold {
-  font-family: "HELVETICA-bold";
+  font-weight: bold;
+  // font-family: "HELVETICA-bold";
 }
 
 .weight-3 {
@@ -260,6 +261,19 @@ export default {
   }
 }
 
+.uptime-ul {
+  margin: 0 0.12rem 0 0;
+  li {
+    width: 0.05rem;
+    height: 0.16rem;
+    margin: 0 0.03rem 0 0;
+    background-color: #7c889b;
+    &.active {
+      background-color: @theme-color;
+    }
+  }
+}
+
 .el-loading-spinner {
   position: relative !important;
   display: flex;
@@ -293,23 +307,25 @@ export default {
   .el-select-dropdown__wrap,
   .el-select-dropdown__list,
   .el-select-dropdown__item {
-    font-size: 16px;
-    @media screen and (min-width: 2160px) {
-      font-size: 8px;
-    }
-    @media screen and (max-width: 768px) {
-      font-size: 24px;
-    }
-    @media screen and (max-width: 600px) {
-      font-size: 36px;
-    }
-    @media screen and (max-width: 540px) {
-      font-size: 48px;
-    }
+    font-size: 0.14rem;
     li {
       @media screen and (max-width: 768px) {
         height: auto;
-        line-height: 2;
+        line-height: 1.2;
+      }
+    }
+  }
+  .el-menu--vertical {
+    .el-menu {
+      .el-menu-item {
+        height: auto;
+        padding: 0.15rem 0.2rem;
+        line-height: 1;
+        &.is-active,
+        &:hover {
+          background-color: #edf2ff;
+          color: @theme-color;
+        }
       }
     }
   }

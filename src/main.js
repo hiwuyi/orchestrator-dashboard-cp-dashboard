@@ -16,6 +16,7 @@ import qs from 'qs'
 const app = createApp(App)
 app.config.globalProperties.$commonFun = commonFun
 app.config.globalProperties.$explorerLink = process.env.VUE_APP_ATOMBLOCKURL
+app.config.globalProperties.$proximaLink = process.env.VUE_APP_PROXIMALINK
 app.config.globalProperties.$Qs = qs
 app.use(ElementPlus, {
     locale: en,

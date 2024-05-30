@@ -29,7 +29,7 @@
                   <span class="font-14">Overview Data</span>
                 </template>
                 <el-row :gutter="18">
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -39,7 +39,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active ECP numbers</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -49,7 +49,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -58,7 +58,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Applications</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -67,7 +67,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -76,7 +76,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -241,7 +241,7 @@
               </el-tab-pane>
               <el-tab-pane name="Swan">
                 <template #label>
-                  <span class="font-14">Swan Proxima Chain</span>
+                  <span class="font-14">Swan Chain</span>
                 </template>
                 <el-row :gutter="18">
                   <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
@@ -369,46 +369,58 @@
           </div>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-          <div class="module-container font-16">
+          <div class="module-container font-14">
             <div class="title flex-row space-between">
               <div class="flex-row">
                 <i class="icon icon-provider"></i>
                 <span class="font-16 weight-4">FCP List</span>
               </div>
-              <router-link :to="{name: 'rankingsFCP'}" class="font-13 flex-row">more &nbsp;
+              <router-link :to="{name: 'rankingsFCP'}" class="font-12 flex-row">more &nbsp;
                 <small>&gt;&gt;</small>
               </router-link>
             </div>
             <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-              <el-table-column type="index" width="70">
+              <el-table-column type="index" min-width="70">
                 <template #header>
-                  <div class="font-18 weight-4">Ranking</div>
+                  <div class="font-14 weight-4">Ranking</div>
                 </template>
               </el-table-column>
               <el-table-column prop="name" min-width="120">
                 <template #header>
-                  <div class="font-18 weight-4">Name</div>
+                  <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
                   <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="computer_provider.active_deployment" sortable min-width="170">
+              <el-table-column prop="computer_provider.active_deployment" sortable min-width="150">
                 <template #header>
-                  <div class="font-18 weight-4">Active deployment</div>
+                  <div class="font-14 weight-4">Active deployment</div>
                 </template>
               </el-table-column>
               <el-table-column prop="computer_provider.score" width="80">
                 <template #header>
-                  <div class="font-18 weight-4">Score</div>
+                  <div class="font-14 weight-4">Score</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="uptime" width="80">
+              <el-table-column prop="uptime" min-width="130">
                 <template #header>
-                  <div class="font-18 weight-4">Uptime</div>
+                  <div class="font-14 weight-4">Uptime</div>
                 </template>
                 <template #default="scope">
-                  <div>
+                  <div class="flex-row center nowrap">
+                    <ul class="flex-row uptime-ul">
+                      <li :class="{'active': scope.row.uptime >= 0.1}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.2}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.3}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.4}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.5}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.6}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.7}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.8}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.9}"></li>
+                      <li :class="{'active': scope.row.uptime >= 1}"></li>
+                    </ul>
                     {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
                   </div>
                 </template>
@@ -417,26 +429,26 @@
           </div>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
-          <div class="module-container font-16">
+          <div class="module-container font-14">
             <div class="title flex-row space-between">
               <div class="flex-row">
                 <i class="icon icon-provider"></i>
                 <span class="font-16 weight-4">ECP List</span>
               </div>
-              <router-link :to="{name: 'rankingsECP'}" class="font-13 flex-row">more &nbsp;
+              <router-link :to="{name: 'rankingsECP'}" class="font-12 flex-row">more &nbsp;
                 <small>&gt;&gt;</small>
               </router-link>
             </div>
             <!-- providerBody.ubiTableData -->
             <el-table :data="providersData" empty-text="No Data" v-loading="providersTableLoad">
-              <el-table-column type="index" width="70">
+              <el-table-column type="index" min-width="70">
                 <template #header>
-                  <div class="font-18 weight-4">Ranking</div>
+                  <div class="font-14 weight-4">Ranking</div>
                 </template>
               </el-table-column>
               <el-table-column prop="name" min-width="120">
                 <template #header>
-                  <div class="font-18 weight-4">Name</div>
+                  <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
                   <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
@@ -448,26 +460,28 @@
                       { text: 'Offline', value: 'Offline' }
                     ]" filter-placement="bottom-end" :filter-multiple="false">
                 <template #header>
-                  <div class="font-18 weight-4">status</div>
+                  <div class="font-14 weight-4">status</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="task">
+              <el-table-column prop="uptime" min-width="150">
                 <template #header>
-                  <div class="font-18 weight-4">Total Task</div>
+                  <div class="font-14 weight-4">Task Completed</div>
                 </template>
                 <template #default="scope">
-                  <div>
-                    {{scope.row.task?scope.row.task.total : ''}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="task" width="120">
-                <template #header>
-                  <div class="font-18 weight-4">Completed(%)</div>
-                </template>
-                <template #default="scope">
-                  <div>
-                    {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+                  <div class="flex-row center nowrap">
+                    <ul class="flex-row uptime-ul">
+                      <li :class="{'active': scope.row.uptime >= 0.1}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.2}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.3}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.4}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.5}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.6}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.7}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.8}"></li>
+                      <li :class="{'active': scope.row.uptime >= 0.9}"></li>
+                      <li :class="{'active': scope.row.uptime >= 1}"></li>
+                    </ul>
+                    {{scope.row.task?scope.row.task.total : '-'}}&nbsp;/&nbsp;{{system.$commonFun.unifyNumber(scope.row.uptime)}}%
                   </div>
                 </template>
               </el-table-column>
@@ -488,6 +502,7 @@ import {
 } from '@element-plus/icons-vue'
 import * as echarts from "echarts"
 import worldGeoJSON from '@/assets/js/world.json'
+import gpuJSON from '@/assets/js/gpuData.json'
 
 export default defineComponent({
   components: {
@@ -806,7 +821,7 @@ export default defineComponent({
           // show: false,
           padding: 5,
           textStyle: {
-            fontSize: 8,
+            fontSize: 12,
             lineHeight: 10,
             align: "left"
           }
@@ -898,17 +913,17 @@ export default defineComponent({
             },
             data: [
               {
-                "city": "阿尔及利亚",
+                "city": "Test",
                 "value": [
-                  -178.535,
-                  35.8639
+                  -88.535,
+                  45.8639
                 ]
               },
               {
-                "city": "阿尔及利亚111",
+                "city": "Test001",
                 "value": [
                   78.535,
-                  -35.8639
+                  35.8639
                 ]
               }],
             roam: true,
@@ -959,11 +974,15 @@ export default defineComponent({
         ]
       })
     }
-    const changetype = () => {
+    const changetype = async () => {
       const machart_resource = echarts.init(document.getElementById("chart-Resource"));
       const machart_fog = echarts.init(document.getElementById("chart-Fog"));
       const machart_gpu = echarts.init(document.getElementById("chart-GPU"));
       const machart_edge = echarts.init(document.getElementById("chart-Edge"));
+
+      const gpuData = await system.$commonFun.dataGPU(gpuJSON)
+      // console.log(gpuData)
+
       const option1 = {
         tooltip: {
           trigger: 'axis',
@@ -1019,6 +1038,17 @@ export default defineComponent({
         xAxis: {
           type: 'category',
           boundaryGap: false,
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            // interval: 6,
+            color: '#7b879a',
+            formatter: function (value) {
+              // 使用字符串的 replace 方法将空格替换为换行符
+              return value.split(' ').join('\n');
+            }
+          },
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
@@ -1089,7 +1119,7 @@ export default defineComponent({
         },
         grid: {
           left: '0',
-          right: '4%',
+          right: '0',
           bottom: '3%',
           containLabel: true
         },
@@ -1119,6 +1149,17 @@ export default defineComponent({
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             boundaryGap: false,
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              // interval: 6,
+              color: '#7b879a',
+              formatter: function (value) {
+                // 使用字符串的 replace 方法将空格替换为换行符
+                return value.split(' ').join('\n');
+              }
+            },
           }
         ],
         yAxis: [
@@ -1135,12 +1176,11 @@ export default defineComponent({
           },
           {
             type: 'value',
-            // name: 'Changes',
-            // min: 0,
-            // max: 24,
-            // interval: 8,
+            min: -300,
+            max: 300,
+            minInterval: 300,
             // axisLabel: {
-            //   formatter: '{value}'
+            //   formatter: '{value} °C'
             // }
           }
         ],
@@ -1148,6 +1188,7 @@ export default defineComponent({
           {
             name: 'FCP',
             type: 'line',
+            stack: 'Total',
             smooth: true,
             showSymbol: false,
             itemStyle: {
@@ -1170,6 +1211,7 @@ export default defineComponent({
           {
             name: 'Delta',
             type: 'line',
+            stack: 'Total',
             smooth: true,
             showSymbol: false,
             // tooltip: {
@@ -1178,7 +1220,7 @@ export default defineComponent({
             //   }
             // },
             color: '#52ce7c',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            data: [60, 35, 85, 27, 22, 72, 25]
           }
         ]
       }
@@ -1213,7 +1255,7 @@ export default defineComponent({
               // 遍历每个系列的数据
               var color = item.color.colorStops ? item.color.colorStops[0].color : item.color; // 获取数据点的颜色
               let colorDot = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + color + ';"></span>';
-              result += colorDot + item.seriesName + ' 23Used 26Free' + '<br/>'; // 系列名和对应的值
+              result += colorDot + item.seriesName + ' ' + item.value + 'Used 26Free' + '<br/>'; // 系列名和对应的值
             });
             return result;
           }
@@ -1248,10 +1290,38 @@ export default defineComponent({
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            interval: 6,
+            color: '#7b879a',
+            formatter: function (value) {
+              // 使用字符串的 replace 方法将空格替换为换行符
+              return value.split(' ').join('\n');
+            }
+          },
+          data: gpuData.timeArr
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          max: 100,
+          min: 0,
+          axisLine: {
+            onZero: true
+          },
+          axisLabel: {
+            fontSize: 13,
+            fontWeight: 500,
+            color: '#000'
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: '#EAEAEA',
+              width: 2
+            }
+          }
         },
         series: [
           {
@@ -1260,7 +1330,7 @@ export default defineComponent({
             showSymbol: false,
             color: '#93c605',
             smooth: true,
-            data: [150, 232, 201, 154, 190, 330, 410]
+            data: gpuData.datum
           }
         ]
       }
@@ -1297,7 +1367,7 @@ export default defineComponent({
         },
         grid: {
           left: '0',
-          right: '4%',
+          right: '0',
           bottom: '3%',
           containLabel: true
         },
@@ -1327,6 +1397,17 @@ export default defineComponent({
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             boundaryGap: false,
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              // interval: 6,
+              color: '#7b879a',
+              formatter: function (value) {
+                // 使用字符串的 replace 方法将空格替换为换行符
+                return value.split(' ').join('\n');
+              }
+            },
           }
         ],
         yAxis: [
@@ -1343,12 +1424,11 @@ export default defineComponent({
           },
           {
             type: 'value',
-            // name: 'Changes',
-            // min: 0,
-            // max: 150,
-            // interval: 75,
+            min: -300,
+            max: 300,
+            minInterval: 300,
             // axisLabel: {
-            //   formatter: '{value}'
+            //   formatter: '{value} °C'
             // }
           }
         ],
@@ -1394,6 +1474,25 @@ export default defineComponent({
       machart_fog.setOption(option2);
       machart_gpu.setOption(option3);
       machart_edge.setOption(option4);
+
+      if (typeof ResizeObserver !== 'undefined') {
+        let observer = new ResizeObserver(entries => {
+          for (let entry of entries) {
+            const width = entry.contentRect.width;
+            const height = entry.contentRect.height;
+            // console.log(`Element resized to width: ${width}, height: ${height}`);
+            machart_resource.resize();
+            machart_fog.resize();
+            machart_gpu.resize();
+            machart_edge.resize();
+          }
+        });
+
+        let element = document.getElementById('main-container');
+        observer.observe(element);
+      } else {
+        console.log('ResizeObserver is not supported in this browser.');
+      }
       window.addEventListener("resize", function () {
         machart_resource.resize();
         machart_fog.resize();
@@ -1446,7 +1545,8 @@ export default defineComponent({
     font-size: 14px;
   }
   .header-title {
-    padding: 0.1rem 0;
+    padding: 0.1rem 0 0.15rem;
+    margin: 0 0 0.07rem;
     border-bottom: 1px solid #858586;
     line-height: 1.15;
     h1 {
@@ -1496,7 +1596,7 @@ export default defineComponent({
     }
     .el-row {
       .el-col {
-        margin: 0.22rem 0;
+        margin: 0.23rem 0;
         &.flex-row {
           display: flex;
         }
@@ -1676,6 +1776,11 @@ export default defineComponent({
           border: 1px solid #e3e7ee;
           tr {
             background-color: transparent;
+            &:hover {
+              td {
+                background-color: #f3f6ff;
+              }
+            }
             th {
               word-break: break-word;
               padding: 0.18rem 0;
@@ -2356,12 +2461,27 @@ export default defineComponent({
         &:not(.disabled).active,
         &:not(.disabled):hover,
         &.is-active {
+          width: 24px;
+          min-width: 24px;
+          height: 24px;
+          line-height: 24px;
           background-color: #f9fafb;
           border-color: @border-color;
           color: #606060;
         }
         &:not(.disabled):hover {
         }
+      }
+      .el-pager li {
+        color: #606060;
+      }
+      .el-select {
+        width: 100px;
+      }
+      .el-input,
+      .el-select__wrapper {
+        min-height: 24px;
+        height: 24px;
       }
     }
   }

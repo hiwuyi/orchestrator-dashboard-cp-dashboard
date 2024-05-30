@@ -65,7 +65,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const activeIndex = ref('overview')
-    const isCollapse = ref(true)
+    const isCollapse = ref(false)
 
     const handleSelect = (key, keyPath) => {
       // console.log('handleOpen', key)
@@ -85,7 +85,7 @@ export default defineComponent({
       else if (nameMenu.indexOf('rankingsECP') > -1 || nameMenu.indexOf('rankings/ECP') > -1) activeIndex.value = 'rankings-ecp'
       else if (nameMenu.indexOf('aarFCP') > -1 || nameMenu.indexOf('aar/FCP') > -1) activeIndex.value = 'aar-fcp'
       else if (nameMenu.indexOf('aarECP') > -1 || nameMenu.indexOf('aar/ECP') > -1) activeIndex.value = 'aar-ecp'
-      else if (nameMenu.indexOf('accountInfo') > -1) activeIndex.value = 'accountInfo'
+      else if (nameMenu.indexOf('accountInfo') > -1 || nameMenu.indexOf('cp-profile') > -1) activeIndex.value = 'accountInfo'
       else if (nameMenu.indexOf('resource') > -1) activeIndex.value = 'resource'
       else activeIndex.value = nameMenu
 
@@ -130,11 +130,11 @@ export default defineComponent({
       background-size: 100%;
     }
     &.icon-Rankings-fcp {
-      background: url(../assets/images/menu-02.png) no-repeat;
+      background: url(../assets/images/menu-03.png) no-repeat;
       background-size: 100%;
     }
     &.icon-Rankings-ecp {
-      background: url(../assets/images/menu-03.png) no-repeat;
+      background: url(../assets/images/menu-02.png) no-repeat;
       background-size: 100%;
     }
     &.icon-AccountInfo {
@@ -185,6 +185,12 @@ export default defineComponent({
         }
       }
       .el-sub-menu {
+        border-radius: 0.12rem;
+        &.is-active {
+          background-color: #edf2ff;
+          border-color: @theme-color;
+          color: @theme-color;
+        }
         .el-tooltip__trigger {
           position: relative;
           display: flex;
@@ -222,7 +228,7 @@ export default defineComponent({
       .el-menu {
         margin: -0.1rem 0 0.1rem;
         .el-menu-item {
-          margin: 0 0 0 0.4rem;
+          margin: 0 0 0 0.24rem;
         }
       }
       .el-sub-menu__icon-arrow {
