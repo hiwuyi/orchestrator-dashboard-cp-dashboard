@@ -101,7 +101,7 @@
               <div class="font-14 weight-4">Region</div>
             </template>
           </el-table-column>
-          <el-table-column prop="uptime" min-width="150">
+          <el-table-column prop="uptime" min-width="130">
             <template #header>
               <div class="font-14 weight-4">Task Completed</div>
             </template>

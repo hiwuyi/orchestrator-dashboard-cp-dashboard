@@ -8,12 +8,12 @@
         </div>
       </template>
 
-      <div class="dialog-content font-18">
+      <div class="dialog-content font-14">
         <div v-if="props.list.type === 'claimAccount'">
-          <el-form ref="ruleAddRef" :model="ruleForm" :rules="rules" label-position="top" class="demo-ruleForm font-18" status-icon @submit.native.prevent>
+          <el-form ref="ruleAddRef" :model="ruleForm" :rules="rules" label-position="top" class="demo-ruleForm font-14" status-icon @submit.native.prevent>
             <el-form-item prop="owner_address">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">Owner Address</div>
+                <div class="flex-row font-16 text-capitalize">Owner Address</div>
               </template>
               <label class="label">
                 <div class="flex-row">
@@ -23,7 +23,7 @@
             </el-form-item>
             <el-form-item prop="name">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">Account Name
+                <div class="flex-row font-16 text-capitalize">Account Name
                   <span class="red">*</span>
                 </div>
               </template>
@@ -35,7 +35,7 @@
             </el-form-item>
             <el-form-item prop="email">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">Email Address
+                <div class="flex-row font-16 text-capitalize">Email Address
                   <span class="red">*</span>
                 </div>
               </template>
@@ -47,19 +47,19 @@
             </el-form-item>
             <el-form-item prop="message">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">message</div>
+                <div class="flex-row font-16 text-capitalize">message</div>
               </template>
-              <div class="server font-18">
+              <div class="server font-14">
                 <!--  {{sortanow}} -->
                 <p class="flex-row center">Signing message for CP Account {{metaAddress}} on Swan Provider Dashboard at {{sortanow}}</p>
               </div>
             </el-form-item>
             <el-form-item prop="sign_code">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">Sign code</div>
+                <div class="flex-row font-16 text-capitalize">Sign code</div>
               </template>
               <div class="flex-row nowrap copy-style width">
-                <div class="server sign-code font-18">{{'computing-provider wallet sign Owner Address'}}{{props.list.owner_address}}</div>
+                <div class="server sign-code font-14">{{'computing-provider wallet sign Owner Address'}}{{props.list.owner_address}}</div>
                 <svg @click="system.$commonFun.copyContent('computing-provider wallet sign XXXX XXXXXXXXXXXXXXXXXXXXXXXX', 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
                   <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
@@ -68,7 +68,7 @@
             </el-form-item>
             <el-form-item prop="signature">
               <template #label>
-                <div class="flex-row font-18 text-capitalize">signature
+                <div class="flex-row font-16 text-capitalize">signature
                   <span class="red">*</span>
                 </div>
               </template>
@@ -80,7 +80,7 @@
             </el-form-item>
           </el-form>
         </div>
-        <el-row class="font-18 note" v-else v-loading="ruleForm.show">
+        <el-row class="font-14 note" v-else v-loading="ruleForm.show">
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
             <p>Available Balance:</p>
           </el-col>
@@ -111,7 +111,7 @@
         </el-row>
       </div>
       <template #footer>
-        <div class="dialog-footer flex-row flex-end font-18">
+        <div class="dialog-footer flex-row flex-end font-14">
           <el-button @click="closeHandle()">Cancel</el-button>
           <el-button @click="cpCollateral" :disabled="!ruleForm.amount" type="primary">Submit</el-button>
         </div>
@@ -335,14 +335,15 @@ export default defineComponent({
         }
         .el-form {
           width: 100%;
-          padding: 0.1rem 0 0;
+          padding: 0;
           .el-form-item {
-            margin: 0 0 15px;
+            margin: 0 0 0.15rem;
             --font-size: inherit;
             &:last-child {
-              margin-bottom: 10px;
+              margin-bottom: 0.1rem;
             }
             .el-form-item__label {
+              margin: 0 0 0.04rem;
               &:before {
                 display: none;
               }
@@ -450,6 +451,10 @@ export default defineComponent({
     .el-dialog__footer {
       padding: 0;
       .dialog-footer {
+        .el-button {
+          font-family: inherit;
+          font-size: inherit;
+        }
       }
     }
   }

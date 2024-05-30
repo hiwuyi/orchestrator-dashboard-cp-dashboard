@@ -1125,7 +1125,7 @@ export default defineComponent({
         },
         legend: {
           data: ['FCP', 'Delta'],
-          right: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          left: document.documentElement.clientWidth >= 1280 ? '40%' : 'auto',
           top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
           icon: 'circle',
           itemWidth: 10,
@@ -1373,7 +1373,7 @@ export default defineComponent({
         },
         legend: {
           data: ['ECP', 'Delta'],
-          right: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
+          left: document.documentElement.clientWidth >= 1280 ? '40%' : 'auto',
           top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
           icon: 'circle',
           itemWidth: 10,

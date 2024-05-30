@@ -472,6 +472,18 @@ export default defineComponent({
         ]
       }
       machart_resource.setOption(option1);
+      if (typeof ResizeObserver !== 'undefined') {
+        let observer = new ResizeObserver(entries => {
+          for (let entry of entries) {
+            machart_resource.resize();
+          }
+        });
+
+        let element = document.getElementById('resource-container');
+        observer.observe(element);
+      } else {
+        console.log('ResizeObserver is not supported in this browser.');
+      }
       window.addEventListener("resize", function () {
         machart_resource.resize();
       })
@@ -570,6 +582,21 @@ export default defineComponent({
       machart_cpu.setOption(option3);
       machart_memory.setOption(option4);
       machart_storage.setOption(option5);
+      if (typeof ResizeObserver !== 'undefined') {
+        let observer = new ResizeObserver(entries => {
+          for (let entry of entries) {
+            machart_gpu.resize();
+            machart_cpu.resize();
+            machart_memory.resize();
+            machart_storage.resize();
+          }
+        });
+
+        let element = document.getElementById('resource-container');
+        observer.observe(element);
+      } else {
+        console.log('ResizeObserver is not supported in this browser.');
+      }
       window.addEventListener("resize", function () {
         machart_gpu.resize();
         machart_cpu.resize();

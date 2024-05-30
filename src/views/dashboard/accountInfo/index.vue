@@ -1076,6 +1076,19 @@ export default defineComponent({
       }
       machart_job.setOption(option1);
       machart_reward.setOption(option2);
+      if (typeof ResizeObserver !== 'undefined') {
+        let observer = new ResizeObserver(entries => {
+          for (let entry of entries) {
+            machart_job.resize();
+            machart_reward.resize();
+          }
+        });
+
+        let element = document.getElementById('cp-container');
+        observer.observe(element);
+      } else {
+        console.log('ResizeObserver is not supported in this browser.');
+      }
       window.addEventListener("resize", function () {
         machart_job.resize();
         machart_reward.resize();
