@@ -1,57 +1,62 @@
 <template>
-  <div class="aside">
-    <div @click="isCollapse = !isCollapse" class="flex-row center collapse-button" :class="{'flex-end': !isCollapse}">
+  <div class="aside flex-row">
+    <div @click="isCollapse = !isCollapse" class="flex-row center collapse-button" :class="{'transform': isCollapse}">
       <i class="icon icon-collapse"></i>
     </div>
-    <el-menu :default-active="activeIndex" :collapse="isCollapse" :collapse-transition="false" class="el-menu-vertical-demo" @select="handleSelect" background-color="#fff" text-color="#000">
-      <el-menu-item index="overview">
-        <i class="icon icon-Overview"></i>
-        <template #title>
-          <span class="font-16">Overview</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="rankings-fcp">
-        <i class="icon icon-Rankings-fcp"></i>
-        <template #title>
-          <span class="font-16">FCP List</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="rankings-ecp">
-        <i class="icon icon-Rankings-ecp"></i>
-        <template #title>
-          <span class="font-16">ECP List</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="accountInfo" v-if="metaAddress && accessToken">
-        <i class="icon icon-AccountInfo"></i>
-        <template #title>
-          <span class="font-16">CP Profile</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="resource">
-        <i class="icon icon-Resource"></i>
-        <template #title>
-          <span class="font-16">Resource</span>
-        </template>
-      </el-menu-item>
-      <el-sub-menu index="aar">
-        <template #title>
-          <i class="icon icon-AAR"></i>
-          <span class="font-16">Atom Accelerator Race
-            <i class="icon icon-new"></i>
-          </span>
-        </template>
-        <el-menu-item index="aar-fcp">
-          <span class="font-16">FCP Ranking</span>
+    <div class="menu">
+      <el-menu :default-active="activeIndex" :collapse="isCollapse" :collapse-transition="false" class="el-menu-vertical-demo" @select="handleSelect" background-color="#fff" text-color="#000">
+        <el-menu-item index="overview">
+          <i class="icon icon-Overview"></i>
+          <template #title>
+            <span class="font-16">Overview</span>
+          </template>
         </el-menu-item>
-        <el-menu-item index="aar-ecp">
-          <span class="font-16">ECP Ranking</span>
+        <el-menu-item index="rankings-fcp">
+          <i class="icon icon-Rankings-fcp"></i>
+          <template #title>
+            <span class="font-16">FCP List</span>
+          </template>
         </el-menu-item>
-      </el-sub-menu>
-    </el-menu>
+        <el-menu-item index="rankings-ecp">
+          <i class="icon icon-Rankings-ecp"></i>
+          <template #title>
+            <span class="font-16">ECP List</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="accountInfo" v-if="metaAddress && accessToken">
+          <i class="icon icon-AccountInfo"></i>
+          <template #title>
+            <span class="font-16">CP Profile</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="resource">
+          <i class="icon icon-Resource"></i>
+          <template #title>
+            <span class="font-16">Resource</span>
+          </template>
+        </el-menu-item>
+        <el-sub-menu index="aar">
+          <template #title>
+            <i class="icon icon-AAR"></i>
+            <span class="font-16">Atom Accelerator Race
+              <i class="icon icon-new"></i>
+            </span>
+          </template>
+          <el-menu-item index="aar-fcp">
+            <span class="font-16">FCP Ranking</span>
+          </el-menu-item>
+          <el-menu-item index="aar-ecp">
+            <span class="font-16">ECP Ranking</span>
+          </el-menu-item>
+        </el-sub-menu>
+      </el-menu>
+    </div>
+
+    <v-foot v-if="!isCollapse"></v-foot>
   </div>
 </template>
 <script>
+import vFoot from './Footer.vue'
 import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
@@ -111,17 +116,21 @@ export default defineComponent({
       handleSelect
     }
   },
-  components: {}
+  components: { vFoot }
 })
 </script>
 <style  lang="less" scoped>
 .aside {
-  position: relative;
+  height: 100%;
+  align-items: start;
+  align-content: space-between;
   line-height: 1.2;
   .icon {
     width: 0.24rem;
     height: 0.24rem;
     &.icon-collapse {
+      width: 0.33rem;
+      height: 0.33rem;
       background: url(../assets/images/menu-collapse.png) no-repeat;
       background-size: 100%;
     }
@@ -159,81 +168,90 @@ export default defineComponent({
     }
   }
   .collapse-button {
-    margin: 0.1rem 0 0.4rem;
+    position: absolute;
+    right: -0.15rem;
+    top: 1.25rem;
     cursor: pointer;
+    z-index: 99;
+    &.transform {
+      transform: rotate(180deg);
+    }
   }
-  :deep(.el-menu) {
-    border: 0;
-    &.el-menu--collapse {
-      width: 0.45rem;
-      .el-menu-item,
-      .el-sub-menu .el-sub-menu__title {
-        padding: 0.09rem 0;
-        border: 0;
-        border-radius: 0.12rem;
-        // span {
-        //   display: none;
-        // }
-        // .icon {
-        //   margin: auto;
-        // }
-        .el-tooltip__trigger {
-          position: relative;
-          display: flex;
-          padding: 0;
-          justify-content: center;
+  .menu {
+    width: 100%;
+    :deep(.el-menu) {
+      border: 0;
+      &.el-menu--collapse {
+        width: 0.45rem;
+        .el-menu-item,
+        .el-sub-menu .el-sub-menu__title {
+          padding: 0.09rem 0;
+          border: 0;
+          border-radius: 0.12rem;
+          // span {
+          //   display: none;
+          // }
+          // .icon {
+          //   margin: auto;
+          // }
+          .el-tooltip__trigger {
+            position: relative;
+            display: flex;
+            padding: 0;
+            justify-content: center;
+          }
+        }
+        .el-sub-menu {
+          border-radius: 0.12rem;
+          &.is-active {
+            background-color: #edf2ff;
+            border-color: @theme-color;
+            color: @theme-color;
+          }
+          .el-tooltip__trigger {
+            position: relative;
+            display: flex;
+            justify-content: center;
+          }
+          .el-sub-menu__icon-arrow,
+          span {
+            display: none;
+          }
         }
       }
-      .el-sub-menu {
-        border-radius: 0.12rem;
-        &.is-active {
+      .el-menu-item,
+      .el-sub-menu .el-sub-menu__title {
+        // max-width: 160px;
+        height: auto;
+        padding: 0.1rem 0.12rem;
+        margin: 0 0 0.18rem;
+        border-left: 0.05rem solid transparent;
+        border-top-right-radius: 0.12rem;
+        border-bottom-right-radius: 0.12rem;
+        white-space: normal;
+        line-height: 1;
+        &.is-active,
+        &:hover {
           background-color: #edf2ff;
           border-color: @theme-color;
           color: @theme-color;
         }
-        .el-tooltip__trigger {
-          position: relative;
-          display: flex;
-          justify-content: center;
-        }
-        .el-sub-menu__icon-arrow,
         span {
-          display: none;
+          width: calc(100% - 0.33rem - 7px);
+          margin: 0 0 0 0.1rem;
         }
       }
-    }
-    .el-menu-item,
-    .el-sub-menu .el-sub-menu__title {
-      max-width: 160px;
-      height: auto;
-      padding: 0.1rem 0.12rem;
-      margin: 0 0 0.18rem;
-      border-left: 0.05rem solid transparent;
-      border-top-right-radius: 0.12rem;
-      border-bottom-right-radius: 0.12rem;
-      white-space: normal;
-      line-height: 1;
-      &.is-active,
-      &:hover {
-        background-color: #edf2ff;
-        border-color: @theme-color;
-        color: @theme-color;
-      }
-      span {
-        width: calc(100% - 0.33rem - 7px);
-        margin: 0 0 0 0.1rem;
-      }
-    }
-    .el-sub-menu {
-      .el-menu {
-        margin: -0.1rem 0 0.1rem;
-        .el-menu-item {
-          margin: 0 0 0 0.24rem;
+      .el-sub-menu {
+        .el-menu {
+          margin: -0.1rem 0 0.1rem;
+          .el-menu-item {
+            margin: 0 0 0 0.24rem;
+          }
         }
-      }
-      .el-sub-menu__icon-arrow {
-        right: 0;
-        font-size: 16px;
+        .el-sub-menu__icon-arrow {
+          right: 0.05rem;
+          font-size: 16px;
+        }
       }
     }
   }

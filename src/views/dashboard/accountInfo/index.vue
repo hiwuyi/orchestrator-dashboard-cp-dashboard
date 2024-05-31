@@ -19,7 +19,7 @@
                     <p>CP Contract Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{system.$commonFun.replaceFormat(pagin.total)}}</p>
+                    <p>{{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p>Account type:</p>
@@ -32,12 +32,14 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
-                      {{system.$commonFun.hiddAddress(ringGraphData.data.cpu_total)}}
-                      <svg @click="system.$commonFun.copyContent(ringGraphData.data.cpu_total, 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
-                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
+                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                        <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                          fill="#3d3d3d" p-id="6468"></path>
+                        <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                          fill="#3d3d3d" p-id="6469"></path>
                       </svg>
-                      <svg @click="system.$commonFun.goLink(`${system.$explorerLink}${ringGraphData.data.cpu_total}`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="16" height="16">
+                      <svg @click="system.$commonFun.goLink(`${system.$explorerLink}0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="16" height="16">
                         <path d="M892 928.1H134c-19.9 0-36-16.1-36-36v-758c0-19.9 16.1-36 36-36h314.1c19.9 0 36 16.1 36 36s-16.1 36-36 36H170v686h686V579.6c0-19.9 16.1-36 36-36s36 16.1 36 36v312.5c0 19.9-16.1 36-36 36z" fill="#2c2c2c" p-id="2409"></path>
                         <path d="M927.9 131.6v-0.5c-0.1-1.7-0.4-3.3-0.7-4.9 0-0.1 0-0.2-0.1-0.3-0.4-1.7-0.9-3.3-1.5-4.9v-0.1c-0.6-1.6-1.4-3.1-2.2-4.6 0-0.1-0.1-0.1-0.1-0.2-0.8-1.4-1.7-2.8-2.7-4.1-0.1-0.1-0.2-0.3-0.3-0.4-0.5-0.6-0.9-1.1-1.4-1.7 0-0.1-0.1-0.1-0.1-0.2-0.5-0.6-1-1.1-1.6-1.6l-0.4-0.4c-0.5-0.5-1.1-1-1.6-1.5l-0.1-0.1c-0.6-0.5-1.2-1-1.9-1.4-0.1-0.1-0.3-0.2-0.4-0.3-1.4-1-2.8-1.8-4.3-2.6l-0.1-0.1c-1.6-0.8-3.2-1.5-4.9-2-1.6-0.5-3.3-1-5-1.2-0.1 0-0.2 0-0.3-0.1l-2.4-0.3h-0.3c-0.7-0.1-1.3-0.1-2-0.1H640.1c-19.9 0-36 16.1-36 36s16.1 36 36 36h165L487.6 487.6c-14.1 14.1-14.1 36.9 0 50.9 7 7 16.2 10.5 25.5 10.5 9.2 0 18.4-3.5 25.5-10.5L856 221v162.8c0 19.9 16.1 36 36 36s36-16.1 36-36V134.1c0-0.8 0-1.7-0.1-2.5z"
                           fill="#2c2c2c" p-id="2410"></path>
@@ -48,11 +50,13 @@
                     <p>Worker Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.memory_total, 'Copied')">
-                      {{system.$commonFun.hiddAddress(ringGraphData.data.memory_total)}}
-                      <svg data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
-                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
+                    <div class="flex-row center copy-style">
+                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                        <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                          fill="#3d3d3d" p-id="6468"></path>
+                        <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                          fill="#3d3d3d" p-id="6469"></path>
                       </svg>
                     </div>
                   </el-col>
@@ -60,11 +64,13 @@
                     <p>Benefciary Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(ringGraphData.data.gpu_total, 'Copied')">
-                      {{system.$commonFun.hiddAddress(ringGraphData.data.gpu_total)}}
-                      <svg data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
-                        <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
+                    <div class="flex-row center copy-style">
+                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                        <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                          fill="#3d3d3d" p-id="6468"></path>
+                        <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                          fill="#3d3d3d" p-id="6469"></path>
                       </svg>
                     </div>
                   </el-col>
@@ -220,6 +226,10 @@
                 <template #header>
                   <div class="font-14 weight-4">status</div>
                 </template>
+                <template #default="scope">
+                  <div v-if="scope.row.computer_provider.status" :class="{'text-capitalize': true, 'color-available':scope.row.computer_provider.status.toLowerCase() === 'available', 'color-occupied':scope.row.computer_provider.status.toLowerCase() === 'occupied'}">{{scope.row.computer_provider.status}}</div>
+                  <span v-else>-</span>
+                </template>
               </el-table-column>
               <el-table-column prop="gpu_list" min-width="140">
                 <template #header>
@@ -245,10 +255,10 @@
                   <div class="font-14 weight-4">Completed(%)</div>
                 </template>
                 <template #default="scope">
-                  <div v-if="scope.row.type === 'ECP'">
+                  <span v-if="scope.row.type === 'FCP'">-</span>
+                  <div v-else>
                     {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
                   </div>
-                  <span v-else>-</span>
                 </template>
               </el-table-column>
               <el-table-column prop="uptime" min-width="130">
@@ -256,7 +266,7 @@
                   <div class="font-14 weight-4">Uptime</div>
                 </template>
                 <template #default="scope">
-                  <div class="flex-row center nowrap" v-if="scope.row.type === 'FCP'">
+                  <div class="flex-row center nowrap uptime-container" v-if="scope.row.type === 'FCP'">
                     <ul class="flex-row uptime-ul">
                       <li :class="{'active': scope.row.uptime >= 0.1}"></li>
                       <li :class="{'active': scope.row.uptime >= 0.2}"></li>
@@ -269,7 +279,7 @@
                       <li :class="{'active': scope.row.uptime >= 0.9}"></li>
                       <li :class="{'active': scope.row.uptime >= 1}"></li>
                     </ul>
-                    {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                    <span class="uptime-text text-right">{{system.$commonFun.unifyNumber(scope.row.uptime)}}%</span>
                   </div>
                   <span v-else>-</span>
                 </template>
@@ -470,7 +480,7 @@ export default defineComponent({
       }
       // ?${system.$Qs.stringify(params)}
       // ?${new URLSearchParams(params).toString()}
-      const providerRes_test = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
+      // const providerRes_test = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cpdata/${metaAddress.value}`, 'get')
       const providerRes = {
         "data": {
           "list_providers_cnt": 4,
@@ -581,7 +591,8 @@ export default defineComponent({
               "name": "cp-2.44-2",
               "node_id": "04d5fce8dae0f493b35ae3e09aa9ba9fb9981ca8bb8c4c83d43eb23a6ff014e77ebab8e989265385571f2b34df7a6c1131a3aa713c9c9369027a73d57224e8b3c5",
               "region": "Quebec-CA",
-              "uptime": 0.9725905402731051
+              "uptime": 0.9725905402731051,
+              "type": "FCP"
             },
             {
               "city": "Montreal",
@@ -690,7 +701,9 @@ export default defineComponent({
               "name": "cp-2.44-2",
               "node_id": "049d09a536d1ea95e7f863a8f93265913f4115ac4fb4d56cfcde051f3a78c7dc52cb1a6feb48e17690f0e98145e221c69262c0e3e7c3657caeaec7841a8d8104a3",
               "region": "Quebec-CA",
-              "uptime": 0.9727884425094003
+              "uptime": 0.9727884425094003,
+              "type": "ECP",
+              "completion_rate": 2266
             },
             {
               "city": "Montreal",
@@ -1050,7 +1063,7 @@ export default defineComponent({
           axisTick: {
             show: false
           },
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07']
         },
         yAxis: {
           type: 'value'
@@ -1529,6 +1542,9 @@ export default defineComponent({
                 border-color: #8eb0ff;
                 color: @theme-color;
               }
+              &.is-disabled {
+                opacity: 0.7;
+              }
             }
           }
           .el-tabs__nav-next,
@@ -1802,7 +1818,6 @@ export default defineComponent({
                 padding: 3px 10px;
                 margin: 3px 5px 3px 0;
                 background-color: @theme-color;
-                font-size: 12px;
                 border-radius: 45px;
                 word-break: break-word;
                 line-height: 1;
@@ -1868,7 +1883,7 @@ export default defineComponent({
       .btn-next,
       .btn-prev,
       .el-pager li {
-        min-width: 32px;
+        min-width: 24px;
         margin: 0 4px;
         background-color: transparent;
         font-size: inherit;

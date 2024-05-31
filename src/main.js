@@ -13,6 +13,20 @@ import commonFun from '@/utils/common'
 import './assets/js/world.js'
 import qs from 'qs'
 
+var routed = '';
+router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+
+    if (to.path != routed) {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0
+    }
+    routed = to.path
+    next()
+})
+
 const app = createApp(App)
 app.config.globalProperties.$commonFun = commonFun
 app.config.globalProperties.$explorerLink = process.env.VUE_APP_ATOMBLOCKURL

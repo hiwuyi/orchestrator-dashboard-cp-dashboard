@@ -11,6 +11,7 @@ export default {
 </script>
 <style lang="less">
 @import "./assets/css/style.css";
+@import "./assets/css/common.less";
 
 .mt-border {
   margin: 30px auto;
@@ -261,15 +262,25 @@ export default {
   }
 }
 
-.uptime-ul {
-  margin: 0 0.12rem 0 0;
-  li {
-    width: 0.05rem;
-    height: 0.16rem;
-    margin: 0 0.03rem 0 0;
-    background-color: #7c889b;
-    &.active {
-      background-color: @theme-color;
+.uptime-container {
+  .uptime-ul {
+    margin: 0;
+    li {
+      width: 0.05rem;
+      height: 0.16rem;
+      margin: 0 0.03rem 0 0;
+      background-color: #7c889b;
+      &.active {
+        background-color: @theme-color;
+      }
+    }
+  }
+  .uptime-text {
+    min-width: 45px;
+    margin: 0 0 0 0.06rem;
+    &.task {
+      min-width: 70px;
+      margin: 0 0 0 0.02rem;
     }
   }
 }

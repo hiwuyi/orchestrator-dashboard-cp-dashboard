@@ -308,6 +308,7 @@ async function sign (nonce) {
     signErr = ''
     signature = sig
   }).catch(async err => {
+    await disconnect(config.config)
     console.log(err)
     signature = ''
     signErr = err && err.code ? String(err.code) : err
@@ -342,7 +343,7 @@ async function signOutFun (status) {
   }
   store.dispatch('setAccessToken', '')
   store.dispatch('setSignature', '')
-  store.dispatch('setMetaAddress', '')
+  // store.dispatch('setMetaAddress', '')
 }
 
 function hiddAddress (val) {
@@ -522,7 +523,7 @@ function getDateTime (time) {
   const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
   const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
 
-  return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  return time ? `${formattedMonth}/${formattedDay}` : `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
 function dataGPU (data) {

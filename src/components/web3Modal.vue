@@ -74,9 +74,9 @@ watchAccount(config, {
     // account = getAccount(config)
     // console.log('watch', account)
     // console.log('prev', prevAccount)
-    // console.log("changed")
+    // console.log("changed", account ?.isConnected)
     if (account ?.isConnected && signature.value === '' && metaAddress.value === '') {
-      // console.log("prompted")
+      console.log("prompted")
       login2()
     } else if (!account ?.isConnected && prevAccount ?.isConnected) {
       signout2()

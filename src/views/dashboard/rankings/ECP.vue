@@ -48,7 +48,15 @@
               <div class="font-14 weight-4">Contract Address</div>
             </template>
             <template #default="scope">
-              <div>{{system.$commonFun.hiddAddress(scope.row.owner_addr)}}</div>
+              <div class="flex-row center copy-style">
+                {{system.$commonFun.hiddAddress(scope.row.owner_addr)}}
+                <svg @click="system.$commonFun.copyContent(scope.row.owner_addr, 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                  <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                    fill="#3d3d3d" p-id="6468"></path>
+                  <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                    fill="#3d3d3d" p-id="6469"></path>
+                </svg>
+              </div>
             </template>
           </el-table-column>
           <el-table-column prop="name" min-width="120">
@@ -64,11 +72,13 @@
               <div class="font-14 weight-4">nodeID</div>
             </template>
             <template #default="scope">
-              <div class="flex-row copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
+              <div class="flex-row center copy-style">
                 {{system.$commonFun.hiddAddress(scope.row.node_id)}}
-                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                  <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+                <svg @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                  <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                    fill="#3d3d3d" p-id="6468"></path>
+                  <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                    fill="#3d3d3d" p-id="6469"></path>
                 </svg>
               </div>
             </template>
@@ -106,7 +116,7 @@
               <div class="font-14 weight-4">Task Completed</div>
             </template>
             <template #default="scope">
-              <div class="flex-row center nowrap">
+              <div class="flex-row center nowrap uptime-container">
                 <ul class="flex-row uptime-ul">
                   <li :class="{'active': scope.row.uptime >= 0.1}"></li>
                   <li :class="{'active': scope.row.uptime >= 0.2}"></li>
@@ -119,7 +129,7 @@
                   <li :class="{'active': scope.row.uptime >= 0.9}"></li>
                   <li :class="{'active': scope.row.uptime >= 1}"></li>
                 </ul>
-                {{scope.row.task?scope.row.task.total : '-'}}&nbsp;/&nbsp;{{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                <span class="uptime-text text-right task">{{scope.row.task?scope.row.task.total : '-'}}&nbsp;/&nbsp;{{system.$commonFun.unifyNumber(scope.row.uptime)}}%</span>
               </div>
             </template>
           </el-table-column>
@@ -197,7 +207,8 @@ export default defineComponent({
         owner_addr: networkZK.owner_addr,
         node_id: networkZK.node_id
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
+      // const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`./static/js/ecpList.json`, 'get')
       if (providerRes && providerRes.code === 0) {
         paginZK.total = providerRes.data.total || 0
         providerBody.ubiTableData = await getList(providerRes.data.list, 'ECP')
@@ -886,7 +897,6 @@ export default defineComponent({
                   padding: 3px 10px;
                   margin: 3px 5px 3px 0;
                   background-color: @theme-color;
-                  font-size: 12px;
                   border-radius: 45px;
                   word-break: break-word;
                   line-height: 1;
@@ -951,7 +961,7 @@ export default defineComponent({
         .btn-next,
         .btn-prev,
         .el-pager li {
-          min-width: 32px;
+          min-width: 24px;
           margin: 0 4px;
           background-color: transparent;
           font-size: inherit;

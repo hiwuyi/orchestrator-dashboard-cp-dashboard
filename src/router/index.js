@@ -35,7 +35,7 @@ const routes = [{
         component: main,
         meta: {
             keepAlive: true,
-            title: 'Orchestrator'
+            title: 'Swan Provider'
         }
     },
     {

@@ -303,7 +303,10 @@
         </div>
       </div>
 
-      <div class="drawer-content font-14" v-if="props.list.type === 'resourceList'">
+      <div class="drawer-content machineID font-14" v-if="props.list.type === 'resourceList'">
+        <div class="flex-row space-between name-title" v-if="props.list.computer_provider">
+          <b class="font-16 weight-4">Machine Amount：{{props.list.computer_provider.machines.length}}</b>
+        </div>
         <div class="font-14 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
           <el-row>
             <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
@@ -368,7 +371,8 @@
                 <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.status}}</div>
+                <div v-if="scope.row.status" :class="{'text-capitalize': true, 'color-available':scope.row.status.toLowerCase() === 'available', 'color-occupied':scope.row.status.toLowerCase() === 'occupied'}">{{scope.row.status}}</div>
+                <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.free" min-width="70">
@@ -376,7 +380,7 @@
                 <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.free}}</div>
+                <div class="color-free">{{scope.row.fb_memory_usage.free}}</div>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.total" min-width="70">
@@ -384,7 +388,7 @@
                 <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.total}}</div>
+                <div class="color-total">{{scope.row.fb_memory_usage.total}}</div>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.used" min-width="70">
@@ -392,7 +396,7 @@
                 <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.used}}</div>
+                <div class="color-used">{{scope.row.fb_memory_usage.used}}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -489,7 +493,7 @@ export default defineComponent({
           axisTick: {
             show: false
           },
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07']
         },
         yAxis: {
           type: 'value',
@@ -506,7 +510,7 @@ export default defineComponent({
             smooth: true,
             showSymbol: false,
             data: [10, 13, 11, 34, 90, 30, 20],
-            color: '#7ecf51'
+            color: '#699bff'
           },
           {
             name: 'Memory',
@@ -514,7 +518,7 @@ export default defineComponent({
             smooth: true,
             showSymbol: false,
             data: [20, 12, 19, 24, 29, 33, 31],
-            color: '#ff9413'
+            color: '#52ce7c'
           },
           {
             name: 'Storage',
@@ -522,7 +526,7 @@ export default defineComponent({
             smooth: true,
             showSymbol: false,
             data: [15, 23, 20, 15, 19, 30, 41],
-            color: '#6067f5'
+            color: '#0046b7'
           }
         ]
       }
@@ -565,6 +569,12 @@ export default defineComponent({
         padding: 0.12rem 0.2rem;
         line-height: 1.4;
         cursor: text;
+        &.machineID {
+          .note {
+            padding: 0 0.18rem 0.1rem;
+            border: 0;
+          }
+        }
         .name-title {
           color: #000;
           text-transform: capitalize;
@@ -592,13 +602,13 @@ export default defineComponent({
               &.color {
                 color: @border-color;
                 .green {
-                  color: #8dd565;
+                  color: #699bff;
                 }
                 .orange {
-                  color: #ff9413;
+                  color: #52cd7b;
                 }
                 .blue {
-                  color: #6067f5;
+                  color: #0046b7;
                 }
               }
             }
@@ -622,7 +632,6 @@ export default defineComponent({
                   padding: 3px 10px;
                   margin: 3px 5px 3px 0;
                   background-color: @theme-color;
-                  font-size: 12px;
                   border-radius: 45px;
                   word-break: break-word;
                   line-height: 1;
@@ -908,7 +917,6 @@ export default defineComponent({
                       padding: 3px 10px;
                       margin: 3px 5px 3px 0;
                       background-color: @theme-color;
-                      font-size: 12px;
                       border-radius: 45px;
                       word-break: break-word;
                       line-height: 1;

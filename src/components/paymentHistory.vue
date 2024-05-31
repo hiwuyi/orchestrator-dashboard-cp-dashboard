@@ -1,6 +1,6 @@
 <template>
   <div id="payment">
-    <div class="payment-history container-landing font-16">
+    <div class="payment-history container-landing font-14">
       <el-row class="search-container font-14">
         <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
           <div class="flex-row nowrap child">
@@ -36,9 +36,11 @@
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.task_uuid, 'Copied')">
               {{ system.$commonFun.hiddAddress(scope.row.task_uuid) || '-' }}
-              <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+              <svg t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                  fill="#3d3d3d" p-id="6468"></path>
+                <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                  fill="#3d3d3d" p-id="6469"></path>
               </svg>
             </div>
           </template>
@@ -61,9 +63,11 @@
           <template #default="scope">
             <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.node_id, 'Copied')">
               {{ system.$commonFun.hiddAddress(scope.row.node_id) }}
-              <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.2"></path>
-                <rect width="8.957" height="8.957" rx="1.2" transform="matrix(-1 0 0 1 12.4 3.043)" stroke="currentColor" stroke-width="1.2"></rect>
+              <svg t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                  fill="#3d3d3d" p-id="6468"></path>
+                <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                  fill="#3d3d3d" p-id="6469"></path>
               </svg>
             </div>
           </template>
@@ -310,11 +314,11 @@
             <div class="address">
               <div class="flex-row hash">
                 {{ system.$commonFun.hiddAddress(txHash) }}
-                <svg @click="system.$commonFun.copyContent(txHash, 'Copied')" t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
-                  <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
-                    p-id="2310" fill="#b5b7c8"></path>
-                  <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
-                  <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+                <svg @click="system.$commonFun.copyContent(txHash, 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                  <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                    fill="#3d3d3d" p-id="6468"></path>
+                  <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                    fill="#3d3d3d" p-id="6469"></path>
                 </svg>
               </div>
             </div>
@@ -532,15 +536,16 @@ export default defineComponent({
         offset: page * pagin.pageSize
       }
       paramsOption = Object.assign({}, paramsOption, paramsFilter.data)
-      const paymentsRes = await system.$commonFun.sendRequest(`${requestURL}?${system.$Qs.stringify(paramsOption)}`, 'get') //?public_address=${store.state.metaAddress}
-      if (paymentsRes && paymentsRes.status === 'success') {
-        for (let p = 0; p < paymentsRes.data.payments.length; p++) {
-          let { url_tx } = await system.$commonFun.getUnit(20241133)
-          paymentsRes.data.payments[p].url_tx = url_tx
-        }
-        paymentData.value = paymentsRes.data.payments || []
-        pagin.total = paymentsRes.data.total || 0
-      }
+      // const paymentsRes = await system.$commonFun.sendRequest(`${requestURL}?${system.$Qs.stringify(paramsOption)}`, 'get') //?public_address=${store.state.metaAddress}
+      const paymentsRes = await system.$commonFun.sendRequest(`./static/js/paymentList.json`, 'get')
+      // if (paymentsRes && paymentsRes.status === 'success') {
+      // for (let p = 0; p < paymentsRes.data.payments.length; p++) {
+      //   let { url_tx } = await system.$commonFun.getUnit(20241133)
+      //   paymentsRes.data.payments[p].url_tx = url_tx
+      // }
+      paymentData.value = paymentsRes.data.payments || []
+      pagin.total = paymentsRes.data.total || 0
+      // }
       // else if (paymentsRes.message) system.$commonFun.messageTip('error', paymentsRes.message)
       paymentLoad.value = false
     }
@@ -573,7 +578,7 @@ export default defineComponent({
     let getnetID = NaN
     onMounted(async () => {
       // getnetID = await system.$commonFun.web3Init.eth.net.getId()
-      // init()
+      init()
     })
     watch(route, (to, from) => {
       // if (to.name === "paymentHistory") init()
@@ -786,7 +791,13 @@ export default defineComponent({
             line-height: 1.5;
             word-break: break-word;
             text-align: center;
-
+            .copy-style {
+              cursor: pointer;
+              flex-wrap: wrap;
+              svg {
+                margin: 0 0 0 0.05rem;
+              }
+            }
             a {
               color: inherit;
 

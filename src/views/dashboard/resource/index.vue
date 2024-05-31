@@ -14,33 +14,37 @@
             </div>
             <el-row class="width">
               <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-                <div class="grid-content small-spacing">
+                <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">GPU Usage</p>
-                  <div class='chart-trends' id='chart-gpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#93c605" class="color-gpu" />
+                  <!-- <div class='chart-trends' id='chart-gpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-gpu">41</span> Used 240 Free</p>
                 </div>
               </el-col>
               <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-                <div class="grid-content small-spacing">
+                <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">CPU Usage</p>
-                  <div class='chart-trends' id='chart-cpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#699bff" class="color-cpu" />
+                  <!-- <div class='chart-trends' id='chart-cpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-cpu">41</span> Used 240 Free</p>
                 </div>
               </el-col>
               <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-                <div class="grid-content small-spacing">
+                <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Memory Usage (GB)</p>
-                  <div class='chart-trends' id='chart-memory' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#52ce7c" class="color-memory" />
+                  <!-- <div class='chart-trends' id='chart-memory' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-memory">41</span> Used 240 Free</p>
                 </div>
               </el-col>
               <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
-                <div class="grid-content small-spacing">
+                <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Storage Usage (TB)</p>
-                  <div class='chart-trends' id='chart-storage' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#0046b7" class="color-storage" />
+                  <!-- <div class='chart-trends' id='chart-storage' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-storage">41</span> Used 240 Free</p>
                 </div>
@@ -48,14 +52,15 @@
             </el-row>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="flex-row baseline">
-            <div class="grid-content">
-              <div class='chart-trends big' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div><div class="date">
-              <el-select v-model="weekList.value" placeholder="Select" size="small">
-                <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
-                  <div class="font-14">{{item.label}}</div>
-                </el-option>
-              </el-select>
-            </div>
+            <div class="grid-content none">
+              <div class='chart-trends big' id='chart-Resource' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
+              <div class="date">
+                <el-select v-model="weekList.value" placeholder="Select" size="small">
+                  <el-option v-for="item in weekList.options" :key="item.value" :label="item.label" :value="item.value">
+                    <div class="font-14">{{item.label}}</div>
+                  </el-option>
+                </el-select>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -185,24 +190,48 @@ export default defineComponent({
       value: 'A100',
       options: [
         {
+          value: 'All',
+          label: 'All'
+        },
+        {
           value: 'A100',
           label: 'A100'
+        },
+        {
+          value: 'H100',
+          label: 'H100'
         }]
     })
     const vRAMList = reactive({
       value: '80Gi',
       options: [
         {
+          value: 'All',
+          label: 'All'
+        },
+        {
+          value: '40Gi',
+          label: '40Gi'
+        },
+        {
           value: '80Gi',
           label: '80Gi'
         }]
     })
     const interfaceList = reactive({
-      value: 'A100',
+      value: 'PCle',
       options: [
         {
-          value: 'A100',
-          label: 'A100'
+          value: 'All',
+          label: 'All'
+        },
+        {
+          value: 'SXM5',
+          label: 'SXM5'
+        },
+        {
+          value: 'PCle',
+          label: 'PCle'
         }]
     })
     const networkInput = ref('')
@@ -426,7 +455,7 @@ export default defineComponent({
           axisTick: {
             show: false
           },
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07']
         },
         yAxis: {
           type: 'value',
@@ -608,13 +637,13 @@ export default defineComponent({
     onActivated(async () => {
       // reset('init')
       changetype()
-      changePietype()
+      // changePietype()
     })
     return {
       system,
       route,
       metaAddress,
-      networkInput, chipsetList, vRAMList, interfaceList, gpuList, providersLoad, providersTableLoad,weekList,
+      networkInput, chipsetList, vRAMList, interfaceList, gpuList, providersLoad, providersTableLoad, weekList,
       searchProvider, clearProvider, handleClick
     }
   }
@@ -753,6 +782,27 @@ export default defineComponent({
           &.small-spacing {
             width: calc(100% - 0.1rem);
             padding: 0.18rem 0.05rem;
+            .el-progress {
+              margin: 0.1rem auto 0.16rem;
+              .el-progress__circle,
+              .el-progress-circle__track {
+                border-radius: 0 !important;
+              }
+              .el-progress-circle__track {
+                stroke: #7c889b;
+              }
+              .el-progress__text {
+                font-family: inherit;
+                font-size: inherit !important;
+                font-weight: bold;
+                color: inherit;
+              }
+            }
+          }
+          &.none {
+            width: calc(100% - 0.3rem);
+            height: 100%;
+            padding: 0 0 0 0.3rem;
           }
           .el-col {
             margin: 0.1rem 0 0;
@@ -800,29 +850,30 @@ export default defineComponent({
                 border-color: #c6cedc;
                 color: #000;
                 cursor: no-drop;
+                pointer-events: none;
               }
             }
           }
           .desc {
             color: #7c889b;
-            .color-gpu {
-              color: #93c605;
-            }
-            .color-cpu {
-              color: #699bff;
-            }
-            .color-memory {
-              color: #52ce7c;
-            }
-            .color-storage {
-              color: #0046b7;
-            }
+          }
+          .color-gpu {
+            color: #93c605;
+          }
+          .color-cpu {
+            color: #699bff;
+          }
+          .color-memory {
+            color: #52ce7c;
+          }
+          .color-storage {
+            color: #0046b7;
           }
         }
         .date {
           position: absolute;
-          right: calc(0.14rem + 2%);
-          top: 0.18rem;
+          right: 0.14rem;
+          top: 0;
           width: 90px;
           .el-select {
             .el-select__wrapper {
@@ -884,7 +935,7 @@ export default defineComponent({
             height: 150px;
           }
           &.big {
-            height: 2rem;
+            height: 2.7rem;
             @media screen and (max-width: 768px) {
               height: 280px;
             }
@@ -936,7 +987,7 @@ export default defineComponent({
             .el-select__icon {
               width: 9px;
               height: 9px;
-              background: url(../../../assets/images/icons/icon-02.png)
+              background: url(../../../assets/images/icons/icon-03.png)
                 no-repeat center;
               background-size: 100%;
               svg {
@@ -1003,267 +1054,6 @@ export default defineComponent({
         }
       }
     }
-    .el-table {
-      width: 100%;
-      margin: 0.24rem auto;
-      background-color: transparent;
-      font-size: inherit;
-      border-radius: 0.1rem;
-      border: 1px solid #c6cddc;
-      tr {
-        background-color: transparent;
-        &:hover {
-          td {
-            background-color: #f3f6ff;
-          }
-        }
-        th {
-          word-break: break-word;
-          padding: 0.18rem 0;
-          background-color: @theme-color;
-          font-size: inherit;
-          border: 0;
-          .cell {
-            color: @white-color;
-            word-break: break-word;
-            text-transform: capitalize;
-            text-align: center;
-            line-height: 1.1;
-            @media screen and (max-width: 540px) {
-              font-size: 12px;
-            }
-          }
-        }
-        td {
-          padding: 0.08rem 0;
-          background-color: @white-color;
-          font-size: inherit;
-          color: #3d3d3d;
-          border-color: #c6cddc;
-          text-align: center;
-          .cell {
-            line-height: 1.1;
-          }
-          i {
-            margin-right: 5px;
-            color: @text-color;
-            font-size: 18px;
-            @media screen and (max-width: 1260px) {
-              font-size: 16px;
-            }
-          }
-          .service-body {
-            padding: 0 0.25rem 0.1rem;
-            // color: #333;
-            // border-top: rgb(220, 223, 230) 1px solid;
-            // border-bottom: rgb(220, 223, 230) 1px solid;
-            .tit {
-              margin: 0.2rem 0 0;
-              font-size: 16px;
-              font-weight: 500;
-              text-transform: capitalize;
-              @media screen and (max-width: 1260px) {
-                font-size: 14px;
-              }
-            }
-            .desc {
-              padding: 0 0 0.1rem;
-              font-size: 14px;
-              @media screen and (max-width: 1260px) {
-                font-size: 12px;
-              }
-            }
-            .list {
-              padding: 0.1rem 0 0;
-              .li-title {
-                width: 100%;
-                padding: 0 0 0.1rem;
-                border-bottom: 1px solid #26272f;
-              }
-              ul {
-                display: flex;
-                align-items: stretch;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                margin: 0 auto 0.25rem;
-                @media screen and (max-width: 768px) {
-                  justify-content: flex-start;
-                }
-                li {
-                  width: 27%;
-                  margin-right: 6%;
-                  @media screen and (max-width: 768px) {
-                    width: auto;
-                    margin-right: 0.5rem;
-                  }
-                  &.m-r {
-                    margin-right: 0;
-                  }
-                  .flex-row {
-                    flex-wrap: wrap;
-                    .li-body {
-                      width: 27%;
-                      margin-right: 6%;
-                      @media screen and (max-width: 768px) {
-                        width: auto;
-                        margin-right: 0.5rem;
-                      }
-                    }
-                  }
-                  .li-body {
-                    position: relative;
-                    padding: 0.15rem;
-                    margin: 0.3rem 0;
-                    background-color: #0d0e12;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-                    -webkit-backdrop-filter: blur(5px);
-                    backdrop-filter: blur(5px);
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    border-radius: 0.1rem;
-                    animation: glow 1s ease-in-out infinite alternate;
-                    @media screen and (max-width: 768px) {
-                      padding: 0.15rem 0.3rem;
-                    }
-                    p {
-                      padding: 3px 0;
-                      font-size: 14px;
-                      line-height: 1.3;
-                      text-align: center;
-                      @media screen and (max-width: 1260px) {
-                        font-size: 12px;
-                      }
-                      strong,
-                      b {
-                        margin-right: 5px;
-                        font-size: 17px;
-                        @media screen and (max-width: 1260px) {
-                          font-size: 15px;
-                        }
-                        @media screen and (max-width: 540px) {
-                          font-size: 13px;
-                        }
-                      }
-                      &.t {
-                        text-transform: capitalize; // color: #808290;
-                      }
-                      &.t-capitalize {
-                        text-transform: uppercase;
-                      }
-                      &:nth-child(2) {
-                        strong {
-                          color: #4db470;
-                        }
-                      }
-                      &:nth-child(3) {
-                        strong {
-                          color: #488fc3;
-                        }
-                      }
-                      &:nth-child(4) {
-                        strong {
-                          color: #9266a9;
-                        }
-                      }
-                    }
-                    &.li-gpu {
-                      &::before {
-                        position: absolute;
-                        content: "";
-                        right: 0.1rem;
-                        top: 0.1rem;
-                        width: 7px;
-                        height: 7px;
-                        background-color: orange;
-                        border-radius: 7px;
-                      }
-                    }
-                    &.li-status {
-                      &::before {
-                        background-color: #8bc34a;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            .el-divider--horizontal {
-              margin: 0.1rem 0;
-            }
-          }
-          .name-style {
-            color: @theme-color;
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-          .copy-style {
-            cursor: pointer;
-            flex-wrap: wrap;
-            svg {
-              margin: 0 0 0 0.05rem;
-            }
-          }
-          .badge {
-            display: flex;
-            align-items: center;
-            white-space: normal;
-            word-break: break-word;
-            img {
-              width: 30px;
-              height: 30px;
-              margin-right: 5px;
-              @media screen and (max-width: 1260px) {
-                width: 25px;
-                height: 25px;
-              }
-            }
-            .machines-style {
-              flex-wrap: wrap;
-              span {
-                padding: 3px 10px;
-                margin: 3px 5px 3px 0;
-                background-color: @theme-color;
-                font-size: 12px;
-                border-radius: 45px;
-                word-break: break-word;
-                line-height: 1;
-                color: @white-color;
-              }
-            }
-          }
-          &.el-table__expanded-cell {
-            padding: 0.32rem 0.64rem;
-            // border: 1px solid @white-color;
-            &:hover {
-              background-color: @primary-color !important;
-            }
-          }
-        }
-        // &.expanded,
-        // &:hover {
-        //   td {
-        //     background-color: rgba(255, 255, 255, 0.85);
-        //     color: #000;
-        //     i {
-        //       color: #000;
-        //     }
-        //   }
-        // }
-        &.expanded {
-          border: 1px solid @white-color;
-          border-collapse: collapse;
-        }
-      }
-    }
-    .el-table--border .el-table__inner-wrapper::after,
-    .el-table--border::after,
-    .el-table--border::before,
-    .el-table__inner-wrapper::before {
-      background-color: rgb(38, 39, 47);
-      height: 0;
-    }
     .el-pagination {
       display: flex;
       justify-content: center;
@@ -1286,7 +1076,7 @@ export default defineComponent({
       .btn-next,
       .btn-prev,
       .el-pager li {
-        min-width: 32px;
+        min-width: 24px;
         margin: 0 4px;
         background-color: transparent;
         font-size: inherit;

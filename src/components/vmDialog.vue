@@ -60,9 +60,11 @@
               </template>
               <div class="flex-row nowrap copy-style width">
                 <div class="server sign-code font-14">{{'computing-provider wallet sign Owner Address'}}{{props.list.owner_address}}</div>
-                <svg @click="system.$commonFun.copyContent('computing-provider wallet sign XXXX XXXXXXXXXXXXXXXXXXXXXXXX', 'Copied')" data-v-52e705d9="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path data-v-52e705d9="" d="M9.957 1.822V1.8a1.2 1.2 0 00-1.2-1.2H2.2A1.2 1.2 0 001 1.8v6.557a1.2 1.2 0 001.2 1.2h.021" stroke="currentColor" stroke-width="1.4"></path>
-                  <rect data-v-52e705d9="" width="10.5" height="10.5" rx="1.2" transform="matrix(-1 0 0 1 15.4 4)" stroke="currentColor" stroke-width="1.2"></rect>
+                <svg @click="system.$commonFun.copyContent('computing-provider wallet sign XXXX XXXXXXXXXXXXXXXXXXXXXXXX', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                  <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                    fill="#3d3d3d" p-id="6468"></path>
+                  <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                    fill="#3d3d3d" p-id="6469"></path>
                 </svg>
               </div>
             </el-form-item>
@@ -307,19 +309,6 @@ export default defineComponent({
                 @media screen and (max-width: 1260px) {
                   width: 25px;
                   height: 25px;
-                }
-              }
-              .machines-style {
-                flex-wrap: wrap;
-                span {
-                  padding: 3px 10px;
-                  margin: 3px 5px 3px 0;
-                  background-color: @theme-color;
-                  font-size: 12px;
-                  border-radius: 45px;
-                  word-break: break-word;
-                  line-height: 1;
-                  color: @white-color;
                 }
               }
             }

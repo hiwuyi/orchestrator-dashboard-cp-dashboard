@@ -1,0 +1,60 @@
+:deep(.el-pagination) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .el-select__wrapper,
+    .el-input,
+    .el-input__inner,
+    .el-pager {
+      font-family: "HELVETICA-ROMAN";
+      font-size: inherit;
+      @media screen and (max-width: 996px) {
+        height: 26px;
+        min-height: 26px;
+        line-height: 26px;
+      }
+    }
+    .el-pagination__total {
+      color: #878c93;
+    }
+    .btn-next,
+    .btn-prev,
+    .el-pager li {
+      min-width: 32px;
+      margin: 0 4px;
+      background-color: transparent;
+      font-size: inherit;
+      color: #878c93;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      @media screen and (max-width: 996px) {
+        width: 26px;
+        min-width: 26px;
+        height: 26px;
+      }
+      &:not(.disabled).active,
+      &:not(.disabled):hover,
+      &.is-active {
+        width: 24px;
+        min-width: 24px;
+        height: 24px;
+        line-height: 24px;
+        background-color: #f9fafb;
+        border-color: @border-color;
+        color: #606060;
+      }
+      &:not(.disabled):hover {
+      }
+    }
+    .el-pager li {
+      color: #606060;
+    }
+    .el-select {
+      width: 100px;
+    }
+    .el-input,
+    .el-select__wrapper {
+      min-height: 24px;
+      height: 24px;
+    }
+  }

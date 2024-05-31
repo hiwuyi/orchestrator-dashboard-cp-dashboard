@@ -222,7 +222,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
+                    <div class="grid-content g-select">
                       <h6 class="font-12 weight-4 text-center flex-row nowrap">
                         <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
                           <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
@@ -390,7 +390,7 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                  <div class="name-style" :title="scope.row.name" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                 </template>
               </el-table-column>
               <el-table-column prop="computer_provider.active_deployment" sortable min-width="150">
@@ -408,7 +408,7 @@
                   <div class="font-14 weight-4">Uptime</div>
                 </template>
                 <template #default="scope">
-                  <div class="flex-row center nowrap">
+                  <div class="flex-row center nowrap uptime-container">
                     <ul class="flex-row uptime-ul">
                       <li :class="{'active': scope.row.uptime >= 0.1}"></li>
                       <li :class="{'active': scope.row.uptime >= 0.2}"></li>
@@ -421,7 +421,7 @@
                       <li :class="{'active': scope.row.uptime >= 0.9}"></li>
                       <li :class="{'active': scope.row.uptime >= 1}"></li>
                     </ul>
-                    {{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                    <span class="uptime-text text-right">{{system.$commonFun.unifyNumber(scope.row.uptime)}}%</span>
                   </div>
                 </template>
               </el-table-column>
@@ -451,7 +451,7 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                  <div class="name-style" :title="scope.row.name" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                 </template>
               </el-table-column>
               <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
@@ -468,7 +468,7 @@
                   <div class="font-14 weight-4">Task Completed</div>
                 </template>
                 <template #default="scope">
-                  <div class="flex-row center nowrap">
+                  <div class="flex-row center nowrap uptime-container">
                     <ul class="flex-row uptime-ul">
                       <li :class="{'active': scope.row.uptime >= 0.1}"></li>
                       <li :class="{'active': scope.row.uptime >= 0.2}"></li>
@@ -481,7 +481,7 @@
                       <li :class="{'active': scope.row.uptime >= 0.9}"></li>
                       <li :class="{'active': scope.row.uptime >= 1}"></li>
                     </ul>
-                    {{scope.row.task?scope.row.task.total : '-'}}&nbsp;/&nbsp;{{system.$commonFun.unifyNumber(scope.row.uptime)}}%
+                    <span class="uptime-text text-right task">{{scope.row.task?scope.row.task.total : '-'}}&nbsp;/&nbsp;{{system.$commonFun.unifyNumber(scope.row.uptime)}}%</span>
                   </div>
                 </template>
               </el-table-column>
@@ -497,17 +497,12 @@
 import { defineComponent, computed, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
-import {
-  CircleCheck, DocumentCopy, Avatar
-} from '@element-plus/icons-vue'
 import * as echarts from "echarts"
 import worldGeoJSON from '@/assets/js/world.json'
 import gpuJSON from '@/assets/js/gpuData.json'
 
 export default defineComponent({
-  components: {
-    CircleCheck, DocumentCopy, Avatar
-  },
+  components: {},
   setup () {
     const store = useStore()
     const metaAddress = computed(() => (store.state.metaAddress))
@@ -519,20 +514,6 @@ export default defineComponent({
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
     const providersData = ref([])
-    const pagin = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
-    const paginZK = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
     const providerBody = reactive({
       data: {},
       ubiData: {},
@@ -557,15 +538,7 @@ export default defineComponent({
         provider: true
       }
     })
-    const networkInput = ref('')
-    const networkZK = reactive({
-      owner_addr: '',
-      node_id: ''
-    })
-    const small = ref(false)
-    const background = ref(false)
     const dataArr = ref([])
-    const expands = ref([])
     const activeName = ref('Overview')
     const cpLoad = ref(false)
     const AvgZKRewards = reactive({
@@ -601,26 +574,15 @@ export default defineComponent({
         }]
     })
 
-    function handleSizeChange (val) { }
-    async function handleCurrentChange (currentPage) {
-      pagin.pageNo = currentPage
-      init()
-    }
-    async function handleZKCurrentChange (currentPage) {
-      paginZK.pageNo = currentPage
-      getUBITable()
-    }
     async function init () {
       providersTableLoad.value = true
-      const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
       const params = {
-        limit: pagin.pageSize,
-        offset: page * pagin.pageSize,
-        search_string: networkInput.value
+        limit: 10,
+        offset: 0
       }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
+      // const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/cplist?${system.$Qs.stringify(params)}`, 'get')
+      const providerRes = await system.$commonFun.sendRequest(`./static/js/cplist.json`, 'get')
       if (providerRes && providerRes.status === 'success') {
-        pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(providerRes.data.providers)
       } else {
         providersData.value = []
@@ -629,17 +591,14 @@ export default defineComponent({
       providersTableLoad.value = false
     }
     async function getUBITable () {
+      return
       providersTableLoad.value = true
-      const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
       const params = {
-        page_size: paginZK.pageSize,
-        page_no: page,
-        owner_addr: networkZK.owner_addr,
-        node_id: networkZK.node_id
+        page_size: 10,
+        page_no: 0
       }
       const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.code === 0) {
-        paginZK.total = providerRes.data.total || 0
         providerBody.ubiTableData = providerRes.data.list || []
       } else {
         providerBody.ubiTableData = []
@@ -665,23 +624,6 @@ export default defineComponent({
       })
       return l
     }
-    async function getUBITotal () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}stats`, 'get')
-      if (statsRes && statsRes.code === 0) {
-        providerBody.ubiData = statsRes.data || {}
-      } else providerBody.ubiData = {}
-    }
-    async function getTotal () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/stats`, 'get')
-      if (statsRes) {
-        providerBody.totalData.gas_used_today = statsRes.gas_used_today || ''
-        providerBody.totalData.total_addresses = statsRes.total_addresses || ''
-        providerBody.totalData.total_blocks = statsRes.total_blocks || ''
-        // providerBody.totalData.total_gas_used = statsRes.total_gas_used || ''
-        providerBody.totalData.total_transactions = statsRes.total_transactions || ''
-        providerBody.totalData.transactions_today = statsRes.transactions_today || ''
-      }
-    }
     async function getCounters () {
       const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/smart-contracts/counters`, 'get')
       if (statsRes) {
@@ -689,85 +631,14 @@ export default defineComponent({
         providerBody.totalData.smart_contracts = statsRes.smart_contracts || ''
       }
     }
-    async function getOverview () {
-      providersLoad.value = true
-      const overviewRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}cp/overview`, 'get')
-      if (overviewRes && overviewRes.status === 'success') {
-        pagin.total_deployments = overviewRes.data.total_deployments
-        pagin.active_applications = overviewRes.data.active_applications
-        providerBody.data = overviewRes.data || {}
-        dataArr.value = overviewRes.data.map_info
-        drawChart(dataArr.value)
-        changetype()
-      }
-      providersLoad.value = false
-    }
-    async function getStorageStats () {
-      const storageRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_FILSWANSTATS}stats/storage`, 'get')
-      if (storageRes && storageRes.status === "success") providerBody.storageData = storageRes.data || {}
-    }
-    async function getProviderStats () {
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_FILSWANSTATS}stats/provider`, 'get')
-      if (providerRes && providerRes.status === "success") providerBody.providerData = providerRes.data || {}
-    }
-    async function getGeneralStats () {
-      const generalRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_BASEAPI}stats/general`, 'get')
-      if (generalRes && generalRes.status === "success") providerBody.generalData = generalRes.data || {}
-    }
-    const searchProvider = system.$commonFun.debounce(async function () {
-      pagin.pageSize = 10
-      pagin.pageNo = 1
-      init()
-    }, 700)
-    const searchZKProvider = system.$commonFun.debounce(async function () {
-      paginZK.pageNo = 1
-      getUBITable()
-    }, 700)
-    function clearProvider () {
-      networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.node_id = ''
-      if (activeName.value === 'ZK-CP') {
-        paginZK.pageNo = 1
-        getUBITable()
-      } else {
-        pagin.pageSize = 10
-        pagin.pageNo = 1
-        init()
-      }
-    }
-    function expandChange (row, expandedRows) {
-      // console.log(row, expandedRows)
-      if (expandedRows.length) {
-        expands.value = [];
-        if (row) expands.value.push(row.node_id);
-      } else expands.value = [];
-    }
-    let getRowKeys = (row) => {
-      return row.node_id;
-    }
     function reset (type) {
-      pagin.total = 0
-      pagin.total_deployments = 0
-      pagin.active_applications = 0
-      pagin.pageSize = 10
-      pagin.pageNo = 1
       providersData.value = []
       providerBody.ubiTableData = []
       providersLoad.value = false
       providersTableLoad.value = false
-      networkInput.value = ''
-      networkZK.owner_addr = ''
-      networkZK.node_id = ''
       if (type) init()
-      getOverview()
-      getUBITotal()
       getUBITable()
-      getTotal()
       getCounters()
-      getStorageStats()
-      getProviderStats()
-      getGeneralStats()
     }
     function drawChart (dataArr) {
       let chart = echarts.init(document.getElementById('chart-world'))
@@ -807,6 +678,9 @@ export default defineComponent({
                 }
               }
             },
+
+            // 放大缩小按钮
+            zoom: { show: true },
           },
           textStyle: {
             color: '#fff',
@@ -828,8 +702,8 @@ export default defineComponent({
         },
         legend: {
           orient: 'vertical',
-          left: '0',
-          bottom: '0',
+          left: '2%',
+          bottom: '2%',
           itemGap: 5,
           itemWidth: 10,
           itemHeight: 10,
@@ -894,7 +768,11 @@ export default defineComponent({
           emphasis: {
             focus: 'none'
           },
-          silent: true
+          silent: true,
+          zoom: 1.1,
+          scaleLimit: {
+            min: 1 // 设置最小缩放倍数为1
+          },
           // left: '5%',
           // right: '5%'
         },
@@ -909,7 +787,8 @@ export default defineComponent({
               // color: 'rgba(89, 152, 14, 1)',
               color: '#9a5aff',
               shadowBlur: 2,
-              shadowColor: '#7ca3fb'
+              // shadowColor: '#7ca3fb'
+              shadowColor: 'transparent'
             },
             data: [
               {
@@ -940,7 +819,7 @@ export default defineComponent({
               // color: 'rgba(89, 152, 14, 1)',
               color: '#bbff00',
               shadowBlur: 2,
-              shadowColor: '#7ca3fb'
+              shadowColor: '#baf243'
             },
             data: dataArr,
             roam: true,
@@ -1042,18 +921,21 @@ export default defineComponent({
             show: false
           },
           axisLabel: {
+            fontSize: 12,
             // interval: 6,
-            color: '#7b879a',
+            color: '#7c889b',
             formatter: function (value) {
               // 使用字符串的 replace 方法将空格替换为换行符
               return value.split(' ').join('\n');
             }
           },
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07']
         },
         yAxis: {
           type: 'value',
           axisLabel: {
+            fontSize: 12,
+            color: '#7c889b',
             // 使用 formatter 函数格式化标签
             formatter: '{value}%'
           },
@@ -1147,14 +1029,15 @@ export default defineComponent({
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07'],
             boundaryGap: false,
             axisTick: {
               show: false
             },
             axisLabel: {
               // interval: 6,
-              color: '#7b879a',
+              fontSize: 12,
+              color: '#7c889b',
               formatter: function (value) {
                 // 使用字符串的 replace 方法将空格替换为换行符
                 return value.split(' ').join('\n');
@@ -1169,9 +1052,11 @@ export default defineComponent({
             // min: 0,
             // max: 240,
             // interval: 80,
-            // axisLabel: {
-            //   formatter: '{value}'
-            // }
+            axisLabel: {
+              fontSize: 12,
+              color: '#7c889b',
+              //   formatter: '{value}'
+            },
             minInterval: 150
           },
           {
@@ -1179,9 +1064,11 @@ export default defineComponent({
             min: -300,
             max: 300,
             minInterval: 300,
-            // axisLabel: {
-            //   formatter: '{value} °C'
-            // }
+            axisLabel: {
+              fontSize: 12,
+              color: '#7c889b',
+              //   formatter: '{value}'
+            },
           }
         ],
         series: [
@@ -1294,8 +1181,9 @@ export default defineComponent({
             show: false
           },
           axisLabel: {
+            fontSize: 12,
             interval: 6,
-            color: '#7b879a',
+            color: '#7c889b',
             formatter: function (value) {
               // 使用字符串的 replace 方法将空格替换为换行符
               return value.split(' ').join('\n');
@@ -1311,10 +1199,12 @@ export default defineComponent({
             onZero: true
           },
           axisLabel: {
-            fontSize: 13,
-            fontWeight: 500,
-            color: '#000'
+            fontSize: 12,
+            fontWeight: 400,
+            color: '#7c889b',
+            formatter: '{value}%'
           },
+          interval: 50,
           splitLine: {
             show: true,
             lineStyle: {
@@ -1395,14 +1285,14 @@ export default defineComponent({
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: ['8/01', '8/02', '8/03', '8/04', '8/05', '8/06', '8/07'],
             boundaryGap: false,
             axisTick: {
               show: false
             },
             axisLabel: {
               // interval: 6,
-              color: '#7b879a',
+              color: '#7c889b',
               formatter: function (value) {
                 // 使用字符串的 replace 方法将空格替换为换行符
                 return value.split(' ').join('\n');
@@ -1501,17 +1391,20 @@ export default defineComponent({
       })
       cpLoad.value = false
     }
-    const handleClick = async (tab, event) => {
-      // activeName.value = tab.props.name || 'CP'
-      // cpLoad.value = true
-      // await system.$commonFun.timeout(500)
-    }
     function handleCP (row) {
       router.push({ name: 'accountInfo' })
     }
     onActivated(async () => {
       echarts.registerMap('worldHq', worldGeoJSON)
       reset('init')
+      drawChart([{
+        "city": "Test3333",
+        "value": [
+          100.535,
+          55.8639
+        ]
+      }])
+      changetype()
     })
     return {
       system,
@@ -1521,16 +1414,9 @@ export default defineComponent({
       providersLoad,
       providersTableLoad,
       providersData,
-      networkInput,
-      networkZK,
-      pagin,
-      paginZK,
-      small,
-      background,
       providerBody,
-      accessToken, expands, activeName, cpLoad, AvgZKRewards, weekList,
-      handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider,
-      expandChange, getRowKeys, handleClick, handleCP
+      accessToken, activeName, cpLoad, AvgZKRewards, weekList,
+      handleCP
     }
   }
 })
@@ -1610,9 +1496,19 @@ export default defineComponent({
           background-color: @white-color;
           border-radius: 0.14rem;
           &.world {
+            width: 100%;
+            height: 100%;
+            min-height: 4.2rem;
+            padding: 0;
             background-color: @theme-color;
             .title {
+              position: absolute;
+              left: 0.25rem;
+              right: 0.25rem;
+              top: 0.32rem;
+              width: auto;
               color: @white-color;
+              z-index: 9;
             }
           }
           .el-col {
@@ -1660,6 +1556,10 @@ export default defineComponent({
             height: calc(100% - 0.53rem);
             margin: 0.23rem 0 0;
             background: #edf2ff;
+            &.g-select {
+              height: calc(100% - 0.4rem);
+              padding-top: 0.05rem;
+            }
           }
         }
         .title-link {
@@ -1716,11 +1616,16 @@ export default defineComponent({
             }
           }
           .el-select {
+            width: auto;
             font-size: inherit;
             .el-tooltip__trigger {
-              margin: 0;
-              width: 80px;
+              width: 63px;
               padding: 2px 4px;
+              margin: 0;
+              background-color: transparent;
+            }
+            .el-select__wrapper {
+              font-size: inherit;
             }
           }
         }
@@ -2007,6 +1912,9 @@ export default defineComponent({
               .name-style {
                 color: @theme-color;
                 cursor: pointer;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
                 &:hover {
                   text-decoration: underline;
                 }
@@ -2030,19 +1938,6 @@ export default defineComponent({
                   @media screen and (max-width: 1260px) {
                     width: 25px;
                     height: 25px;
-                  }
-                }
-                .machines-style {
-                  flex-wrap: wrap;
-                  span {
-                    padding: 3px 10px;
-                    margin: 3px 5px 3px 0;
-                    background-color: @theme-color;
-                    font-size: 12px;
-                    border-radius: 45px;
-                    word-break: break-word;
-                    line-height: 1;
-                    color: @white-color;
                   }
                 }
               }
@@ -2087,8 +1982,9 @@ export default defineComponent({
         }
         .chart-world {
           width: 100%;
-          margin: 0 auto;
-          height: 3.15rem;
+          height: 3.45rem;
+          height: 100%;
+          margin: 0;
           @media screen and (max-width: 768px) {
             height: 300px;
           }
@@ -2379,19 +2275,6 @@ export default defineComponent({
                 height: 25px;
               }
             }
-            .machines-style {
-              flex-wrap: wrap;
-              span {
-                padding: 3px 10px;
-                margin: 3px 5px 3px 0;
-                background-color: @theme-color;
-                font-size: 12px;
-                border-radius: 45px;
-                word-break: break-word;
-                line-height: 1;
-                color: @white-color;
-              }
-            }
           }
           &.el-table__expanded-cell {
             padding: 0.32rem 0.64rem;
@@ -2423,66 +2306,6 @@ export default defineComponent({
     .el-table__inner-wrapper::before {
       background-color: rgb(38, 39, 47);
       height: 0;
-    }
-    .el-pagination {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .el-select__wrapper,
-      .el-input,
-      .el-input__inner,
-      .el-pager {
-        font-family: "HELVETICA-ROMAN";
-        font-size: inherit;
-        @media screen and (max-width: 996px) {
-          height: 26px;
-          min-height: 26px;
-          line-height: 26px;
-        }
-      }
-      .el-pagination__total {
-        color: #878c93;
-      }
-      .btn-next,
-      .btn-prev,
-      .el-pager li {
-        min-width: 32px;
-        margin: 0 4px;
-        background-color: transparent;
-        font-size: inherit;
-        color: #878c93;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        @media screen and (max-width: 996px) {
-          width: 26px;
-          min-width: 26px;
-          height: 26px;
-        }
-        &:not(.disabled).active,
-        &:not(.disabled):hover,
-        &.is-active {
-          width: 24px;
-          min-width: 24px;
-          height: 24px;
-          line-height: 24px;
-          background-color: #f9fafb;
-          border-color: @border-color;
-          color: #606060;
-        }
-        &:not(.disabled):hover {
-        }
-      }
-      .el-pager li {
-        color: #606060;
-      }
-      .el-select {
-        width: 100px;
-      }
-      .el-input,
-      .el-select__wrapper {
-        min-height: 24px;
-        height: 24px;
-      }
     }
   }
 }
