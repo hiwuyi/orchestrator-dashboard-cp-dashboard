@@ -4,7 +4,7 @@
       <div class="drawer-content font-14" v-if="props.list.type === 'FCP'">
         <div class="flex-row space-between name-title">
           <b class="font-16 weight-4">{{props.list.name}}</b>
-          <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'FCP'}}" class="font-17" @click="closeHandle()">View CP Profile</router-link>
+          <router-link v-if="route.name !== 'accountInfo'" :to="{name:'accountInfo', params: {type: 'FCP'}}" class="font-16" @click="closeHandle()">View CP Profile</router-link>
         </div>
         <el-row class="font-14 note">
           <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
@@ -118,7 +118,8 @@
                 <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.status}}</div>
+                <div v-if="scope.row.status" :class="{'text-capitalize': true, 'color-available':scope.row.status.toLowerCase() === 'available', 'color-occupied':scope.row.status.toLowerCase() === 'occupied'}">{{scope.row.status}}</div>
+                <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.free" min-width="70">
@@ -126,7 +127,7 @@
                 <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.free}}</div>
+                <div class="color-free">{{scope.row.fb_memory_usage.free}}</div>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.total" min-width="70">
@@ -134,7 +135,7 @@
                 <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.total}}</div>
+                <div class="color-total">{{scope.row.fb_memory_usage.total}}</div>
               </template>
             </el-table-column>
             <el-table-column type="fb_memory_usage.used" min-width="70">
@@ -142,7 +143,7 @@
                 <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.fb_memory_usage.used}}</div>
+                <div class="color-used">{{scope.row.fb_memory_usage.used}}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -269,7 +270,8 @@
                 <div class="font-14 weight-4">Status</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.status}}</div>
+                <div v-if="scope.row.status" :class="{'text-capitalize': true, 'color-available':scope.row.status.toLowerCase() === 'available', 'color-occupied':scope.row.status.toLowerCase() === 'occupied'}">{{scope.row.status}}</div>
+                <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column type="free" min-width="70">
@@ -277,7 +279,7 @@
                 <div class="font-14 weight-4">Free</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.free}}</div>
+                <div class="color-free">{{scope.row.free}}</div>
               </template>
             </el-table-column>
             <el-table-column type="total" min-width="70">
@@ -285,7 +287,7 @@
                 <div class="font-14 weight-4">Total</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.total}}</div>
+                <div class="color-total">{{scope.row.total}}</div>
               </template>
             </el-table-column>
             <el-table-column type="used" min-width="70">
@@ -293,7 +295,7 @@
                 <div class="font-14 weight-4">Used</div>
               </template>
               <template #default="scope">
-                <div>{{scope.row.total-scope.row.free}}</div>
+                <div class="color-used">{{scope.row.total-scope.row.free}}</div>
               </template>
             </el-table-column>
           </el-table>

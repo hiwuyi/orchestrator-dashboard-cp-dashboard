@@ -6,7 +6,7 @@
         <img :src="swanLogo" class="swan-logo" />
       </div>
       <div class="font-12 desc">
-        Swan Provider is a SWAN computing provider explorer and data service platform, providing one-stop data services, including provider details and visualization charts.
+        Swan Provider is a SWAN provider explorer and data service platform, providing one-stop data services, including provider details and visualization charts.
       </div>
     </el-col>
     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="m">

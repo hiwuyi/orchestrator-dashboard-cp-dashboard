@@ -33,6 +33,22 @@
             <div class="font-14 weight-4">Task ID</div>
           </template>
         </el-table-column>
+        <el-table-column prop="task_contract" min-width="90">
+          <template #header>
+            <div class="font-14 weight-4">Task Contract</div>
+          </template>
+          <template #default="scope">
+            <div class="flex-row center copy-style">
+              {{system.$commonFun.hiddAddress(scope.row.task_contract)}}
+              <svg @click="system.$commonFun.copyContent(scope.row.task_contract, 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
+                <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
+                  fill="#3d3d3d" p-id="6468"></path>
+                <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
+                  fill="#3d3d3d" p-id="6469"></path>
+              </svg>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="type" column-key="type" filterable :filters="[
             { text: 'CPU', value: 'CPU' },
             { text: 'GPU', value: 'GPU' }
@@ -170,6 +186,7 @@ export default defineComponent({
               "task_id": 2011,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
@@ -184,6 +201,7 @@ export default defineComponent({
               "task_id": 2009,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
@@ -198,6 +216,7 @@ export default defineComponent({
               "task_id": 2007,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
@@ -212,6 +231,7 @@ export default defineComponent({
               "task_id": 2005,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
@@ -226,6 +246,7 @@ export default defineComponent({
               "task_id": 2003,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
@@ -240,6 +261,7 @@ export default defineComponent({
               "task_id": 2001,
               "type": 1,
               "zk_type": "fil-c2-32G",
+              "task_contract": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "beneficiary_addr": "0x1AE8665873565C9089753920A0866C49Bd35DCC9",
               "amount": "50.000000000000000000",
               "from": "0xd76a526A0612ce12633D66f97fFA7Ac365f95262",
