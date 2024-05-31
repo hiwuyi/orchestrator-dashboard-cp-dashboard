@@ -111,35 +111,59 @@
                 <el-dropdown-menu>
                   <el-dropdown-item command="overview">
                     <div class="profile router-link b">
-                      <div class="flex-row">
+                      <div class="flex-row font-18">
                         <i class="icon icon-Overview"></i>
                         <span>Overview</span>
                       </div>
                     </div>
                   </el-dropdown-item>
-                  <el-dropdown-item command="rankings">
+                  <el-dropdown-item command="rankings-fcp">
                     <div class="profile router-link b">
-                      <div class="flex-row">
-                        <i class="icon icon-Rankings"></i>
-                        <span>Rankings</span>
+                      <div class="flex-row font-18">
+                        <i class="icon icon-Rankings-fcp"></i>
+                        <span>FCP List</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="rankings-ecp">
+                    <div class="profile router-link b">
+                      <div class="flex-row font-18">
+                        <i class="icon icon-Rankings-ecp"></i>
+                        <span>ECP List</span>
                       </div>
                     </div>
                   </el-dropdown-item>
                   <el-dropdown-item command="resource">
                     <div class="profile router-link b">
-                      <div class="flex-row">
+                      <div class="flex-row font-18">
                         <i class="icon icon-Resource"></i>
                         <span>Resource</span>
                       </div>
                     </div>
                   </el-dropdown-item>
-                  <el-dropdown-item command="aar">
+                  <el-dropdown-item command="aar" divided>
                     <div class="profile router-link b">
-                      <div class="flex-row">
+                      <div class="flex-row font-18">
                         <i class="icon icon-AAR"></i>
                         <span>Atom Accelerator Race
                           <i class="icon icon-new"></i>
                         </span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="aar-fcp">
+                    <div class="profile router-link b">
+                      <div class="flex-row font-18">
+                        <i class="icon icon-AAR"></i>
+                        <span>FCP Ranking</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="aar-ecp">
+                    <div class="profile router-link b">
+                      <div class="flex-row font-18">
+                        <i class="icon icon-AAR"></i>
+                        <span>ECP Ranking</span>
                       </div>
                     </div>
                   </el-dropdown-item>
@@ -455,8 +479,10 @@ export default defineComponent({
         // await system.$commonFun.timeout(50)
         window.location.reload()
       } else if (key === 'overview') router.push({ path: '/overview' })
-      else if (key === 'rankings') router.push({ name: 'rankings', params: { type: 'FCP' } })
-      else if (key === 'aar') router.push({ name: 'aar', params: { type: 'FCP' } })
+      else if (key === 'rankings-fcp') router.push({ name: 'rankingsFCP' })
+      else if (key === 'rankings-ecp') router.push({ name: 'rankingsECP' })
+      else if (key === 'aar' || key === 'aar-fcp') router.push({ name: 'aarFCP' })
+      else if (key === 'aar-ecp') router.push({ name: 'aarECP' })
       else if (key === 'accountInfo') router.push({ name: 'accountInfo', params: { type: 'FCP' } })
       else if (key === 'resource') router.push({ name: 'resource' })
     }
@@ -606,7 +632,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 #container {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
   @media screen and (max-width: 1600px) {
     font-size: 15px;
@@ -639,7 +665,7 @@ export default defineComponent({
     img {
       height: 0.45rem;
       @media screen and (max-width: 767px) {
-        height: 35px;
+        height: 30px;
       }
     }
     .swan-right {
@@ -1401,7 +1427,7 @@ export default defineComponent({
     }
     .el-dropdown-menu__item {
       min-width: 170px;
-      padding: 5px 12px;
+      padding: 2px 12px;
       &:hover,
       &:focus {
         background-color: #fbfbfc;
@@ -1418,7 +1444,7 @@ export default defineComponent({
       }
       .profile {
         width: 100%;
-        padding: 5px 0 0;
+        padding: 0;
         margin: 0;
         // &.router-link {
         //   display: block;
@@ -1453,23 +1479,27 @@ export default defineComponent({
             height: 0.23rem;
             margin: 0 0.1rem 0 0;
             &.icon-Overview {
-              background: url(../assets/images/menu-01-01.png) no-repeat;
+              background: url(../assets/images/menu-01.png) no-repeat;
               background-size: 100%;
             }
-            &.icon-Rankings {
-              background: url(../assets/images/menu-02-01.png) no-repeat;
+            &.icon-Rankings-fcp {
+              background: url(../assets/images/menu-03.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-Rankings-ecp {
+              background: url(../assets/images/menu-02.png) no-repeat;
               background-size: 100%;
             }
             &.icon-AccountInfo {
-              background: url(../assets/images/menu-03-01.png) no-repeat;
+              background: url(../assets/images/menu-03.png) no-repeat;
               background-size: 100%;
             }
             &.icon-Resource {
-              background: url(../assets/images/menu-04-01.png) no-repeat;
+              background: url(../assets/images/menu-04.png) no-repeat;
               background-size: 100%;
             }
             &.icon-AAR {
-              background: url(../assets/images/menu-05-01.png) no-repeat;
+              background: url(../assets/images/menu-05.png) no-repeat;
               background-size: 100%;
             }
             &.icon-new {

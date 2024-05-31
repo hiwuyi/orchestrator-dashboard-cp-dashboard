@@ -397,11 +397,11 @@ a:focus {
     }
 }
 
-@media screen and (max-width:640px) {
+/* @media screen and (max-width:640px) {
     html,
     body,
     #app,
     .wrapper {
         font-size: 42px;
     }
-}
+} */

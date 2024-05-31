@@ -645,8 +645,11 @@ export default defineComponent({
               width: 100%;
               margin: 0 auto 0.24rem;
               height: 2.3rem;
-              @media screen and (max-width: 540px) {
-                height: 300px;
+              @media screen and (max-width: 768px) {
+                height: 250px;
+              }
+              @media screen and (max-width: 600px) {
+                height: 200px;
               }
             }
           }

@@ -118,7 +118,7 @@
         </div>
 
         <el-row :gutter="34" class="small-row">
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" v-for="gpu in gpuList" :key="gpu">
+          <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" v-for="gpu in gpuList" :key="gpu">
             <div class="grid-content">
               <div class="top flex-row space-between">
                 <div class="left flex-row font-20">
@@ -134,22 +134,22 @@
               <el-row :gutter="24" class="content">
                 <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
                   <el-row class="font-14 note">
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p>vRAM:</p>
                     </el-col>
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p class="color">{{gpu.vRAM}}</p>
                     </el-col>
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p>Interface:</p>
                     </el-col>
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p class="color">{{gpu.Interface}}</p>
                     </el-col>
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p>Price:</p>
                     </el-col>
-                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
                       <p class="color">{{gpu.Price}}</p>
                     </el-col>
                   </el-row>
@@ -803,6 +803,10 @@ export default defineComponent({
             width: calc(100% - 0.3rem);
             height: 100%;
             padding: 0 0 0 0.3rem;
+            @media screen and (max-width: 768px) {
+              width: 100%;
+              padding: 0;
+            }
           }
           .el-col {
             margin: 0.1rem 0 0;
@@ -933,6 +937,9 @@ export default defineComponent({
           height: 1.3rem;
           @media screen and (max-width: 768px) {
             height: 150px;
+          }
+          @media screen and (max-width: 600px) {
+            height: 200px;
           }
           &.big {
             height: 2.7rem;
@@ -1112,122 +1119,6 @@ export default defineComponent({
       .el-select__wrapper {
         min-height: 24px;
         height: 24px;
-      }
-    }
-  }
-}
-</style>
-
-<style lang="less">
-.menu-style {
-  border-radius: 0.1rem;
-  border-top-right-radius: 0.05rem;
-  .el-dropdown-menu {
-    position: relative;
-    border-radius: 0.1rem;
-    border-top-right-radius: 0.05rem;
-    &:first-child {
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 12px;
-        right: 12px;
-        height: 1px;
-        background-color: #e7e7e7;
-      }
-    }
-    .el-dropdown-menu__item {
-      min-width: 170px;
-      padding: 5px 12px;
-      &:hover,
-      &:focus {
-        background-color: #fbfbfc;
-        color: #000;
-        // background-color: rgba(116, 5, 255, 0.1);
-        // color: rgba(116, 5, 255, 1);
-        .link {
-          text-decoration: underline;
-        }
-      }
-      .link {
-        padding: 5px 0;
-        cursor: pointer;
-      }
-      .profile {
-        width: 100%;
-        padding: 5px 0 0;
-        margin: 0;
-        // &.router-link {
-        //   display: block;
-        //   width: 100%;
-        //   height: auto;
-        //   padding: 3px 3px 3px 22px;
-        //   &:hover {
-        //     text-decoration: underline;
-        //   }
-        // }
-        // &.b {
-        // }
-        cursor: pointer;
-        * {
-          cursor: pointer;
-        }
-        .tit {
-          font-size: 12px;
-          color: #989898;
-          line-height: 1.5;
-        }
-        .flex-row {
-          img {
-            margin-right: 7px;
-            border-radius: 100%;
-          }
-          .link {
-            padding: 2px 0;
-          }
-        }
-      }
-      .set {
-        vertical-align: middle;
-        * {
-          vertical-align: middle;
-        }
-        .el-button-group > .el-button {
-          border-radius: 7px;
-          &:first-child {
-            padding-left: 10px;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-          &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-        .el-icon {
-          margin: auto;
-          cursor: pointer;
-          svg {
-            width: 1em;
-            cursor: pointer;
-            path {
-              cursor: pointer;
-            }
-          }
-        }
-        .loginImg {
-          cursor: pointer;
-          img {
-            width: 23px;
-            height: 23px;
-            margin: 0 5px 0 0;
-            cursor: pointer;
-            background-color: #fff;
-            border: 1px solid #b9b9b9;
-            border-radius: 50%;
-          }
-        }
       }
     }
   }

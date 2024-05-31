@@ -304,7 +304,7 @@
             <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <div class="module-container">
             <div class="title flex-row">
               <i class="icon icon-gpu"></i>
@@ -320,7 +320,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <div class="module-container">
             <div class="title flex-row">
               <i class="icon icon-provider"></i>
@@ -336,7 +336,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <div class="module-container">
             <div class="title flex-row">
               <i class="icon icon-resource"></i>
@@ -352,7 +352,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <div class="module-container">
             <div class="title flex-row">
               <i class="icon icon-provider"></i>
@@ -368,7 +368,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="m">
           <div class="module-container font-14">
             <div class="title flex-row space-between">
               <div class="flex-row">
@@ -428,7 +428,7 @@
             </el-table>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="m">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="m">
           <div class="module-container font-14">
             <div class="title flex-row space-between">
               <div class="flex-row">
@@ -1977,8 +1977,11 @@ export default defineComponent({
           margin: -0.3rem auto 0;
           height: 2.3rem;
           @media screen and (max-width: 768px) {
-            height: 300px;
+            height: 250px;
           }
+              @media screen and (max-width: 600px) {
+                height: 200px;
+              }
         }
         .chart-world {
           width: 100%;
@@ -1987,9 +1990,6 @@ export default defineComponent({
           margin: 0;
           @media screen and (max-width: 768px) {
             height: 300px;
-          }
-          @media screen and (max-width: 540px) {
-            height: 400px;
           }
         }
         .chart {
@@ -2306,122 +2306,6 @@ export default defineComponent({
     .el-table__inner-wrapper::before {
       background-color: rgb(38, 39, 47);
       height: 0;
-    }
-  }
-}
-</style>
-
-<style lang="less">
-.menu-style {
-  border-radius: 0.1rem;
-  border-top-right-radius: 0.05rem;
-  .el-dropdown-menu {
-    position: relative;
-    border-radius: 0.1rem;
-    border-top-right-radius: 0.05rem;
-    &:first-child {
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 12px;
-        right: 12px;
-        height: 1px;
-        background-color: #e7e7e7;
-      }
-    }
-    .el-dropdown-menu__item {
-      min-width: 170px;
-      padding: 5px 12px;
-      &:hover,
-      &:focus {
-        background-color: #fbfbfc;
-        color: #000;
-        // background-color: rgba(116, 5, 255, 0.1);
-        // color: rgba(116, 5, 255, 1);
-        .link {
-          text-decoration: underline;
-        }
-      }
-      .link {
-        padding: 5px 0;
-        cursor: pointer;
-      }
-      .profile {
-        width: 100%;
-        padding: 5px 0 0;
-        margin: 0;
-        // &.router-link {
-        //   display: block;
-        //   width: 100%;
-        //   height: auto;
-        //   padding: 3px 3px 3px 22px;
-        //   &:hover {
-        //     text-decoration: underline;
-        //   }
-        // }
-        // &.b {
-        // }
-        cursor: pointer;
-        * {
-          cursor: pointer;
-        }
-        .tit {
-          font-size: 12px;
-          color: #989898;
-          line-height: 1.5;
-        }
-        .flex-row {
-          img {
-            margin-right: 7px;
-            border-radius: 100%;
-          }
-          .link {
-            padding: 2px 0;
-          }
-        }
-      }
-      .set {
-        vertical-align: middle;
-        * {
-          vertical-align: middle;
-        }
-        .el-button-group > .el-button {
-          border-radius: 7px;
-          &:first-child {
-            padding-left: 10px;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-          &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-        .el-icon {
-          margin: auto;
-          cursor: pointer;
-          svg {
-            width: 1em;
-            cursor: pointer;
-            path {
-              cursor: pointer;
-            }
-          }
-        }
-        .loginImg {
-          cursor: pointer;
-          img {
-            width: 23px;
-            height: 23px;
-            margin: 0 5px 0 0;
-            cursor: pointer;
-            background-color: #fff;
-            border: 1px solid #b9b9b9;
-            border-radius: 50%;
-          }
-        }
-      }
     }
   }
 }

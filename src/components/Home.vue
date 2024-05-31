@@ -69,6 +69,9 @@ export default defineComponent({
       &.el-header {
         background-color: @theme-color;
       }
+      @media screen and (max-width: 600px) {
+        padding: 0.2rem 0.3rem;
+      }
     }
     .el-container {
       // height: calc(100vh - 1rem);
@@ -87,6 +90,9 @@ export default defineComponent({
       }
       .el-main {
         padding: 0.2rem 0.5rem;
+        @media screen and (max-width: 600px) {
+          padding: 0.2rem 0.3rem;
+        }
       }
     }
   }

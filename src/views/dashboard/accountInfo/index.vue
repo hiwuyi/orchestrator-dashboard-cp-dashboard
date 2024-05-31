@@ -16,19 +16,19 @@
               <div class="note b">
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
-                    <p>CP Contract Address:</p>
+                    <p class="text-capitalize">CP Contract Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <p>{{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
-                    <p>Account type:</p>
+                    <p class="text-capitalize">Account Type:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="collateral m b-ecp" :class="{'b-fcp': activeName === 'FCP'}">{{activeName}}</div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
-                    <p>Owner Address:</p>
+                    <p class="text-capitalize">Owner Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
@@ -39,7 +39,7 @@
                         <path d="M251.65 662.81h-29.34a29.73 29.73 0 0 1-29.69-29.69V222.31a29.73 29.73 0 0 1 29.69-29.69h410.81a29.73 29.73 0 0 1 29.69 29.69v29.34a29 29 0 0 0 58 0v-29.34a87.79 87.79 0 0 0-87.69-87.69H222.31a87.79 87.79 0 0 0-87.69 87.69v410.81a87.79 87.79 0 0 0 87.69 87.69h29.34a29 29 0 0 0 0-58z"
                           fill="#3d3d3d" p-id="6469"></path>
                       </svg>
-                      <svg @click="system.$commonFun.goLink(`${system.$explorerLink}0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="16" height="16">
+                      <svg @click="system.$commonFun.goLink(`${system.$explorerLink}0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677`)" t="1716455516372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2408" width="14" height="14">
                         <path d="M892 928.1H134c-19.9 0-36-16.1-36-36v-758c0-19.9 16.1-36 36-36h314.1c19.9 0 36 16.1 36 36s-16.1 36-36 36H170v686h686V579.6c0-19.9 16.1-36 36-36s36 16.1 36 36v312.5c0 19.9-16.1 36-36 36z" fill="#2c2c2c" p-id="2409"></path>
                         <path d="M927.9 131.6v-0.5c-0.1-1.7-0.4-3.3-0.7-4.9 0-0.1 0-0.2-0.1-0.3-0.4-1.7-0.9-3.3-1.5-4.9v-0.1c-0.6-1.6-1.4-3.1-2.2-4.6 0-0.1-0.1-0.1-0.1-0.2-0.8-1.4-1.7-2.8-2.7-4.1-0.1-0.1-0.2-0.3-0.3-0.4-0.5-0.6-0.9-1.1-1.4-1.7 0-0.1-0.1-0.1-0.1-0.2-0.5-0.6-1-1.1-1.6-1.6l-0.4-0.4c-0.5-0.5-1.1-1-1.6-1.5l-0.1-0.1c-0.6-0.5-1.2-1-1.9-1.4-0.1-0.1-0.3-0.2-0.4-0.3-1.4-1-2.8-1.8-4.3-2.6l-0.1-0.1c-1.6-0.8-3.2-1.5-4.9-2-1.6-0.5-3.3-1-5-1.2-0.1 0-0.2 0-0.3-0.1l-2.4-0.3h-0.3c-0.7-0.1-1.3-0.1-2-0.1H640.1c-19.9 0-36 16.1-36 36s16.1 36 36 36h165L487.6 487.6c-14.1 14.1-14.1 36.9 0 50.9 7 7 16.2 10.5 25.5 10.5 9.2 0 18.4-3.5 25.5-10.5L856 221v162.8c0 19.9 16.1 36 36 36s36-16.1 36-36V134.1c0-0.8 0-1.7-0.1-2.5z"
                           fill="#2c2c2c" p-id="2410"></path>
@@ -47,7 +47,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
-                    <p>Worker Address:</p>
+                    <p class="text-capitalize">Worker Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
@@ -61,7 +61,7 @@
                     </div>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
-                    <p>Benefciary Address:</p>
+                    <p class="text-capitalize">beneficiary Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
@@ -1509,7 +1509,10 @@ export default defineComponent({
           margin: -0.3rem auto 0;
           height: 2.3rem;
           @media screen and (max-width: 768px) {
-            height: 300px;
+            height: 250px;
+          }
+          @media screen and (max-width: 600px) {
+            height: 200px;
           }
         }
       }
@@ -1919,122 +1922,6 @@ export default defineComponent({
       .el-select__wrapper {
         min-height: 24px;
         height: 24px;
-      }
-    }
-  }
-}
-</style>
-
-<style lang="less">
-.menu-style {
-  border-radius: 0.1rem;
-  border-top-right-radius: 0.05rem;
-  .el-dropdown-menu {
-    position: relative;
-    border-radius: 0.1rem;
-    border-top-right-radius: 0.05rem;
-    &:first-child {
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 12px;
-        right: 12px;
-        height: 1px;
-        background-color: #e7e7e7;
-      }
-    }
-    .el-dropdown-menu__item {
-      min-width: 170px;
-      padding: 5px 12px;
-      &:hover,
-      &:focus {
-        background-color: #fbfbfc;
-        color: #000;
-        // background-color: rgba(116, 5, 255, 0.1);
-        // color: rgba(116, 5, 255, 1);
-        .link {
-          text-decoration: underline;
-        }
-      }
-      .link {
-        padding: 5px 0;
-        cursor: pointer;
-      }
-      .profile {
-        width: 100%;
-        padding: 5px 0 0;
-        margin: 0;
-        // &.router-link {
-        //   display: block;
-        //   width: 100%;
-        //   height: auto;
-        //   padding: 3px 3px 3px 22px;
-        //   &:hover {
-        //     text-decoration: underline;
-        //   }
-        // }
-        // &.b {
-        // }
-        cursor: pointer;
-        * {
-          cursor: pointer;
-        }
-        .tit {
-          font-size: 12px;
-          color: #989898;
-          line-height: 1.5;
-        }
-        .flex-row {
-          img {
-            margin-right: 7px;
-            border-radius: 100%;
-          }
-          .link {
-            padding: 2px 0;
-          }
-        }
-      }
-      .set {
-        vertical-align: middle;
-        * {
-          vertical-align: middle;
-        }
-        .el-button-group > .el-button {
-          border-radius: 7px;
-          &:first-child {
-            padding-left: 10px;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-          &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-        .el-icon {
-          margin: auto;
-          cursor: pointer;
-          svg {
-            width: 1em;
-            cursor: pointer;
-            path {
-              cursor: pointer;
-            }
-          }
-        }
-        .loginImg {
-          cursor: pointer;
-          img {
-            width: 23px;
-            height: 23px;
-            margin: 0 5px 0 0;
-            cursor: pointer;
-            background-color: #fff;
-            border: 1px solid #b9b9b9;
-            border-radius: 50%;
-          }
-        }
       }
     }
   }

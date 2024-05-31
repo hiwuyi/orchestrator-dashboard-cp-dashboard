@@ -7,25 +7,25 @@
     <div class="providers-network font-14">
       <div class="module-container">
         <el-row class="search-body flex-row font-14">
-          <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+          <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
             <div class="flex-row nowrap child">
               <span class="font-14">Contract Address: </span>
               <el-input class="zk-input" v-model="networkZK.contract_address" placeholder="please enter Contract Address" @chang="searchZKProvider" @input="searchZKProvider" />
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
+          <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
             <div class="flex-row nowrap child">
               <span class="font-14">Name: </span>
               <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter CP name" @chang="searchZKProvider" @input="searchZKProvider" />
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="7" :xl="7">
+          <el-col :xs="24" :sm="12" :md="12" :lg="7" :xl="7">
             <div class="flex-row nowrap child">
               <span class="font-14">NodeID: </span>
               <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
             </div>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="3" :xl="3">
+          <el-col :xs="24" :sm="12" :md="12" :lg="3" :xl="3">
             <div class="flex-row nowrap child">
               <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
               <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
@@ -514,32 +514,6 @@ export default defineComponent({
               }
             }
           }
-          .chart-trends {
-            width: 100%;
-            margin: 0 auto;
-            height: 2.3rem;
-            @media screen and (max-width: 540px) {
-              height: 300px;
-            }
-          }
-          .chart-world {
-            width: 100%;
-            margin: 0 auto;
-            height: 3.15rem;
-            background-color: @theme-color;
-            border-radius: 0.2rem;
-            @media screen and (max-width: 540px) {
-              height: 400px;
-            }
-          }
-          .chart {
-            width: 100%;
-            margin: 0.45rem auto 0;
-            height: 500px;
-            @media screen and (max-width: 540px) {
-              height: 400px;
-            }
-          }
           .el-tabs {
             .el-tabs__header {
               margin: 0;
@@ -997,122 +971,6 @@ export default defineComponent({
         .el-select__wrapper {
           min-height: 24px;
           height: 24px;
-        }
-      }
-    }
-  }
-}
-</style>
-
-<style lang="less">
-.menu-style {
-  border-radius: 0.1rem;
-  border-top-right-radius: 0.05rem;
-  .el-dropdown-menu {
-    position: relative;
-    border-radius: 0.1rem;
-    border-top-right-radius: 0.05rem;
-    &:first-child {
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 12px;
-        right: 12px;
-        height: 1px;
-        background-color: #e7e7e7;
-      }
-    }
-    .el-dropdown-menu__item {
-      min-width: 170px;
-      padding: 5px 12px;
-      &:hover,
-      &:focus {
-        background-color: #fbfbfc;
-        color: #000;
-        // background-color: rgba(116, 5, 255, 0.1);
-        // color: rgba(116, 5, 255, 1);
-        .link {
-          text-decoration: underline;
-        }
-      }
-      .link {
-        padding: 5px 0;
-        cursor: pointer;
-      }
-      .profile {
-        width: 100%;
-        padding: 5px 0 0;
-        margin: 0;
-        // &.router-link {
-        //   display: block;
-        //   width: 100%;
-        //   height: auto;
-        //   padding: 3px 3px 3px 22px;
-        //   &:hover {
-        //     text-decoration: underline;
-        //   }
-        // }
-        // &.b {
-        // }
-        cursor: pointer;
-        * {
-          cursor: pointer;
-        }
-        .tit {
-          font-size: 12px;
-          color: #989898;
-          line-height: 1.5;
-        }
-        .flex-row {
-          img {
-            margin-right: 7px;
-            border-radius: 100%;
-          }
-          .link {
-            padding: 2px 0;
-          }
-        }
-      }
-      .set {
-        vertical-align: middle;
-        * {
-          vertical-align: middle;
-        }
-        .el-button-group > .el-button {
-          border-radius: 7px;
-          &:first-child {
-            padding-left: 10px;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-          &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-        .el-icon {
-          margin: auto;
-          cursor: pointer;
-          svg {
-            width: 1em;
-            cursor: pointer;
-            path {
-              cursor: pointer;
-            }
-          }
-        }
-        .loginImg {
-          cursor: pointer;
-          img {
-            width: 23px;
-            height: 23px;
-            margin: 0 5px 0 0;
-            cursor: pointer;
-            background-color: #fff;
-            border: 1px solid #b9b9b9;
-            border-radius: 50%;
-          }
         }
       }
     }
