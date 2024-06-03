@@ -93,7 +93,7 @@
               </p>
             </el-col>
             <el-col v-show="machines.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-              <div class="grid-content">
+              <div class="grid-content width">
                 <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               </div>
             </el-col>
@@ -245,7 +245,7 @@
               </p>
             </el-col>
             <el-col v-show="machinesECP.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-              <div class="grid-content">
+              <div class="grid-content width">
                 <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               </div>
             </el-col>
@@ -348,7 +348,7 @@
               </p>
             </el-col>
             <el-col v-show="machines.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
-              <div class="grid-content">
+              <div class="grid-content width">
                 <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               </div>
             </el-col>

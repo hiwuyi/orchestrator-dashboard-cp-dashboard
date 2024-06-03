@@ -1484,24 +1484,6 @@ export default defineComponent({
   }
   .header-title {
     padding: 0.1rem 0 0.15rem;
-    margin: 0 0 0.07rem;
-    border-bottom: 1px solid #858586;
-    line-height: 1.15;
-    h1 {
-      margin: 0 0.3rem 0 0;
-    }
-    a {
-      padding: 0.07rem 0.1rem;
-      margin: 0 0 0 0.1rem;
-      color: @theme-color;
-      i {
-        width: 0.25rem;
-        height: 0.25rem;
-        margin: 0 0 0 0.12rem;
-        background: url(../../../assets/images/icons/icon-01.png) no-repeat;
-        background-size: 100%;
-      }
-    }
   }
   .color {
     color: #3c85ff;

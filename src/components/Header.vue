@@ -1,9 +1,29 @@
 <template>
   <section id="container">
     <div class="swan-logo flex-row nowrap">
-      <img :src="swanLogo" @click="system.$commonFun.goLink('https://www.swanchain.io/')" />
+      <div class="flex-row space-between swan-icon">
+        <img :src="swanLogo" @click="system.$commonFun.goLink('https://www.swanchain.io/')" />
+
+        <div class="flex-row mobileShow">
+          <!-- @change="handleClick" -->
+          <el-select v-model="explorerList.value" placeholder="Select" size="small">
+            <template #prefix>
+              <div class="flex-row font-17">
+                <i class="icon icon-swanProxima"></i>
+                {{explorerList.value}}
+              </div>
+            </template>
+            <el-option v-for="item in explorerList.options" :key="item.value" :label="item.label" :value="item.value">
+              <div class="flex-row font-17">
+                <i class="icon icon-swanProxima"></i>
+                {{item.label}}
+              </div>
+            </el-option>
+          </el-select>
+        </div>
+      </div>
       <div class="flex-row nowrap swan-right font-17">
-        <div class="flex-row header-title">
+        <div class="flex-row pcShow">
           <!-- @change="handleClick" -->
           <el-select v-model="explorerList.value" placeholder="Select" size="small">
             <template #prefix>
@@ -25,7 +45,7 @@
           <web3-modal />
         </div>
 
-        <div class="header-right flex-row nowrap" v-if="accessToken !== ''">
+        <div class="header-right flex-row nowrap pcShow" v-if="accessToken !== ''">
           <div class="set">
             <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end" :hide-on-click="false">
               <div class="el-dropdown-link setting-style loginImg flex-row">
@@ -120,6 +140,9 @@
                         <span>ECP Ranking</span>
                       </div>
                     </div>
+                  </el-dropdown-item>
+                  <el-dropdown-item command="sign_out">
+                    <span class="link">Sign Out</span>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -500,11 +523,17 @@ export default defineComponent({
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0;
+    .swan-icon{
+    @media screen and (max-width: 600px) {
+      width: 100%;
+    }
     img {
       height: 0.45rem;
+      margin: 0 0.2rem 0 0;
       @media screen and (max-width: 767px) {
         height: 30px;
       }
+    }
     }
     .swan-right {
       @media screen and (max-width: 600px) {
@@ -513,77 +542,76 @@ export default defineComponent({
         width: 100%;
         margin: 6px 0 0;
       }
-      .pcShow {
-        display: block;
-        @media screen and (max-width: 768px) {
-          display: none;
-        }
-      }
-      .mobileShow {
+    }
+    .pcShow {
+      display: block;
+      @media screen and (max-width: 768px) {
         display: none;
-        @media screen and (max-width: 768px) {
-          display: block;
-        }
       }
-      :deep(.el-select) {
+    }
+    .mobileShow {
+      display: none;
+      @media screen and (max-width: 768px) {
+        display: block;
+      }
+    }
+    :deep(.el-select) {
+      width: auto;
+      margin: 0 0.1rem 0 0;
+      font-size: inherit;
+      .el-tooltip__trigger {
+        margin: 0;
         width: auto;
-        margin: 0 0.1rem 0 0;
+        height: auto;
+        padding: 0.04rem 0.22rem 0.04rem 0.12rem;
+        background-color: transparent;
         font-size: inherit;
-        .el-tooltip__trigger {
-          margin: 0;
-          width: auto;
-          height: auto;
-          padding: 0.04rem 0.22rem 0.04rem 0.12rem;
-          background-color: transparent;
-          font-size: inherit;
-          font-family: inherit;
-          border: 1px solid @white-color;
-          border-radius: 0.3rem;
-          box-shadow: none;
-          @media screen and (max-width: 767px) {
-            padding: 0.04rem 0.1rem;
-          }
-          .el-select__prefix {
-            margin: 0 0.06rem 0 0;
-            line-height: 1.2;
-            color: @white-color;
-            .icon {
-              width: 0.3rem;
-              height: 0.3rem;
-              margin: 0 0.07rem 0 0;
-              @media screen and (max-width: 1024px) {
-                width: 20px;
-                height: 20px;
-                margin: 0 0.03rem 0 0;
-              }
-              &.icon-swanProxima {
-                background: url(../assets/images/logo-swan.png) no-repeat center;
-                background-size: 90%;
-              }
+        font-family: inherit;
+        border: 1px solid @white-color;
+        border-radius: 0.3rem;
+        box-shadow: none;
+        @media screen and (max-width: 767px) {
+          padding: 0.04rem 0.1rem;
+        }
+        .el-select__prefix {
+          margin: 0 0.06rem 0 0;
+          line-height: 1.2;
+          color: @white-color;
+          .icon {
+            width: 0.3rem;
+            height: 0.3rem;
+            margin: 0 0.07rem 0 0;
+            @media screen and (max-width: 1024px) {
+              width: 20px;
+              height: 20px;
+              margin: 0 0.03rem 0 0;
             }
-          }
-          .el-select__selection {
-            display: none;
-            .el-select__selected-item {
-              position: relative;
-              top: auto;
-              margin: 0 0.06rem 0 0;
-              transform: translateY(0px);
-              line-height: 1.2;
-              color: #000;
-              &.is-hidden {
-                display: none;
-              }
-            }
-          }
-          .el-select__suffix {
-            .el-select__icon {
-              background: url(../assets/images/icons/icon-02.png) no-repeat
-                center;
+            &.icon-swanProxima {
+              background: url(../assets/images/logo-swan.png) no-repeat center;
               background-size: 90%;
-              svg {
-                display: none;
-              }
+            }
+          }
+        }
+        .el-select__selection {
+          display: none;
+          .el-select__selected-item {
+            position: relative;
+            top: auto;
+            margin: 0 0.06rem 0 0;
+            transform: translateY(0px);
+            line-height: 1.2;
+            color: #000;
+            &.is-hidden {
+              display: none;
+            }
+          }
+        }
+        .el-select__suffix {
+          .el-select__icon {
+            background: url(../assets/images/icons/icon-02.png) no-repeat center;
+            background-size: 90%;
+            svg {
+              display: none;
             }
           }
         }

@@ -11,6 +11,8 @@ import 'element-plus/dist/index.css'
 import en from 'element-plus/es/locale/lang/en'
 import commonFun from '@/utils/common'
 import './assets/js/world.js'
+import './assets/css/style.css'
+import './assets/css/common.less'
 import qs from 'qs'
 
 var routed = '';

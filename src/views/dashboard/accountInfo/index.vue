@@ -1282,58 +1282,6 @@ export default defineComponent({
       margin: 0 0 0 0.05rem;
     }
   }
-  :deep(.header-title) {
-    padding: 0.15rem 0 0.2rem;
-    margin: 0 0 0.07rem;
-    border-bottom: 1px solid #858586;
-    line-height: 1.15;
-    h1 {
-      margin: 0 0.3rem 0 0;
-    }
-    .link {
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    .el-select {
-      width: auto;
-      margin: 0 0.3rem 0 0;
-      font-size: inherit;
-      .el-tooltip__trigger {
-        margin: 0;
-        width: auto;
-        height: auto;
-        padding: 0.06rem 0.22rem;
-        font-size: inherit;
-        font-family: inherit;
-        border: 1px solid #b6c0d1;
-        border-radius: 0.07rem;
-        box-shadow: none;
-        .el-select__selected-item {
-          position: relative;
-          top: auto;
-          margin: 0 0.16rem 0 0;
-          transform: translateY(0px);
-          line-height: 1.2;
-          color: @theme-color;
-          &.is-hidden {
-            display: none;
-          }
-        }
-        .el-select__suffix {
-          .el-select__icon {
-            background: url(../../../assets/images/icons/icon-03.png) no-repeat
-              center;
-            background-size: 100%;
-            svg {
-              display: none;
-            }
-          }
-        }
-      }
-    }
-  }
   .color {
     color: #3c85ff;
   }
