@@ -403,7 +403,11 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <div class="name-style" :title="scope.row.name" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                    <template #reference>
+                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                    </template>
+                  </el-popover>
                 </template>
               </el-table-column>
               <el-table-column prop="computer_provider.active_deployment" sortable min-width="150">
@@ -464,7 +468,11 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <div class="name-style" :title="scope.row.name" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                    <template #reference>
+                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                    </template>
+                  </el-popover>
                 </template>
               </el-table-column>
               <el-table-column prop="status" min-width="90" column-key="status" filterable :filters="[
@@ -1709,146 +1717,6 @@ export default defineComponent({
               }
             }
           }
-        }
-        .el-table {
-          width: 100%;
-          margin: 0.24rem auto 0.2rem;
-          background-color: transparent;
-          font-size: inherit;
-          border-radius: 0.1rem;
-          border: 1px solid #e3e7ee;
-          tr {
-            background-color: transparent;
-            &:hover {
-              td {
-                background-color: #f3f6ff;
-              }
-            }
-            th {
-              word-break: break-word;
-              padding: 0.18rem 0;
-              background-color: @theme-color;
-              font-size: inherit;
-              border: 0;
-              &.ascending {
-                .cell {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #fff;
-                      }
-                      &.descending {
-                        border-top-color: #d0dcf9;
-                      }
-                    }
-                  }
-                }
-              }
-              &.descending {
-                .cell {
-                  .caret-wrapper {
-                    .sort-caret {
-                      &.ascending {
-                        border-bottom-color: #d0dcf9;
-                      }
-                      &.descending {
-                        border-top-color: #fff;
-                      }
-                    }
-                  }
-                }
-              }
-              .cell {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
-                color: @white-color;
-                word-break: break-word;
-                text-transform: capitalize;
-                text-align: center;
-                line-height: 1.1;
-                @media screen and (max-width: 540px) {
-                  font-size: 12px;
-                }
-                .el-table__column-filter-trigger {
-                  i {
-                    margin: 0 0 0 4px;
-                    color: @white-color;
-                  }
-                }
-                .caret-wrapper {
-                  .sort-caret {
-                    &.ascending {
-                      border-bottom-color: #d0dcf9;
-                    }
-                    &.descending {
-                      border-top-color: #d0dcf9;
-                    }
-                  }
-                }
-              }
-            }
-            td {
-              padding: 0.08rem 0;
-              background-color: @white-color;
-              font-size: inherit;
-              color: #3d3d3d;
-              border-color: #e3e7ee;
-              text-align: center;
-              .cell {
-                padding: 0 6px;
-                line-height: 1.1;
-              }
-              i {
-                margin-right: 5px;
-                color: @text-color;
-                font-size: 18px;
-                @media screen and (max-width: 1260px) {
-                  font-size: 16px;
-                }
-              }
-              .name-style {
-                color: @theme-color;
-                cursor: pointer;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                &:hover {
-                  text-decoration: underline;
-                }
-              }
-              .copy-style {
-                cursor: pointer;
-                flex-wrap: wrap;
-                svg {
-                  margin: 0 0 0 0.05rem;
-                }
-              }
-              .badge {
-                display: flex;
-                align-items: center;
-                white-space: normal;
-                word-break: break-word;
-                img {
-                  width: 30px;
-                  height: 30px;
-                  margin-right: 5px;
-                  @media screen and (max-width: 1260px) {
-                    width: 25px;
-                    height: 25px;
-                  }
-                }
-              }
-            }
-          }
-        }
-        .el-table--border .el-table__inner-wrapper::after,
-        .el-table--border::after,
-        .el-table--border::before,
-        .el-table__inner-wrapper::before {
-          background-color: rgb(38, 39, 47);
-          height: 0;
         }
         .chart-trends {
           width: 100%;

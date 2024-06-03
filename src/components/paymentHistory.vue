@@ -753,34 +753,16 @@ export default defineComponent({
     }
 
     .el-table {
-      background-color: transparent;
-      margin: 0 auto 0.24rem;
-      // border-radius: 0.1rem;
-      border: 1px solid rgb(30, 32, 39);
-
       tr {
-        &:hover {
-          td {
-            background-color: #f3f6ff;
+        th {
+          .cell {
+            .el-tooltip__trigger {
+              margin: 0 0 0 4px;
+            }
           }
         }
-        th,
         td {
-          padding: 0.1rem 0;
-          background-color: @primary-color;
-          font-size: 15px;
-          color: rgb(181, 183, 200);
-          border-color: rgb(38, 39, 47);
-          @media screen and (max-width: 1600px) {
-            font-size: 13px;
-          }
-          @media screen and (max-width: 768px) {
-            font-size: 12px;
-          }
-
           .cell {
-            display: flex;
-            align-items: center;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: normal;
@@ -788,150 +770,12 @@ export default defineComponent({
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             padding: 0 6px;
-            line-height: 1.5;
-            word-break: break-word;
-            text-align: center;
-            .copy-style {
-              cursor: pointer;
-              flex-wrap: wrap;
-              svg {
-                margin: 0 0 0 0.05rem;
-              }
-            }
             a {
               color: inherit;
-
               &:hover {
                 text-decoration: underline;
               }
             }
-
-            .el-button {
-              height: auto;
-              padding: 6px 0.1rem;
-              background-color: transparent;
-              font-family: inherit;
-              font-size: inherit;
-              border-color: @theme-color;
-              border-radius: 1rem;
-              line-height: 1;
-              color: @theme-color;
-
-              &:hover {
-                background-color: @theme-color;
-                color: @white-color;
-              }
-
-              &.is-disabled {
-                border-color: @text-color;
-                color: @text-color;
-
-                &:hover {
-                  background-color: transparent;
-                  color: @text-color;
-                }
-              }
-            }
-
-            .el-tooltip__trigger {
-              margin: 0 0 0 4px;
-            }
-          }
-        }
-
-        th {
-          font-size: 16px;
-          font-weight: normal;
-          background-color: @primary-color;
-          text-transform: uppercase;
-          color: @text-color;
-          @media screen and (max-width: 1600px) {
-            font-size: 14px;
-          }
-          @media screen and (max-width: 768px) {
-            font-size: 13px;
-          }
-          &.ascending {
-            .cell {
-              .caret-wrapper {
-                .sort-caret {
-                  &.ascending {
-                    border-bottom-color: #fff;
-                  }
-                  &.descending {
-                    border-top-color: #d0dcf9;
-                  }
-                }
-              }
-            }
-          }
-          &.descending {
-            .cell {
-              .caret-wrapper {
-                .sort-caret {
-                  &.ascending {
-                    border-bottom-color: #d0dcf9;
-                  }
-                  &.descending {
-                    border-top-color: #fff;
-                  }
-                }
-              }
-            }
-          }
-          .cell {
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .el-table__column-filter-trigger {
-            i {
-              margin: 0 0 0 4px;
-              color: @white-color;
-            }
-          }
-          .caret-wrapper {
-            .sort-caret {
-              &.ascending {
-                border-bottom-color: #d0dcf9;
-              }
-              &.descending {
-                border-top-color: #d0dcf9;
-              }
-            }
-          }
-        }
-      }
-
-      .el-table__inner-wrapper::before {
-        height: 0;
-      }
-    }
-    .pagination-style {
-      color: rgb(181, 183, 200);
-    }
-    .el-pagination {
-      margin: 0.4rem auto;
-      justify-content: center;
-      font-size: inherit;
-      .btn-next,
-      .btn-prev,
-      .el-pager li {
-        background-color: @primary-color;
-        color: rgb(181, 183, 200);
-
-        &.active,
-        &:hover {
-          color: @white-color;
-        }
-      }
-
-      .btn-prev {
-        i {
-          font-size: 14px;
-          @media screen and (min-width: 1800px) {
-            font-size: 16px;
           }
         }
       }

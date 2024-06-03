@@ -212,9 +212,13 @@
                   <div class="font-14 weight-4">Machine ID</div>
                 </template>
                 <template #default="scope">
-                  <div class="badge flex-row center name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
-                    {{scope.row.name}}
-                  </div>
+                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                    <template #reference>
+                      <div class="badge flex-row center name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
+                        {{scope.row.name}}
+                      </div>
+                    </template>
+                  </el-popover>
                 </template>
               </el-table-column>
               <!-- <el-table-column prop="country" label="Country" /> -->
@@ -248,6 +252,13 @@
               <el-table-column prop="region" min-width="100">
                 <template #header>
                   <div class="font-14 weight-4">Region</div>
+                </template>
+                <template #default="scope">
+                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.region">
+                    <template #reference>
+                      <div class="name-style black">{{scope.row.region}}</div>
+                    </template>
+                  </el-popover>
                 </template>
               </el-table-column>
               <el-table-column prop="task" min-width="140">
@@ -1557,213 +1568,6 @@ export default defineComponent({
             line-height: 24px;
           }
         }
-      }
-    }
-    .el-table {
-      width: 100%;
-      margin: 0 auto 0.24rem;
-      background-color: transparent;
-      font-size: inherit;
-      border-radius: 0.1rem;
-      border: 1px solid #c6cddc;
-      tr {
-        background-color: transparent;
-        &:hover {
-          td {
-            background-color: #f3f6ff;
-          }
-        }
-        th {
-          word-break: break-word;
-          padding: 0.18rem 0;
-          background-color: @theme-color;
-          font-size: inherit;
-          border: 0;
-          &.ascending {
-            .cell {
-              .caret-wrapper {
-                .sort-caret {
-                  &.ascending {
-                    border-bottom-color: #fff;
-                  }
-                  &.descending {
-                    border-top-color: #d0dcf9;
-                  }
-                }
-              }
-            }
-          }
-          &.descending {
-            .cell {
-              .caret-wrapper {
-                .sort-caret {
-                  &.ascending {
-                    border-bottom-color: #d0dcf9;
-                  }
-                  &.descending {
-                    border-top-color: #fff;
-                  }
-                }
-              }
-            }
-          }
-          .cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            color: @white-color;
-            word-break: break-word;
-            text-transform: capitalize;
-            text-align: center;
-            line-height: 1.1;
-            @media screen and (max-width: 540px) {
-              font-size: 12px;
-            }
-            .el-table__column-filter-trigger {
-              i {
-                margin: 0 0 0 4px;
-                color: @white-color;
-              }
-            }
-            .caret-wrapper {
-              .sort-caret {
-                &.ascending {
-                  border-bottom-color: #d0dcf9;
-                }
-                &.descending {
-                  border-top-color: #d0dcf9;
-                }
-              }
-            }
-          }
-        }
-        td {
-          padding: 0.08rem 0;
-          background-color: @white-color;
-          font-size: inherit;
-          color: #3d3d3d;
-          border-color: #c6cddc;
-          text-align: center;
-          .cell {
-            padding: 0 6px;
-            line-height: 1.1;
-          }
-          i {
-            margin-right: 5px;
-            color: @text-color;
-            font-size: 18px;
-            @media screen and (max-width: 1260px) {
-              font-size: 16px;
-            }
-          }
-          .name-style {
-            color: @theme-color;
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-          .badge {
-            display: flex;
-            align-items: center;
-            white-space: normal;
-            word-break: break-word;
-            .img {
-              width: 0.23rem;
-              height: 0.23rem;
-              margin-right: 0.15rem;
-              @media screen and (max-width: 1260px) {
-                width: 20px;
-                height: 20px;
-              }
-            }
-            .machines-style {
-              flex-wrap: wrap;
-              span {
-                padding: 3px 10px;
-                margin: 3px 5px 3px 0;
-                background-color: @theme-color;
-                border-radius: 45px;
-                word-break: break-word;
-                line-height: 1;
-                color: @white-color;
-              }
-            }
-          }
-        }
-      }
-    }
-    .el-table--border .el-table__inner-wrapper::after,
-    .el-table--border::after,
-    .el-table--border::before,
-    .el-table__inner-wrapper::before {
-      background-color: rgb(38, 39, 47);
-      height: 0;
-    }
-    .pagination-style {
-      color: #878c93;
-    }
-    .el-pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      font-size: inherit;
-      .el-select__wrapper,
-      .el-input,
-      .el-input__inner,
-      .el-pager {
-        font-family: "HELVETICA-ROMAN";
-        font-size: inherit;
-        @media screen and (max-width: 996px) {
-          height: 26px;
-          min-height: 26px;
-          line-height: 26px;
-        }
-      }
-      .el-pagination__total {
-        color: #878c93;
-      }
-      .btn-next,
-      .btn-prev,
-      .el-pager li {
-        min-width: 24px;
-        margin: 0 4px;
-        background-color: transparent;
-        font-size: inherit;
-        color: #878c93;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        @media screen and (max-width: 996px) {
-          width: 26px;
-          min-width: 26px;
-          height: 26px;
-        }
-        &:not(.disabled).active,
-        &:not(.disabled):hover,
-        &.is-active {
-          width: 24px;
-          min-width: 24px;
-          height: 24px;
-          line-height: 24px;
-          background-color: #f9fafb;
-          border-color: @border-color;
-          color: #606060;
-        }
-        &:not(.disabled):hover {
-        }
-      }
-      .el-pager li {
-        color: #606060;
-      }
-      .el-select {
-        width: 100px;
-      }
-      .el-input,
-      .el-select__wrapper {
-        min-height: 24px;
-        height: 24px;
       }
     }
   }

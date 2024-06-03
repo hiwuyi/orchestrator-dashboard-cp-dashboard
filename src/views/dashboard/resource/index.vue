@@ -151,7 +151,7 @@
                   <span class="small-text font-14">{{gpu.available ?'Available':'Occupied'}}</span>
                 </div>
               </div>
-              <el-row :gutter="24" class="content">
+              <el-row :gutter="childWidth" class="content">
                 <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
                   <el-row class="font-14 note">
                     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="flex-row baseline">
@@ -175,7 +175,7 @@
                   </el-row>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10" class="flex-row flex-end align-end">
-                  <a :href="gpu.rentnow ? 'javascript:void(0);' : 'https://lagrangedao.org/'" target="_blank" class="font-14" :class="{'is-disabled': gpu.rentnow}">RENT NOW</a>
+                  <a :href="gpu.rentnow ? 'javascript:void(0);' : 'https://lagrangedao.org/'" target="_blank" class="font-14 text-center" :class="{'is-disabled': gpu.rentnow}">RENT NOW</a>
                 </el-col>
               </el-row>
             </div>
@@ -205,6 +205,7 @@ export default defineComponent({
     const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
     const bodyWidth = ref(document.body.clientWidth > 1440 ? '34' : '24')
+    const childWidth = ref(document.body.clientWidth > 1440 ? '24' : '12')
     const route = useRoute()
     const router = useRouter()
     const chipsetList = reactive({
@@ -665,6 +666,7 @@ export default defineComponent({
       route,
       metaAddress,
       bodyWidth,
+      childWidth,
       networkInput, chipsetList, vRAMList, interfaceList, gpuList, providersLoad, providersTableLoad, weekList,
       searchProvider, clearProvider, handleClick
     }
@@ -828,7 +830,6 @@ export default defineComponent({
             @media screen and (max-width: 768px) {
               width: 100%;
               padding: 0;
-              margin: 0.4rem 0 0;
             }
           }
           .el-col {
@@ -865,17 +866,21 @@ export default defineComponent({
           }
           .content {
             a {
-              padding: 0.08rem 0.15rem;
+              width: 100%;
+              padding: 0.08rem 0;
               background-color: #edf2ff;
               border: 1px solid #a8c2ff;
               border-radius: 0.5rem;
               color: @theme-color;
               line-height: 1;
               cursor: pointer;
+              @media screen and (max-width: 1200px) {
+                margin: 0.2rem 0 0.1rem;
+              }
               &.is-disabled {
                 background-color: #f3f4f8;
                 border-color: #c6cedc;
-                color: #000;
+                color: #ababab;
                 cursor: no-drop;
                 pointer-events: none;
               }

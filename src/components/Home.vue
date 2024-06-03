@@ -86,6 +86,9 @@ export default defineComponent({
         padding: 0.4rem 0.15rem 0.25rem;
         background-color: @white-color;
         overflow: unset;
+        @media screen and (max-width: 1440px) {
+          max-width: 2.6rem;
+        }
         @media screen and (max-width: 1024px) {
           max-width: 3.4rem;
         }
