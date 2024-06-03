@@ -100,21 +100,39 @@ export default {
 }
 .font-18 {
   font-size: 0.18rem;
+  @media screen and (max-width: 1024px) {
+    font-size: 15px;
+  }
 }
 .font-17 {
   font-size: 0.17rem;
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 }
 .font-16 {
   font-size: 0.16rem;
+  @media screen and (max-width: 1440px) {
+    font-size: 14px;
+  }
 }
 .font-14 {
   font-size: 0.14rem;
+  @media screen and (max-width: 1440px) {
+    font-size: 13px;
+  }
 }
 .font-13 {
   font-size: 0.13rem;
+  @media screen and (max-width: 1440px) {
+    font-size: 12px;
+  }
 }
 .font-12 {
   font-size: 0.12rem;
+  @media screen and (max-width: 1440px) {
+    font-size: 12px;
+  }
 }
 
 .font-bold {
@@ -270,6 +288,15 @@ export default {
       height: 0.16rem;
       margin: 0 0.03rem 0 0;
       background-color: #7c889b;
+      // @media screen and (max-width: 1680px) {
+      //   width: 4px;
+      //   height: 14px;
+      // }
+      @media screen and (max-width: 1440px) {
+        width: 3px;
+        height: 12px;
+        margin: 0 2px 0 0;
+      }
       &.active {
         background-color: @theme-color;
       }
@@ -278,9 +305,15 @@ export default {
   .uptime-text {
     min-width: 45px;
     margin: 0 0 0 0.06rem;
+    @media screen and (min-width: 1800px) {
+      min-width: 55px;
+    }
     &.task {
       min-width: 70px;
       margin: 0 0 0 0.02rem;
+      @media screen and (min-width: 1800px) {
+        min-width: 80px;
+      }
     }
   }
 }

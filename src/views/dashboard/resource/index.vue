@@ -13,7 +13,7 @@
               <span class="font-16 weight-4">Current Resource Use</span>
             </div>
             <el-row class="width">
-              <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">GPU Usage</p>
                   <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#93c605" class="color-gpu" />
@@ -22,7 +22,7 @@
                     <span class="color-gpu">41</span> Used 240 Free</p>
                 </div>
               </el-col>
-              <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">CPU Usage</p>
                   <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#699bff" class="color-cpu" />
@@ -31,7 +31,7 @@
                     <span class="color-cpu">41</span> Used 240 Free</p>
                 </div>
               </el-col>
-              <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Memory Usage (GB)</p>
                   <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#52ce7c" class="color-memory" />
@@ -40,7 +40,7 @@
                     <span class="color-memory">41</span> Used 240 Free</p>
                 </div>
               </el-col>
-              <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+              <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Storage Usage (TB)</p>
                   <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#0046b7" class="color-storage" />
@@ -68,7 +68,7 @@
     </div>
 
     <div class="providers-overview">
-      <el-row :gutter="50">
+      <el-row :gutter="16">
         <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14" class="flex-row baseline">
           <div class="usage-style flex-row font-24 font-bold">
             <label>Total Available GPUs: </label>
@@ -84,40 +84,60 @@
 
     <div class="providers-network font-14">
       <div class="providers-cp">
-        <div class="search-body flex-row font-14">
-          <span class="font-14">Chipset: </span>
-          <el-select v-model="chipsetList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in chipsetList.options" :key="item.value" :label="item.label" :value="item.value">
-              <div class="font-14">{{item.label}}</div>
-            </el-option>
-          </el-select>
-          <span class="font-14">vRAM: </span>
-          <el-select v-model="vRAMList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in vRAMList.options" :key="item.value" :label="item.label" :value="item.value">
-              <div class="font-14">{{item.label}}</div>
-            </el-option>
-          </el-select>
-          <span class="font-14">Interface: </span>
-          <el-select v-model="interfaceList.value" @change="handleClick" placeholder="Select" size="small">
-            <el-option v-for="item in interfaceList.options" :key="item.value" :label="item.label" :value="item.value">
-              <div class="font-14">{{item.label}}</div>
-            </el-option>
-          </el-select>
-          <span class="font-14">Price from </span>
-          <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
-          <span class="font-14">to </span>
-          <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
-          <span class="font-14">$ &nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <el-button type="info" :disabled="!networkInput ? true:false" round @click="clearProvider">Clear</el-button>
-          <el-button type="primary" :disabled="!networkInput ? true:false" round @click="searchProvider">
-            <el-icon>
-              <Search />
-            </el-icon>
-            Search
-          </el-button>
-        </div>
+        <el-row class="search-body flex-row font-14">
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="4">
+            <div class="flex-row nowrap child">
+              <span class="font-14">Chipset: </span>
+              <el-select v-model="chipsetList.value" @change="handleClick" placeholder="Select" size="small">
+                <el-option v-for="item in chipsetList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </el-col>
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="4">
+            <div class="flex-row nowrap child">
+              <span class="font-14">vRAM: </span>
+              <el-select v-model="vRAMList.value" @change="handleClick" placeholder="Select" size="small">
+                <el-option v-for="item in vRAMList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </el-col>
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="4">
+            <div class="flex-row nowrap child">
+              <span class="font-14">Interface: </span>
+              <el-select v-model="interfaceList.value" @change="handleClick" placeholder="Select" size="small">
+                <el-option v-for="item in interfaceList.options" :key="item.value" :label="item.label" :value="item.value">
+                  <div class="font-14">{{item.label}}</div>
+                </el-option>
+              </el-select>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <div class="flex-row nowrap child">
+              <span class="font-14">Price from </span>
+              <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
+              <span class="font-14">to </span>
+              <el-input v-model="networkInput" placeholder=" " class="font-14 small-spacing" @chang="searchProvider" @input="searchProvider" />
+              <span class="font-14">$ &nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+          </el-col>
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="4">
+            <div class="flex-row nowrap child">
+              <el-button type="info" :disabled="!networkInput ? true:false" round @click="clearProvider">Clear</el-button>
+              <el-button type="primary" :disabled="!networkInput ? true:false" round @click="searchProvider">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
 
-        <el-row :gutter="34" class="small-row">
+        <el-row :gutter="bodyWidth" class="small-row">
           <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" v-for="gpu in gpuList" :key="gpu">
             <div class="grid-content">
               <div class="top flex-row space-between">
@@ -184,6 +204,7 @@ export default defineComponent({
     const metaAddress = computed(() => (store.state.metaAddress))
     const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
+    const bodyWidth = ref(document.body.clientWidth > 1440 ? '34' : '24')
     const route = useRoute()
     const router = useRouter()
     const chipsetList = reactive({
@@ -643,6 +664,7 @@ export default defineComponent({
       system,
       route,
       metaAddress,
+      bodyWidth,
       networkInput, chipsetList, vRAMList, interfaceList, gpuList, providersLoad, providersTableLoad, weekList,
       searchProvider, clearProvider, handleClick
     }
@@ -729,6 +751,10 @@ export default defineComponent({
         width: 0.24rem;
         height: 0.24rem;
         margin: 0 0.09rem 0 0;
+        @media screen and (max-width: 1024px) {
+          width: 16px;
+          height: 16px;
+        }
         &.icon-use {
           background: url(../../../assets/images/icons/icon-06.png) no-repeat;
           background-size: 100%;
@@ -767,10 +793,6 @@ export default defineComponent({
         &.flex-row {
           display: flex;
         }
-        .title-link {
-          margin: auto;
-          line-height: 1;
-        }
         .grid-content {
           position: relative;
           width: calc(100% - 0.48rem);
@@ -806,6 +828,7 @@ export default defineComponent({
             @media screen and (max-width: 768px) {
               width: 100%;
               padding: 0;
+              margin: 0.4rem 0 0;
             }
           }
           .el-col {
@@ -963,9 +986,15 @@ export default defineComponent({
     .search-body {
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin: 0.3rem 0 0;
+      margin: 0;
+      .child {
+        height: 100%;
+        span {
+          white-space: nowrap;
+        }
+      }
       .el-select {
-        width: auto;
+        width: 100%;
         margin: 0 0.3rem 0 0.17rem;
         font-size: inherit;
         .el-tooltip__trigger {
@@ -1005,9 +1034,9 @@ export default defineComponent({
         }
       }
       .el-input {
-        width: 0.7rem;
-        max-width: 250px;
-        min-width: 60px;
+        width: 100%;
+        // max-width: 250px;
+        // min-width: 60px;
         margin: 0 0.16rem 0 0.1rem;
         font-size: inherit;
         &.small-spacing {

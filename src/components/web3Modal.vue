@@ -1,6 +1,6 @@
 <script setup>
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
-import { reconnect } from '@wagmi/core'
+import { reconnect, getChainId  } from '@wagmi/core'
 import { useStore } from "vuex"
 import {
   computed,
@@ -51,6 +51,9 @@ async function throttle () {
 }
 
 let account = reactive(getAccount(config))
+
+// const chainId = reactive(getChainId(config))
+// console.log(chainId)
 
 async function login2 () {
   // console.log('here')

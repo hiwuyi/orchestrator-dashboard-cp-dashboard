@@ -15,7 +15,7 @@
     </div>
 
     <div class="providers-overview">
-      <el-row :gutter="42">
+      <el-row :gutter="bodyWidth">
         <el-col :xs="24" :sm="24" :md="24" :lg="13" :xl="13" class="flex-row baseline">
           <div class="module-container">
             <div class="title flex-row">
@@ -29,7 +29,7 @@
                   <span class="font-14">Overview Data</span>
                 </template>
                 <el-row :gutter="18">
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -39,7 +39,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active ECP numbers</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -49,7 +49,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -58,7 +58,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Applications</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -67,7 +67,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -76,7 +76,7 @@
                       <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -92,7 +92,7 @@
                   <span class="font-14">FCP Summary</span>
                 </template>
                 <el-row :gutter="18">
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -102,7 +102,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active Applications</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -112,7 +112,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Deployments</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -121,7 +121,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total jobs</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -130,7 +130,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total running jobs</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -140,7 +140,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -149,7 +149,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total CPU hours</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -165,7 +165,7 @@
                   <span class="font-14">ECP Summary</span>
                 </template>
                 <el-row :gutter="18">
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Active ECP Number</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -175,7 +175,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -185,7 +185,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -194,7 +194,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">GPU ZK task</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -203,7 +203,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">CPU ZK task</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -212,7 +212,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Verified ZK task</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -221,7 +221,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content g-select">
                       <h6 class="font-12 weight-4 text-center flex-row nowrap">
                         <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
@@ -244,7 +244,7 @@
                   <span class="font-14">Swan Chain</span>
                 </template>
                 <el-row :gutter="18">
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Addresses</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -253,7 +253,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Contracts(24H)</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -263,7 +263,7 @@
                       <h6 class="font-12 weight-4 text-right t">24h change</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Transactions Today</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -272,7 +272,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Transactions</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -281,7 +281,7 @@
                       <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
                     <div class="grid-content">
                       <h6 class="font-12 weight-4 text-center">Total Accounts</h6>
                       <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
@@ -300,6 +300,19 @@
             <div class="title flex-row">
               <i class="icon icon-world"></i>
               <span class="font-16 weight-4">Location Overview</span>
+            </div>
+            <div class="world-buttom">
+              <svg @click="resetMap" t="1717382052739" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8179" width="18" height="18">
+                <path d="M713.536 255.232l-58.624 72.192L960 355.712 868.8 64l-72.512 89.344A458.88 458.88 0 0 0 523.52 64C269.76 64 64 269.184 64 522.24c0 253.12 205.76 458.24 459.52 458.24a459.648 459.648 0 0 0 429.44-294.72 65.408 65.408 0 0 0-37.824-84.48 65.728 65.728 0 0 0-84.8 37.76A328.32 328.32 0 0 1 523.584 849.6c-181.312 0-328.32-146.56-328.32-327.36 0-180.736 147.008-327.296 328.32-327.296 69.376 0 135.232 21.504 189.952 60.288"
+                  fill="#ffffff" p-id="8180"></path>
+              </svg>
+              <svg @click="roamMap(0)" t="1717381974237" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6091" width="18" height="18">
+                <path d="M580.722174 437.990403 580.722174 78.171384 436.794158 78.171384 436.794158 437.990403 76.975139 437.990403 76.975139 581.918419 436.794158 581.918419 436.794158 941.737438 580.722174 941.737438 580.722174 581.918419 940.542216 581.918419 940.542216 437.990403Z"
+                  fill="#ffffff" p-id="6092"></path>
+              </svg>
+              <svg @click="roamMap(1)" t="1717382018337" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7130" width="18" height="18">
+                <path d="M587.229378 437.990403 580.722174 437.990403 76.975139 437.990403 76.975139 581.918419 580.722174 581.918419 587.229378 581.918419 940.542216 581.918419 940.542216 437.990403Z" fill="#ffffff" p-id="7131"></path>
+              </svg>
             </div>
             <div class='chart-world' id='chart-world' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
           </div>
@@ -398,7 +411,7 @@
                   <div class="font-14 weight-4">Active deployment</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="computer_provider.score" width="80">
+              <el-table-column prop="computer_provider.score" width="70">
                 <template #header>
                   <div class="font-14 weight-4">Score</div>
                 </template>
@@ -508,6 +521,7 @@ export default defineComponent({
     const metaAddress = computed(() => (store.state.metaAddress))
     const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
+    const bodyWidth = ref(document.body.clientWidth > 1440 ? '42' : '28')
     const route = useRoute()
     const router = useRouter()
     const gmtTime = new Date().toGMTString()
@@ -625,7 +639,13 @@ export default defineComponent({
       return l
     }
     async function getCounters () {
-      const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/smart-contracts/counters`, 'get')
+      // const statsRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_STATS}v2/smart-contracts/counters`, 'get')
+      const statsRes = {
+        "new_smart_contracts_24h": "13671",
+        "new_verified_smart_contracts_24h": "0",
+        "smart_contracts": "143652",
+        "verified_smart_contracts": "5"
+      }
       if (statsRes) {
         providerBody.totalData.new_smart_contracts_24h = statsRes.new_smart_contracts_24h || ''
         providerBody.totalData.smart_contracts = statsRes.smart_contracts || ''
@@ -640,8 +660,32 @@ export default defineComponent({
       getUBITable()
       getCounters()
     }
+    let chart = null
+    function resetMap () {
+      chart.setOption({
+        geo: {
+          center: undefined,
+          zoom: 1.1
+        }
+      })
+    }
+    function roamMap (flag) {
+      const currentZoom = chart.getOption().geo[0].zoom
+      let increaseAmplitude = 1.1
+      if (flag === 1) {
+        increaseAmplitude = 0.8
+        if (currentZoom < 1) increaseAmplitude = 1
+      } else if (flag == 2) {
+        increaseAmplitude = 0 //reset
+      }
+      chart.setOption({
+        geo: {
+          zoom: currentZoom * increaseAmplitude < 1 ? 1 : currentZoom * increaseAmplitude
+        },
+      })
+    }
     function drawChart (dataArr) {
-      let chart = echarts.init(document.getElementById('chart-world'))
+      chart = echarts.init(document.getElementById('chart-world'))
       window.addEventListener('resize', function () {
         chart.resize()
       })
@@ -661,7 +705,7 @@ export default defineComponent({
           feature: {
             dataZoom: { show: false },
             restore: {
-              show: true,
+              show: false,
               textStyle: {
                 color: 'transparent' // 文字颜色设置为透明
               },
@@ -680,7 +724,7 @@ export default defineComponent({
             },
 
             // 放大缩小按钮
-            zoom: { show: true },
+            // zoom: { show: true },
           },
           textStyle: {
             color: '#fff',
@@ -738,8 +782,7 @@ export default defineComponent({
             }
           },
           // aspectScale: 0.75,
-          // roam: true, // 开启拖拽和缩放
-          // zoom: 1.2,
+          roam: true, // 开启拖拽和缩放
           toolbox: {
             show: true,
             feature: {
@@ -769,7 +812,7 @@ export default defineComponent({
             focus: 'none'
           },
           silent: true,
-          zoom: 1.1,
+          zoom: 1,
           scaleLimit: {
             min: 1 // 设置最小缩放倍数为1
           },
@@ -1410,13 +1453,14 @@ export default defineComponent({
       system,
       route,
       metaAddress,
+      bodyWidth,
       gmtTime,
       providersLoad,
       providersTableLoad,
       providersData,
       providerBody,
       accessToken, activeName, cpLoad, AvgZKRewards, weekList,
-      handleCP
+      handleCP, resetMap, roamMap
     }
   }
 })
@@ -1451,15 +1495,6 @@ export default defineComponent({
       }
     }
   }
-  :deep(.el-button) {
-    border: 0;
-    border-radius: 0.08rem;
-    background: linear-gradient(45deg, #025bd5, #3c73ec);
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    font-family: inherit;
-  }
   .color {
     color: #3c85ff;
   }
@@ -1486,8 +1521,6 @@ export default defineComponent({
         &.flex-row {
           display: flex;
         }
-        &.m {
-        }
         .module-container {
           position: relative;
           width: calc(100% - 0.64rem);
@@ -1495,6 +1528,8 @@ export default defineComponent({
           padding: 0.25rem 0.32rem;
           background-color: @white-color;
           border-radius: 0.14rem;
+          @media screen and (max-width: 768px) {
+          }
           &.world {
             width: 100%;
             height: 100%;
@@ -1520,6 +1555,10 @@ export default defineComponent({
               width: 0.24rem;
               height: 0.24rem;
               margin: 0 0.09rem 0 0;
+              @media screen and (max-width: 1024px) {
+                width: 16px;
+                height: 16px;
+              }
               &.icon-world {
                 background: url(../../../assets/images/icons/icon-05.png)
                   no-repeat;
@@ -1562,10 +1601,6 @@ export default defineComponent({
             }
           }
         }
-        .title-link {
-          margin: auto;
-          line-height: 1;
-        }
         .grid-content {
           position: relative;
           height: calc(100% - 0.3rem);
@@ -1573,6 +1608,9 @@ export default defineComponent({
           background: @white-color;
           border-radius: 0.18rem;
           // box-shadow: 0 0 12px #e6e7eb;
+          @media screen and (max-width: 1440px) {
+            padding: 0.18rem 0.04rem 0.12rem;
+          }
         }
         h6 {
           width: 100%;
@@ -1770,145 +1808,6 @@ export default defineComponent({
                   font-size: 16px;
                 }
               }
-              .service-body {
-                padding: 0 0.25rem 0.1rem;
-                // color: #333;
-                // border-top: rgb(220, 223, 230) 1px solid;
-                // border-bottom: rgb(220, 223, 230) 1px solid;
-                .tit {
-                  margin: 0.2rem 0 0;
-                  font-size: 16px;
-                  font-weight: 500;
-                  text-transform: capitalize;
-                  @media screen and (max-width: 1260px) {
-                    font-size: 14px;
-                  }
-                }
-                .desc {
-                  padding: 0 0 0.1rem;
-                  font-size: 14px;
-                  @media screen and (max-width: 1260px) {
-                    font-size: 12px;
-                  }
-                }
-                .list {
-                  padding: 0.1rem 0 0;
-                  .li-title {
-                    width: 100%;
-                    padding: 0 0 0.1rem;
-                    border-bottom: 1px solid #26272f;
-                  }
-                  ul {
-                    display: flex;
-                    align-items: stretch;
-                    justify-content: space-between;
-                    flex-wrap: wrap;
-                    margin: 0 auto 0.25rem;
-                    @media screen and (max-width: 768px) {
-                      justify-content: flex-start;
-                    }
-                    li {
-                      width: 27%;
-                      margin-right: 6%;
-                      @media screen and (max-width: 768px) {
-                        width: auto;
-                        margin-right: 0.5rem;
-                      }
-                      &.m-r {
-                        margin-right: 0;
-                      }
-                      .flex-row {
-                        flex-wrap: wrap;
-                        .li-body {
-                          width: 27%;
-                          margin-right: 6%;
-                          @media screen and (max-width: 768px) {
-                            width: auto;
-                            margin-right: 0.5rem;
-                          }
-                        }
-                      }
-                      .li-body {
-                        position: relative;
-                        padding: 0.15rem;
-                        margin: 0.3rem 0;
-                        background-color: #0d0e12;
-                        border-radius: 5px;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-                        -webkit-backdrop-filter: blur(5px);
-                        backdrop-filter: blur(5px);
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        border-radius: 0.1rem;
-                        animation: glow 1s ease-in-out infinite alternate;
-                        @media screen and (max-width: 768px) {
-                          padding: 0.15rem 0.3rem;
-                        }
-                        p {
-                          padding: 3px 0;
-                          font-size: 14px;
-                          line-height: 1.3;
-                          text-align: center;
-                          @media screen and (max-width: 1260px) {
-                            font-size: 12px;
-                          }
-                          strong,
-                          b {
-                            margin-right: 5px;
-                            font-size: 17px;
-                            @media screen and (max-width: 1260px) {
-                              font-size: 15px;
-                            }
-                            @media screen and (max-width: 540px) {
-                              font-size: 13px;
-                            }
-                          }
-                          &.t {
-                            text-transform: capitalize; // color: #808290;
-                          }
-                          &.t-capitalize {
-                            text-transform: uppercase;
-                          }
-                          &:nth-child(2) {
-                            strong {
-                              color: #4db470;
-                            }
-                          }
-                          &:nth-child(3) {
-                            strong {
-                              color: #488fc3;
-                            }
-                          }
-                          &:nth-child(4) {
-                            strong {
-                              color: #9266a9;
-                            }
-                          }
-                        }
-                        &.li-gpu {
-                          &::before {
-                            position: absolute;
-                            content: "";
-                            right: 0.1rem;
-                            top: 0.1rem;
-                            width: 7px;
-                            height: 7px;
-                            background-color: orange;
-                            border-radius: 7px;
-                          }
-                        }
-                        &.li-status {
-                          &::before {
-                            background-color: #8bc34a;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                .el-divider--horizontal {
-                  margin: 0.1rem 0;
-                }
-              }
               .name-style {
                 color: @theme-color;
                 cursor: pointer;
@@ -1941,27 +1840,6 @@ export default defineComponent({
                   }
                 }
               }
-              &.el-table__expanded-cell {
-                padding: 0.32rem 0.64rem;
-                // border: 1px solid @white-color;
-                &:hover {
-                  background-color: @primary-color !important;
-                }
-              }
-            }
-            // &.expanded,
-            // &:hover {
-            //   td {
-            //     background-color: rgba(255, 255, 255, 0.85);
-            //     color: #000;
-            //     i {
-            //       color: #000;
-            //     }
-            //   }
-            // }
-            &.expanded {
-              border: 1px solid @white-color;
-              border-collapse: collapse;
             }
           }
         }
@@ -1979,9 +1857,22 @@ export default defineComponent({
           @media screen and (max-width: 768px) {
             height: 250px;
           }
-              @media screen and (max-width: 600px) {
-                height: 200px;
-              }
+          @media screen and (max-width: 600px) {
+            height: 200px;
+          }
+        }
+        .world-buttom {
+          position: absolute;
+          right: 0.25rem;
+          top: 0.32rem;
+          z-index: 10;
+          svg {
+            display: block;
+            cursor: pointer;
+            &:nth-child(2) {
+              margin: 7px 0 3px;
+            }
+          }
         }
         .chart-world {
           width: 100%;
@@ -1990,14 +1881,6 @@ export default defineComponent({
           margin: 0;
           @media screen and (max-width: 768px) {
             height: 300px;
-          }
-        }
-        .chart {
-          width: 100%;
-          margin: 0.45rem auto 0;
-          height: 500px;
-          @media screen and (max-width: 540px) {
-            height: 400px;
           }
         }
         .el-tabs {
@@ -2033,279 +1916,6 @@ export default defineComponent({
           }
         }
       }
-    }
-    .search-body {
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin: 0.24rem 0 0;
-      .el-input {
-        width: 50%;
-        margin: 0 0.2rem 0 0;
-        &.zk-input {
-          width: 30%;
-        }
-        .el-input__wrapper {
-          background-color: rgb(21, 23, 28);
-          border: 1px solid rgb(38, 39, 47);
-          border-radius: 0.1rem;
-          box-shadow: none;
-          .el-input__inner {
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            color: #d1d1d1;
-            @media screen and (max-width: 768px) {
-              width: 100%;
-            }
-            &:hover,
-            &:active,
-            &:focus {
-              border-color: @theme-color;
-            }
-          }
-        }
-      }
-      .el-button {
-        font-family: inherit;
-        &.el-button--primary {
-          background-color: #7405ff;
-          border-color: #7405ff;
-        }
-        &:hover,
-        &.is-disabled {
-          opacity: 0.9;
-        }
-      }
-    }
-    .el-table {
-      margin: 0.24rem auto;
-      background-color: transparent;
-      border-radius: 0.1rem;
-      border: 1px solid rgb(30, 32, 39);
-      tr {
-        background-color: transparent;
-        th {
-          word-break: break-word;
-          padding: 0.1rem 0;
-          background-color: @primary-color;
-          border: 0;
-          .cell {
-            color: @text-color;
-            word-break: break-word;
-            @media screen and (max-width: 540px) {
-              font-size: 12px;
-              line-height: 1.1;
-            }
-          }
-        }
-        td {
-          padding: 0.16rem 0;
-          background-color: @primary-color;
-          color: rgb(181, 183, 200);
-          border-color: rgb(38, 39, 47);
-          @media screen and (max-width: 540px) {
-            font-size: 12px;
-            line-height: 1.1;
-          }
-          i {
-            margin-right: 5px;
-            color: @text-color;
-            font-size: 18px;
-            @media screen and (max-width: 1260px) {
-              font-size: 16px;
-            }
-          }
-          .service-body {
-            padding: 0 0.25rem 0.1rem;
-            // color: #333;
-            // border-top: rgb(220, 223, 230) 1px solid;
-            // border-bottom: rgb(220, 223, 230) 1px solid;
-            .tit {
-              margin: 0.2rem 0 0;
-              font-size: 16px;
-              font-weight: 500;
-              text-transform: capitalize;
-              @media screen and (max-width: 1260px) {
-                font-size: 14px;
-              }
-            }
-            .desc {
-              padding: 0 0 0.1rem;
-              font-size: 14px;
-              @media screen and (max-width: 1260px) {
-                font-size: 12px;
-              }
-            }
-            .list {
-              padding: 0.1rem 0 0;
-              .li-title {
-                width: 100%;
-                padding: 0 0 0.1rem;
-                border-bottom: 1px solid #26272f;
-              }
-              ul {
-                display: flex;
-                align-items: stretch;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                margin: 0 auto 0.25rem;
-                @media screen and (max-width: 768px) {
-                  justify-content: flex-start;
-                }
-                li {
-                  width: 27%;
-                  margin-right: 6%;
-                  @media screen and (max-width: 768px) {
-                    width: auto;
-                    margin-right: 0.5rem;
-                  }
-                  &.m-r {
-                    margin-right: 0;
-                  }
-                  .flex-row {
-                    flex-wrap: wrap;
-                    .li-body {
-                      width: 27%;
-                      margin-right: 6%;
-                      @media screen and (max-width: 768px) {
-                        width: auto;
-                        margin-right: 0.5rem;
-                      }
-                    }
-                  }
-                  .li-body {
-                    position: relative;
-                    padding: 0.15rem;
-                    margin: 0.3rem 0;
-                    background-color: #0d0e12;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-                    -webkit-backdrop-filter: blur(5px);
-                    backdrop-filter: blur(5px);
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    border-radius: 0.1rem;
-                    animation: glow 1s ease-in-out infinite alternate;
-                    @media screen and (max-width: 768px) {
-                      padding: 0.15rem 0.3rem;
-                    }
-                    p {
-                      padding: 3px 0;
-                      font-size: 14px;
-                      line-height: 1.3;
-                      text-align: center;
-                      @media screen and (max-width: 1260px) {
-                        font-size: 12px;
-                      }
-                      strong,
-                      b {
-                        margin-right: 5px;
-                        font-size: 17px;
-                        @media screen and (max-width: 1260px) {
-                          font-size: 15px;
-                        }
-                        @media screen and (max-width: 540px) {
-                          font-size: 13px;
-                        }
-                      }
-                      &.t {
-                        text-transform: capitalize; // color: #808290;
-                      }
-                      &.t-capitalize {
-                        text-transform: uppercase;
-                      }
-                      &:nth-child(2) {
-                        strong {
-                          color: #4db470;
-                        }
-                      }
-                      &:nth-child(3) {
-                        strong {
-                          color: #488fc3;
-                        }
-                      }
-                      &:nth-child(4) {
-                        strong {
-                          color: #9266a9;
-                        }
-                      }
-                    }
-                    &.li-gpu {
-                      &::before {
-                        position: absolute;
-                        content: "";
-                        right: 0.1rem;
-                        top: 0.1rem;
-                        width: 7px;
-                        height: 7px;
-                        background-color: orange;
-                        border-radius: 7px;
-                      }
-                    }
-                    &.li-status {
-                      &::before {
-                        background-color: #8bc34a;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            .el-divider--horizontal {
-              margin: 0.1rem 0;
-            }
-          }
-          .copy-style {
-            cursor: pointer;
-            flex-wrap: wrap;
-            svg {
-              margin: 0 0 0 0.05rem;
-            }
-          }
-          .badge {
-            display: flex;
-            align-items: center;
-            white-space: normal;
-            word-break: break-word;
-            img {
-              width: 30px;
-              height: 30px;
-              margin-right: 5px;
-              @media screen and (max-width: 1260px) {
-                width: 25px;
-                height: 25px;
-              }
-            }
-          }
-          &.el-table__expanded-cell {
-            padding: 0.32rem 0.64rem;
-            // border: 1px solid @white-color;
-            &:hover {
-              background-color: @primary-color !important;
-            }
-          }
-        }
-        // &.expanded,
-        // &:hover {
-        //   td {
-        //     background-color: rgba(255, 255, 255, 0.85);
-        //     color: #000;
-        //     i {
-        //       color: #000;
-        //     }
-        //   }
-        // }
-        &.expanded {
-          border: 1px solid @white-color;
-          border-collapse: collapse;
-        }
-      }
-    }
-    .el-table--border .el-table__inner-wrapper::after,
-    .el-table--border::after,
-    .el-table--border::before,
-    .el-table__inner-wrapper::before {
-      background-color: rgb(38, 39, 47);
-      height: 0;
     }
   }
 }

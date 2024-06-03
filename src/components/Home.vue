@@ -69,8 +69,11 @@ export default defineComponent({
       &.el-header {
         background-color: @theme-color;
       }
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 1024px) {
         padding: 0.2rem 0.3rem;
+      }
+      @media screen and (max-width: 600px) {
+        padding: 0.2rem;
       }
     }
     .el-container {
@@ -83,6 +86,9 @@ export default defineComponent({
         padding: 0.4rem 0.15rem 0.25rem;
         background-color: @white-color;
         overflow: unset;
+        @media screen and (max-width: 1024px) {
+          max-width: 3.4rem;
+        }
         @media screen and (max-width: 768px) {
           display: none;
           width: 0;
@@ -90,7 +96,7 @@ export default defineComponent({
       }
       .el-main {
         padding: 0.2rem 0.5rem;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 1440px) {
           padding: 0.2rem 0.3rem;
         }
       }

@@ -94,11 +94,6 @@ export default defineComponent({
       else if (nameMenu.indexOf('resource') > -1) activeIndex.value = 'resource'
       else activeIndex.value = nameMenu
 
-      // const chainId = await system.$commonFun.web3Init.eth.net.getId()
-      // const { unit, name, url } = await system.$commonFun.getUnit(chainId)
-      // info.network = name || `Chain ID: ${chainId}`
-      // info.unit = unit
-      // info.url = url || ''
       // console.log(activeIndex.value, nameMenu)
     }
     onMounted(() => {
@@ -128,6 +123,10 @@ export default defineComponent({
   .icon {
     width: 0.24rem;
     height: 0.24rem;
+    @media screen and (max-width: 1024px) {
+      width: 16px;
+      height: 16px;
+    }
     &.icon-collapse {
       width: 0.33rem;
       height: 0.33rem;

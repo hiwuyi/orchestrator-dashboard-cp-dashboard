@@ -299,7 +299,7 @@
         </el-table-column>
       </el-table>
       <div class="flex-row center pagination-style">
-        Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentLoad.length : 0 + paymentLoad.length }} /&nbsp;
+        Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentData.length : 0 + paymentData.length }} /&nbsp;
         <!-- hide-on-single-page -->
         <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
           :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -577,7 +577,7 @@ export default defineComponent({
 
     let getnetID = NaN
     onMounted(async () => {
-      // getnetID = await system.$commonFun.web3Init.eth.net.getId()
+      // getnetID = await system.$commonFun.chainIdSWAN
       init()
     })
     watch(route, (to, from) => {

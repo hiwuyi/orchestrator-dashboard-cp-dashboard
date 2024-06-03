@@ -6,8 +6,9 @@ import {
 } from 'element-plus'
 import router from '../router'
 import config from './config.js'
-import { disconnect } from '@wagmi/core'
+import { disconnect, getChainId } from '@wagmi/core'
 let lastTime = 0
+const chainIdSWAN = getChainId(config.config)
 
 async function sendRequest (apilink, type, jsonObject, api_token) {
   // signOutFun()
@@ -155,10 +156,11 @@ async function Init (callback) {
 }
 
 let web3Init
+// let providerInit
 const providerInit = window.ethereum && window.ethereum.providers ? window.ethereum.providers.find((provider) => provider.isMetaMask) : window.ethereum
 if (typeof window.ethereum === 'undefined') {
   // window.open('https://metamask.io/download.html')
-  // alert("Consider installing MetaMask!");
+  alert("Consider installing MetaMask!");
 } else {
   if (window.ethereum) {
     web3 = new Web3(providerInit);
@@ -177,7 +179,6 @@ if (typeof window.ethereum === 'undefined') {
 
 async function walletChain (chainId) {
   let text = {}
-  const currentID = await web3Init.eth.net.getId()
   switch (chainId) {
     case 20241133:
       text = {
@@ -192,45 +193,6 @@ async function walletChain (chainId) {
         blockExplorerUrls: [process.env.VUE_APP_ATOMBLOCKURL]
       }
       break
-    // case 80001:
-    //   text = {
-    //     chainId: web3Init.utils.numberToHex(80001),
-    //     chainName: 'Mumbai Testnet',
-    //     nativeCurrency: {
-    //       name: 'MATIC',
-    //       symbol: 'MATIC', // 2-6 characters long
-    //       decimals: 18
-    //     },
-    //     rpcUrls: [process.env.VUE_APP_MUMBAIRPCURL],
-    //     blockExplorerUrls: [process.env.VUE_APP_MUMBAIPAYMENTURL]
-    //   }
-    //   break
-    // case 97:
-    //   text = {
-    //     chainId: web3Init.utils.numberToHex(97),
-    //     chainName: 'BSC TestNet',
-    //     nativeCurrency: {
-    //       name: 'tBNB',
-    //       symbol: 'tBNB', // 2-6 characters long
-    //       decimals: 18
-    //     },
-    //     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
-    //     blockExplorerUrls: [process.env.VUE_APP_BSCTESTNETBLOCKURL]
-    //   }
-    //   break
-    // case 137:
-    //   text = {
-    //     chainId: web3Init.utils.numberToHex(137),
-    //     chainName: 'Polygon Mainnet',
-    //     nativeCurrency: {
-    //       name: 'MATIC',
-    //       symbol: 'MATIC', // 2-6 characters long
-    //       decimals: 18
-    //     },
-    //     rpcUrls: ['https://polygon-rpc.com'],
-    //     blockExplorerUrls: [process.env.VUE_APP_POLYGONBLOCKURL]
-    //   }
-    //   break
   }
   try {
     await providerInit.request({
@@ -240,8 +202,7 @@ async function walletChain (chainId) {
       ]
     })
     await timeout(500)
-    const newID = await web3Init.eth.net.getId()
-    if (newID !== currentID) {
+    if (chainIdSWAN !== 20241133) {
       router.push({
         name: 'dashboard'
       })
@@ -253,7 +214,6 @@ async function walletChain (chainId) {
 }
 
 async function login () {
-  const chain_id = await web3Init.eth.net.getId()
   if (!store.state.metaAddress || store.state.metaAddress === undefined) {
     const accounts = await providerInit.request({
       method: 'eth_requestAccounts'
@@ -313,7 +273,6 @@ async function sign (nonce) {
     signature = ''
     signErr = err && err.code ? String(err.code) : err
     signOutFun()
-    // await disconnect(config)
   })
   return [signature, signErr]
 }
@@ -447,8 +406,7 @@ function goLink (link) {
 }
 
 async function checkNetwork () {
-  const getnetID = await web3Init.eth.net.getId()
-  if (getnetID !== 20241133) {
+  if (chainIdSWAN !== 20241133) {
     walletChain(20241133)
     return true
   } else return false
@@ -596,5 +554,6 @@ export default {
   AddFormat,
   getDateTime,
   dataGPU,
-  paginationWidth
+  paginationWidth,
+  chainIdSWAN
 }
