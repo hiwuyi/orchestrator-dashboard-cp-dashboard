@@ -1,6 +1,6 @@
 <script setup>
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/vue'
-import { reconnect, getChainId  } from '@wagmi/core'
+import { reconnect, disconnect, getChainId } from '@wagmi/core'
 import { useStore } from "vuex"
 import {
   computed,
@@ -10,7 +10,7 @@ import {
   onMounted,
   onUpdated,
   watchEffect,
-  reactive,
+  reactive
 } from 'vue'
 import { getAccount, watchAccount } from '@wagmi/core'
 import configJS from './../utils/config'
@@ -75,17 +75,35 @@ async function signout2 () {
 watchAccount(config, {
   onChange (account, prevAccount) {
     // account = getAccount(config)
-    // console.log('watch', account)
-    // console.log('prev', prevAccount)
-    // console.log("changed", account ?.isConnected)
-    if (account ?.isConnected && signature.value === '' && metaAddress.value === '') {
-      console.log("prompted")
-      login2()
-    } else if (!account ?.isConnected && prevAccount ?.isConnected) {
-      signout2()
-    }
+    try {
+      // console.log('watch', account)
+      // console.log('prev', prevAccount)
+      // console.log("changed", account ?.isConnected)
+      if (account ?.isConnected && signature.value === '' && metaAddress.value === '') {
+        console.log("prompted")
+        login2()
+      } else if (!account ?.isConnected && prevAccount ?.isConnected) {
+        signout2()
+      }
+    } catch{ }
   },
 })
+
+let beginTime = 0; // 执行onbeforeunload的开始时间
+
+window.onbeforeunload = function () {
+  beginTime = new Date().getTime();
+}
+
+window.onunload = function () {
+  let differTime = new Date().getTime() - beginTime;
+  if (differTime <= 5) {
+    disconnect(config)
+    console.log("close")
+  } else {
+    console.log("Refresh")
+  }
+}
 
 async function test () {
   // console.log(store.state.metaAddress)

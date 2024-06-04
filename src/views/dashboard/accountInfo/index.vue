@@ -15,22 +15,22 @@
               </div>
               <div class="note b">
                 <el-row>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">CP Contract Address:</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <p>0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">Account Type:</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="collateral m b-ecp" :class="{'b-fcp': activeName === 'FCP'}">{{activeName}}</div>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">Owner Address:</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
                       0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
@@ -46,10 +46,10 @@
                       </svg>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">Worker Address:</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
                       0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
@@ -60,10 +60,10 @@
                       </svg>
                     </div>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">beneficiary Address:</p>
                   </el-col>
-                  <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
+                  <el-col :xs="24" :sm="12" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
                       0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
@@ -296,7 +296,7 @@
                 </template>
               </el-table-column>
             </el-table>
-            <div class="flex-row center pagination-style font-16">
+            <div class="flex-row center pagination-style font-14">
               <span class="showing">Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;</span>
               <!-- hide-on-single-page -->
               <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
@@ -359,7 +359,7 @@ export default defineComponent({
     const accessToken = computed(() => (store.state.accessToken))
     const signature = computed(() => (store.state.signature))
     const system = getCurrentInstance().appContext.config.globalProperties
-    const bodyWidth = ref(document.body.clientWidth > 1440 ? '32' : '22')
+    const bodyWidth = ref(document.body.clientWidth > 1440 ? 32 : 22)
     const route = useRoute()
     const router = useRouter()
     const providersLoad = ref(false)
@@ -392,19 +392,19 @@ export default defineComponent({
       providersTotal: {}
     })
     const weekList = reactive({
-      value: '7',
+      value: 'Week',
       options: [
         {
-          value: '7',
-          label: '7 DAYS'
+          value: 'Week',
+          label: '1 Week'
         },
         {
-          value: '14',
-          label: '14 DAYS'
+          value: 'Month',
+          label: '1 Month'
         },
         {
-          value: '30',
-          label: '30 DAYS'
+          value: 'Year',
+          label: '1 Year'
         }]
     })
 
@@ -1013,6 +1013,9 @@ export default defineComponent({
           {
             name: 'Job Failed',
             type: 'bar',
+            // barCategoryGap: '0%',
+            barGap: '0%',
+            barWidth: '10',
             data: [
               2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
             ],
@@ -1021,6 +1024,9 @@ export default defineComponent({
           {
             name: 'Job Success',
             type: 'bar',
+            // barCategoryGap: '0%',
+            barGap: '0%',
+            barWidth: '10',
             data: [
               2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
             ],
@@ -1437,7 +1443,10 @@ export default defineComponent({
         .chart-trends {
           width: 100%;
           margin: -0.4rem auto 0;
-          height: 2.3rem;
+          height: 2.8rem;
+          @media screen and (min-width: 3600px) {
+            height: 400px;
+          }
           @media screen and (max-width: 1600px) {
             margin: -0.43rem auto 0;
           }
@@ -1445,11 +1454,11 @@ export default defineComponent({
             margin: -0.5rem auto 0;
           }
           @media screen and (max-width: 768px) {
-            height: 250px;
+            height: 280px;
             margin: -0.3rem auto 0;
           }
           @media screen and (max-width: 600px) {
-            height: 200px;
+            height: 250px;
           }
         }
       }

@@ -29,7 +29,7 @@
 
       <el-table v-loading="paymentLoad" element-loading-text="Please do not refresh the page" :data="paymentData" stripe style="width: 100%" @filter-change="handleFilterChange">
         <!-- <el-table-column prop="chain_id" label="chain id" min-width="110" /> -->
-        <el-table-column prop="job" min-width="100">
+        <el-table-column prop="job" min-width="120">
           <template #header>
             <div class="font-14 weight-4">task UUID</div>
           </template>
@@ -56,7 +56,7 @@
             <span>{{ scope.row.hardware_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="node_id" min-width="110">
+        <el-table-column prop="node_id" min-width="120">
           <template #header>
             <div class="font-14 weight-4">NODE ID</div>
           </template>

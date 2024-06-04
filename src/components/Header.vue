@@ -654,6 +654,7 @@ export default defineComponent({
         cursor: pointer;
         border-radius: 0.08rem;
         transition: all 0.2s;
+        outline: none;
         @media screen and (max-width: 767px) {
           width: 28px;
           height: 28px;

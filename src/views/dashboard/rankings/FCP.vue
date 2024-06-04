@@ -71,7 +71,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="node_id" min-width="110">
+          <el-table-column prop="node_id" min-width="120">
             <template #header>
               <div class="font-14 weight-4">NodeID</div>
             </template>
@@ -283,13 +283,14 @@ export default defineComponent({
     }
     async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
-      switch (key) {
-        case 'ranking':
-          vmOperate.row = row
-          vmOperate.row.type = type
-          vmOperate.centerDrawerVisible = true
-          break;
-      }
+      // switch (key) {
+      //   case 'ranking':
+      //     vmOperate.row = row
+      //     vmOperate.row.type = type
+      //     vmOperate.centerDrawerVisible = true
+      //     break;
+      // }
+      router.push({ name: 'accountInfo', params: { type: 'FCP' } })
     }
     function hardClose (dialog, type) {
       vmOperate.centerDrawerVisible = dialog

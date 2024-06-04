@@ -278,13 +278,14 @@ export default defineComponent({
     }
     async function handleSelect (key, row, type) {
       // console.log(key, index, row) 
-      switch (key) {
-        case 'ranking':
-          vmOperate.row = row
-          vmOperate.row.type = type
-          vmOperate.centerDrawerVisible = true
-          break;
-      }
+      // switch (key) {
+      //   case 'ranking':
+      //     vmOperate.row = row
+      //     vmOperate.row.type = type
+      //     vmOperate.centerDrawerVisible = true
+      //     break;
+      // }
+      router.push({ name: 'accountInfo', params: { type: 'FCP' } })
     }
     function hardClose (dialog, type) {
       vmOperate.centerDrawerVisible = dialog

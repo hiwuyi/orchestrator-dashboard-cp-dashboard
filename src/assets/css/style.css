@@ -316,6 +316,33 @@ a:focus {
     }
 }
 
+@media screen and (min-width:2160px) {
+    html,
+    body,
+    #app,
+    .wrapper {
+        font-size: 112.5px;
+    }
+}
+
+@media screen and (min-width:2664px) {
+    html,
+    body,
+    #app,
+    .wrapper {
+        font-size: 139px;
+    }
+}
+
+@media screen and (min-width:3070px) {
+    html,
+    body,
+    #app,
+    .wrapper {
+        font-size: 160px;
+    }
+}
+
 @media screen and (max-width:1800px) {
     html,
     body,

@@ -268,7 +268,7 @@ async function sign (nonce) {
     signErr = ''
     signature = sig
   }).catch(async err => {
-    await disconnect(config.config)
+    // await disconnect(config.config)
     console.log(err)
     signature = ''
     signErr = err && err.code ? String(err.code) : err

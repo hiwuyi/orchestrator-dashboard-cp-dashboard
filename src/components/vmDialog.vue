@@ -107,8 +107,8 @@
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex-row baseline">
             <div class="flex-row nowrap">
-              <el-input-number v-model="ruleForm.amount" :min="0" controls-position="right" />
-              <span class="text-white">&nbsp;sETH</span>
+              <el-input-number v-model="ruleForm.amount" :min="0" :step="0.25" controls-position="right" />
+              <span class="text-white">&nbsp;&nbsp;sETH</span>
             </div>
           </el-col>
         </el-row>
@@ -170,7 +170,7 @@ export default defineComponent({
       email: '',
       sign_code: '',
       signature: '',
-      amount: NaN,
+      amount: 0.25,
       show: false,
       tx_hash: ''
     })

@@ -529,7 +529,7 @@ export default defineComponent({
     const metaAddress = computed(() => (store.state.metaAddress))
     const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
-    const bodyWidth = ref(document.body.clientWidth > 1440 ? '42' : '28')
+    const bodyWidth = ref(document.body.clientWidth > 1440 ? 42 : 28)
     const route = useRoute()
     const router = useRouter()
     const gmtTime = new Date().toGMTString()
@@ -1677,6 +1677,9 @@ export default defineComponent({
           width: 100%;
           margin: -0.25rem auto 0;
           height: 2.3rem;
+          @media screen and (min-width: 3600px) {
+            height: 350px;
+          }
           @media screen and (max-width: 1440px) {
             margin: -0.3rem auto 0;
           }

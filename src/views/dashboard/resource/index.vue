@@ -16,7 +16,7 @@
               <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">GPU Usage</p>
-                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#93c605" class="color-gpu" />
+                  <el-progress type="circle" stroke-linecap="butt" :percentage="24" :width="104" :stroke-width="21" color="#93c605" class="color-gpu" />
                   <!-- <div class='chart-trends' id='chart-gpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-gpu">41</span> Used 240 Free</p>
@@ -25,7 +25,7 @@
               <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">CPU Usage</p>
-                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#699bff" class="color-cpu" />
+                  <el-progress type="circle" stroke-linecap="butt" :percentage="24" :width="104" :stroke-width="21" color="#699bff" class="color-cpu" />
                   <!-- <div class='chart-trends' id='chart-cpu' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-cpu">41</span> Used 240 Free</p>
@@ -34,7 +34,7 @@
               <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Memory Usage (GB)</p>
-                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#52ce7c" class="color-memory" />
+                  <el-progress type="circle" stroke-linecap="butt" :percentage="24" :width="104" :stroke-width="21" color="#52ce7c" class="color-memory" />
                   <!-- <div class='chart-trends' id='chart-memory' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-memory">41</span> Used 240 Free</p>
@@ -43,7 +43,7 @@
               <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
                 <div class="grid-content small-spacing text-center font-20">
                   <p class="font-12 text-center">Storage Usage (TB)</p>
-                  <el-progress type="circle" :percentage="24" :width="104" :stroke-width="21" color="#0046b7" class="color-storage" />
+                  <el-progress type="circle" stroke-linecap="butt" :percentage="24" :width="104" :stroke-width="21" color="#0046b7" class="color-storage" />
                   <!-- <div class='chart-trends' id='chart-storage' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div> -->
                   <p class="font-12 text-center desc">
                     <span class="color-storage">41</span> Used 240 Free</p>
@@ -204,8 +204,8 @@ export default defineComponent({
     const metaAddress = computed(() => (store.state.metaAddress))
     const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
-    const bodyWidth = ref(document.body.clientWidth > 1440 ? '34' : '24')
-    const childWidth = ref(document.body.clientWidth > 1440 ? '24' : '12')
+    const bodyWidth = ref(document.body.clientWidth > 1440 ? 34 : 24)
+    const childWidth = ref(document.body.clientWidth > 1440 ? 24 : 12)
     const route = useRoute()
     const router = useRouter()
     const chipsetList = reactive({
@@ -877,7 +877,7 @@ export default defineComponent({
                 display: none;
               }
               .el-progress-bar__outer {
-                background-color: @border-color;
+                background-color: #d7d7d7;
               }
             }
             .text {

@@ -33,7 +33,7 @@
             <div class="font-14 weight-4">Task ID</div>
           </template>
         </el-table-column>
-        <el-table-column prop="task_contract" min-width="110">
+        <el-table-column prop="task_contract" min-width="125">
           <template #header>
             <div class="font-14 weight-4">Task Contract</div>
           </template>
@@ -60,7 +60,7 @@
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="node_id" min-width="110">
+        <el-table-column prop="node_id" min-width="120">
           <template #header>
             <div class="font-14 weight-4">NODE ID</div>
           </template>
