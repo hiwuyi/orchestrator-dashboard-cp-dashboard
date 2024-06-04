@@ -2,19 +2,19 @@
   <div id="payment">
     <div class="payment-history container-landing font-14">
       <el-row class="search-container font-14">
-        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+        <el-col :xs="24" :sm="12" :md="24" :lg="7" :xl="7">
           <div class="flex-row nowrap child">
             <span class="font-14">Task ID: </span>
             <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="please enter Task ID" @chang="searchZKProvider" @input="searchZKProvider" />
           </div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+        <el-col :xs="24" :sm="12" :md="24" :lg="7" :xl="7">
           <div class="flex-row nowrap child">
             <span class="font-14">NodeID: </span>
             <el-input class="zk-input" v-model="networkZK.node_id" placeholder="please enter NodeID" @chang="searchZKProvider" @input="searchZKProvider" />
           </div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="4" :xl="4">
+        <el-col :xs="24" :sm="12" :md="24" :lg="4" :xl="4">
           <div class="flex-row nowrap child">
             <el-button type="info" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
             <el-button type="primary" :disabled="!networkZK.contract_address && !networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">
@@ -33,7 +33,7 @@
             <div class="font-14 weight-4">Task ID</div>
           </template>
         </el-table-column>
-        <el-table-column prop="task_contract" min-width="90">
+        <el-table-column prop="task_contract" min-width="110">
           <template #header>
             <div class="font-14 weight-4">Task Contract</div>
           </template>
@@ -60,7 +60,7 @@
             <span>{{scope.row.type === 0 ? 'CPU': 'GPU'}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="node_id" min-width="100">
+        <el-table-column prop="node_id" min-width="110">
           <template #header>
             <div class="font-14 weight-4">NODE ID</div>
           </template>
@@ -105,7 +105,7 @@
             <div class="font-14 weight-4">Reward TX Hash</div>
           </template>
           <template #default="scope">
-            <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank">{{scope.row.tx_hash}}</a>
+            <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank" class="name-style">{{scope.row.tx_hash}}</a>
           </template>
         </el-table-column>
         <el-table-column prop="amount">
@@ -115,7 +115,7 @@
         </el-table-column>
       </el-table>
       <div class="flex-row center pagination-style">
-        Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentData.length : 0 + paymentData.length }} /&nbsp;
+        <span class="showing">Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + paymentData.length : 0 + paymentData.length }} /&nbsp;</span>
         <!-- hide-on-single-page -->
         <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
           :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -449,7 +449,8 @@ export default defineComponent({
             -webkit-box-orient: vertical;
             padding: 0 6px;
             a {
-              color: inherit;
+              display: block;
+              // color: inherit;
               &:hover {
                 text-decoration: underline;
               }

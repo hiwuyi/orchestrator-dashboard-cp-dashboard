@@ -403,7 +403,7 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                  <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                     <template #reference>
                       <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                     </template>
@@ -468,7 +468,7 @@
                   <div class="font-14 weight-4">Name</div>
                 </template>
                 <template #default="scope">
-                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                  <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                     <template #reference>
                       <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                     </template>
@@ -940,8 +940,8 @@ export default defineComponent({
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage'],
-          left: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          right: document.documentElement.clientWidth >= 1280 ? '110px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '0' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1058,8 +1058,8 @@ export default defineComponent({
         },
         legend: {
           data: ['FCP', 'Delta'],
-          left: document.documentElement.clientWidth >= 1280 ? '40%' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          right: document.documentElement.clientWidth >= 1280 ? '110px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '0' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1200,8 +1200,8 @@ export default defineComponent({
         },
         legend: {
           data: ['GPU'],
-          left: document.documentElement.clientWidth >= 1280 ? '150px' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          right: document.documentElement.clientWidth >= 1280 ? '110px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '0' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1314,8 +1314,8 @@ export default defineComponent({
         },
         legend: {
           data: ['ECP', 'Delta'],
-          left: document.documentElement.clientWidth >= 1280 ? '40%' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          right: document.documentElement.clientWidth >= 1280 ? '110px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '0' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1673,37 +1673,13 @@ export default defineComponent({
             }
           }
         }
-        .date {
-          position: absolute;
-          right: calc(0.14rem + 2%);
-          top: 0.18rem;
-          width: 90px;
-          .el-select {
-            .el-select__wrapper {
-              width: 85px;
-              border: 1px solid #c9d0dd;
-              border-radius: 0.5rem;
-              box-shadow: none;
-              .el-select__placeholder {
-                color: #95a3bd;
-              }
-              .el-select__suffix {
-                .el-select__icon {
-                  background: url(../../../assets/images/icons/icon-03.png)
-                    no-repeat center;
-                  background-size: 8px;
-                  svg {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
         .chart-trends {
           width: 100%;
-          margin: -0.3rem auto 0;
+          margin: -0.25rem auto 0;
           height: 2.3rem;
+          @media screen and (max-width: 1440px) {
+            margin: -0.3rem auto 0;
+          }
           @media screen and (max-width: 768px) {
             height: 250px;
           }

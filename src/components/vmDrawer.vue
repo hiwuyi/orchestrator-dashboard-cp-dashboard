@@ -306,8 +306,8 @@
       </div>
 
       <div class="drawer-content machineID font-14" v-if="props.list.type === 'resourceList'">
-        <div class="flex-row space-between name-title" v-if="props.list.computer_provider">
-          <b class="font-16 weight-4">Machine Amount：{{props.list.computer_provider.machines.length}}</b>
+        <div class="flex-row space-between header-title">
+          <b class="font-16 weight-4">Machine Details</b>
         </div>
         <div class="font-14 note b" v-if="props.list.computer_provider" v-for="(machines, m) in props.list.computer_provider.machines" :key="m">
           <el-row>
@@ -347,16 +347,16 @@
                 <span class="blue">{{machines.specs.storage.used}}</span> used
               </p>
             </el-col>
-            <el-col v-show="machines.MachineShow" :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="flex-row baseline">
               <div class="grid-content width">
                 <div class='chart-trends' id='chart-name' v-loading="cpLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               </div>
             </el-col>
           </el-row>
-          <div v-show="machines.MachineShow" class="flex-row space-between name-title">
+          <div class="flex-row space-between name-title">
             <b class="font-16 weight-4">GPU Source</b>
           </div>
-          <el-table v-show="machines.MachineShow && machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
+          <el-table v-show="machines.specs && machines.specs.gpu" :data="machines.specs.gpu.details" style="width: 100%" empty-text="No Data">
             <el-table-column type="product_name" min-width="70">
               <template #header>
                 <div class="font-14 weight-4">GPU</div>
@@ -402,9 +402,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="flex-row center">
-            <el-button @click="machines.MachineShow = !machines.MachineShow">{{machines.MachineShow?'Fold':'Unfold'}}</el-button>
-          </div>
         </div>
       </div>
     </el-drawer>

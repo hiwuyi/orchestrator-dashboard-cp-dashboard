@@ -56,7 +56,7 @@
               <div class="font-14 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+              <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                 <template #reference>
                   <div class="name-style" @click="handleSelect('ranking', scope.row, 'FCP')">{{scope.row.name}}</div>
                 </template>
@@ -79,7 +79,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="node_id" min-width="130">
+          <el-table-column prop="node_id" min-width="120">
             <template #header>
               <div class="font-14 weight-4">NodeID</div>
             </template>
@@ -95,12 +95,12 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="gpu_hours" width="110">
+          <el-table-column prop="gpu_hours" min-width="80">
             <template #header>
               <div class="font-14 weight-4">GPU hours</div>
             </template>
           </el-table-column>
-          <el-table-column prop="cpu_hours" width="110">
+          <el-table-column prop="cpu_hours" min-width="80">
             <template #header>
               <div class="font-14 weight-4">CPU hours</div>
             </template>
@@ -119,7 +119,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="uptime" width="80">
+          <el-table-column prop="uptime" min-width="70">
             <template #header>
               <div class="font-14 weight-4">Uptime</div>
             </template>
@@ -139,7 +139,7 @@
               <div class="font-14 weight-4">Reward Score</div>
             </template>
             <template #default="scope">
-              <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.region">
+              <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.region">
                 <template #reference>
                   <div class="name-style black">{{scope.row.region}}</div>
                 </template>
@@ -148,7 +148,7 @@
           </el-table-column>
         </el-table>
         <div class="flex-row center pagination-style">
-          Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+          <span class="showing">Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;</span>
           <!-- hide-on-single-page -->
           <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
             :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />

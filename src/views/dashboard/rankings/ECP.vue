@@ -64,7 +64,7 @@
               <div class="font-14 weight-4">Name</div>
             </template>
             <template #default="scope">
-              <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+              <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                 <template #reference>
                   <div class="name-style" @click="handleSelect('ranking', scope.row, 'ECP')">{{scope.row.name}}</div>
                 </template>
@@ -115,7 +115,7 @@
               <div class="font-14 weight-4">Region</div>
             </template>
             <template #default="scope">
-              <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.region">
+              <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.region">
                 <template #reference>
                   <div class="name-style black">{{scope.row.region}}</div>
                 </template>
@@ -147,7 +147,7 @@
         </el-table>
 
         <div class="flex-row center pagination-style">
-          Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;
+          <span class="showing">Showing {{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize : 0 }}-{{paginZK.pageNo > 0 ? (paginZK.pageNo - 1) * paginZK.pageSize + providerBody.ubiTableData.length : 0 + providerBody.ubiTableData.length }} /&nbsp;</span>
           <!-- hide-on-single-page -->
           <el-pagination :page-size="paginZK.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
             :total="paginZK.total" @size-change="handleSizeChange" @current-change="handleZKCurrentChange" />

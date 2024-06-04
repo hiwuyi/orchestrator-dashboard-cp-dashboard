@@ -19,7 +19,7 @@
                     <p class="text-capitalize">CP Contract Address:</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
-                    <p>{{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}</p>
+                    <p>0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677</p>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" class="flex-row baseline">
                     <p class="text-capitalize">Account Type:</p>
@@ -32,7 +32,7 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
-                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
                         <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
                           fill="#3d3d3d" p-id="6468"></path>
@@ -51,7 +51,7 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
-                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
                         <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
                           fill="#3d3d3d" p-id="6468"></path>
@@ -65,7 +65,7 @@
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" class="flex-row baseline">
                     <div class="flex-row center copy-style">
-                      {{system.$commonFun.hiddAddress('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677')}}
+                      0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677
                       <svg @click="system.$commonFun.copyContent('0xf1F8D7Ca4dDeDfAF0f69a1883f20505952134677', 'Copied')" t="1717142367802" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6467" width="16" height="16">
                         <path d="M809.19 310.68H398.37a87.79 87.79 0 0 0-87.69 87.69v410.82a87.79 87.79 0 0 0 87.69 87.69h410.82a87.79 87.79 0 0 0 87.69-87.69V398.37a87.79 87.79 0 0 0-87.69-87.69z m29.69 498.51a29.73 29.73 0 0 1-29.69 29.69H398.37a29.73 29.73 0 0 1-29.69-29.69V398.37a29.73 29.73 0 0 1 29.69-29.69h410.82a29.73 29.73 0 0 1 29.69 29.69z"
                           fill="#3d3d3d" p-id="6468"></path>
@@ -129,9 +129,9 @@
         <el-row :gutter="bodyWidth">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="module-container">
-              <div class="title flex-row">
-                <span class="font-16 weight-4">Job completion</span>
-                <span class="font-12 subtitle">Job completion total： 101</span>
+              <div class="title">
+                <p class="font-16 weight-4">Job completion</p>
+                <p class="font-12 subtitle">Job completion total： 101</p>
               </div>
               <div class='chart-trends' id='chart-job' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
@@ -145,9 +145,9 @@
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <div class="module-container">
-              <div class="title flex-row">
-                <span class="font-16 weight-4">Reward claimed</span>
-                <span class="font-12 subtitle">Reward claimed total： 87</span>
+              <div class="title">
+                <p class="font-16 weight-4">Reward claimed</p>
+                <p class="font-12 subtitle">Reward claimed total： 87</p>
               </div>
               <div class='chart-trends' id='chart-reward' v-loading="providersLoad" element-loading-background="rgba(255, 255, 255, 0.8)"></div>
               <div class="date">
@@ -168,40 +168,40 @@
         </div>
         <div class="font-14 note b">
           <el-row>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Total Number Of Node:</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{system.$commonFun.replaceFormat(pagin.total)}}</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Average Score:</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{ringGraphData.data.average_score_total || '-'}}</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Used CPU/Total:</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.cpu_total)}}</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Used Memory/Total (GiB):</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.memory_total)}}</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Used GPU/Total:</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.gpu_total)}}</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>Used Storage/Total (GiB):</p>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6" class="flex-row baseline">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6" class="flex-row baseline">
               <p>{{system.$commonFun.replaceFormat(ringGraphData.data.storage_total)}}</p>
             </el-col>
           </el-row>
@@ -212,7 +212,7 @@
                   <div class="font-14 weight-4">Machine ID</div>
                 </template>
                 <template #default="scope">
-                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.name">
+                  <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                     <template #reference>
                       <div class="badge flex-row center name-style" @click="handleSelect('ranking', scope.row, 'resourceList')">
                         {{scope.row.name}}
@@ -254,7 +254,7 @@
                   <div class="font-14 weight-4">Region</div>
                 </template>
                 <template #default="scope">
-                  <el-popover placement="top" effect="dark" :width="200" popper-style="word-break: break-word; text-align: left;font-size:12px;" trigger="hover" :content="scope.row.region">
+                  <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.region">
                     <template #reference>
                       <div class="name-style black">{{scope.row.region}}</div>
                     </template>
@@ -297,7 +297,7 @@
               </el-table-column>
             </el-table>
             <div class="flex-row center pagination-style font-16">
-              Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;
+              <span class="showing">Showing {{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize : 0 }}-{{pagin.pageNo > 0 ? (pagin.pageNo - 1) * pagin.pageSize + providersData.length : 0 + providersData.length }} /&nbsp;</span>
               <!-- hide-on-single-page -->
               <el-pagination :page-size="pagin.pageSize" :page-sizes="[10, 20, 30, 40]" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" :layout="system.$commonFun.paginationWidth ? 'total, prev, pager, next, sizes, jumper' : 'total, prev, pager, next'"
                 :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -976,7 +976,7 @@ export default defineComponent({
         legend: {
           data: ['Job Failed', 'Job Success'],
           right: document.documentElement.clientWidth >= 1280 ? '100px' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '4%' : '25px',
+          top: document.documentElement.clientWidth >= 1280 ? '5px' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1045,7 +1045,7 @@ export default defineComponent({
         legend: {
           data: ['Claimed Count', 'Waiting'],
           right: document.documentElement.clientWidth >= 1280 ? '100px' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '4%' : '25px',
+          top: document.documentElement.clientWidth >= 1280 ? '5px' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -1403,10 +1403,6 @@ export default defineComponent({
           padding: 0.25rem 0.32rem;
           background-color: @white-color;
           border-radius: 0.14rem;
-          @media screen and (max-width: 768px) {
-            height: calc(100% - 1rem);
-            padding: 0.75rem 0.32rem 0.25rem;
-          }
           &.world {
             background-color: @theme-color;
             .title {
@@ -1419,7 +1415,7 @@ export default defineComponent({
           .title {
             margin: 0;
             .subtitle {
-              margin: 0 0 0 0.35rem;
+              margin: 0.06rem 0 0;
               color: #7c889b;
             }
           }
@@ -1438,39 +1434,19 @@ export default defineComponent({
           border-radius: 0.18rem;
           // box-shadow: 0 0 12px #e6e7eb;
         }
-        .date {
-          position: absolute;
-          right: calc(0.14rem + 2%);
-          top: 0.18rem;
-          width: 90px;
-          .el-select {
-            .el-select__wrapper {
-              width: 85px;
-              border: 1px solid #c9d0dd;
-              border-radius: 0.5rem;
-              box-shadow: none;
-              .el-select__placeholder {
-                color: #95a3bd;
-              }
-              .el-select__suffix {
-                .el-select__icon {
-                  background: url(../../../assets/images/icons/icon-03.png)
-                    no-repeat center;
-                  background-size: 8px;
-                  svg {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
         .chart-trends {
           width: 100%;
-          margin: -0.3rem auto 0;
+          margin: -0.4rem auto 0;
           height: 2.3rem;
+          @media screen and (max-width: 1600px) {
+            margin: -0.43rem auto 0;
+          }
+          @media screen and (max-width: 1440px) {
+            margin: -0.5rem auto 0;
+          }
           @media screen and (max-width: 768px) {
             height: 250px;
+            margin: -0.3rem auto 0;
           }
           @media screen and (max-width: 600px) {
             height: 200px;

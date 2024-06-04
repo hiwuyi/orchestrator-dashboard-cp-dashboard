@@ -446,8 +446,8 @@ export default defineComponent({
         },
         legend: {
           data: ['CPU', 'Memory', 'Storage', 'GPU'],
-          right: document.documentElement.clientWidth >= 1280 ? '120px' : 'auto',
-          top: document.documentElement.clientWidth >= 1280 ? '2%' : '25px',
+          right: document.documentElement.clientWidth >= 1280 ? '130px' : 'auto',
+          top: document.documentElement.clientWidth >= 1280 ? '3px' : '25px',
           icon: 'circle',
           itemWidth: 10,
           itemHeight: 10,
@@ -767,7 +767,8 @@ export default defineComponent({
                 border-radius: 0 !important;
               }
               .el-progress-circle__track {
-                stroke: #7c889b;
+                // stroke: #7c889b;
+                stroke: #d7d7d7;
               }
               .el-progress__text {
                 font-family: inherit;
@@ -857,31 +858,7 @@ export default defineComponent({
           }
         }
         .date {
-          position: absolute;
-          right: 0.14rem;
           top: 0;
-          width: 90px;
-          .el-select {
-            .el-select__wrapper {
-              width: 85px;
-              border: 1px solid #c9d0dd;
-              border-radius: 0.5rem;
-              box-shadow: none;
-              .el-select__placeholder {
-                color: #95a3bd;
-              }
-              .el-select__suffix {
-                .el-select__icon {
-                  background: url(../../../assets/images/icons/icon-03.png)
-                    no-repeat center;
-                  background-size: 8px;
-                  svg {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
         }
         .usage-style {
           width: 100%;
@@ -961,7 +938,7 @@ export default defineComponent({
           width: auto;
           height: auto;
           padding: 0.06rem 0.15rem 0.06rem 0.2rem;
-          background-color: transparent;
+          background-color: @white-color;
           font-size: inherit;
           font-family: inherit;
           border: 1px solid #505052;
@@ -1002,7 +979,7 @@ export default defineComponent({
           margin: 0 0.06rem 0 0.1rem;
         }
         .el-input__wrapper {
-          background-color: transparent;
+          background-color: @white-color;
           border: 1px solid #505052;
           border-radius: 0.08rem;
           box-shadow: none;

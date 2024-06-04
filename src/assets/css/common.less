@@ -296,6 +296,11 @@
   }
 }
 
+.el-popover.el-popper.popup-content{
+  width: auto !important;
+  min-width: auto !important;
+}
+
 .el-popper {
   .el-select-dropdown__wrap,
   .el-select-dropdown__list,
@@ -555,6 +560,11 @@ body {
   }
   .pagination-style {
     color: #878c93;
+    .showing{
+      @media screen and (max-width: 767px) {
+        display: none;
+      }
+    }
   }
   .el-pagination {
     display: flex;
@@ -580,7 +590,7 @@ body {
     .btn-prev,
     .el-pager li {
       min-width: 24px;
-      margin: 0 4px;
+      margin: 0 2px;
       background-color: transparent;
       font-size: inherit;
       color: #878c93;
@@ -616,5 +626,48 @@ body {
       min-height: 24px;
       height: 24px;
     }
+  }
+  
+  .date {
+    position: absolute;
+    right: calc(0.14rem + 2%);
+    top: 0.22rem;
+    width: 90px;
+    .el-select {
+      .el-select__wrapper {
+        width: 85px;
+        border: 1px solid #c9d0dd;
+        border-radius: 0.5rem;
+        box-shadow: none;
+        .el-select__placeholder {
+          color: #95a3bd;
+        }
+        .el-select__suffix {
+          .el-select__icon {
+            background: url(../images/icons/icon-03.png)
+              no-repeat center;
+            background-size: 8px;
+            svg {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .green {
+    color: #699bff;
+  }
+  .orange {
+    color: #52cd7b;
+  }
+  .blue {
+    color: #0046b7;
+  }
+  .color-green{
+    color: #51b75f;
+  }
+  .color-orange{
+    color: #ff9413;
   }
 }
