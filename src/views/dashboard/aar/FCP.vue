@@ -177,7 +177,6 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const metaAddress = computed(() => (store.state.metaAddress))
-    const accessToken = computed(() => (store.state.accessToken))
     const system = getCurrentInstance().appContext.config.globalProperties
     const route = useRoute()
     const router = useRouter()
@@ -186,19 +185,8 @@ export default defineComponent({
     const badgeIcon03 = require("@/assets/images/icons/badge-3.png")
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
-    const providersECPLoad = ref(false)
     const providersData = ref([])
-    const providerBody = reactive({
-      ubiTableData: []
-    })
     const pagin = reactive({
-      pageSize: 10,
-      pageNo: 1,
-      total: 0,
-      total_deployments: 0,
-      active_applications: 0
-    })
-    const paginZK = reactive({
       pageSize: 10,
       pageNo: 1,
       total: 0,
@@ -280,7 +268,6 @@ export default defineComponent({
       providersData.value = []
       providersLoad.value = false
       providersTableLoad.value = false
-      providersECPLoad.value = false
       networkInput.name = ''
       networkInput.contract_address = ''
       init()
@@ -308,18 +295,15 @@ export default defineComponent({
       metaAddress,
       providersLoad,
       providersTableLoad,
-      providersECPLoad,
       providersData,
-      providerBody,
       networkInput,
       pagin,
-      paginZK,
       small,
       background,
       badgeIcon01,
       badgeIcon02,
       badgeIcon03,
-      accessToken, cpLoad, vmOperate,
+      cpLoad, vmOperate,
       handleSizeChange, handleCurrentChange, searchProvider, clearProvider,
       handleSelect, hardClose
     }
@@ -334,15 +318,6 @@ export default defineComponent({
   line-height: 1.6;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
-  }
-  :deep(.el-button) {
-    border: 0;
-    border-radius: 0.06rem;
-    background: @theme-color;
-    color: white;
-    // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    font-family: inherit;
   }
   .color {
     color: #3c85ff;
@@ -464,68 +439,6 @@ export default defineComponent({
                 }
               }
             }
-          }
-        }
-      }
-      .search-body {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        margin: 0;
-        .child {
-          height: 100%;
-          span {
-            white-space: nowrap;
-          }
-        }
-        .el-input {
-          width: 100%;
-          margin: 0 0.16rem 0 0.1rem;
-          font-size: inherit;
-          .el-input__wrapper {
-            background-color: @white-color;
-            border: 1px solid @border-color;
-            border-radius: 0.08rem;
-            box-shadow: none;
-            .el-input__inner {
-              width: 100%;
-              height: 0.3rem;
-              line-height: 0.3rem;
-              color: #333;
-              @media screen and (max-width: 768px) {
-                width: 100%;
-              }
-              &:hover,
-              &:active,
-              &:focus {
-                border-color: @theme-color;
-              }
-            }
-          }
-        }
-        .el-button {
-          height: 0.3rem;
-          padding: 0 0.1rem;
-          font-family: inherit;
-          font-size: inherit;
-          border: 0;
-          line-height: 0.3rem;
-          .el-icon {
-            width: 0.2rem;
-            height: 0.2rem;
-            margin: 0 0.08rem 0 0;
-            svg {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.el-button--info {
-            background-color: #d0dcf9;
-            border-color: #d0dcf9;
-            color: @theme-color;
-          }
-          &:hover,
-          &.is-disabled {
-            opacity: 0.9;
           }
         }
       }

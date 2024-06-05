@@ -28,20 +28,8 @@
 <script>
 import vHead from './Header.vue'
 import vAside from './Aside.vue'
-import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
-import { useStore } from "vuex"
-import { useRouter, useRoute } from 'vue-router'
+import { defineComponent } from 'vue'
 export default defineComponent({
-  setup () {
-    const store = useStore()
-    const bodyWidth = ref(document.body.clientWidth < 992)
-    const system = getCurrentInstance().appContext.config.globalProperties
-    const route = useRoute()
-    const router = useRouter()
-
-    onMounted(() => { })
-    return {}
-  },
   components: {
     vHead, vAside
   }
@@ -77,12 +65,10 @@ export default defineComponent({
       }
     }
     .el-container {
-      // height: calc(100vh - 1rem);
       .el-aside {
         position: relative;
         width: auto;
         max-width: 2.4rem;
-        // min-width: 180px;
         padding: 0.4rem 0.15rem 0.25rem;
         background-color: @white-color;
         overflow: unset;

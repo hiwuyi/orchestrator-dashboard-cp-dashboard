@@ -362,26 +362,6 @@ export default defineComponent({
       }
       providersLoad.value = false
     }
-    async function getUBITable () {
-      providersTableLoad.value = true
-      const page = paginZK.pageNo > 0 ? paginZK.pageNo - 1 : 0
-      const params = {
-        page_size: paginZK.pageSize,
-        page_no: page,
-        contract_address: networkZK.contract_address,
-        owner_addr: networkZK.owner_addr,
-        node_id: networkZK.node_id
-      }
-      const providerRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_UBI}providers?${system.$Qs.stringify(params)}`, 'get')
-      if (providerRes && providerRes.code === 0) {
-        paginZK.total = providerRes.data.total || 0
-        providerBody.ubiTableData = providerRes.data.list || []
-      } else {
-        providerBody.ubiTableData = []
-        if (providerRes.msg) system.$commonFun.messageTip('error', providerRes.msg)
-      }
-      providersTableLoad.value = false
-    }
     async function getList (list) {
       let l = list || []
       l.forEach((element) => {
@@ -410,12 +390,6 @@ export default defineComponent({
       pagin.pageSize = 10
       pagin.pageNo = 1
       init()
-    }
-    function reset (type) {
-      networkInput.value = ''
-      chipsetList.value = 'A100'
-      vRAMList.value = '80Gi'
-      interfaceList.value = 'A100'
     }
     const changetype = () => {
       const machart_resource = echarts.init(document.getElementById("chart-Resource"));
@@ -539,127 +513,9 @@ export default defineComponent({
         machart_resource.resize();
       })
     }
-    const changePietype = () => {
-      const machart_gpu = echarts.init(document.getElementById("chart-gpu"));
-      const machart_cpu = echarts.init(document.getElementById("chart-cpu"));
-      const machart_memory = echarts.init(document.getElementById("chart-memory"));
-      const machart_storage = echarts.init(document.getElementById("chart-storage"));
-      const option = {
-        tooltip: {
-          trigger: 'item',
-          triggerOn: 'none'
-        },
-        // legend: {
-        //   orient: 'vertical',
-        //   left: '2%',
-        //   bottom: '0',
-        //   itemGap: 5,
-        //   itemWidth: 10,
-        //   itemHeight: 10,
-        //   icon: 'roundRect',
-        //   // 图例标签的格式器，可以定制文本
-        //   // formatter: function (name) {
-        //   //     return echarts.format.truncateText(name, 50);
-        //   // },
-        //   // 图例文本样式
-        //   textStyle: {
-        //     color: '#000',
-        //     fontSize: 11,
-        //     fontFamily: 'HELVETICA-ROMAN',
-        //     // lineHeight: 14,
-        //     rich: {
-        //       a: {
-        //         verticalAlign: 'middle',
-        //       },
-        //     },
-        //     padding: [0, 0, -2, -1]
-        //   }
-        // },
-        color: ['#93c605', '#7c889b'],
-        series: [
-          {
-            name: 'Total',
-            type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '50%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 0,
-              borderColor: 'transparent',
-              borderWidth: 0
-            },
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 9,
-                borderColor: 'transparent',
-                color: '#000'
-              }
-            },
-            labelLine: {
-              show: false
-            }
-          }
-        ]
-      }
-      const option2 = JSON.parse(JSON.stringify(option))
-      const option3 = JSON.parse(JSON.stringify(option))
-      const option4 = JSON.parse(JSON.stringify(option))
-      const option5 = JSON.parse(JSON.stringify(option))
-      option3.color[0] = '#699bff'
-      option4.color[0] = '#52ce7c'
-      option5.color[0] = '#0046b7'
-      option2.series[0].data = [
-        { value: 16, name: `16 Used` },
-        { value: 26, name: `26 Free` },
-      ]
-      option3.series[0].data = [
-        { value: 1648, name: `1648 Used` },
-        { value: 2000, name: `2000 Free` },
-      ]
-      option4.series[0].data = [
-        { value: 1.21, name: `1.21 TB Used` },
-        { value: 22, name: `22 TB Free` },
-      ]
-      option5.series[0].data = [
-        { value: 16.45, name: `16.45 TB Used` },
-        { value: 80.12, name: `80.12 TB Free` },
-      ]
-      machart_gpu.setOption(option2);
-      machart_cpu.setOption(option3);
-      machart_memory.setOption(option4);
-      machart_storage.setOption(option5);
-      if (typeof ResizeObserver !== 'undefined') {
-        let observer = new ResizeObserver(entries => {
-          for (let entry of entries) {
-            machart_gpu.resize();
-            machart_cpu.resize();
-            machart_memory.resize();
-            machart_storage.resize();
-          }
-        });
-
-        let element = document.getElementById('resource-container');
-        observer.observe(element);
-      } else {
-        console.log('ResizeObserver is not supported in this browser.');
-      }
-      window.addEventListener("resize", function () {
-        machart_gpu.resize();
-        machart_cpu.resize();
-        machart_memory.resize();
-        machart_storage.resize();
-      })
-    }
     const handleClick = () => { }
     onActivated(async () => {
-      // reset('init')
       changetype()
-      // changePietype()
     })
     return {
       system,
@@ -681,15 +537,6 @@ export default defineComponent({
   line-height: 1.6;
   @media screen and (max-width: 1200px) {
     font-size: 14px;
-  }
-  :deep(.el-button) {
-    border: 0;
-    border-radius: 0.06rem;
-    background: @theme-color;
-    color: white;
-    // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    font-family: inherit;
   }
   .color {
     color: #3c85ff;
@@ -917,173 +764,6 @@ export default defineComponent({
             height: 400px;
           }
         }
-      }
-    }
-    .search-body {
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin: 0;
-      .child {
-        height: 100%;
-        span {
-          white-space: nowrap;
-        }
-      }
-      .el-select {
-        width: 100%;
-        margin: 0 0.3rem 0 0.17rem;
-        font-size: inherit;
-        .el-tooltip__trigger {
-          margin: 0;
-          width: auto;
-          height: auto;
-          padding: 0.06rem 0.15rem 0.06rem 0.2rem;
-          background-color: @white-color;
-          font-size: inherit;
-          font-family: inherit;
-          border: 1px solid #505052;
-          border-radius: 0.07rem;
-          box-shadow: none;
-          .el-select__selected-item {
-            position: relative;
-            top: auto;
-            margin: 0 0.12rem 0 0;
-            transform: translateY(0px);
-            line-height: 1.2;
-            color: #333;
-            &.is-hidden {
-              display: none;
-            }
-          }
-          .el-select__suffix {
-            .el-select__icon {
-              width: 9px;
-              height: 9px;
-              background: url(../../../assets/images/icons/icon-03.png)
-                no-repeat center;
-              background-size: 100%;
-              svg {
-                display: none;
-              }
-            }
-          }
-        }
-      }
-      .el-input {
-        width: 100%;
-        // max-width: 250px;
-        // min-width: 60px;
-        margin: 0 0.16rem 0 0.1rem;
-        font-size: inherit;
-        &.small-spacing {
-          margin: 0 0.06rem 0 0.1rem;
-        }
-        .el-input__wrapper {
-          background-color: @white-color;
-          border: 1px solid #505052;
-          border-radius: 0.08rem;
-          box-shadow: none;
-          .el-input__inner {
-            width: 100%;
-            height: 0.3rem;
-            line-height: 0.3rem;
-            color: #333;
-            @media screen and (max-width: 768px) {
-              width: 100%;
-            }
-            &:hover,
-            &:active,
-            &:focus {
-              border-color: @theme-color;
-            }
-          }
-        }
-      }
-      .el-button {
-        height: 0.3rem;
-        padding: 0 0.1rem;
-        font-family: inherit;
-        font-size: inherit;
-        border: 0;
-        line-height: 0.3rem;
-        .el-icon {
-          width: 0.2rem;
-          height: 0.2rem;
-          margin: 0 0.08rem 0 0;
-          svg {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        &.el-button--info {
-          background-color: #d0dcf9;
-          border-color: #d0dcf9;
-          color: @theme-color;
-        }
-        &:hover,
-        &.is-disabled {
-          opacity: 0.9;
-        }
-      }
-    }
-    .el-pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .el-select__wrapper,
-      .el-input,
-      .el-input__inner,
-      .el-pager {
-        font-family: "HELVETICA-ROMAN";
-        font-size: inherit;
-        @media screen and (max-width: 996px) {
-          height: 26px;
-          min-height: 26px;
-          line-height: 26px;
-        }
-      }
-      .el-pagination__total {
-        color: #878c93;
-      }
-      .btn-next,
-      .btn-prev,
-      .el-pager li {
-        min-width: 24px;
-        margin: 0 4px;
-        background-color: transparent;
-        font-size: inherit;
-        color: #878c93;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        @media screen and (max-width: 996px) {
-          width: 26px;
-          min-width: 26px;
-          height: 26px;
-        }
-        &:not(.disabled).active,
-        &:not(.disabled):hover,
-        &.is-active {
-          width: 24px;
-          min-width: 24px;
-          height: 24px;
-          line-height: 24px;
-          background-color: #f9fafb;
-          border-color: @border-color;
-          color: #606060;
-        }
-        &:not(.disabled):hover {
-        }
-      }
-      .el-pager li {
-        color: #606060;
-      }
-      .el-select {
-        width: 100px;
-      }
-      .el-input,
-      .el-select__wrapper {
-        min-height: 24px;
-        height: 24px;
       }
     }
   }

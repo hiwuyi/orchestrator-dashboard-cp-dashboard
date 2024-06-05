@@ -325,9 +325,9 @@
               </template>
             </el-tab-pane>
           </el-tabs>
-          <payment-history v-if="activeName === 'FCP'"></payment-history>
-          <ubi-history v-else-if="activeName === 'ECP'"></ubi-history>
         </div>
+        <payment-history v-if="activeName === 'FCP'"></payment-history>
+        <ubi-history v-else-if="activeName === 'ECP'"></ubi-history>
       </div>
     </div>
 
@@ -365,9 +365,6 @@ export default defineComponent({
     const providersLoad = ref(false)
     const providersTableLoad = ref(false)
     const providersData = ref([])
-    const providerBody = reactive({
-      ubiTableData: []
-    })
     const pagin = reactive({
       pageSize: 10,
       pageNo: 1,
@@ -440,7 +437,6 @@ export default defineComponent({
       pagin.pageSize = 10
       pagin.pageNo = 1
       providersData.value = []
-      providerBody.ubiTableData = []
       providersTableLoad.value = false
       providersLoad.value = false
       networkInput.value = ''
@@ -1260,7 +1256,6 @@ export default defineComponent({
       providersLoad,
       providersTableLoad,
       providersData,
-      providerBody,
       networkInput,
       pagin,
       small,
@@ -1307,23 +1302,6 @@ export default defineComponent({
       margin: 0.4rem 0 0;
       background-color: @white-color;
       border-radius: 0.2rem;
-      .name-title {
-        color: #000;
-        text-transform: capitalize;
-        cursor: text;
-        a {
-          padding: 0.07rem 0.14rem;
-          margin: 0 0 0 0.14rem;
-          background-color: @theme-color;
-          border-radius: 0.5rem;
-          color: @white-color;
-          line-height: 1;
-        }
-        .is-disabled {
-          opacity: 0.8;
-          cursor: no-drop;
-        }
-      }
       .note {
         .el-row {
           margin: 0.1rem 0;
@@ -1464,44 +1442,7 @@ export default defineComponent({
       }
     }
     .search-body {
-      justify-content: flex-start;
-      flex-wrap: wrap;
       margin: 0 0 0.2rem;
-      .el-tabs {
-        width: 100%;
-        .el-tabs__header {
-          padding: 0;
-          margin: 0;
-          .el-tabs__active-bar,
-          .el-tabs__nav-wrap:after {
-            display: none;
-          }
-          .el-tabs__nav {
-            .el-tabs__item {
-              height: auto;
-              padding: 0.08rem 0.13rem;
-              margin: 0 0.15rem 0 0;
-              background-color: #f3f4f8;
-              border: 1px solid #ced4e1;
-              border-radius: 0.5rem;
-              color: #313132;
-              line-height: 1.1;
-              &.is-active {
-                background-color: #edf2ff;
-                border-color: #8eb0ff;
-                color: @theme-color;
-              }
-              &.is-disabled {
-                opacity: 0.7;
-              }
-            }
-          }
-          .el-tabs__nav-next,
-          .el-tabs__nav-prev {
-            line-height: 24px;
-          }
-        }
-      }
     }
   }
 }

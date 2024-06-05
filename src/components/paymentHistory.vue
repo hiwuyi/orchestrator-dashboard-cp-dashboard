@@ -337,7 +337,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, onMounted, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
+import { defineComponent, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
@@ -360,7 +360,6 @@ export default defineComponent({
     const bodyWidth = ref(document.body.clientWidth > 600 ? '450px' : '95%')
     const paymentData = ref([])
     const paymentLoad = ref(false)
-    const paymentType = ref(route.query.type || 'user')
     const prevType = ref(true)
     const txhashVisible = ref(false)
     const txHash = ref('')
@@ -383,7 +382,6 @@ export default defineComponent({
     })
     const small = ref(false)
     const background = ref(false)
-    const statusRadio = ref('')
     let biddingContractAddress = process.env.VUE_APP_OPSWAN_BIDDING_ADDRESS
     let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
 
@@ -433,7 +431,7 @@ export default defineComponent({
     }
 
     async function retryFun (row) {
-      if (getnetID.toString() !== '20241133') {
+      if (system.$commonFun.chainIdSWAN.toString() !== '20241133') {
         await system.$commonFun.walletChain(20241133)
         return
       }
@@ -446,7 +444,7 @@ export default defineComponent({
     }
 
     async function rewardFun (row, type) {
-      if (getnetID.toString() !== '20241133') {
+      if (system.$commonFun.chainIdSWAN.toString() !== '20241133') {
         await system.$commonFun.walletChain(20241133)
         return
       }
@@ -516,7 +514,7 @@ export default defineComponent({
       paymentLoad.value = true
       let formData = new FormData()
       formData.append('tx_hash', receipt.transactionHash)
-      formData.append('chain_id', getnetID)
+      formData.append('chain_id', system.$commonFun.chainIdSWAN)
       formData.append('uuid', row.uuid)
       formData.append('token', 'SwanToken')
       try {
@@ -530,7 +528,6 @@ export default defineComponent({
 
     async function init (pFilter) {
       paymentLoad.value = true
-      paymentType.value = route.query.type || 'user'
       const requestURL = `${process.env.VUE_APP_BASEAPI}provider/payments`
       const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
       let paramsOption = {
@@ -577,9 +574,7 @@ export default defineComponent({
       // init()
     }
 
-    let getnetID = NaN
     onMounted(async () => {
-      // getnetID = await system.$commonFun.chainIdSWAN
       init()
     })
     watch(route, (to, from) => {
@@ -591,13 +586,12 @@ export default defineComponent({
       system,
       route,
       router,
-      paymentType,
       txhashVisible,
       txHash,
       rowAll,
       pagin,
       background,
-      small, bodyWidth, statusRadio, networkZK,
+      small, bodyWidth, networkZK,
       rewardFun, reviewFun, checkFun, handleClose, handleSizeChange, handleCurrentChange,
       retryFun, handleFilterChange, radioFilterChange, searchZKProvider, clearProvider
     }
@@ -724,36 +718,6 @@ export default defineComponent({
       text-transform: capitalize;
     }
 
-    .status-style {
-      margin: 0;
-      font-size: inherit;
-      .el-radio-group {
-        font-size: inherit;
-        .el-radio {
-          font-size: inherit;
-          color: #000;
-          text-transform: capitalize;
-          .el-radio__label {
-            font-size: inherit;
-          }
-          .el-radio__input {
-            &.is-checked {
-              .el-radio__inner {
-                background-color: #409eff;
-              }
-              .el-radio__inner::after {
-                display: none;
-                transition: all 0s;
-              }
-            }
-            .el-radio__inner {
-              background-color: transparent;
-            }
-          }
-        }
-      }
-    }
-
     .el-table {
       tr {
         th {
@@ -844,13 +808,6 @@ export default defineComponent({
         padding: 0.2rem;
       }
 
-      .cp-show {
-        min-height: 50px;
-
-        label {
-        }
-      }
-
       label {
         word-break: break-word;
         line-height: 1;
@@ -869,77 +826,6 @@ export default defineComponent({
           svg {
             margin: 0 0 0 0.05rem;
             cursor: pointer;
-          }
-        }
-      }
-
-      .address_email {
-        margin: 0 0 10px;
-
-        .address_body {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin: 10px 0 0;
-
-          .address {
-            width: 80%;
-            margin: 0;
-          }
-
-          .address_right {
-            position: relative;
-            display: inline-block;
-            padding: 0.05rem 0.2rem 0.05rem 0.32rem;
-            margin: 0 5px;
-            background-color: rgba(85, 128, 233, 0.15);
-            font-size: 14px;
-            border-radius: 0.5rem;
-            white-space: nowrap;
-            @media screen and (max-width: 1600px) {
-              font-size: 13px;
-            }
-            @media screen and (max-width: 600px) {
-              font-size: 12px;
-            }
-
-            &::before {
-              position: absolute;
-              left: 0.16rem;
-              top: 50%;
-              content: "";
-              width: 0.08rem;
-              height: 0.08rem;
-              margin-top: -0.04rem;
-              background-color: #606266;
-              border-radius: 0.5rem;
-            }
-          }
-
-          .bg-primary {
-            &::before {
-              background-color: #4d73ff;
-            }
-          }
-        }
-
-        .share {
-          .el-button {
-            width: 100%;
-            margin: 3px 0 0;
-            font-size: 13px;
-            @media screen and (min-width: 1800px) {
-              font-size: 14px;
-            }
-            @media screen and (max-width: 600px) {
-              font-size: 12px;
-            }
-          }
-        }
-
-        .el-loading-mask {
-          .el-loading-spinner {
-            top: 50%;
           }
         }
       }
@@ -976,85 +862,6 @@ export default defineComponent({
             .el-input__inner {
               text-align: left;
             }
-          }
-        }
-      }
-
-      .share {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        font-size: inherit;
-
-        svg,
-        path {
-          fill: @theme-color;
-        }
-
-        .el-button {
-          justify-content: flex-start;
-          min-width: 50%;
-          padding: 0;
-          margin: 8px 0 0;
-          background: transparent !important;
-          border: 0;
-          color: @theme-color !important;
-          font-size: inherit;
-          font-weight: normal;
-          font-family: inherit;
-          opacity: 0.8;
-          box-shadow: none !important;
-
-          span {
-            display: flex;
-            align-items: center;
-
-            svg {
-              width: 15px;
-              height: 15px;
-              margin: 0 3px 0 0;
-            }
-
-            .icon_big {
-              width: 13px;
-              height: 13px;
-            }
-          }
-
-          &:hover {
-            background: transparent;
-            opacity: 1;
-          }
-
-          &.is-disabled {
-            opacity: 0.4;
-          }
-        }
-      }
-
-      .loadStyle {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 2000;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 0.2rem;
-      }
-
-      .apiTipCont {
-        p {
-          display: flex;
-          align-items: center;
-          text-indent: 0.1rem;
-          margin: 0.1rem;
-          color: #7e7e7e;
-          font-size: 0.18rem;
-
-          .el-icon-document-copy {
-            display: block;
-            font-size: 17px;
-            cursor: pointer;
           }
         }
       }

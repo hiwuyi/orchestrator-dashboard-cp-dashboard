@@ -250,12 +250,6 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const swanLogo = require("@/assets/images/logo-white.png")
-    const providersLoad = ref(false)
-    const providersData = ref([])
-    const small = ref(false)
-    const background = ref(false)
-    const getnetID = ref(NaN)
-    const prevType = ref(true)
     const centerDialogVisible = ref(false)
     const tokenShow = ref(false)
     const toolData = ref('')
@@ -472,11 +466,6 @@ export default defineComponent({
       route,
       swanLogo,
       metaAddress,
-      providersLoad,
-      providersData,
-      small,
-      background,
-      getnetID,
       accessToken,
       centerDialogVisible,
       toolData,
@@ -523,17 +512,17 @@ export default defineComponent({
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0;
-    .swan-icon{
-    @media screen and (max-width: 600px) {
-      width: 100%;
-    }
-    img {
-      height: 0.45rem;
-      margin: 0 0.2rem 0 0;
-      @media screen and (max-width: 767px) {
-        height: 30px;
+    .swan-icon {
+      @media screen and (max-width: 600px) {
+        width: 100%;
       }
-    }
+      img {
+        height: 0.45rem;
+        margin: 0 0.2rem 0 0;
+        @media screen and (max-width: 767px) {
+          height: 30px;
+        }
+      }
     }
     .swan-right {
       @media screen and (max-width: 600px) {
@@ -768,11 +757,6 @@ export default defineComponent({
       @media screen and (max-width: 540px) {
         padding: 0.2rem;
       }
-      .cp-show {
-        min-height: 50px;
-        label {
-        }
-      }
       label {
         word-break: break-word;
         line-height: 1;
@@ -785,69 +769,6 @@ export default defineComponent({
         margin: 10px 0 12px;
         border-radius: 8px;
         font-size: inherit;
-      }
-      .address_email {
-        margin: 0 0 10px;
-        .address_body {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin: 10px 0 0;
-          .address {
-            width: 80%;
-            margin: 0;
-          }
-          .address_right {
-            position: relative;
-            display: inline-block;
-            padding: 0.05rem 0.2rem 0.05rem 0.32rem;
-            margin: 0 5px;
-            background-color: rgba(85, 128, 233, 0.15);
-            font-size: 14px;
-            border-radius: 0.5rem;
-            white-space: nowrap;
-            @media screen and (max-width: 1600px) {
-              font-size: 13px;
-            }
-            @media screen and (max-width: 600px) {
-              font-size: 12px;
-            }
-            &::before {
-              position: absolute;
-              left: 0.16rem;
-              top: 50%;
-              content: "";
-              width: 0.08rem;
-              height: 0.08rem;
-              margin-top: -0.04rem;
-              background-color: #606266;
-              border-radius: 0.5rem;
-            }
-          }
-          .bg-primary {
-            &::before {
-              background-color: #4d73ff;
-            }
-          }
-        }
-        .share {
-          .el-button {
-            width: 100%;
-            margin: 3px 0 0;
-            font-size: 13px;
-            @media screen and (min-width: 1800px) {
-              font-size: 14px;
-            }
-            @media screen and (max-width: 600px) {
-              font-size: 12px;
-            }
-          }
-        }
-        .el-loading-mask {
-          .el-loading-spinner {
-            top: 50%;
-          }
-        }
       }
       .area {
         flex-wrap: wrap;
@@ -875,74 +796,6 @@ export default defineComponent({
             .el-input__inner {
               text-align: left;
             }
-          }
-        }
-      }
-      .share {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        font-size: inherit;
-        svg,
-        path {
-          fill: @theme-color;
-        }
-        .el-button {
-          justify-content: flex-start;
-          min-width: 50%;
-          padding: 0;
-          margin: 8px 0 0;
-          background: transparent !important;
-          border: 0;
-          color: @theme-color !important;
-          font-size: inherit;
-          font-weight: normal;
-          font-family: inherit;
-          opacity: 0.8;
-          box-shadow: none !important;
-          span {
-            display: flex;
-            align-items: center;
-            svg {
-              width: 15px;
-              height: 15px;
-              margin: 0 3px 0 0;
-            }
-            .icon_big {
-              width: 13px;
-              height: 13px;
-            }
-          }
-          &:hover {
-            background: transparent;
-            opacity: 1;
-          }
-          &.is-disabled {
-            opacity: 0.4;
-          }
-        }
-      }
-      .loadStyle {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 2000;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 0.2rem;
-      }
-      .apiTipCont {
-        p {
-          display: flex;
-          align-items: center;
-          text-indent: 0.1rem;
-          margin: 0.1rem;
-          color: #7e7e7e;
-          font-size: 0.18rem;
-          .el-icon-document-copy {
-            display: block;
-            font-size: 17px;
-            cursor: pointer;
           }
         }
       }
@@ -1175,28 +1028,6 @@ export default defineComponent({
   }
   .el-dialog__body {
     padding: 0;
-    .tip,
-    .tip_black {
-      padding: 0.1rem 0.25rem;
-      background-color: #f3f1ff;
-      color: #562683;
-      font-size: 15px;
-      word-break: break-word;
-      line-height: 1.3;
-      @media screen and (max-width: 768px) {
-        font-size: 14px;
-      }
-      @media screen and (min-width: 1800px) {
-        font-size: 17px;
-      }
-    }
-    .tip_black {
-      background-color: transparent;
-      color: #000;
-      a {
-        text-decoration: underline;
-      }
-    }
     .el-form {
       padding: 0.15rem 0.25rem 0;
       .el-form-item {
@@ -1219,17 +1050,6 @@ export default defineComponent({
               // background: linear-gradient(180deg, #fefefe, #f0f0f0);
             }
           }
-        }
-      }
-    }
-    .apiTipCont {
-      padding: 0.15rem 0.25rem;
-      p {
-        margin-bottom: 0.15rem;
-        line-height: 1.5;
-        word-break: break-word;
-        @media screen and (min-width: 1800px) {
-          font-size: 16px;
         }
       }
     }

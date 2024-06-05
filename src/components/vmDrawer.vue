@@ -580,18 +580,6 @@ export default defineComponent({
             border: 0;
           }
         }
-        .name-title {
-          color: #000;
-          text-transform: capitalize;
-          cursor: text;
-          a {
-            padding: 0.08rem 0.06rem;
-            background-color: @theme-color;
-            border-radius: 0.08rem;
-            color: @white-color;
-            line-height: 1;
-          }
-        }
         .note {
           padding: 0.12rem 0.25rem;
           margin: 0.27rem 0;

@@ -99,7 +99,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "Frank",
@@ -146,7 +149,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "CryptoHub",
@@ -193,7 +199,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "26",
@@ -240,7 +249,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "31",
@@ -287,7 +299,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "jeremy",
@@ -334,7 +349,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "swannode",
@@ -381,7 +399,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "lawaworker.online",
@@ -428,7 +449,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             },
             {
                 "name": "DataNexus",
@@ -475,7 +499,10 @@
                     }
                 ],
                 "completion_rate": 10000,
-                "status": 1
+                "status": 1,
+                "gpu_tags": [
+                    "NVIDIA 3080"
+                ]
             }
         ]
     }

@@ -42,16 +42,9 @@
   </el-row>
 </template>
 <script>
-import { defineComponent, computed, onMounted, watch, ref, reactive, getCurrentInstance } from 'vue'
-import { useStore } from "vuex"
-import { useRouter, useRoute } from 'vue-router'
+import { defineComponent, onMounted, ref } from 'vue'
 export default defineComponent({
   setup () {
-    const store = useStore()
-    const bodyWidth = ref(document.body.clientWidth < 992)
-    const system = getCurrentInstance().appContext.config.globalProperties
-    const route = useRoute()
-    const router = useRouter()
     const swanLogo = require("@/assets/images/logo-swansmall.png")
     const mediaData = ref([
       {
@@ -83,13 +76,11 @@ export default defineComponent({
 
     onMounted(() => { })
     return {
-      system,
       swanLogo,
       mediaData,
       emailAddress
     }
-  },
-  components: {}
+  }
 })
 </script>
 <style  lang="less" scoped>
