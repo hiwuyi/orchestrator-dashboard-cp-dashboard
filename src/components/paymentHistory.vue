@@ -48,7 +48,7 @@
         <el-table-column prop="hardware_type" column-key="hardware_type" filterable :filters="[
             { text: 'CPU', value: 'CPU' },
             { text: 'GPU', value: 'GPU' }
-          ]" filter-placement="bottom-end" :filter-multiple="false" min-width="80">
+          ]" filter-placement="bottom-end" :filter-multiple="false" min-width="90">
           <template #header>
             <div class="font-14 weight-4">Task Type</div>
           </template>

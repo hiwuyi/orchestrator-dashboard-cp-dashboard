@@ -248,7 +248,7 @@ export default defineComponent({
   .dialog-body {
     width: 35%;
     max-width: 900px;
-    min-width: 300px;
+    min-width: 320px;
     padding-top: 5px;
     border-radius: 6px;
     word-break: break-word;

@@ -73,7 +73,7 @@
           </div>
         </div>
 
-        <div class="header-right flex-row nowrap">
+        <div class="header-right flex-row nowrap" v-if="accessToken !== ''">
           <div class="set mobileShow">
             <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end" :hide-on-click="false">
               <div class="el-dropdown-link setting-style loginImg flex-row">
