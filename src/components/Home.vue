@@ -17,10 +17,13 @@
                 </keep-alive>
               </transition>
             </router-view>
-            <el-backtop :right="20" :bottom="30" />
+            <el-backtop :right="20" :bottom="backtopMargin" />
           </div>
         </el-main>
       </el-container>
+      <el-footer v-show="bodyWidth">
+        <v-foot></v-foot>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -28,10 +31,18 @@
 <script>
 import vHead from './Header.vue'
 import vAside from './Aside.vue'
-import { defineComponent } from 'vue'
+import vFoot from './Footer.vue'
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
   components: {
-    vHead, vAside
+    vHead, vAside, vFoot
+  },
+  setup () {
+    const bodyWidth = ref(document.body.clientWidth > 768 ? false : true)
+    const backtopMargin = ref(document.body.clientWidth > 768 ? 30 : 130)
+    return{
+      bodyWidth, backtopMargin
+    }
   }
 })
 </script>

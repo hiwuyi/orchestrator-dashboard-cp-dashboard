@@ -115,12 +115,20 @@ export default defineComponent({
     .media-list {
       width: 100%;
       margin: 0.3rem 0 0.2rem;
+      @media screen and (max-width: 768px) {
+        width: auto;
+        margin: 0.2rem 0 0;
+      }
       a {
         display: block;
         padding: 0.05rem;
         margin: 0 auto;
         background-color: #000;
         border-radius: 0.5rem;
+        @media screen and (max-width: 768px) {
+          padding: 4px;
+          margin: 0 10px 0 0;
+        }
         svg {
           display: block;
           width: 0.14rem;
@@ -134,8 +142,8 @@ export default defineComponent({
             height: 12px;
           }
           @media screen and (max-width: 768px) {
-            width: 10px;
-            height: 10px;
+            width: 16px;
+            height: 16px;
           }
         }
       }

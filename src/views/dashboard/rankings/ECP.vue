@@ -122,7 +122,7 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="uptime" min-width="130">
+          <el-table-column prop="uptime" min-width="140">
             <template #header>
               <div class="font-14 weight-4">Task Completed</div>
             </template>

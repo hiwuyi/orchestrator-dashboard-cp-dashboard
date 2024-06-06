@@ -1,6 +1,6 @@
 <template>
   <div class="flex-row center">
-    <el-drawer v-model="props.centerDrawerVisible" direction="rtl" size="50%" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="drawer-body">
+    <el-drawer v-model="props.centerDrawerVisible" direction="rtl" size="50%" :lock-scroll="true" :show-close="false" :close-on-click-modal="true" :close-on-press-escape="false" @before-close="closeHandle()" @close="closeHandle()" align-center class="drawer-body">
       <div class="drawer-content font-14" v-if="props.list.type === 'FCP'">
         <div class="flex-row space-between name-title">
           <b class="font-16 weight-4">{{props.list.name}}</b>
@@ -315,13 +315,13 @@
               <p>MachineID: </p>
             </el-col>
             <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
-              <p class="color text-right" v-if="machines.specs">{{machines.machine_id}}</p>
+              <p class="width color text-right" v-if="machines.specs">{{machines.machine_id}}</p>
             </el-col>
             <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10" class="flex-row baseline">
               <p>Current CPU usage:</p>
             </el-col>
             <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
-              <p class="color text-right" v-if="machines.specs">
+              <p class="width color text-right" v-if="machines.specs">
                 <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.free)}}</span> free
                 <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.total)}}</span> total
                 <span class="green">{{system.$commonFun.replaceFormat(machines.specs.cpu.used)}}</span> used
@@ -331,7 +331,7 @@
               <p>Current Memory usage(GiB):</p>
             </el-col>
             <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
-              <p class="color text-right" v-if="machines.specs">
+              <p class="width color text-right" v-if="machines.specs">
                 <span class="orange">{{machines.specs.memory.free}}</span> free
                 <span class="orange">{{machines.specs.memory.total}}</span> total
                 <span class="orange">{{machines.specs.memory.used}}</span> used
@@ -341,7 +341,7 @@
               <p>Current Storage usage(GiB):</p>
             </el-col>
             <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="flex-row baseline">
-              <p class="color text-right" v-if="machines.specs">
+              <p class="width color text-right" v-if="machines.specs">
                 <span class="blue">{{machines.specs.storage.free}}</span> free
                 <span class="blue">{{machines.specs.storage.total}}</span> total
                 <span class="blue">{{machines.specs.storage.used}}</span> used
@@ -555,7 +555,7 @@ export default defineComponent({
   .drawer-body {
     width: 50%;
     max-width: 900px;
-    min-width: 300px;
+    min-width: 330px;
     border-radius: 6px;
     word-break: break-word;
     color: #6c6f72;
@@ -594,6 +594,9 @@ export default defineComponent({
               color: #000;
               &.color {
                 color: @border-color;
+                @media screen and (max-width: 767px) {
+                  text-align: left !important;
+                }
                 .green {
                   color: #699bff;
                 }

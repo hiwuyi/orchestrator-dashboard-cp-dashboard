@@ -85,7 +85,7 @@
                 <el-dropdown-menu>
                   <el-dropdown-item command="overview">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-Overview"></i>
                         <span>Overview</span>
                       </div>
@@ -93,7 +93,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="rankings-fcp">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-Rankings-fcp"></i>
                         <span>FCP List</span>
                       </div>
@@ -101,15 +101,23 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="rankings-ecp">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-Rankings-ecp"></i>
                         <span>ECP List</span>
                       </div>
                     </div>
                   </el-dropdown-item>
+                  <el-dropdown-item command="accountInfo" v-if="metaAddress && accessToken">
+                    <div class="profile router-link b">
+                      <div class="flex-row font-16">
+                        <i class="icon icon-AccountInfo"></i>
+                        <span>CP Profile</span>
+                      </div>
+                    </div>
+                  </el-dropdown-item>
                   <el-dropdown-item command="resource">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-Resource"></i>
                         <span>Resource</span>
                       </div>
@@ -117,7 +125,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="aar" divided>
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-AAR"></i>
                         <span>Atom Accelerator Race
                           <i class="icon icon-new"></i>
@@ -127,7 +135,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="aar-fcp">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-AAR"></i>
                         <span>FCP Ranking</span>
                       </div>
@@ -135,7 +143,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item command="aar-ecp">
                     <div class="profile router-link b">
-                      <div class="flex-row font-18">
+                      <div class="flex-row font-16">
                         <i class="icon icon-AAR"></i>
                         <span>ECP Ranking</span>
                       </div>
@@ -1175,15 +1183,15 @@ export default defineComponent({
               background-size: 100%;
             }
             &.icon-AccountInfo {
-              background: url(../assets/images/menu-03.png) no-repeat;
-              background-size: 100%;
-            }
-            &.icon-Resource {
               background: url(../assets/images/menu-04.png) no-repeat;
               background-size: 100%;
             }
-            &.icon-AAR {
+            &.icon-Resource {
               background: url(../assets/images/menu-05.png) no-repeat;
+              background-size: 100%;
+            }
+            &.icon-AAR {
+              background: url(../assets/images/menu-06.png) no-repeat;
               background-size: 100%;
             }
             &.icon-new {
