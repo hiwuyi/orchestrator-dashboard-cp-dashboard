@@ -80,7 +80,6 @@ export default defineComponent({
         position: relative;
         width: auto;
         max-width: 2.4rem;
-        padding: 0.4rem 0.15rem 0.25rem;
         background-color: @white-color;
         overflow: unset;
         @media screen and (max-width: 1440px) {

@@ -27,7 +27,7 @@
         </el-col>
       </el-row>
 
-      <el-table v-loading="paymentLoad" :data="paymentData" stripe style="width: 100%">
+      <el-table v-loading="paymentLoad" ref="tableRef" :data="paymentData" stripe style="width: 100%">
         <el-table-column prop="task_id" width="90">
           <template #header>
             <div class="font-14 weight-4">Task ID</div>
@@ -105,7 +105,8 @@
             <div class="font-14 weight-4">Reward TX Hash</div>
           </template>
           <template #default="scope">
-            <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank" class="name-style">{{scope.row.tx_hash}}</a>
+            <!-- <a :href="`${scope.row.url_tx}${scope.row.tx_hash}`" target="_blank" class="name-style font-14">{{scope.row.tx_hash}}</a> -->
+            <a target="_blank" class="name-style font-14"></a>
           </template>
         </el-table-column>
         <el-table-column prop="amount">
@@ -124,7 +125,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, onMounted, onActivated, watch, ref, reactive, getCurrentInstance } from 'vue'
+import { defineComponent, computed, onMounted, onActivated, nextTick, watch, ref, reactive, getCurrentInstance } from 'vue'
 import { useStore } from "vuex"
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
@@ -156,6 +157,7 @@ export default defineComponent({
     })
     const small = ref(false)
     const background = ref(false)
+    const tableRef = ref(null)
 
     async function handleSizeChange (val) {
       // console.log('handleSizeChange:', val)
@@ -285,6 +287,10 @@ export default defineComponent({
         }
         pagin.total = paymentsRes.data.total
         paymentData.value = paymentsRes.data.list || []
+
+        nextTick(() => {
+          tableRef.value.doLayout();
+        });
       } else {
         pagin.total = 0
         paymentData.value = []
@@ -313,7 +319,7 @@ export default defineComponent({
       system,
       route,
       router,
-      pagin, background, small, networkZK,
+      pagin, background, small, networkZK, tableRef,
       handleSizeChange, handleCurrentChange, searchZKProvider, clearProvider
     }
   },
@@ -449,7 +455,9 @@ export default defineComponent({
             -webkit-box-orient: vertical;
             padding: 0 6px;
             a {
+              width: 100%;
               display: block;
+              font-size: inherit;
               // color: inherit;
               &:hover {
                 text-decoration: underline;

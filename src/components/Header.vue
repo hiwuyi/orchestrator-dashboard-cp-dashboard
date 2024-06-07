@@ -73,9 +73,9 @@
           </div>
         </div>
 
-        <div class="header-right flex-row nowrap" v-if="accessToken !== ''">
+        <div class="header-right flex-row nowrap">
           <div class="set mobileShow">
-            <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end" :hide-on-click="false">
+            <el-dropdown popper-class="menu-style" @command="handleSelect" placement="bottom-end">
               <div class="el-dropdown-link setting-style loginImg flex-row">
                 <el-icon>
                   <Menu />
@@ -149,7 +149,7 @@
                       </div>
                     </div>
                   </el-dropdown-item>
-                  <el-dropdown-item command="sign_out">
+                  <el-dropdown-item command="sign_out" v-if="accessToken !== ''">
                     <span class="link">Sign Out</span>
                   </el-dropdown-item>
                 </el-dropdown-menu>

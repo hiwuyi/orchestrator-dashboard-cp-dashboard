@@ -23,276 +23,281 @@
               <span class="font-16 weight-4">Provider Figures</span>
             </div>
 
-            <el-tabs v-model="activeName" class="demo-tabs">
-              <el-tab-pane name="Overview">
-                <template #label>
-                  <span class="font-14">Overview Data</span>
-                </template>
-                <el-row :gutter="18">
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Active ECP numbers</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Applications</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-tab-pane>
-              <el-tab-pane name="FCP">
-                <template #label>
-                  <span class="font-14">FCP Summary</span>
-                </template>
-                <el-row :gutter="18">
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Active Applications</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Deployments</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total jobs</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total running jobs</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total CPU hours</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-tab-pane>
-              <el-tab-pane name="ECP">
-                <template #label>
-                  <span class="font-14">ECP Summary</span>
-                </template>
-                <el-row :gutter="18">
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Active ECP Number</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">GPU ZK task</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">CPU ZK task</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Verified ZK task</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content g-select">
-                      <h6 class="font-12 weight-4 text-center flex-row nowrap">
-                        <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
-                          <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
-                            <div class="font-14">{{item.value}}</div>
-                          </el-option>
-                        </el-select>
-                        Avg ZK rewards
-                      </h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-tab-pane>
-              <el-tab-pane name="Swan">
-                <template #label>
-                  <span class="font-14">Swan Chain</span>
-                </template>
-                <el-row :gutter="18">
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Addresses</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Contracts(24H)</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                      <h6 class="font-12 weight-4 text-right t">24h change</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Transactions Today</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Transactions</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                  <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
-                    <div class="grid-content">
-                      <h6 class="font-12 weight-4 text-center">Total Accounts</h6>
-                      <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
-                        {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
-                      </b>
-                      <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-tab-pane>
-            </el-tabs>
+            <div class="tabs-container">
+              <div @click="tabsSwitch(0)" class="tabs-button text-center tabs-prev" :class="{'is-disabled': activeName === 0}">&lt;</div>
+              <div @click="tabsSwitch(1)" class="tabs-button text-center tabs-next" :class="{'is-disabled': activeName === 3}">&gt;</div>
+
+              <el-tabs v-model="activeName" class="demo-tabs">
+                <el-tab-pane :name="0">
+                  <template #label>
+                    <span class="font-14">Overview Data</span>
+                  </template>
+                  <el-row :gutter="18">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Active ECP numbers</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Applications</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="8">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="span font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+                <el-tab-pane :name="1">
+                  <template #label>
+                    <span class="font-14">FCP Summary</span>
+                  </template>
+                  <el-row :gutter="18">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Active FCP Number</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Active Applications</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Deployments</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total jobs</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total running jobs</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total GPU hours</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total CPU hours</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+                <el-tab-pane :name="2">
+                  <template #label>
+                    <span class="font-14">ECP Summary</span>
+                  </template>
+                  <el-row :gutter="18">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Active ECP Number</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total ZK rewards (SWAN)</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total ZK tasks</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">GPU ZK task</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">CPU ZK task</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Verified ZK task</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content g-select">
+                        <h6 class="font-12 weight-4 text-center flex-row nowrap">
+                          <el-select v-model="AvgZKRewards.value" placeholder="Select" size="small">
+                            <el-option v-for="item in AvgZKRewards.options" :key="item.value" :label="item.value" :value="item.value">
+                              <div class="font-14">{{item.value}}</div>
+                            </el-option>
+                          </el-select>
+                          Avg ZK rewards
+                        </h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+                <el-tab-pane :name="3">
+                  <template #label>
+                    <span class="font-14">Swan Chain</span>
+                  </template>
+                  <el-row :gutter="18">
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Addresses</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Contracts(24H)</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                        <h6 class="font-12 weight-4 text-right t">24h change</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Transactions Today</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Transactions</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="6" :xl="6">
+                      <div class="grid-content">
+                        <h6 class="font-12 weight-4 text-center">Total Accounts</h6>
+                        <b v-loading="providersLoad" class="flex-row center font-30 weight-4 text-center">
+                          {{providerBody.totalData.smart_contracts?system.$commonFun.replaceFormat(providerBody.totalData.smart_contracts):'-'}}
+                        </b>
+                        <h6 class="font-22 weight-4 text-right t" :class="{'up': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h>=0,'down': providerBody.totalData.new_smart_contracts_24h&&providerBody.totalData.new_smart_contracts_24h<0}">{{providerBody.totalData.new_smart_contracts_24h?providerBody.totalData.new_smart_contracts_24h>=0?'+':'-':''}}{{system.$commonFun.replaceFormat(providerBody.totalData.new_smart_contracts_24h)}}</h6>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+              </el-tabs>
+            </div>
           </div>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="11" :xl="11" class="flex-row baseline">
@@ -405,7 +410,7 @@
                 <template #default="scope">
                   <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                     <template #reference>
-                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                      <div class="name-style width" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                     </template>
                   </el-popover>
                 </template>
@@ -470,7 +475,7 @@
                 <template #default="scope">
                   <el-popover placement="top" effect="dark" popper-class="popup-content" popper-style="word-break: break-word; text-align: center;font-size:12px;" trigger="hover" :content="scope.row.name">
                     <template #reference>
-                      <div class="name-style" @click="handleCP(scope.row)">{{scope.row.name}}</div>
+                      <div class="name-style width" @click="handleCP(scope.row)">{{scope.row.name}}</div>
                     </template>
                   </el-popover>
                 </template>
@@ -484,7 +489,7 @@
                   <div class="font-14 weight-4">status</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="uptime" min-width="150">
+              <el-table-column prop="uptime" min-width="160">
                 <template #header>
                   <div class="font-14 weight-4">Task Completed</div>
                 </template>
@@ -561,7 +566,7 @@ export default defineComponent({
       }
     })
     const dataArr = ref([])
-    const activeName = ref('Overview')
+    const activeName = ref(0)
     const cpLoad = ref(false)
     const AvgZKRewards = reactive({
       value: 'Daily',
@@ -596,6 +601,10 @@ export default defineComponent({
         }]
     })
 
+    function tabsSwitch (index) {
+      if (index > 0 && activeName.value < 3) activeName.value += 1
+      else if (index === 0 && activeName.value > 0) activeName.value -= 1
+    }
     async function init () {
       providersTableLoad.value = true
       const params = {
@@ -1468,7 +1477,7 @@ export default defineComponent({
       providersData,
       providerBody,
       accessToken, activeName, cpLoad, AvgZKRewards, weekList,
-      handleCP, resetMap, roamMap
+      handleCP, resetMap, roamMap, tabsSwitch
     }
   }
 })
@@ -1714,9 +1723,17 @@ export default defineComponent({
         }
         .el-tabs {
           width: 100%;
+          .el-tabs__nav-scroll {
+            overflow: auto;
+          }
           .el-tabs__header {
             padding: 0.22rem 0 0;
             margin: 0;
+            .el-tabs__nav-wrap {
+              @media screen and (max-width: 600px) {
+                padding: 0 20px;
+              }
+            }
             .el-tabs__active-bar,
             .el-tabs__nav-wrap:after {
               display: none;
@@ -1740,6 +1757,7 @@ export default defineComponent({
             }
             .el-tabs__nav-next,
             .el-tabs__nav-prev {
+              display: none;
               line-height: 24px;
             }
           }

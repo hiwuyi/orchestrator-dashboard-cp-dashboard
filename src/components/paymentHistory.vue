@@ -286,7 +286,8 @@
                 </template>
               </el-popover>
             </span>
-            <a v-else :href="`${scope.row.url_tx}${scope.row.transaction_hash}`" target="_blank" class="name-style">{{scope.row.transaction_hash}}</a>
+            <!-- <a v-else :href="`${scope.row.url_tx}${scope.row.transaction_hash}`" target="_blank" class="name-style">{{scope.row.transaction_hash}}</a> -->
+            <a v-else target="_blank" class="name-style"></a>
           </template>
         </el-table-column>
         <el-table-column prop="Reward">
@@ -383,7 +384,8 @@ export default defineComponent({
     const small = ref(false)
     const background = ref(false)
     let biddingContractAddress = process.env.VUE_APP_OPSWAN_BIDDING_ADDRESS
-    let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
+    let biddingContract
+    // let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
 
     function handleSizeChange (val) {
     }
@@ -735,9 +737,10 @@ export default defineComponent({
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            padding: 0 6px;
             a {
+              width: 100%;
               display: block;
+              font-size: inherit;
               &:hover {
                 text-decoration: underline;
               }

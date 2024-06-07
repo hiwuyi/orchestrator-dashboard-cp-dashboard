@@ -308,23 +308,28 @@
 
       <div class="providers-cp">
         <div class="search-body flex-row font-14">
-          <el-tabs v-model="activeName" class="demo-tabs">
-            <el-tab-pane name="FCP">
-              <template #label>
-                <span class="font-14">FCP Reward List</span>
-              </template>
-            </el-tab-pane>
-            <el-tab-pane name="ECP">
-              <template #label>
-                <span class="font-14">ZK Proof List</span>
-              </template>
-            </el-tab-pane>
-            <el-tab-pane name="Transaction" disabled>
-              <template #label>
-                <span class="font-14">Transaction List</span>
-              </template>
-            </el-tab-pane>
-          </el-tabs>
+          <div class="tabs-container">
+            <div @click="activeName = 'FCP'" class="tabs-button text-center tabs-prev" :class="{'is-disabled': activeName === 'FCP'}">&lt;</div>
+            <div @click="activeName = 'ECP'" class="tabs-button text-center tabs-next" :class="{'is-disabled': activeName === 'ECP'}">&gt;</div>
+
+            <el-tabs v-model="activeName" class="demo-tabs">
+              <el-tab-pane name="FCP">
+                <template #label>
+                  <span class="font-14">FCP Reward List</span>
+                </template>
+              </el-tab-pane>
+              <el-tab-pane name="ECP">
+                <template #label>
+                  <span class="font-14">ZK Proof List</span>
+                </template>
+              </el-tab-pane>
+              <el-tab-pane name="Transaction" disabled>
+                <template #label>
+                  <span class="font-14">Transaction List</span>
+                </template>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
         <payment-history v-if="activeName === 'FCP'"></payment-history>
         <ubi-history v-else-if="activeName === 'ECP'"></ubi-history>
@@ -1443,6 +1448,11 @@ export default defineComponent({
     }
     .search-body {
       margin: 0 0 0.2rem;
+      .tabs-container {
+        .tabs-button {
+          top: 0;
+        }
+      }
     }
   }
 }

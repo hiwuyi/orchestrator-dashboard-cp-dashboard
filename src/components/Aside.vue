@@ -116,10 +116,16 @@ export default defineComponent({
 </script>
 <style  lang="less" scoped>
 .aside {
-  height: 100%;
+  height: calc(100% - 0.65rem);
+  padding: 0.4rem 0.15rem 0.25rem;
   align-items: start;
   align-content: space-between;
   line-height: 1.2;
+  &:hover {
+    .collapse-button {
+      opacity: 1 !important;
+    }
+  }
   .icon {
     width: 0.24rem;
     height: 0.24rem;
@@ -172,6 +178,8 @@ export default defineComponent({
     top: 1.25rem;
     cursor: pointer;
     z-index: 99;
+    opacity: 0;
+    transition: all 0.2s;
     &.transform {
       transform: rotate(180deg);
     }
