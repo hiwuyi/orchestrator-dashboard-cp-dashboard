@@ -915,7 +915,7 @@
             <template #default="props">
               <div class="service-body" v-if="props.row.machines && props.row.machines.length>0">
                 <div v-for="n in props.row.machines" :key="n" class="list">
-                  <div class="li-title">CP Account Address: {{props.row.cp_account_address}}</div>
+                  <!-- <div class="li-title">CP Account Address: {{props.row.cp_account_address}}</div> -->
                   <ul>
                     <li v-for="(child, vcpuKeys, k) in n.specs" :key="k" v-show="vcpuKeys === 'cpu'">
                       <div class="li-body">
@@ -975,6 +975,7 @@
               <div class="service-body text-center" v-else>No Data</div>
             </template>
           </el-table-column>
+          <el-table-column prop="cp_account_address" label="CP Account Address" min-width="130" />
           <el-table-column prop="multiAddress" label="Name" min-width="120">
             <template #default="scope">
               <div class="badge">
@@ -986,7 +987,7 @@
           </el-table-column>
           <!-- <el-table-column prop="country" label="Country" /> -->
           <el-table-column prop="active_deployment" label="Active deployment" width="130" />
-          <el-table-column prop="score" label="Score" width="120" />
+          <!-- <el-table-column prop="score" label="Score" width="120" /> -->
           <el-table-column prop="gpu_list" label="GPU" min-width="140">
             <template #default="scope">
               <div class="badge">
