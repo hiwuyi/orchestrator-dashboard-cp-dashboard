@@ -193,7 +193,7 @@ import {
 import { ElMessageBox } from 'element-plus'
 import * as echarts from "echarts"
 import SpaceTokenABI from '@/utils/abi/SwanToken.json'
-import CollateralABI from '@/utils/abi/CollateralContract.json'
+import CollateralABI from '@/utils/abi/SwanCreditCollateral.json'
 export default defineComponent({
   components: {
     CircleCheck, DocumentCopy, Avatar, Setting, Delete, View, web3Modal

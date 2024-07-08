@@ -176,7 +176,7 @@
       },
       {
         "indexed": false,
-        "internalType": "enum CollateralV2.CollateralStatus",
+        "internalType": "enum SwanCreditCollateral.CollateralStatus",
         "name": "newStatus",
         "type": "uint8"
       }
@@ -452,7 +452,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct CollateralV2.ContractInfo",
+        "internalType": "struct SwanCreditCollateral.ContractInfo",
         "name": "",
         "type": "tuple"
       }
@@ -506,7 +506,7 @@
             "type": "string"
           }
         ],
-        "internalType": "struct CollateralV2.CPInfo",
+        "internalType": "struct SwanCreditCollateral.CPInfo",
         "name": "",
         "type": "tuple"
       }
@@ -539,11 +539,16 @@
         "internalType": "address",
         "name": "cpAccount",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
     "name": "deposit",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -582,12 +587,12 @@
             "type": "uint256"
           },
           {
-            "internalType": "enum CollateralV2.CollateralStatus",
+            "internalType": "enum SwanCreditCollateral.CollateralStatus",
             "name": "collateralStatus",
             "type": "uint8"
           }
         ],
-        "internalType": "struct CollateralV2.Task",
+        "internalType": "struct SwanCreditCollateral.Task",
         "name": "",
         "type": "tuple"
       }
@@ -637,24 +642,6 @@
         "internalType": "uint256",
         "name": "taskCollateral",
         "type": "uint256"
-      }
-    ],
-    "name": "lockCollateral",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "taskUid",
-        "type": "string"
-      },
-      {
-        "internalType": "address[]",
-        "name": "cpList",
-        "type": "address[]"
       }
     ],
     "name": "lockCollateral",
@@ -730,12 +717,43 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "sendETH",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_baseCollateral",
         "type": "uint256"
       }
     ],
     "name": "setBaseCollateral",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setCollateralToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -813,7 +831,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum CollateralV2.CollateralStatus",
+        "internalType": "enum SwanCreditCollateral.CollateralStatus",
         "name": "collateralStatus",
         "type": "uint8"
       }
@@ -913,9 +931,5 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
   }
 ]
