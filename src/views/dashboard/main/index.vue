@@ -148,8 +148,7 @@
               <h6 class="flex-row">
                 <span class="t">Total CP Online</span>
               </h6>
-              <b v-if="versionRef.value === 'v1'" v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.data.total_providers ? system.$commonFun.replaceFormat(providerBody.data.total_providers):'-'}}</b>
-              <b v-else v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
+              <b v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
               <!-- <b v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.generalData?system.$commonFun.replaceFormat(providerBody.generalData.total_computer_providers):'-'}}</b> -->
             </div>
           </el-col>
@@ -158,8 +157,7 @@
               <h6 class="flex-row">
                 <span class="t">Total Task</span>
               </h6>
-              <b v-if="versionRef.value === 'v1'" v-loading="providersLoad" class="flex-row font-bold color">{{pagin.active_applications?system.$commonFun.replaceFormat(pagin.active_applications):'-'}}</b>
-              <b v-else v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.generalData?system.$commonFun.replaceFormat(providerBody.generalData.total_task):'-'}}</b>
+              <b v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.generalData?system.$commonFun.replaceFormat(providerBody.generalData.total_task):'-'}}</b>
             </div>
           </el-col>
           <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
@@ -1710,7 +1708,7 @@ export default defineComponent({
         ]
       })
     }
-    function drawChart (data) {
+    function drawChart(data) {
       chart = echarts.init(document.getElementById('chart'))
       window.addEventListener('resize', function () {
         chart.resize()
