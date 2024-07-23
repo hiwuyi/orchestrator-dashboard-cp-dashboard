@@ -909,7 +909,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table v-else :data="providersData" @expand-change="expandV2Change" :row-key="getRowKeysV2" :expand-row-keys="expands" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+        <el-table v-else :data="providersData" @filter-change="handleFilterChange" @expand-change="expandV2Change" :row-key="getRowKeysV2" :expand-row-keys="expands" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="expand" width="40">
             <template #default="props">
               <div class="service-body" v-if="props.row.machines && props.row.machines.length>0">
@@ -974,12 +974,26 @@
               <div class="service-body text-center" v-else>No Data</div>
             </template>
           </el-table-column>
-          <el-table-column prop="cp_account_address" label="CP Account Address" min-width="130" />
-          <el-table-column prop="multiAddress" label="Name" min-width="120">
+          <el-table-column prop="cp_account_address" label="CP Account Address" min-width="180">
             <template #default="scope">
               <div class="badge">
                 <img v-if="scope.$index < 2 && pagin.pageNo <= 1" :src="badgeIcon01" alt="">
                 <img v-else :src="badgeIcon02" alt="">
+                <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.cp_account_address, 'Copied')">
+                  {{system.$commonFun.hiddAddress(scope.row.cp_account_address)}}
+                  <svg t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
+                    <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
+                      p-id="2310" fill="#b5b7c8"></path>
+                    <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
+                    <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+                  </svg>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="multiAddress" label="Name" min-width="120">
+            <template #default="scope">
+              <div class="badge">
                 <span v-for="address in scope.row.multiAddress" :key="address">{{address}}</span>
               </div>
             </template>
@@ -998,8 +1012,19 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="region" label="Region" min-width="100" />
-          <el-table-column prop="uptime" label="Uptime">
+          <el-table-column prop="status" label="Status" width="100" v-if="networkValue !== 'Mainnet' && !networkInput"
+            column-key="status" filterable :filters="[
+              { text: 'Active', value: '1' },
+              { text: 'Inactive', value: '0' }
+            ]" filter-placement="bottom-end" :filter-multiple="false">
+            <template #default="scope">
+              <div>
+                {{scope.row.task_types ? 'Inactive' : 'Active'}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="region" label="Region" min-width="110" />
+          <el-table-column prop="uptime" label="Uptime" min-width="110">
             <template #default="scope">
               <div v-if="scope.row.uptime === null">Waiting for calculation</div>
               <div v-else>
@@ -1007,6 +1032,20 @@
               </div>
             </template>
           </el-table-column>
+          <!-- <el-table-column prop="score" label="Contribution Score" width="130">
+            <template #default="scope">
+              <div>
+                {{scope.row.score || '-'}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="score" label="Contribution Percentage" width="130">
+            <template #default="scope">
+              <div>
+                {{scope.row.score || '-'}}%
+              </div>
+            </template>
+          </el-table-column> -->
         </el-table>
         <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
         />
@@ -1232,9 +1271,15 @@ export default defineComponent({
           value: 'v2'
         }]
     })
+    const paramsFilter = reactive({
+      data: {
+        online: 0,
+        total: 1
+      }
+    })
 
     function handleSizeChange (val) { }
-    async function handleCurrentChange (currentPage) {
+    async function handleCurrentChange(currentPage, type) {
       pagin.pageNo = currentPage
       init()
     }
@@ -1242,16 +1287,33 @@ export default defineComponent({
       paginZK.pageNo = currentPage
       getUBITable()
     }
-    async function init () {
+    const handleFilterChange = (filters) => {
+      for (const key in filters) {
+        if (key === 'status') {
+          const result = filters.status[0] ?? ''
+          if (result === '') paramsFilter.data.total = 1
+          else {
+            paramsFilter.data.online = result
+            paramsFilter.data.total = 0
+          }
+        }
+      }
+      handleCurrentChange(1, 1)
+    }
+    async function init (pFilter) {
       providersTableLoad.value = true
       const page = pagin.pageNo > 0 ? pagin.pageNo - 1 : 0
-      const params = networkInput.value ? {
+      let params = networkInput.value ? {
         cp_account_address: networkInput.value
       } : {
           limit: pagin.pageSize,
           offset: page * pagin.pageSize
-        }
-      const providerRes = await system.$commonFun.sendRequest(`${system.$baseurl}${networkInput.value ? 'cp/search_cp' : 'cp/cplist'}?${system.$Qs.stringify(params)}`, 'get')
+      }
+      if (pFilter) params = Object.assign({}, params, pFilter)
+      else if(networkValue.value !== 'Mainnet' && versionRef.value === 'v2' && !networkInput.value) params = Object.assign({}, params, paramsFilter.data)
+      const v2ProximaUri = networkValue.value !== 'Mainnet' && versionRef.value === 'v2' ? 'cp/cplist_archived' : 'cp/cplist'
+      const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : v2ProximaUri}`
+      const providerRes = await system.$commonFun.sendRequest(`${uri}?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
         pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(networkInput.value ? providerRes.data.provider : providerRes.data.providers)
@@ -1449,6 +1511,7 @@ export default defineComponent({
       networkInput.value = ''
       networkZK.owner_addr = ''
       networkZK.node_id = ''
+      paramsFilter.data.total = 1
       if (activeName.value === 'ZK-CP') {
         paginZK.pageNo = 1
         getUBITable()
@@ -1484,6 +1547,7 @@ export default defineComponent({
       pagin.active_applications = 0
       pagin.pageSize = 10
       pagin.pageNo = 1
+      paramsFilter.data.total = 1
       providersData.value = []
       providerBody.ubiTableData = []
       providersLoad.value = false
@@ -2015,7 +2079,7 @@ export default defineComponent({
       accessToken, expands, activeName, cpLoad,
       versionRef, dataArr,
       handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, expandChange, expandV2Change, getRowKeys, getRowKeysV2,
-      handleClick, handleSelect, versionMethod, roamMap, chipFilterMethod
+      handleClick, handleSelect, versionMethod, roamMap, chipFilterMethod, handleFilterChange
     }
   }
 })
@@ -2680,6 +2744,7 @@ export default defineComponent({
           background-color: @primary-color;
           border: 0;
           .cell {
+            padding: 0 0.06rem;
             color: @text-color;
             word-break: break-word;
             @media screen and (max-width: 540px) {
@@ -2696,6 +2761,9 @@ export default defineComponent({
           @media screen and (max-width: 540px) {
             font-size: 12px;
             line-height: 1.1;
+          }
+          .cell{
+            padding: 0 0.06rem;
           }
           i {
             margin-right: 5px;
