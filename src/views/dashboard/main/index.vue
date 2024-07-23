@@ -12,7 +12,8 @@
     <div class="describe ">
       Use this status page to check an Swan Provider information and status.
       <br> This list is refreshed every 5 minutes. Below snapshot taken at
-      <span class="color">{{gmtTime}}</span>
+      <!-- <span class="color">{{gmtTime}}</span> -->
+      <span class="color">Tue, 16 Jul 2024 23:59:59 GMT</span>
     </div>
 
     <div class="providers-overview mt-border">
