@@ -26,7 +26,8 @@
                 <h6 class="flex-row flex-end">
                   <span class="t">Providers</span>
                 </h6>
-                <b class="flex-row font-bold color" v-if="networkValue !== 'Mainnet'">{{providerBody.data && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
+                <b class="flex-row font-bold color" v-if="networkValue !== 'Mainnet' && versionRef.value === 'v2'">{{providerBody.archived && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.archived.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
+                <b class="flex-row font-bold color" v-else-if="networkValue !== 'Mainnet' && versionRef.value !== 'v2'">{{providerBody.data && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
                 <b class="flex-row font-bold color" v-else>{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
               </div>
               <div class="flex-row">
@@ -149,7 +150,8 @@
               <h6 class="flex-row">
                 <span class="t">Total CP Online</span>
               </h6>
-              <b v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
+              <b v-loading="providersLoad" class="flex-row font-bold color" v-if="networkValue !== 'Mainnet' && versionRef.value === 'v2'">{{providerBody.archived ? system.$commonFun.replaceFormat(providerBody.archived.total_online_computers):'-'}}</b>
+              <b v-loading="providersLoad" class="flex-row font-bold color" v-else>{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
               <!-- <b v-loading="providersLoad" class="flex-row font-bold color">{{providerBody.generalData?system.$commonFun.replaceFormat(providerBody.generalData.total_computer_providers):'-'}}</b> -->
             </div>
           </el-col>
@@ -1209,6 +1211,7 @@ export default defineComponent({
       active_applications: 0
     })
     const providerBody = reactive({
+      archived: {},
       data: {},
       ubiData: {},
       ubiTableData: {},
@@ -1486,6 +1489,14 @@ export default defineComponent({
       } catch{ }
       providersLoad.value = false
     }
+    async function getOverviewArchived () {
+      try {
+        const overviewRes = await system.$commonFun.sendRequest(`${system.$baseurl}cp/overview_archived`, 'get')
+        if (overviewRes && overviewRes.status === 'success') {
+          providerBody.archived = overviewRes.data || {}
+        }
+      } catch{ }
+    }
     async function getStorageStats () {
       const storageRes = await system.$commonFun.sendRequest(`${process.env.VUE_APP_FILSWANSTATS}stats/storage`, 'get')
       if (storageRes && storageRes.status === "success") providerBody.storageData = storageRes.data || {}
@@ -1564,6 +1575,7 @@ export default defineComponent({
       providerBody.chipDataAll.storageArray = []
       providerBody.chipOverview = true
       if (type) init()
+      if(networkValue.value !== 'Mainnet' && versionRef.value === 'v2') getOverviewArchived()
       getOverview()
       getUBITotal()
       getUBITable()
