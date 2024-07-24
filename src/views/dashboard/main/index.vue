@@ -1042,20 +1042,20 @@
               </div>
             </template>
           </el-table-column>
-          <!-- <el-table-column prop="score" label="Contribution Score" width="130">
+          <el-table-column prop="contribution_score" label="Contribution Score" width="130">
             <template #default="scope">
               <div>
-                {{scope.row.score || '-'}}
+                {{system.$commonFun.NumFormat(scope.row.contribution_score, 1)}}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="score" label="Contribution Percentage" width="130">
+          <el-table-column prop="contribution_percertage" label="Contribution Percentage" width="130">
             <template #default="scope">
               <div>
-                {{scope.row.score || '-'}}%
+                {{system.$commonFun.unifyNumber(scope.row.contribution_percertage)}}%
               </div>
             </template>
-          </el-table-column> -->
+          </el-table-column>
         </el-table>
         <el-pagination hide-on-single-page :page-size="pagin.pageSize" :current-page="pagin.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="pagin.total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
         />
