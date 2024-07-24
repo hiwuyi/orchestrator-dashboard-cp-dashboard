@@ -28,7 +28,8 @@
                 </h6>
                 <b class="flex-row font-bold color" v-if="networkValue !== 'Mainnet' && versionRef.value === 'v2'">{{providerBody.archived && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.archived.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
                 <b class="flex-row font-bold color" v-else-if="networkValue !== 'Mainnet' && versionRef.value !== 'v2'">{{providerBody.data && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
-                <b class="flex-row font-bold color" v-else>{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b>
+                <!-- <b class="flex-row font-bold color" v-else>{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b> -->
+                <b class="flex-row font-bold color" v-else>{{providerBody.dataProviders ? system.$commonFun.replaceFormat(providerBody.dataProviders):'-'}}</b>
               </div>
               <div class="flex-row">
                 <h6 class="flex-row flex-end">
@@ -1218,6 +1219,7 @@ export default defineComponent({
       active_applications: 0
     })
     const providerBody = reactive({
+      dataProviders: '',
       archived: {},
       data: {},
       ubiData: {},
@@ -1326,7 +1328,8 @@ export default defineComponent({
       const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : v2ProximaUri}`
       const providerRes = await system.$commonFun.sendRequest(`${uri}?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
-        if(networkInput.value) singleTableRef.value?.clearFilter?.()
+        if (networkInput.value) singleTableRef.value?.clearFilter?.()
+        else if(paramsFilter.data.total === 1) providerBody.dataProviders = providerRes.data.list_providers_cnt ?? '-'
         pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(networkInput.value ? providerRes.data.provider : providerRes.data.providers)
       } else {
