@@ -911,7 +911,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table v-else :data="providersData" @filter-change="handleFilterChange" @expand-change="expandV2Change" :row-key="getRowKeysV2" :expand-row-keys="expands" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
+        <el-table v-else ref="singleTableRef" :data="providersData" @filter-change="handleFilterChange" @expand-change="expandV2Change" :row-key="getRowKeysV2" :expand-row-keys="expands" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="expand" width="40">
             <template #default="props">
               <div class="service-body" v-if="props.row.machines && props.row.machines.length>0">
@@ -1001,7 +1001,7 @@
             </template>
           </el-table-column>
           <!-- <el-table-column prop="country" label="Country" /> -->
-          <el-table-column prop="active_deployment" label="Active deployment" width="130" />
+          <el-table-column prop="active_deployment" label="Active deployment" width="130" v-if="networkValue === 'Mainnet'" />
           <!-- <el-table-column prop="score" label="Score" width="120" /> -->
           <el-table-column prop="gpu_list" label="GPU" min-width="140">
             <template #default="scope">
@@ -1014,19 +1014,26 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="Status" width="100" v-if="networkValue !== 'Mainnet' && !networkInput"
+          <el-table-column prop="status" label="Status" min-width="100" v-if="networkInput">
+            <template #default="scope">
+              <div>
+                {{scope.row.online ? 'Active' : 'Inactive'}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="Status" min-width="100" v-else
             column-key="status" filterable :filters="[
               { text: 'Active', value: '1' },
               { text: 'Inactive', value: '0' }
             ]" filter-placement="bottom-end" :filter-multiple="false">
             <template #default="scope">
               <div>
-                {{scope.row.task_types ? 'Inactive' : 'Active'}}
+                {{scope.row.online ? 'Active' : 'Inactive'}}
               </div>
             </template>
           </el-table-column>
           <el-table-column prop="region" label="Region" min-width="110" />
-          <el-table-column prop="uptime" label="Uptime" min-width="110">
+          <el-table-column prop="uptime" label="Uptime" min-width="110" v-if="networkValue === 'Mainnet'" >
             <template #default="scope">
               <div v-if="scope.row.uptime === null">Waiting for calculation</div>
               <div v-else>
@@ -1280,6 +1287,7 @@ export default defineComponent({
         total: 1
       }
     })
+    const singleTableRef = ref()
 
     function handleSizeChange (val) { }
     async function handleCurrentChange(currentPage, type) {
@@ -1313,11 +1321,12 @@ export default defineComponent({
           offset: page * pagin.pageSize
       }
       if (pFilter) params = Object.assign({}, params, pFilter)
-      else if(networkValue.value !== 'Mainnet' && versionRef.value === 'v2' && !networkInput.value) params = Object.assign({}, params, paramsFilter.data)
+      else if(versionRef.value === 'v2' && !networkInput.value) params = Object.assign({}, params, paramsFilter.data)
       const v2ProximaUri = networkValue.value !== 'Mainnet' && versionRef.value === 'v2' ? 'cp/cplist_archived' : 'cp/cplist'
       const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : v2ProximaUri}`
       const providerRes = await system.$commonFun.sendRequest(`${uri}?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
+        if(networkInput.value) singleTableRef.value?.clearFilter?.()
         pagin.total = providerRes.data.list_providers_cnt || 0
         providersData.value = await getList(networkInput.value ? providerRes.data.provider : providerRes.data.providers)
       } else {
@@ -2089,7 +2098,7 @@ export default defineComponent({
       badgeIcon01,
       badgeIcon02,
       accessToken, expands, activeName, cpLoad,
-      versionRef, dataArr,
+      versionRef, dataArr,singleTableRef,
       handleSizeChange, handleCurrentChange, handleZKCurrentChange, searchProvider, searchZKProvider, clearProvider, expandChange, expandV2Change, getRowKeys, getRowKeysV2,
       handleClick, handleSelect, versionMethod, roamMap, chipFilterMethod, handleFilterChange
     }
