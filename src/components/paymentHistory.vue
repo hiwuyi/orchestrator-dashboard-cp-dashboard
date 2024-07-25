@@ -231,7 +231,6 @@ export default defineComponent({
     const background = ref(false)
     const statusRadio = ref('')
     let biddingContractAddress = process.env.VUE_APP_OPSWAN_BIDDING_ADDRESS
-    let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
 
     function handleSizeChange (val) {
     }
@@ -299,6 +298,7 @@ export default defineComponent({
       paymentLoad.value = true
       try {
         // get task contract address
+        let biddingContract = new system.$commonFun.web3Init.eth.Contract(BiddingABI, biddingContractAddress)
         let taskContractAddress = await biddingContract.methods.tasks(String(row.task_uuid)).call()
         console.log(row.task_uuid)
         if (taskContractAddress.indexOf('0x0') > -1) {

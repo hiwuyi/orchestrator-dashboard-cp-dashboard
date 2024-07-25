@@ -242,9 +242,8 @@ export default defineComponent({
     })
     const txLink = process.env.VUE_APP_ATOMBLOCKURL
     const tokenAddress = store.state.networkValue === 'Proxima' ? process.env.VUE_APP_OPSWAN_SWANTOKEN_ADDRESS : process.env.VUE_APP_MINNET_SWANTOKEN_ADDRESS
-    const tokenContract = new system.$commonFun.web3Init.eth.Contract(SpaceTokenABI, tokenAddress)
+    // const tokenContract = new system.$commonFun.web3Init.eth.Contract(SpaceTokenABI, tokenAddress)
     const collateralAddress = store.state.networkValue === 'Proxima' ? process.env.VUE_APP_COLLATERAL_CONTACT : process.env.VUE_APP_MINNET_COLLATERAL_CONTACT
-    const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
 
 
     async function createCom () {
@@ -354,6 +353,7 @@ export default defineComponent({
       try {
         const amount = system.$commonFun.web3Init.utils.toWei(String(cpCollateralCont.amount), 'ether')
 
+        const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
         let payMethod = collateralContract.methods.deposit(cpCollateralCont.user_input_address)
         let payGasLimit = await payMethod.estimateGas({ from: metaAddress.value })
         const tx = await payMethod.send({ from: metaAddress.value, gasLimit: Math.floor(payGasLimit * 5), value: amount })
@@ -373,6 +373,7 @@ export default defineComponent({
       cpCheckCont.diagle = true
       cpCheckCont.show = true
       try {
+        const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
         const taskBalance = await collateralContract.methods.lockedCollateral(cpCollateralCont.user_input_address).call()
         const balances = await collateralContract.methods.availableBalance(cpCollateralCont.user_input_address).call()
         cpCheckCont.balance = system.$commonFun.web3Init.utils.fromWei(String(balances), 'ether') || 0
