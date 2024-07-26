@@ -440,9 +440,11 @@ async function checkNetwork() {
   } else return false
 }
 
-function NumFormat(num) {
+function NumFormat(num, type) {
   try {
-    if (num) return parseFloat(num).toFixed(2)
+    if (type && num) return parseFloat(num).toFixed(1)
+    else if (type && num === 0) return 0
+    else if (num) return parseFloat(num).toFixed(2)
     else return '-'
   } catch {
     return '-'
