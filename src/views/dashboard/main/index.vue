@@ -25,7 +25,7 @@
               <div class="flex-row">
                 <h6 class="flex-row flex-end">
                   <span class="t">Providers</span>
-                </h6>
+                </h6> 
                 <b class="flex-row font-bold color" v-if="networkValue !== 'Mainnet' && versionRef.value === 'v2'">{{providerBody.archived && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.archived.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
                 <b class="flex-row font-bold color" v-else-if="networkValue !== 'Mainnet' && versionRef.value !== 'v2'">{{providerBody.data && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
                 <!-- <b class="flex-row font-bold color" v-else>{{providerBody.data ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers):'-'}}</b> -->
