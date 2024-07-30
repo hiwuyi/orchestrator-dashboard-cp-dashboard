@@ -1051,9 +1051,10 @@
       <div class="providers-cp" v-if="activeName === 'ZK-CP'">
         <div class="search-body flex">
           <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-input class="zk-input" v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
-          <el-button type="primary" :disabled="!networkZK.owner_addr && !networkZK.node_id ? true:false" round @click="searchZKProvider">Search</el-button>
-          <el-button type="info" :disabled="!networkZK.owner_addr && !networkZK.node_id  ? true:false" round @click="clearProvider">Clear</el-button>
+          <el-input class="zk-input" v-if="networkValue === 'Mainnet'" v-model="networkZK.cp_addr" placeholder="CP Account Address" @chang="searchZKProvider" @input="searchZKProvider" />
+          <el-input class="zk-input" v-else v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
+          <el-button type="primary" :disabled="!networkZK.owner_addr && !networkZK.node_id && !networkZK.cp_addr ? true:false" round @click="searchZKProvider">Search</el-button>
+          <el-button type="info" :disabled="!networkZK.owner_addr && !networkZK.node_id && !networkZK.cp_addr  ? true:false" round @click="clearProvider">Clear</el-button>
         </div>
         <el-table :data="providerBody.ubiTableData" @expand-change="expandChange" :row-key="getRowKeys" :expand-row-keys="expands" style="width: 100%" empty-text="No Data" v-loading="providersTableLoad">
           <el-table-column type="expand" width="40">
@@ -1153,6 +1154,13 @@
             <template #default="scope">
               <div>
                 {{system.$commonFun.fixedformat(scope.row.completion_rate,10000)}}%
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="task" label="Contribution Score" min-width="140" v-if="networkValue === 'Mainnet'">
+            <template #default="scope">
+              <div>
+                {{scope.row.reward ? system.$commonFun.NumFormat(scope.row.reward.done, 1) : '-'}}
               </div>
             </template>
           </el-table-column>
@@ -1260,7 +1268,8 @@ export default defineComponent({
     const networkInput = ref('')
     const networkZK = reactive({
       owner_addr: '',
-      node_id: ''
+      node_id: '',
+      cp_addr: ''
     })
     const small = ref(false)
     const background = ref(false)
@@ -1341,7 +1350,8 @@ export default defineComponent({
         page_size: paginZK.pageSize,
         page_no: page,
         owner_addr: networkZK.owner_addr,
-        node_id: networkZK.node_id
+        node_id: networkZK.node_id,
+        cp_addr: networkZK.cp_addr
       }
       const providerRes = await system.$commonFun.sendRequest(`${system.$ubiurl}providers?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.code === 0) {
@@ -1527,6 +1537,7 @@ export default defineComponent({
       networkInput.value = ''
       networkZK.owner_addr = ''
       networkZK.node_id = ''
+      networkZK.cp_addr= ''
       paramsFilter.data.total = 1
       if (activeName.value === 'ZK-CP') {
         paginZK.pageNo = 1
@@ -1571,6 +1582,7 @@ export default defineComponent({
       networkInput.value = ''
       networkZK.owner_addr = ''
       networkZK.node_id = ''
+      networkZK.cp_addr= ''
       providerBody.chipWorld = ' World'
       providerBody.chipFilter = 'GPUWorld'
       providerBody.chipMaxData = 0
