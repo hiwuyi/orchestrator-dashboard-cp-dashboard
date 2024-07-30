@@ -27,7 +27,7 @@
                   <span class="t">Providers</span>
                 </h6>
                 <b class="flex-row font-bold color" v-if="networkValue !== 'Mainnet'">{{providerBody.archived && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.archived.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
-                <b class="flex-row font-bold color" v-else>{{providerBody.data && providerBody.ubiData.cp ? system.$commonFun.replaceFormat(providerBody.data.total_online_computers+(providerBody.ubiData.cp.total||0)):'-'}}</b>
+                <b class="flex-row font-bold color" v-else>{{system.$commonFun.replaceFormat(pagin.total+paginZK.total) || '-'}}</b>
               </div>
               <div class="flex-row">
                 <h6 class="flex-row flex-end">
