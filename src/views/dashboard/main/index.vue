@@ -1160,7 +1160,7 @@
           <el-table-column prop="score" label="Contribution Score" min-width="140" v-if="networkValue === 'Mainnet'">
             <template #default="scope">
               <div>
-                {{system.$commonFun.NumFormat(scope.row.score, 1) || '-'}}
+                {{system.$commonFun.replaceFormat(scope.row.score)}}
               </div>
             </template>
           </el-table-column>
