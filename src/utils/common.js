@@ -499,6 +499,25 @@ async function sortBoole(arr) {
   return arr.sort((a, b) => b.value - a.value)
 }
 
+
+async function sortByField(arr, fieldArray, fieldName) {
+  let removedItems = []
+  let newArray = []
+  fieldArray.forEach(element => {
+    arr.filter((item, index) => {
+      if (item[fieldName].toLowerCase() === element[fieldName].toLowerCase()) {
+        removedItems.push(item);
+        arr.splice(index, 1)
+        return false;
+      }
+      return true;
+    });
+  });
+
+  newArray = [...removedItems, ...arr]
+  return newArray
+}
+
 async function acronymsMethod(name) {
   switch (name) {
     case 'Malaysia':
@@ -568,5 +587,6 @@ export default {
   AddFormat,
   sortBoole,
   acronymsMethod,
+  sortByField,
   chainNetworkID
 }

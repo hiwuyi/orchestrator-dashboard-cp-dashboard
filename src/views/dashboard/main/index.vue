@@ -1181,6 +1181,7 @@ import {
 } from '@element-plus/icons-vue'
 import * as echarts from "echarts"
 import worldGeoJSON from '@/assets/js/world.json'
+import gpuTypeList from '@/utils/gpu.js'
 
 export default defineComponent({
   components: {
@@ -1631,7 +1632,6 @@ export default defineComponent({
     }
     async function worldChange (name) {
       providerBody.chipWorld = name
-      let list = [], gpuList = []
       let worldName = await system.$commonFun.acronymsMethod(name)
       switch (worldName) {
         case 'Memory':
@@ -1643,7 +1643,11 @@ export default defineComponent({
           providerBody.chipMaxData = providerBody.chipData.length > 0 ? providerBody.chipData[0].value : 0
           break;
         default:
-          providerBody.chipData = providerBody.chipDataAll.all
+          try {
+            providerBody.chipData = await system.$commonFun.sortByField(providerBody.chipDataAll.all, gpuTypeList, 'name');
+          } catch {
+            providerBody.chipData = providerBody.chipDataAll.all
+          }
           providerBody.chipMaxData = providerBody.chipData.length > 0 ? providerBody.chipData[0].value : 0
           break;
       }
