@@ -1157,10 +1157,10 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="task" label="Contribution Score" min-width="140" v-if="networkValue === 'Mainnet'">
+          <el-table-column prop="score" label="Contribution Score" min-width="140" v-if="networkValue === 'Mainnet'">
             <template #default="scope">
               <div>
-                {{scope.row.reward ? system.$commonFun.NumFormat(scope.row.reward.done, 1) : '-'}}
+                {{system.$commonFun.NumFormat(scope.row.score, 1) || '-'}}
               </div>
             </template>
           </el-table-column>
