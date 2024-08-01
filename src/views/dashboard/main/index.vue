@@ -1156,6 +1156,13 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="score" label="Contribution Score" min-width="140" v-if="networkValue === 'Mainnet'">
+            <template #default="scope">
+              <div>
+                {{system.$commonFun.replaceFormat(scope.row.score)}}
+              </div>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination hide-on-single-page :page-size="paginZK.pageSize" :current-page="paginZK.pageNo" :pager-count="5" :small="small" :background="background" layout="total, prev, pager, next" :total="paginZK.total" @size-change="handleSizeChange"
           @current-change="handleZKCurrentChange" />
