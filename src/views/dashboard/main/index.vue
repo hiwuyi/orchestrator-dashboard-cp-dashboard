@@ -1643,11 +1643,34 @@ export default defineComponent({
           providerBody.chipMaxData = providerBody.chipData.length > 0 ? providerBody.chipData[0].value : 0
           break;
         default:
-          try {
-            providerBody.chipData = await system.$commonFun.sortByField(providerBody.chipDataAll.all, gpuTypeList, 'name');
-          } catch {
-            providerBody.chipData = providerBody.chipDataAll.all
-          }
+          // try {
+            // // providerBody.chipData = await system.$commonFun.sortByField(providerBody.chipDataAll.all, gpuTypeList, 'name');
+
+            // let allArr = [...providerBody.chipDataAll.all]
+            // const newArr = gpuTypeList.map((item, n) => {
+            //   let value = item.value;
+            //   allArr.forEach((provided, index) => {
+            //     const result = system.$commonFun.gpuMatched(item.name, provided.name)
+            //     if (result) {
+            //       value += provided.value
+            //       allArr.splice(index, 1)
+            //     }
+            //   })
+            //   return {
+            //     ...item,
+            //     value
+            //   }
+            // })
+            // providerBody.chipData = [...newArr, ...allArr]
+          // } catch {
+          //   providerBody.chipData = providerBody.chipDataAll.all
+          // }
+          
+          providerBody.chipData = providerBody.chipDataAll.all.sort((a, b) => {
+            const aId = a.id || (99999999 + (a.value || 0))
+            const bId = b.id || (99999999 + (b.value || 0))
+            return aId - bId
+          })
           providerBody.chipMaxData = providerBody.chipData.length > 0 ? providerBody.chipData[0].value : 0
           break;
       }
@@ -2494,7 +2517,10 @@ export default defineComponent({
           }
           .cont-flex {
             height: 420px;
+            overflow: hidden;
             overflow-y: scroll;
+            // border: 1px solid #3a67cf;
+            // border-radius: 0.14rem;
             scrollbar-width: none;
             scrollbar-color: rgba(60, 70, 110, 0.6) rgba(13, 14, 18, 1);
             @media screen and (max-width: 992px) {
@@ -2517,7 +2543,7 @@ export default defineComponent({
             .cont {
               position: relative;
               flex-direction: row;
-              width: calc(100% - 0.32rem);
+              width: calc(100% - 0.34rem);
               padding: 0.07rem 0.16rem;
               margin: 0.1rem 0 0;
               font-size: 0.18rem;
@@ -2525,6 +2551,8 @@ export default defineComponent({
               letter-spacing: 1px;
               color: #fff;
               z-index: 9;
+              border: 1px solid #3a67cf;
+              border-radius: 0.14rem;
               @media screen and (max-width: 600px) {
                 padding: 0.12rem 0.16rem;
                 font-size: 12px;
@@ -2535,12 +2563,12 @@ export default defineComponent({
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(
-                  45deg,
-                  rgba(60, 133, 255, 0),
-                  #3c85ff
-                );
-                border-radius: 10px;
+                // background: linear-gradient(
+                //   45deg,
+                //   rgba(60, 133, 255, 0),
+                //   #3c85ff
+                // );
+                // border-radius: 10px;
                 z-index: -1;
               }
               .items-center {

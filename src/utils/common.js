@@ -500,22 +500,72 @@ async function sortBoole(arr) {
 }
 
 
+function countCommonSubsets(arr1, arr2) {
+  let count = 0;
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      if (arr2[j] === arr1[i]) count++
+    }
+  }
+  return count;
+}
+function getMatchingSubsets(arr, subset, fieldName) {
+  let matchArray = []
+  const matchingSubsets = arr.filter((sub, index) => {
+    const newSub = sub[fieldName].toLowerCase().split(" ")
+    const newSubset = subset.toLowerCase().split(" ")
+    const commonSubsetCount = countCommonSubsets(newSubset, newSub)
+    if (commonSubsetCount > 1) {
+      sub.match = commonSubsetCount
+      matchArray.push(sub)
+      gpuAPIarray.splice(index, 1)
+    }
+  });
+
+  matchArray.sort((a, b) => b[fieldName].length - a[fieldName].length)
+  matchArray.sort((a, b) => b.match - a.match)
+
+  return matchArray
+}
+let gpuAPIarray = []
 async function sortByField(arr, fieldArray, fieldName) {
   let removedItems = []
   let newArray = []
+  gpuAPIarray = arr
   fieldArray.forEach(element => {
-    arr.filter((item, index) => {
-      if (item[fieldName].toLowerCase() === element[fieldName].toLowerCase()) {
-        removedItems.push(item);
-        arr.splice(index, 1)
-        return false;
-      }
-      return true;
-    });
+    // arr.filter((item, index) => {
+    //   if (item[fieldName].toLowerCase() === element[fieldName].toLowerCase()) {
+    //     removedItems.push(item);
+    //     arr.splice(index, 1)
+    //     return false;
+    //   }
+    //   return true;
+    // });
+    const result = getMatchingSubsets(gpuAPIarray, element[fieldName], fieldName)
+    removedItems = removedItems.concat(result)
   });
 
-  newArray = [...removedItems, ...arr]
+  newArray = [...removedItems, ...gpuAPIarray]
   return newArray
+}
+
+function extractNumberAndDescriptor(gpuName) {
+  const match = gpuName.match(/(\d+\s*(?:TI|SUPER|TI SUPER|GeForce RTX)?)/i);
+  return match ? match[1].trim().toLowerCase() : "";
+}
+
+function gpuMatched(desiredConfigGpu, providedMachineGpu) {
+  const desiredGpuDescriptor = extractNumberAndDescriptor(desiredConfigGpu);
+  const providedGpuDescriptor = extractNumberAndDescriptor(providedMachineGpu);
+  if (desiredGpuDescriptor && providedGpuDescriptor) {
+    if (desiredGpuDescriptor !== providedGpuDescriptor) return false
+  }
+  const providedGpuWords = providedMachineGpu.split(/[\s\-]+/).map(s => s.toLowerCase());
+  let desiredGpuWords = desiredConfigGpu.split(/[\s\-]+/).map(s => s.toLowerCase());
+  desiredGpuWords = desiredGpuWords.filter(char => char !== 'geforce' && char !== 'rtx')
+
+  if (desiredGpuWords.every(w => providedGpuWords.includes(w))) return true
+  return false;
 }
 
 async function acronymsMethod(name) {
@@ -588,5 +638,6 @@ export default {
   sortBoole,
   acronymsMethod,
   sortByField,
+  gpuMatched,
   chainNetworkID
 }
