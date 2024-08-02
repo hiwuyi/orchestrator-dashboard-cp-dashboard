@@ -1030,10 +1030,10 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="contribution_score" label="Contribution Score" width="130">
+          <el-table-column prop="contribution_score" label="Contribution Score" width="130" v-if="networkValue === 'Mainnet'">
             <template #default="scope">
               <div>
-                {{system.$commonFun.NumFormat(scope.row.contribution_score, 1)}}
+                {{system.$commonFun.replaceFormat(system.$commonFun.NumFormat(scope.row.contribution_score, 1))}}
               </div>
             </template>
           </el-table-column>
