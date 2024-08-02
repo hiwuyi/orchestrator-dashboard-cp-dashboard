@@ -1434,7 +1434,7 @@ export default defineComponent({
       try {
         const newArray = list.map(item => {
           const newItem = Object.keys(item).reduce((acc, key) => {
-            const newKey = key === 'gpu_name' || key === 'region' ? 'name' : key === 'gpu_count' || key === 'memory_amount' || key === 'storage_amount' ? 'value' : key
+            const newKey = key === 'gpu_name' || key === 'region' ? 'name' : key === 'gpu_count' || key === 'memory_amount' || key === 'storage_amount' ? 'value' : key === 'gpu_value' ? 'id' : key
             acc[newKey] = item[key];
             return acc;
           }, {});
