@@ -1043,7 +1043,7 @@
       </div>
       <div class="providers-cp" v-if="activeName === 'ZK-CP'">
         <div class="search-body flex">
-          <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" />
+          <!-- <el-input class="zk-input" v-model="networkZK.owner_addr" placeholder="Owner Addr" @chang="searchZKProvider" @input="searchZKProvider" /> -->
           <el-input class="zk-input" v-if="networkValue === 'Mainnet'" v-model="networkZK.cp_addr" placeholder="CP Account Address" @chang="searchZKProvider" @input="searchZKProvider" />
           <el-input class="zk-input" v-else v-model="networkZK.node_id" placeholder="Node ID" @chang="searchZKProvider" @input="searchZKProvider" />
           <el-button type="primary" :disabled="!networkZK.owner_addr && !networkZK.node_id && !networkZK.cp_addr ? true:false" round @click="searchZKProvider">Search</el-button>
@@ -1103,6 +1103,21 @@
               <div class="service-body text-center" v-else>No Data</div>
             </template>
           </el-table-column>
+          <el-table-column prop="contract_addr" label="CP Account Address" min-width="140" v-if="networkValue === 'Mainnet'">
+            <template #default="scope">
+              <div class="badge">
+                <div class="flex-row center copy-style" @click="system.$commonFun.copyContent(scope.row.contract_addr, 'Copied')">
+                  {{system.$commonFun.hiddAddress(scope.row.contract_addr)}}
+                  <svg t="1706499607741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2309" width="18" height="18">
+                    <path d="M720 192h-544A80.096 80.096 0 0 0 96 272v608C96 924.128 131.904 960 176 960h544c44.128 0 80-35.872 80-80v-608C800 227.904 764.128 192 720 192z m16 688c0 8.8-7.2 16-16 16h-544a16 16 0 0 1-16-16v-608a16 16 0 0 1 16-16h544a16 16 0 0 1 16 16v608z"
+                      p-id="2310" fill="#b5b7c8"></path>
+                    <path d="M848 64h-544a32 32 0 0 0 0 64h544a16 16 0 0 1 16 16v608a32 32 0 1 0 64 0v-608C928 99.904 892.128 64 848 64z" p-id="2311" fill="#b5b7c8"></path>
+                    <path d="M608 360H288a32 32 0 0 0 0 64h320a32 32 0 1 0 0-64zM608 520H288a32 32 0 1 0 0 64h320a32 32 0 1 0 0-64zM480 678.656H288a32 32 0 1 0 0 64h192a32 32 0 1 0 0-64z" p-id="2312" fill="#b5b7c8"></path>
+                  </svg>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="name" label="Name" min-width="120">
             <template #default="scope">
               <div class="badge">
@@ -1136,6 +1151,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="region" label="Region" min-width="100" />
+          <el-table-column prop="work_status" label="Status" min-width="100" v-if="networkValue === 'Mainnet'" />
           <el-table-column prop="task" label="Total Task">
             <template #default="scope">
               <div>
@@ -1322,8 +1338,8 @@ export default defineComponent({
       }
       if (pFilter) params = Object.assign({}, params, pFilter)
       else if(versionRef.value === 'v2' && !networkInput.value) params = Object.assign({}, params, paramsFilter.data)
-      const v2ProximaUri = networkValue.value !== 'Mainnet' && versionRef.value === 'v2' ? 'cp/cplist_archived' : 'cp/cplist'
-      const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : v2ProximaUri}`
+      if(networkValue.value !== 'Mainnet' && versionRef.value === 'v2') params.for_prod = 1
+      const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : 'cp/cplist'}`
       const providerRes = await system.$commonFun.sendRequest(`${uri}?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
         if (networkInput.value) singleTableRef.value?.clearFilter?.()
@@ -1500,7 +1516,7 @@ export default defineComponent({
     }
     async function getOverviewArchived () {
       try {
-        const overviewRes = await system.$commonFun.sendRequest(`${system.$baseurl}cp/overview_archived`, 'get')
+        const overviewRes = await system.$commonFun.sendRequest(`${system.$baseurl}cp/overview?for_prod=1`, 'get')
         if (overviewRes && overviewRes.status === 'success') {
           providerBody.archived = overviewRes.data || {}
         }
