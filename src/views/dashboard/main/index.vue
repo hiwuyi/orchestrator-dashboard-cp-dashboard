@@ -1666,11 +1666,13 @@ export default defineComponent({
           //   providerBody.chipData = providerBody.chipDataAll.all
           // }
           
-          providerBody.chipData = providerBody.chipDataAll.all.sort((a, b) => {
-            const aId = a.id || (99999999 + (a.value || 0))
-            const bId = b.id || (99999999 + (b.value || 0))
-            return aId - bId
-          })
+          if(networkValue.value === 'Mainnet') {
+            providerBody.chipData = providerBody.chipDataAll.all.sort((a, b) => {
+              const aId = a.id || (99999999 + (a.value || 0))
+              const bId = b.id || (99999999 + (b.value || 0))
+              return aId - bId
+            })
+          } else providerBody.chipData = providerBody.chipDataAll.all
           providerBody.chipMaxData = providerBody.chipData.length > 0 ? providerBody.chipData[0].value : 0
           break;
       }
