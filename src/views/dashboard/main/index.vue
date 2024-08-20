@@ -1368,7 +1368,7 @@ export default defineComponent({
       }
       if (pFilter) params = Object.assign({}, params, pFilter)
       else if(versionRef.value === 'v2' && !networkInput.value) params = Object.assign({}, params, paramsFilter.data)
-      if(networkValue.value !== 'Mainnet' && versionRef.value === 'v2') params.for_prod = 1
+      if (networkValue.value !== 'Mainnet' && versionRef.value === 'v2') params.for_prod = process.env.NODE_ENV === 'production' ? 1 : 0 
       const uri = `${system.$baseurl}${networkInput.value ? 'cp/search_cp' : 'cp/cplist'}`
       const providerRes = await system.$commonFun.sendRequest(`${uri}?${system.$Qs.stringify(params)}`, 'get')
       if (providerRes && providerRes.status === 'success') {
@@ -1547,7 +1547,10 @@ export default defineComponent({
     }
     async function getOverviewArchived () {
       try {
-        const overviewRes = await system.$commonFun.sendRequest(`${system.$baseurl}cp/overview?for_prod=1`, 'get')
+        let params = {
+          for_prod: process.env.NODE_ENV === 'production'? 1 : 0
+        } 
+        const overviewRes = await system.$commonFun.sendRequest(`${system.$baseurl}cp/overview?${system.$Qs.stringify(params)}`, 'get')
         if (overviewRes && overviewRes.status === 'success') {
           providerBody.archived = overviewRes.data || {}
         }

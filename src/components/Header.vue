@@ -231,7 +231,7 @@ export default defineComponent({
     })
     const activeName = ref('deposit')
     const currentRef = reactive({
-      value: store.state.networkValue || 'Proxima',
+      value: store.state.networkValue || 'Mainnet',
       options: [
         {
           value: 'Mainnet'
