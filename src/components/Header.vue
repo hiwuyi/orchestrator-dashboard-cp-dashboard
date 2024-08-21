@@ -192,7 +192,7 @@ import {
 } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import * as echarts from "echarts"
-import SpaceTokenABI from '@/utils/abi/SwanToken.json'
+import SwanTokenABI from '@/utils/abi/SwanToken.json'
 import CollateralABI from '@/utils/abi/SwanCreditCollateral.json'
 export default defineComponent({
   components: {
@@ -353,15 +353,33 @@ export default defineComponent({
       try {
         const amount = system.$commonFun.web3Init.utils.toWei(String(cpCollateralCont.amount), 'ether')
 
+        const tokenContract = new system.$commonFun.web3Init.eth.Contract(SwanTokenABI, tokenAddress)
         const collateralContract = new system.$commonFun.web3Init.eth.Contract(CollateralABI, collateralAddress)
-        let payMethod = collateralContract.methods.deposit(cpCollateralCont.user_input_address)
-        let payGasLimit = await payMethod.estimateGas({ from: metaAddress.value })
-        const tx = await payMethod.send({ from: metaAddress.value, gasLimit: Math.floor(payGasLimit * 5), value: amount })
+        
+        // find the user's allowance
+        let allowanceMethod = tokenContract.methods.allowance(metaAddress.value, collateralAddress)
+        let allowance = await allowanceMethod.call()
+        console.log('allowance:', allowance)
+
+        // approve spending token if neccessary
+        if (allowance < amount) {
+          let approveMethod = tokenContract.methods.approve(collateralAddress, amount)
+          const tx = await approveMethod.send({ from: metaAddress.value })
           .on('transactionHash', async (transactionHash) => {
-            console.log('transactionHash:', transactionHash)
+            console.log('approve transactionHash:', transactionHash)
+          })
+        }
+
+        // deposit
+        let payMethod = collateralContract.methods.deposit(cpCollateralCont.user_input_address, amount)
+        let payGasLimit = await payMethod.estimateGas({ from: metaAddress.value })
+        const tx = await payMethod.send({ from: metaAddress.value, gasLimit: Math.floor(payGasLimit * 5) })
+          .on('transactionHash', async (transactionHash) => {
+            console.log('deposit transactionHash:', transactionHash)
             cpCollateralCont.tx_hash = transactionHash
             cpCollateralCont.show = false
           })
+          .on('receipt', async (receipt) => { console.log('deposit receipt:', receipt) })
           .on('error', () => cpCollateralCont.show = false)
       } catch (err) {
         console.log('err', err)
