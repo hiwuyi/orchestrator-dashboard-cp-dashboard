@@ -65,7 +65,10 @@ watchAccount(config, {
       console.log('watch', account)
       console.log('prev', prevAccount)
       // console.log("changed")
-      if (sessionStorage.getItem('fristOpen_swan') === null && signature.value === '') signout2()
+      const chainId = await system.$commonFun.providerInit.request({ method: 'eth_chainId' })
+      if(store.state.networkValue === 'Proxima' && parseInt(chainId, 16) !== 20241133) return false
+      else if(store.state.networkValue === 'Mainnet' && parseInt(chainId, 16) !== 254) return false
+      else if (sessionStorage.getItem('fristOpen_swan') === null && signature.value === '') signout2()
       else if (account ?.isConnected && signature.value === '' && metaAddress.value === '' && fristOpen > 0) {
         console.log("prompted")
         login2()

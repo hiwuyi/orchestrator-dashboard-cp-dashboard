@@ -1021,6 +1021,13 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="score" label="Reputation Score" min-width="110" >
+            <template #default="scope">
+              <div>
+                {{system.$commonFun.replaceFormat(scope.row.score)}}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="region" label="Region" min-width="110" />
           <el-table-column prop="uptime" label="Uptime" min-width="110" v-if="networkValue === 'Mainnet'" >
             <template #default="scope">
